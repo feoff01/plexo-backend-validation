@@ -203,3 +203,15 @@
 - regressão local sem DB: 429 passed, 16 skipped, 357 DB-deselected, 0 failed;
 - registry: 30/30 códigos únicos, quatro FQ4 shadows ainda ocultas;
 - gate PostgreSQL continua pendente porque este runtime não possui servidor/container e não tem DNS externo.
+
+
+## 2026-09-30 — FQ4 real PostgreSQL integration gate
+
+- executado CI isolado contra PostgreSQL 18 real;
+- gate FQ1/F5/F22/FQ4 E2E verde;
+- suíte completa verde: 806 passed, 52 skipped, 19 warnings;
+- `prompts check` verde;
+- `tools sync --check` verde;
+- corrigidas fixtures FQ4 para API async real e asserts para os schemas públicos reais de condicional/sensibilidade/regimes;
+- testes F5/F6 atualizados para exigir propagação auditável de warnings metodológicos;
+- nenhuma tool FQ4 foi promovida nesta etapa.
