@@ -5,6 +5,8 @@
 name: verificar backend (isolado)
 
 on:
+  push:
+    branches: [bootstrap/plexo-project]
   pull_request:
     branches: [main]
   workflow_dispatch:
