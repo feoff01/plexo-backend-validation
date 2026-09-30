@@ -5,8 +5,6 @@
 name: verificar backend (isolado)
 
 on:
-  push:
-    branches: [bootstrap/plexo-project]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -31,7 +29,7 @@ jobs:
           POSTGRES_PASSWORD: plexo
           POSTGRES_DB: plexo
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U postgres -d plexo"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 20
