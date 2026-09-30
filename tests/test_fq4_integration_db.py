@@ -1,4 +1,4 @@
-"""Integração PostgreSQL das quatro tools FQ4 em shadow mode.
+"""Integração PostgreSQL das quatro tools FQ4 promovidas.
 
 Este arquivo prova o caminho real do backend contra PostgreSQL: sync de tool_versions, policies,
 MarketSeriesLoader/views, preparar(), hash/cache, calcular(), tool_executions e output final.
@@ -113,20 +113,20 @@ async def _executar(db, mundo, code: str, params: dict):
         )
 
 
-def test_fq4_shadows_estao_registradas_mas_ocultas() -> None:
+def test_fq4_promovidas_estao_registradas_e_visiveis() -> None:
     for code in (
         "quant.analise_condicional",
         "quant.sensibilidade",
         "quant.regimes",
-        "quant.event_study_v2",
+        "quant.event_study",
     ):
         spec = spec_de(code)
-        assert spec.exposed_to_llm is False
+        assert spec.exposed_to_llm is True
         assert spec.family == "quant"
         assert spec.requires_market_data is True
 
 
-async def test_fq4_shadow_tools_executam_end_to_end_no_postgres(db, fq4_mundo):
+async def test_fq4_promovidas_executam_end_to_end_no_postgres(db, fq4_mundo):
     cond = await _executar(
         db,
         fq4_mundo,
@@ -179,7 +179,7 @@ async def test_fq4_shadow_tools_executam_end_to_end_no_postgres(db, fq4_mundo):
     evento = await _executar(
         db,
         fq4_mundo,
-        "quant.event_study_v2",
+        "quant.event_study",
         {
             "ticker": "F4PETR",
             "benchmark": "F4BOVA",
