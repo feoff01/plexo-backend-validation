@@ -103,3 +103,21 @@ jobs:
 
       - name: tools locais sem drift
         run: python -m app.cli tools sync --check
+
+      # Snapshot exato do commit que passou por todos os gates. A .env é descartável e não entra no artefato.
+      - name: preparar snapshot de handoff
+        run: |
+          set -euo pipefail
+          rm -f .env
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          rm -rf .pytest_cache
+          zip -qr "$RUNNER_TEMP/plexo-backend-validation-${GITHUB_SHA}.zip" . \
+            -x ".git/*" ".venv/*" ".env" ".pytest_cache/*" "*/__pycache__/*" "*.pyc"
+
+      - name: publicar snapshot de handoff
+        uses: actions/upload-artifact@v4
+        with:
+          name: plexo-backend-validation-${{ github.sha }}
+          path: ${{ runner.temp }}/plexo-backend-validation-${{ github.sha }}.zip
+          if-no-files-found: error
+          retention-days: 7
