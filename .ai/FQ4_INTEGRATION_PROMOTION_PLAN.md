@@ -123,3 +123,22 @@ Qualquer um bloqueia promoção:
 Neste ambiente de ChatGPT não existem binários PostgreSQL/Docker e DNS externo está bloqueado.
 Portanto o gate DB foi escrito, ligado à CI e validado estaticamente, mas o run PostgreSQL não pode
 ser declarado verde até ser executado por um runner com PostgreSQL 18 (ex.: GitHub Actions).
+
+## Resultado final — 2026-09-30
+
+O plano acima foi executado.
+
+- Gate pré-promoção PostgreSQL 18: verde.
+- `quant.analise_condicional`: 1.0.1 pública.
+- `quant.sensibilidade`: 1.0.1 pública.
+- `quant.regimes`: 1.0.1 pública.
+- `quant.event_study`: cutover canônico para 2.0.0.
+- `quant.event_study_v2`: alias removido do registry.
+- Replay 1.0.1: preservado.
+- Testes F5 e golden de blocos atualizados para o contrato canônico v2.
+- Run pós-promoção #39 (`36760273363`): **success**.
+- Run #40 no HEAD documentado (`36760679156`): **success**.
+- Suíte completa: **806 passed, 52 skipped, 19 warnings**.
+- `prompts check` e `tools sync --check`: verdes.
+
+Portanto, o critério de GO foi cumprido no repositório de validação. Este documento permanece como histórico da estratégia de promoção; a promoção FQ4 não está mais pendente aqui.
