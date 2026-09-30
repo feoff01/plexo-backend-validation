@@ -1,0 +1,87 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular) sobre série sintética. Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "ticker": "PETR4",
+    "instrument_id": "i-petr4",
+    "serie": {
+      "codigo": "PETR4",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 100.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 102.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 101.0
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 104.0
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 103.0
+        }
+      ]
+    },
+    "calendario": [
+      "2024-01-02",
+      "2024-01-03",
+      "2024-01-04",
+      "2024-01-05",
+      "2024-01-06"
+    ],
+    "metodo_retorno": "log",
+    "dias_uteis_ano": 252,
+    "cutoff_date": "2024-01-06",
+    "min_observacoes": 3,
+    "max_dias_defasagem": 5,
+    "fonte": "b3",
+    "ingestion_batch_ids": [
+      "lote-1"
+    ]
+  },
+  "esperado": {
+    "ticker": "PETR4",
+    "periodo": {
+      "de": "2024-01-02",
+      "ate": "2024-01-06",
+      "n": 5
+    },
+    "retorno_acumulado_pct": 3.0000000000000027,
+    "retorno_anualizado_pct": 543.7913785074596,
+    "vol_anualizada_pct": 32.02415766767408,
+    "max_drawdown_pct": -0.9803921568627416,
+    "evidencia": {
+      "fonte": "b3",
+      "instrument_ids": [
+        "i-petr4"
+      ],
+      "tickers": [
+        "PETR4"
+      ],
+      "index_codes": [],
+      "cutoff_date": "2024-01-06",
+      "as_of": "2024-01-06",
+      "n_observacoes": 5,
+      "lacunas": [],
+      "metodo": "log_anualizado_base_252",
+      "nota_metodo": "Retorno log entre fechamentos consecutivos; anualização geométrica e volatilidade = desvio-padrão × raiz(252); drawdown sobre o pico corrente. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "avisos": [],
+      "metricas": {
+        "retorno_acumulado_pct": 3.0000000000000027,
+        "retorno_anualizado_pct": 543.7913785074596,
+        "vol_anualizada_pct": 32.02415766767408,
+        "max_drawdown_pct": -0.9803921568627416
+      },
+      "ingestion_batch_ids": [
+        "lote-1"
+      ]
+    }
+  }
+}

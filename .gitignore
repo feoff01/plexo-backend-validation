@@ -1,0 +1,18 @@
+# segredos e ambiente — nunca no git
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# python
+.venv
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# saídas locais
+*.log
+.smoke/
+tests/evals/relatorios/20*.json

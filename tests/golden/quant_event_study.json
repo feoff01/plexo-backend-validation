@@ -1,0 +1,200 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular) sobre série sintética. Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "ticker": "A",
+    "benchmark": "B",
+    "instrument_ids": [
+      "ia",
+      "ib"
+    ],
+    "cutoff_date": "2024-01-14",
+    "data_evento": "2024-01-11",
+    "data_evento_efetiva": "2024-01-11",
+    "serie_ativo": {
+      "codigo": "A",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 50.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 50.79999999999999
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 49.326799999999984
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 50.485979799999974
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 50.91511062829997
+        },
+        {
+          "data": "2024-01-07",
+          "valor": 50.20229907950377
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 51.75857035096838
+        },
+        {
+          "data": "2024-01-09",
+          "valor": 51.81032892131934
+        },
+        {
+          "data": "2024-01-10",
+          "valor": 52.7947251708244
+        },
+        {
+          "data": "2024-01-11",
+          "valor": 52.213983193945325
+        },
+        {
+          "data": "2024-01-12",
+          "valor": 52.57948107630293
+        },
+        {
+          "data": "2024-01-13",
+          "valor": 53.341883551909326
+        },
+        {
+          "data": "2024-01-14",
+          "valor": 53.15518695947764
+        }
+      ]
+    },
+    "serie_benchmark": {
+      "codigo": "B",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 100.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 101.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 98.98
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 100.4647
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 100.96702349999998
+        },
+        {
+          "data": "2024-01-07",
+          "valor": 99.95735326499998
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 101.95650033029999
+        },
+        {
+          "data": "2024-01-09",
+          "valor": 101.95650033029999
+        },
+        {
+          "data": "2024-01-10",
+          "valor": 103.1799783342636
+        },
+        {
+          "data": "2024-01-11",
+          "valor": 102.35453850758948
+        },
+        {
+          "data": "2024-01-12",
+          "valor": 102.76395666161984
+        },
+        {
+          "data": "2024-01-13",
+          "valor": 103.68883227157441
+        },
+        {
+          "data": "2024-01-14",
+          "valor": 103.3777657747597
+        }
+      ]
+    },
+    "metodo": "market_model",
+    "metodo_retorno": "simples",
+    "janela_estimacao_dias": 6,
+    "pre_dias": 1,
+    "pos_dias": 1,
+    "min_observacoes": 3,
+    "max_dias_defasagem": 5,
+    "fonte": "b3",
+    "ingestion_batch_ids": []
+  },
+  "esperado": {
+    "ticker": "A",
+    "benchmark": "B",
+    "data_evento": "2024-01-11",
+    "data_evento_efetiva": "2024-01-11",
+    "metodo": "market_model",
+    "alpha": 0.0009999999999999094,
+    "beta": 1.5000000000000049,
+    "ar": [
+      {
+        "data": "2024-01-10",
+        "ar_pct": -7.979727989493313e-15
+      },
+      {
+        "data": "2024-01-11",
+        "ar_pct": 2.0816681711721685e-15
+      },
+      {
+        "data": "2024-01-12",
+        "ar_pct": -3.989863994746656e-15
+      }
+    ],
+    "car_pct": -9.8879238130678e-15,
+    "desvio_residuos_pct": 1.0538299365464916e-14,
+    "janela_estimacao": {
+      "de": "2024-01-04",
+      "ate": "2024-01-09",
+      "n": 6
+    },
+    "janela_evento": {
+      "de": "2024-01-10",
+      "ate": "2024-01-12",
+      "n": 3
+    },
+    "truncada": false,
+    "evidencia": {
+      "fonte": "b3",
+      "instrument_ids": [
+        "ia",
+        "ib"
+      ],
+      "tickers": [
+        "A",
+        "B"
+      ],
+      "index_codes": [],
+      "cutoff_date": "2024-01-14",
+      "as_of": "2024-01-14",
+      "n_observacoes": 12,
+      "lacunas": [],
+      "metodo": "event_study_market_model_simples",
+      "nota_metodo": "Retorno anormal = retorno do ativo − retorno esperado pelo benchmark (alpha/beta da janela de estimação); CAR = soma na janela do evento. Sem teste de significância nem inferência estatística: o CAR comparado ao desvio dos resíduos é só ordem de grandeza. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "avisos": [],
+      "metricas": {
+        "alpha": 0.0009999999999999094,
+        "beta": 1.5000000000000049,
+        "car_pct": -9.8879238130678e-15,
+        "desvio_residuos_pct": 1.0538299365464916e-14
+      },
+      "ingestion_batch_ids": []
+    }
+  }
+}

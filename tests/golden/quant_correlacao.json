@@ -1,0 +1,128 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular) sobre série sintética. Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "ticker_a": "A",
+    "codigo_b": "B",
+    "instrument_ids": [
+      "ia",
+      "ib"
+    ],
+    "index_codes": [],
+    "cutoff_date": "2024-01-20",
+    "serie_a": {
+      "codigo": "A",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 100.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 101.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 103.0
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 102.0
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 105.0
+        },
+        {
+          "data": "2024-01-07",
+          "valor": 104.0
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 108.0
+        },
+        {
+          "data": "2024-01-09",
+          "valor": 107.0
+        }
+      ]
+    },
+    "serie_b": {
+      "codigo": "B",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 50.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 50.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 50.5
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 51.5
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 51.0
+        },
+        {
+          "data": "2024-01-07",
+          "valor": 52.5
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 52.0
+        },
+        {
+          "data": "2024-01-09",
+          "valor": 54.0
+        }
+      ]
+    },
+    "unidade_b": "pontos",
+    "dias_uteis_ano": 252,
+    "defasagem_dias": 1,
+    "metodo_retorno": "simples",
+    "min_observacoes": 3,
+    "max_dias_defasagem": 5,
+    "fonte": "b3",
+    "ingestion_batch_ids": []
+  },
+  "esperado": {
+    "par": "A × B",
+    "correlacao": 1.0,
+    "n_pares": 6,
+    "defasagem_dias": 1,
+    "evidencia": {
+      "fonte": "b3",
+      "instrument_ids": [
+        "ia",
+        "ib"
+      ],
+      "tickers": [
+        "A",
+        "B"
+      ],
+      "index_codes": [],
+      "cutoff_date": "2024-01-20",
+      "as_of": "2024-01-09",
+      "n_observacoes": 6,
+      "lacunas": [],
+      "metodo": "pearson_retornos_simples_defasagem_1",
+      "nota_metodo": "Pearson sobre retornos alinhados por data (interseção de pregões); índice em taxa é convertido ao retorno do período. Correlação não é causalidade. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "avisos": [
+        "serie_defasada"
+      ],
+      "metricas": {
+        "correlacao": 1.0,
+        "n_pares": 6.0
+      },
+      "ingestion_batch_ids": []
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). A REGRA que este golden trava: capacidade usa o PISO da renda variável (p10/haircut), nunca a média.",
+  "resolvido": {
+    "fonte": "income_summaries",
+    "fixed_brl": 12000.0,
+    "variable_brl": 8000.0,
+    "variable_p10_brl": 2000.0,
+    "committable_brl": 14000.0,
+    "months_observed": 12,
+    "savings_rate_referencia": 0.25,
+    "dividas": [
+      {
+        "descricao": "cartão",
+        "outstanding_brl": 15000.0,
+        "annual_rate": 0.9,
+        "monthly_payment_brl": 1500.0,
+        "is_expensive": true
+      },
+      {
+        "descricao": "financiamento",
+        "outstanding_brl": 300000.0,
+        "annual_rate": 0.11,
+        "monthly_payment_brl": 2800.0,
+        "is_expensive": false
+      }
+    ],
+    "aporte_desejado_brl": 20000.0,
+    "premissas": {
+      "INCOME_HAIRCUT": {
+        "meses_minimos_para_p10": 6,
+        "haircut_por_estabilidade": {
+          "fixo": 0.0,
+          "variavel": 0.5,
+          "sazonal": 0.3,
+          "eventual": 1.0
+        },
+        "haircut_variavel_sem_historico": 0.0,
+        "alerta_top_source_share": 0.9
+      }
+    },
+    "sobra": {
+      "sobra_brl": 6000.0,
+      "teto_brl": 8500.0,
+      "despesa_total_brl": 8000.0,
+      "despesa_essencial_brl": 5500.0,
+      "meses_observados": 12
+    }
+  },
+  "esperado": {
+    "capacidade_mensal_brl": 6000.0,
+    "teto_se_cortar_o_supérfluo_brl": 8500.0,
+    "renda_com_que_da_para_contar_brl": 14000.0,
+    "fonte": "income_summaries",
+    "decomposicao": {
+      "fixa_brl": 12000.0,
+      "piso_variavel_brl": 2000.0,
+      "media_variavel_brl": 8000.0,
+      "despesa_total_brl": 8000.0,
+      "despesa_essencial_brl": 5500.0
+    },
+    "regra": "sobra_sobre_o_piso_da_renda",
+    "aporte_desejado_brl": 20000.0,
+    "aporte_desejado_cabe": false,
+    "excedente_sobre_capacidade_brl": 14000.0,
+    "dividas_caras": [
+      {
+        "descricao": "cartão",
+        "outstanding_brl": 15000.0,
+        "annual_rate": 0.9,
+        "custo_anual_estimado_brl": 13500.0
+      }
+    ],
+    "pagamentos_mensais_dividas_brl": 4300.0,
+    "savings_rate_referencia": 0.25,
+    "avisos": [
+      "ha_divida_cara_ativa"
+    ],
+    "premissas_usadas": {
+      "meses_minimos_para_p10": 6
+    }
+  }
+}

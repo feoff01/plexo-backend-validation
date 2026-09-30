@@ -1,0 +1,25 @@
+# Vocabulário vetado em superfície client-facing (RCVM 19) e em prompts de agente.
+# É CONFIG, não código: ajustar aqui, nunca em .py. Casamento por palavra inteira, sem distinção de
+# maiúsculas/acentos. Usado por: aprovação de prompt (CLI), guardrail pós-LLM (F2), teste de varredura.
+# ESTA É A FONTE. O frontend carrega uma cópia (plexo-frontend/scripts/vocabulario_proibido.yaml)
+# porque o CI dele só faz checkout daquele repo — mudou aqui, copie lá (o teste de vocabulário do
+# frontend falha quando os dois repos estão lado a lado e as listas divergem).
+termos:
+  - recomendamos
+  - recomendo
+  - recomendação personalizada
+  - compre
+  - venda já
+  - melhor fundo
+  - melhor investimento
+  - melhor opção
+  - oportunidade
+  - garantido
+  - garantia de retorno
+  - rentabilidade garantida
+# Expressões que CONTÊM um termo vetado mas são vocabulário técnico neutro: são removidas do texto
+# antes do casamento (F8, 2026-08-25 — "custo de oportunidade" derrubava a resposta inteira).
+excecoes:
+  - custo de oportunidade
+# Vocabulário permitido (referência para quem escreve prompt/copy): diagnóstico, simulação,
+# referência, estimativa, comparação, cenário.

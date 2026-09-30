@@ -1,0 +1,60 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "conceito": "come_cotas",
+    "slug": "come-cotas",
+    "titulo_conteudo": "Come-cotas",
+    "valor_brl": 10000.0,
+    "fonte_valor": "policy",
+    "prazo_meses": null,
+    "parametros": {
+      "aliquota_curto_pct": 20,
+      "aliquota_longo_pct": 15,
+      "rendimento_semestre_pct": 5
+    }
+  },
+  "esperado": {
+    "conceito": "come_cotas",
+    "slug": "come-cotas",
+    "titulo_conteudo": "Come-cotas",
+    "valor_base_brl": 10000.0,
+    "linhas": [
+      {
+        "rotulo": "valor aplicado",
+        "valor_brl": 10000.0,
+        "detalhe": ""
+      },
+      {
+        "rotulo": "rendimento no semestre",
+        "valor_brl": 500.0,
+        "detalhe": "5% (didático)"
+      },
+      {
+        "rotulo": "come-cotas em fundo de curto prazo",
+        "valor_brl": 100.0,
+        "detalhe": "20% sobre o rendimento"
+      },
+      {
+        "rotulo": "come-cotas em fundo de longo prazo",
+        "valor_brl": 75.0,
+        "detalhe": "15% sobre o rendimento"
+      },
+      {
+        "rotulo": "saldo após o come-cotas (longo prazo)",
+        "valor_brl": 10425.0,
+        "detalhe": ""
+      }
+    ],
+    "leitura": "O come-cotas antecipa, a cada semestre, o imposto sobre o rendimento — reduzindo o número de cotas; a diferença para a alíquota final é acertada no resgate.",
+    "premissas_usadas": {
+      "EDUCACAO_EXEMPLOS": {
+        "come_cotas": {
+          "aliquota_curto_pct": 20,
+          "aliquota_longo_pct": 15,
+          "rendimento_semestre_pct": 5
+        },
+        "fonte_valor": "policy"
+      }
+    }
+  }
+}

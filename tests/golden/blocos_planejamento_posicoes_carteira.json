@@ -1,0 +1,280 @@
+{
+  "blocos": [
+    {
+      "tipo": "barras",
+      "id": "exec-1:1",
+      "titulo": "Onde o capital está alocado",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Renda variável",
+            "valor": 367046.0,
+            "detalhe": "47.36% da carteira · 6 posição(ões)"
+          },
+          {
+            "rotulo": "Renda fixa",
+            "valor": 360000.0,
+            "detalhe": "46.45% da carteira · 3 posição(ões)"
+          },
+          {
+            "rotulo": "Alternativos",
+            "valor": 30000.0,
+            "detalhe": "3.87% da carteira · 1 posição(ões)"
+          },
+          {
+            "rotulo": "Caixa e liquidez",
+            "valor": 18000.0,
+            "detalhe": "2.32% da carteira · 1 posição(ões)"
+          }
+        ],
+        "formato": "brl",
+        "referencia": {
+          "rotulo": "carteira",
+          "valor": 775046.0
+        }
+      },
+      "proveniencia": {
+        "fonte": "wealth.holdings_snapshots + market.prices",
+        "as_of": "2026-08-30",
+        "cutoff_date": "2026-08-27",
+        "n": 11,
+        "metodo": "posições registradas no escopo, avaliadas pelo último fechamento publicado",
+        "premissas": {},
+        "avisos": [
+          "Algumas posições ainda não têm emissor cadastrado, então não entram na leitura de concentração."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Posições registradas no escopo, avaliadas pelo último fechamento publicado. Preço de fechamento é do pregão anterior, não cotação do momento. É descrição do que está registrado, não avaliação de adequação nem indicação de compra ou venda."
+    },
+    {
+      "tipo": "carteira",
+      "id": "exec-1:2",
+      "titulo": "A carteira, posição a posição",
+      "subtitulo": "11 posição(ões) em 2 conta(s)",
+      "dados": {
+        "linhas": [
+          {
+            "codigo": null,
+            "nome": "CDB Itaú 108% do CDI",
+            "grupo": "renda_fixa",
+            "classe": "Pós-fixado Selic/CDI",
+            "emissor": "Itaú Unibanco",
+            "quantidade": null,
+            "preco_medio": null,
+            "preco_fechamento": null,
+            "valor": 180000.0,
+            "share_pct": 23.22,
+            "variacao_pct": null,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 0,
+            "fgc": true
+          },
+          {
+            "codigo": "ITUB4",
+            "nome": "Itaú Unibanco PN",
+            "grupo": "renda_variavel",
+            "classe": "Ações Brasil",
+            "emissor": "Itaú Unibanco",
+            "quantidade": 2400.0,
+            "preco_medio": 31.2,
+            "preco_fechamento": 39.1,
+            "valor": 93840.0,
+            "share_pct": 12.11,
+            "variacao_pct": 25.32,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 2,
+            "fgc": false
+          },
+          {
+            "codigo": null,
+            "nome": "LCI Itaú Financeira 95% do CDI",
+            "grupo": "renda_fixa",
+            "classe": "Pós-fixado Selic/CDI",
+            "emissor": "Itaú Unibanco",
+            "quantidade": null,
+            "preco_medio": null,
+            "preco_fechamento": null,
+            "valor": 90000.0,
+            "share_pct": 11.61,
+            "variacao_pct": null,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 90,
+            "fgc": true
+          },
+          {
+            "codigo": null,
+            "nome": "Tesouro IPCA+ 2035",
+            "grupo": "renda_fixa",
+            "classe": "Inflação (IPCA+)",
+            "emissor": "Tesouro Nacional",
+            "quantidade": null,
+            "preco_medio": null,
+            "preco_fechamento": null,
+            "valor": 90000.0,
+            "share_pct": 11.61,
+            "variacao_pct": null,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 1,
+            "fgc": false
+          },
+          {
+            "codigo": "PETR4",
+            "nome": "Petrobras PN",
+            "grupo": "renda_variavel",
+            "classe": "Ações Brasil",
+            "emissor": "Petróleo Brasileiro S.A.",
+            "quantidade": 1700.0,
+            "preco_medio": 46.8,
+            "preco_fechamento": 42.7,
+            "valor": 72590.0,
+            "share_pct": 9.37,
+            "variacao_pct": -8.76,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 2,
+            "fgc": false
+          },
+          {
+            "codigo": "BOVA11",
+            "nome": "iShares Ibovespa (ETF)",
+            "grupo": "renda_variavel",
+            "classe": "Ações Brasil",
+            "emissor": "Gestora de índices",
+            "quantidade": 360.0,
+            "preco_medio": 149.8,
+            "preco_fechamento": 172.4,
+            "valor": 62064.0,
+            "share_pct": 8.01,
+            "variacao_pct": 15.09,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 2,
+            "fgc": false
+          },
+          {
+            "codigo": "VALE3",
+            "nome": "Vale ON",
+            "grupo": "renda_variavel",
+            "classe": "Ações Brasil",
+            "emissor": "Vale S.A.",
+            "quantidade": 700.0,
+            "preco_medio": 68.4,
+            "preco_fechamento": 79.11,
+            "valor": 55377.0,
+            "share_pct": 7.14,
+            "variacao_pct": 15.66,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 2,
+            "fgc": false
+          },
+          {
+            "codigo": "HGLG11",
+            "nome": "FII de logística",
+            "grupo": "renda_variavel",
+            "classe": "Fundos imobiliários",
+            "emissor": "Gestora imobiliária",
+            "quantidade": 300.0,
+            "preco_medio": 168.0,
+            "preco_fechamento": 160.0,
+            "valor": 48000.0,
+            "share_pct": 6.19,
+            "variacao_pct": -4.76,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 2,
+            "fgc": false
+          },
+          {
+            "codigo": "WEGE3",
+            "nome": "WEG ON",
+            "grupo": "renda_variavel",
+            "classe": "Ações Brasil",
+            "emissor": "WEG S.A.",
+            "quantidade": 700.0,
+            "preco_medio": 54.1,
+            "preco_fechamento": 50.25,
+            "valor": 35175.0,
+            "share_pct": 4.54,
+            "variacao_pct": -7.12,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 2,
+            "fgc": false
+          },
+          {
+            "codigo": null,
+            "nome": "Fundo multimercado macro",
+            "grupo": "alternativos",
+            "classe": "Multimercado",
+            "emissor": "Gestora macro",
+            "quantidade": null,
+            "preco_medio": null,
+            "preco_fechamento": null,
+            "valor": 30000.0,
+            "share_pct": 3.87,
+            "variacao_pct": null,
+            "taxa_adm_aa": 0.023,
+            "liquidez_dias": 30,
+            "fgc": false
+          },
+          {
+            "codigo": null,
+            "nome": "Saldo em conta na corretora",
+            "grupo": "caixa",
+            "classe": "Caixa e liquidez",
+            "emissor": null,
+            "quantidade": null,
+            "preco_medio": null,
+            "preco_fechamento": null,
+            "valor": 18000.0,
+            "share_pct": 2.32,
+            "variacao_pct": null,
+            "taxa_adm_aa": null,
+            "liquidez_dias": 0,
+            "fgc": false
+          }
+        ],
+        "grupos": [
+          {
+            "grupo": "renda_variavel",
+            "rotulo": "Renda variável",
+            "valor": 367046.0,
+            "share_pct": 47.36
+          },
+          {
+            "grupo": "renda_fixa",
+            "rotulo": "Renda fixa",
+            "valor": 360000.0,
+            "share_pct": 46.45
+          },
+          {
+            "grupo": "alternativos",
+            "rotulo": "Alternativos",
+            "valor": 30000.0,
+            "share_pct": 3.87
+          },
+          {
+            "grupo": "caixa",
+            "rotulo": "Caixa e liquidez",
+            "valor": 18000.0,
+            "share_pct": 2.32
+          }
+        ],
+        "total_brl": 775046.0,
+        "posicao_em": "2026-08-30",
+        "fechamento_em": "2026-08-27"
+      },
+      "proveniencia": {
+        "fonte": "wealth.holdings_snapshots + market.prices",
+        "as_of": "2026-08-30",
+        "cutoff_date": "2026-08-27",
+        "n": 11,
+        "metodo": "posições registradas no escopo, avaliadas pelo último fechamento publicado",
+        "premissas": {},
+        "avisos": [
+          "Algumas posições ainda não têm emissor cadastrado, então não entram na leitura de concentração."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Posições registradas no escopo, avaliadas pelo último fechamento publicado. Preço de fechamento é do pregão anterior, não cotação do momento. É descrição do que está registrado, não avaliação de adequação nem indicação de compra ou venda."
+    }
+  ]
+}

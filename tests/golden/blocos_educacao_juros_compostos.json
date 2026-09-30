@@ -1,0 +1,110 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output educacao_juros_compostos.json pela tool educacao.simulador_juros_compostos. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "serie",
+      "id": "exec-1:1",
+      "titulo": "Montante ano a ano",
+      "subtitulo": "12.0% a.a. · 2 anos",
+      "dados": {
+        "series": [
+          {
+            "nome": "Aportado",
+            "pontos": [
+              {
+                "x": "ano 1",
+                "y": 2200.0
+              },
+              {
+                "x": "ano 2",
+                "y": 3400.0
+              }
+            ]
+          },
+          {
+            "nome": "Juros",
+            "pontos": [
+              {
+                "x": "ano 1",
+                "y": 184.65
+              },
+              {
+                "x": "ano 2",
+                "y": 535.46
+              }
+            ]
+          }
+        ],
+        "eixo_y": {
+          "formato": "brl"
+        },
+        "empilhada": true
+      },
+      "proveniencia": {
+        "fonte": "simulador didático (taxa informada pelo cliente)",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "capitalizacao_mensal_aporte_fim_do_mes",
+        "premissas": {
+          "EDUCACAO_PARAMS": {
+            "prazo_max_anos": 50,
+            "taxa_max_aa_pct": 100
+          },
+          "taxa_anual_pct": 12.0,
+          "aporte_mensal_brl": 100.0,
+          "valor_inicial_brl": 1000.0,
+          "prazo_anos": 2
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Exemplo DIDÁTICO com a taxa informada; não é projeção de rentabilidade de nenhum produto real."
+    },
+    {
+      "tipo": "indicadores",
+      "id": "exec-1:2",
+      "titulo": "Resultado da simulação",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Montante final",
+            "valor": 3935.46,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Total aportado",
+            "valor": 3400.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Juros",
+            "valor": 535.46,
+            "formato": "brl"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "simulador didático (taxa informada pelo cliente)",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "capitalizacao_mensal_aporte_fim_do_mes",
+        "premissas": {
+          "EDUCACAO_PARAMS": {
+            "prazo_max_anos": 50,
+            "taxa_max_aa_pct": 100
+          },
+          "taxa_anual_pct": 12.0,
+          "aporte_mensal_brl": 100.0,
+          "valor_inicial_brl": 1000.0,
+          "prazo_anos": 2
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Exemplo DIDÁTICO com a taxa informada; não é projeção de rentabilidade de nenhum produto real."
+    }
+  ]
+}

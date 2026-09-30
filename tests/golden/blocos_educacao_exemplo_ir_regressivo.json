@@ -1,0 +1,175 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output educacao_exemplo_ir_regressivo.json pela tool educacao.exemplo_didatico. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "tabela",
+      "id": "exec-1:1",
+      "titulo": "Tabela regressiva do IR",
+      "subtitulo": null,
+      "dados": {
+        "colunas": [
+          {
+            "chave": "rotulo",
+            "rotulo": "Item"
+          },
+          {
+            "chave": "valor_brl",
+            "rotulo": "Valor",
+            "formato": "brl"
+          },
+          {
+            "chave": "detalhe",
+            "rotulo": "Premissa"
+          }
+        ],
+        "linhas": [
+          {
+            "rotulo": "valor aplicado",
+            "valor_brl": 10000.0,
+            "detalhe": ""
+          },
+          {
+            "rotulo": "rendimento em 24 meses",
+            "valor_brl": 2000.0,
+            "detalhe": "10% a.a. simples (didático)"
+          },
+          {
+            "rotulo": "imposto se resgatado até 180 dias",
+            "valor_brl": 450.0,
+            "detalhe": "22.5%"
+          },
+          {
+            "rotulo": "imposto se resgatado até 360 dias",
+            "valor_brl": 400.0,
+            "detalhe": "20.0%"
+          },
+          {
+            "rotulo": "imposto se resgatado até 720 dias",
+            "valor_brl": 350.0,
+            "detalhe": "17.5%"
+          },
+          {
+            "rotulo": "imposto se resgatado acima do último limite",
+            "valor_brl": 300.0,
+            "detalhe": "15.0%"
+          },
+          {
+            "rotulo": "imposto neste prazo (720 dias)",
+            "valor_brl": 350.0,
+            "detalhe": "17.5%"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "verbete aprovado · ir-regressivo-renda-fixa",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "",
+        "premissas": {
+          "EDUCACAO_EXEMPLOS": {
+            "ir_regressivo": {
+              "rendimento_aa_pct": 10,
+              "dias_por_mes": 30,
+              "meses_por_ano": 12,
+              "prazo_meses_padrao": 24,
+              "faixas": [
+                {
+                  "ate_dias": 180,
+                  "aliquota_pct": 22.5
+                },
+                {
+                  "ate_dias": 360,
+                  "aliquota_pct": 20
+                },
+                {
+                  "ate_dias": 720,
+                  "aliquota_pct": 17.5
+                },
+                {
+                  "ate_dias": null,
+                  "aliquota_pct": 15
+                }
+              ]
+            },
+            "fonte_valor": "policy"
+          }
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Exemplo DIDÁTICO com a taxa informada; não é projeção de rentabilidade de nenhum produto real."
+    },
+    {
+      "tipo": "barras",
+      "id": "exec-1:2",
+      "titulo": "Imposto por faixa de prazo",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "até 180 dias",
+            "valor": 450.0,
+            "detalhe": "22.5%"
+          },
+          {
+            "rotulo": "até 360 dias",
+            "valor": 400.0,
+            "detalhe": "20.0%"
+          },
+          {
+            "rotulo": "até 720 dias",
+            "valor": 350.0,
+            "detalhe": "17.5%",
+            "destaque": "referencia"
+          },
+          {
+            "rotulo": "acima do último limite",
+            "valor": 300.0,
+            "detalhe": "15.0%"
+          }
+        ],
+        "formato": "brl"
+      },
+      "proveniencia": {
+        "fonte": "verbete aprovado · ir-regressivo-renda-fixa",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "",
+        "premissas": {
+          "EDUCACAO_EXEMPLOS": {
+            "ir_regressivo": {
+              "rendimento_aa_pct": 10,
+              "dias_por_mes": 30,
+              "meses_por_ano": 12,
+              "prazo_meses_padrao": 24,
+              "faixas": [
+                {
+                  "ate_dias": 180,
+                  "aliquota_pct": 22.5
+                },
+                {
+                  "ate_dias": 360,
+                  "aliquota_pct": 20
+                },
+                {
+                  "ate_dias": 720,
+                  "aliquota_pct": 17.5
+                },
+                {
+                  "ate_dias": null,
+                  "aliquota_pct": 15
+                }
+              ]
+            },
+            "fonte_valor": "policy"
+          }
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Exemplo DIDÁTICO com a taxa informada; não é projeção de rentabilidade de nenhum produto real."
+    }
+  ]
+}

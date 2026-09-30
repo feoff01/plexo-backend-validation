@@ -1,0 +1,204 @@
+{
+  "persona": "jovem_sem_patrimonio",
+  "forca": "Cobertura baixíssima: quase tudo indisponível, e a tela precisa dizer isso sem parecer quebrada",
+  "esperado": {
+    "fundacao_critica": true,
+    "cobertura_do_catalogo": 0.41,
+    "scores": [
+      {
+        "score": "score.comportamento",
+        "valor": null,
+        "cobertura": 0.0,
+        "critica": false,
+        "indisponivel": true,
+        "motivo": "fundacao_critica"
+      },
+      {
+        "score": "score.destino",
+        "valor": null,
+        "cobertura": 0.0,
+        "critica": false,
+        "indisponivel": true,
+        "motivo": "fundacao_critica"
+      },
+      {
+        "score": "score.estoque",
+        "valor": null,
+        "cobertura": 1.0,
+        "critica": false,
+        "indisponivel": true,
+        "motivo": "fundacao_critica"
+      },
+      {
+        "score": "score.fluxo",
+        "valor": null,
+        "cobertura": 0.85,
+        "critica": true,
+        "indisponivel": true,
+        "motivo": "fundacao_critica"
+      },
+      {
+        "score": "score.protecao",
+        "valor": null,
+        "cobertura": 0.7,
+        "critica": true,
+        "indisponivel": true,
+        "motivo": "fundacao_critica"
+      }
+    ],
+    "indicadores": [
+      {
+        "indicador": "comportamento.disciplina_na_queda",
+        "valor": null,
+        "unidade": "fracao",
+        "cobertura": 0.0,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": [
+          "comportamento.reacao_queda"
+        ]
+      },
+      {
+        "indicador": "comportamento.regularidade_aporte",
+        "valor": null,
+        "unidade": "fracao",
+        "cobertura": 0.0,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": [
+          "comportamento.aporte_regular"
+        ]
+      },
+      {
+        "indicador": "destino.esforco_requerido",
+        "valor": null,
+        "unidade": "fracao",
+        "cobertura": 0.0,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": [
+          "fluxo.aporte_mensal",
+          "objetivo.prazo_meses",
+          "objetivo.valor_alvo"
+        ]
+      },
+      {
+        "indicador": "destino.horizonte_aposentadoria",
+        "valor": null,
+        "unidade": "anos",
+        "cobertura": 0.5,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": [
+          "destino.idade_aposentadoria"
+        ]
+      },
+      {
+        "indicador": "destino.probabilidade_meta",
+        "valor": null,
+        "unidade": "fracao",
+        "cobertura": 0.0,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": [
+          "objetivo.probabilidade_sucesso"
+        ]
+      },
+      {
+        "indicador": "estoque.comprometimento_divida",
+        "valor": 0.0,
+        "unidade": "fracao",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "estoque.custo_da_divida",
+        "valor": 0.0,
+        "unidade": "fracao",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "estoque.independencia",
+        "valor": 0.0,
+        "unidade": "meses",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "fluxo.concentracao_renda",
+        "valor": 1.0,
+        "unidade": "fracao",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "fluxo.inflacao_estilo_vida",
+        "valor": null,
+        "unidade": "fracao",
+        "cobertura": 1.0,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": []
+      },
+      {
+        "indicador": "fluxo.rigidez_orcamentaria",
+        "valor": 0.632,
+        "unidade": "fracao",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "fluxo.taxa_poupanca",
+        "valor": 0.079,
+        "unidade": "fracao",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "protecao.cobertura_reserva",
+        "valor": 0.484,
+        "unidade": "meses",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      },
+      {
+        "indicador": "protecao.lacuna_seguro_vida",
+        "valor": null,
+        "unidade": "BRL",
+        "cobertura": 0.75,
+        "indisponivel": true,
+        "motivo": "dados_insuficientes",
+        "faltando": [
+          "protecao.cobertura_vida"
+        ]
+      },
+      {
+        "indicador": "protecao.vulnerabilidade_choque",
+        "valor": 1.829,
+        "unidade": "meses",
+        "cobertura": 1.0,
+        "indisponivel": false,
+        "motivo": null,
+        "faltando": []
+      }
+    ],
+    "fatos_presentes": 16,
+    "fatos_no_catalogo": 39,
+    "elo_mais_fraco": null
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output quant_event_study.json pela tool quant.event_study. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "serie",
+      "id": "exec-1:1",
+      "titulo": "Retorno anormal acumulado (CAR) · A",
+      "subtitulo": "benchmark B · método market_model",
+      "dados": {
+        "series": [
+          {
+            "nome": "CAR",
+            "pontos": [
+              {
+                "x": "2024-01-10",
+                "y": -7.979727989493313e-15
+              },
+              {
+                "x": "2024-01-11",
+                "y": -5.898059818321144e-15
+              },
+              {
+                "x": "2024-01-12",
+                "y": -9.8879238130678e-15
+              }
+            ]
+          }
+        ],
+        "eixo_y": {
+          "formato": "pct"
+        },
+        "empilhada": false,
+        "anotacao": {
+          "x": "2024-01-11",
+          "rotulo": "evento"
+        }
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-14",
+        "cutoff_date": "2024-01-14",
+        "n": 12,
+        "metodo": "event_study_market_model_simples",
+        "premissas": {},
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Descreve o que aconteceu na janela; não infere significância nem projeta reação futura. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    },
+    {
+      "tipo": "barras",
+      "id": "exec-1:2",
+      "titulo": "Retorno anormal por pregão",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "2024-01-10",
+            "valor": -7.979727989493313e-15
+          },
+          {
+            "rotulo": "2024-01-11",
+            "valor": 2.0816681711721685e-15,
+            "destaque": "referencia"
+          },
+          {
+            "rotulo": "2024-01-12",
+            "valor": -3.989863994746656e-15
+          }
+        ],
+        "formato": "pct"
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-14",
+        "cutoff_date": "2024-01-14",
+        "n": 12,
+        "metodo": "event_study_market_model_simples",
+        "premissas": {},
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Descreve o que aconteceu na janela; não infere significância nem projeta reação futura. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    }
+  ]
+}
