@@ -280,16 +280,14 @@ def test_params_default_adjusted_none_inference_and_no_point_in_time_language():
     assert "point-in-time" not in schema_text
 
 
-def test_v2_is_shadow_and_legacy_101_stays_visible_and_unchanged():
+def test_v2_is_canonical_2_0_and_legacy_101_replay_stays_unchanged():
     carregar_tools()
-    v2 = spec_de("quant.event_study_v2")
-    legacy = spec_de("quant.event_study")
-    assert v2.semver == "1.0.0" and v2.exposed_to_llm is False
-    assert legacy.semver == "1.0.2" and legacy.exposed_to_llm is True
+    canonical = spec_de("quant.event_study")
+    assert canonical.semver == "2.0.0" and canonical.exposed_to_llm is True
     visible = {s.code for s in filtrar_tools(specs_registradas(), familias=("quant", "dados"), plano="advanced")}
-    assert "quant.event_study_v2" not in visible
+    assert "quant.event_study_v2" not in {s.code for s in specs_registradas()}
     assert "quant.event_study" in visible
-    names = {Path(p).name for p in v2.source_files}
+    names = {Path(p).name for p in canonical.source_files}
     assert {"event_study_v2.py", "event_study.py", "series.py", "returns.py", "dependence.py", "regression.py", "estimates.py", "evidencia_estatistica.py"} <= names
 
 
@@ -355,7 +353,7 @@ def test_v2_block_exposes_car_ci_without_claiming_significance():
         _asset("AAA3", "ia", pa, dates=ds), _asset("BBB3", "ib", pb, dates=ds),
         cutoff_date=ds[-1], data_evento=ds[8], inferencia="classic_iid_normal",
     ))
-    blocks = blocos_de("quant.event_study_v2", out.model_dump(mode="json"), execution_id="e1")
+    blocks = blocos_de("quant.event_study", out.model_dump(mode="json"), execution_id="e1")
     assert blocks
     text = str(blocks).lower()
     assert "intervalo de confiança" in text or "limite inferior" in text
@@ -419,11 +417,11 @@ def test_truncated_event_window_is_descriptive_but_not_sufficient():
     assert "janela_pos_truncada" in out.evidencia.avisos
 
 
-def test_legacy_public_schema_no_longer_promises_point_in_time():
+def test_canonical_public_schema_no_longer_promises_point_in_time():
     carregar_tools()
-    legacy_schema = json.dumps(spec_de("quant.event_study").param_schema, ensure_ascii=False).lower()
-    assert "point-in-time" not in legacy_schema
-    assert spec_de("quant.event_study").semver == "1.0.2"
+    canonical_schema = json.dumps(spec_de("quant.event_study").param_schema, ensure_ascii=False).lower()
+    assert "point-in-time" not in canonical_schema
+    assert spec_de("quant.event_study").semver == "2.0.0"
 
 
 def test_property_exact_market_model_recovers_parameters_across_250_paths():
