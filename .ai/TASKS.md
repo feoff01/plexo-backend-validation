@@ -133,3 +133,16 @@ Atualizado em: 2026-09-21
 
 Planejamento financeiro pessoal, orçamento, aposentadoria, suitability individual e vida financeira do cliente possuem estrutura própria e não entram nesta roadmap.
 
+
+
+## 2026-09-30 — após CI PostgreSQL verde
+
+- [x] Executar FQ4 E2E em PostgreSQL 18 real.
+- [x] Executar suíte Python completa em PostgreSQL real.
+- [x] Executar `prompts check`.
+- [x] Executar `tools sync --check`.
+- [x] Corrigir incompatibilidades de fixtures/expectativas reveladas pelo CI.
+- [ ] Limpar workflow temporário de bootstrap e confirmar PR-only CI verde.
+- [ ] Abrir branch/PR separado para promoção controlada de FQ4.
+- [ ] Promover `quant.analise_condicional`, `quant.sensibilidade`, `quant.regimes` com patch semver.
+- [ ] Fazer cutover versionado de Event Study v2 para `quant.event_study`, preservando replay histórico.
