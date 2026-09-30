@@ -306,3 +306,22 @@ Após o gate PostgreSQL 18 verde, a branch `bootstrap/plexo-project` entrou em p
 
 Estado atual: a promoção está aplicada apenas no repositório dedicado de validação e ainda precisa do CI pós-promoção totalmente verde para ser considerada encerrada.
 
+## Fechamento canônico FQ4 — 2026-09-30
+
+Esta seção substitui qualquer frase anterior deste arquivo que ainda trate o CI pós-promoção como pendente.
+
+- `quant.analise_condicional` 1.0.1: pública;
+- `quant.sensibilidade` 1.0.1: pública;
+- `quant.regimes` 1.0.1: pública;
+- `quant.event_study` 2.0.0: implementação canônica FQ4.4 sobre MarketSeriesLoader/Quant Core;
+- alias `quant.event_study_v2`: removido do registry;
+- replay histórico 1.0.1: preservado;
+- Event Study legacy permanece sem decorator para golden/replay;
+- run pós-promoção #39 (`36760273363`) verde;
+- HEAD documentado `c11cb160743c00d18a06b2fa5689fdb56cd64dff` também passou no run #40 (`36760679156`);
+- suíte completa: **806 passed, 52 skipped, 19 warnings**;
+- FQ1 + F5 + F22 + FQ4 E2E, `prompts check` e `tools sync --check`: verdes.
+
+**FQ4 está encerrado no repositório de validação.**
+
+Pendências reais passam a ser transversais: destino de integração/produção, storage histórico, prioridade de múltiplas fontes, availability/vintage real e mecanismo de payload/artifacts antes de abrir outra grande família Quant.
