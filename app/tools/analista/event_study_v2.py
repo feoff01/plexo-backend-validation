@@ -1,7 +1,7 @@
-"""Tool shadow `quant.event_study_v2` (FQ4.4).
+"""Tool canônica `quant.event_study` v2 (FQ4.4).
 
-A v2 migra o estudo de evento para MarketSeriesLoader + Quant Core sem tocar na implementação
-registrada `quant.event_study` 1.0.1. O cutover canônico é uma etapa separada.
+Implementação canônica sobre MarketSeriesLoader + Quant Core. O replay histórico da v1 permanece
+preservado em módulo separado.
 """
 from __future__ import annotations
 
@@ -243,11 +243,11 @@ def _nota_metodo(r: EventStudyV2Resolvido, analysis: quant_event_study.EventStud
 
 
 @tool(
-    code="quant.event_study_v2",
+    code="quant.event_study",
     family="quant",
-    semver="1.0.0",
-    display_name="Estudo de evento v2",
-    description=("Versão shadow do estudo de evento com MarketSeriesLoader/Quant Core. Mede retorno anormal e CAR "
+    semver="2.0.0",
+    display_name="Estudo de evento",
+    description=("Estudo de evento canônico com MarketSeriesLoader/Quant Core. Mede retorno anormal e CAR "
                  "contra benchmark; opcionalmente fornece CI clássico do CAR sob hipóteses iid explícitas. Não gera "
                  "p-value, rótulo de significância, causalidade ou previsão."),
     preparar=preparar_event_study_v2,
@@ -257,7 +257,7 @@ def _nota_metodo(r: EventStudyV2Resolvido, analysis: quant_event_study.EventStud
         quant_estimates.__file__, quant_event_study.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_event_study_v2(r: EventStudyV2Resolvido) -> EventStudyV2Output:
     asset_points = r.serie_ativo.points if r.serie_ativo is not None else []
