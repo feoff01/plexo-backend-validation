@@ -37,6 +37,21 @@ O run provou em PostgreSQL 18 real:
 - testes de condicional/sensibilidade/regimes esperam 1.0.1 e exposição;
 - testes de event study esperam 2.0.0 e ausência do alias.
 
-## Gate de fechamento
+## Gate de fechamento — concluído
 
-A promoção só é considerada concluída quando o workflow PostgreSQL 18 passar novamente no commit final desta etapa.
+Run pós-promoção: `36760273363` (#39) — **success**.
+
+O estado promovido passou novamente em PostgreSQL 18 real:
+
+- migrations do zero;
+- seeds/tools/policies/prompts;
+- validador sem erros/avisos;
+- invariantes SQL;
+- FQ1 + F5 + F22 + FQ4 E2E;
+- suíte completa: **806 passed, 52 skipped, 19 warnings**;
+- `prompts check` verde;
+- `tools sync --check` verde.
+
+Durante o fechamento, o CI encontrou dois contratos F5 ainda presos ao catálogo/shape legacy e um golden visual de Event Study. Todos foram atualizados para o contrato promovido. O golden mudou apenas na representação do bloco (indicadores + CAR + AR); os números históricos permaneceram preservados.
+
+**FQ4 está encerrado no branch de validação.**
