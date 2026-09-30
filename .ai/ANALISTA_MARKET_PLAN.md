@@ -185,3 +185,20 @@ Gate de promoção continua sendo PostgreSQL CI + sync/governança.
 - CI clássico do CAR é opt-in e não produz decisão de significância;
 - alinhamento correto é preço-com-preço antes de retorno;
 - promoção/cutover depende de PostgreSQL CI + tool/prompt sync.
+
+## Status canônico após FQ4 — 2026-09-30
+
+FQ4 foi promovido e fechado no repositório de validação com PostgreSQL 18 real em CI.
+
+Catálogo Quant público atual:
+
+- `quant.risco_retorno` 1.0.1;
+- `quant.dependencia` 1.0.1;
+- `quant.analise_condicional` 1.0.1;
+- `quant.sensibilidade` 1.0.1;
+- `quant.regimes` 1.0.1;
+- `quant.event_study` 2.0.0.
+
+O alias `quant.event_study_v2` não está registrado. O replay histórico do Event Study permanece preservado.
+
+Antes de abrir fundamentos/valuation/fatores/renda fixa/derivativos/backtesting, fechar as decisões transversais ainda abertas: storage histórico, prioridade de fontes, availability/vintage real e mecanismo de outputs longos/artifacts. A ordem exata das próximas famílias ainda não foi congelada.
