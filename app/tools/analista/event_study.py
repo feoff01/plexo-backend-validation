@@ -115,12 +115,7 @@ async def preparar_event_study(params: EventStudyParams, ctx: ToolContext) -> Ev
                                ingestion_batch_ids=sorted(set(lotes)))
 
 
-@tool(code="quant.event_study", family="quant", semver="1.0.2",
-      display_name="Estudo de evento",
-      description=("Mede como um ativo reagiu a um evento datado (balanço, decisão de juros, anúncio) descontando o "
-                   "benchmark: alpha/beta estimados antes do evento, retorno anormal por pregão na janela do evento "
-                   "e o acumulado (CAR). Descreve o que aconteceu; não infere significância nem projeta reação futura."),
-      preparar=preparar_event_study, source_dependencies=(comum_module.__file__, market_series.__file__), requires_market_data=True)
+# Implementação legacy preservada apenas para golden/replay. Não registra tool no catálogo atual.
 def calcular_event_study(r: EventStudyResolvido) -> EventStudyOutput:
     ra = retornos(r.serie_ativo.pontos, r.metodo_retorno)
     rb = retornos(r.serie_benchmark.pontos, r.metodo_retorno)
