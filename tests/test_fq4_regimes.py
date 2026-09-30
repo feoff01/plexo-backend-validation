@@ -300,11 +300,11 @@ def test_tool_marks_insufficient_when_one_regime_is_too_small_but_keeps_numbers(
     assert any(g.media_pct is not None for g in out.grupos)
 
 
-def test_tool_shadow_registry_and_fingerprint():
+def test_tool_promovida_registry_and_fingerprint():
     carregar_tools()
     spec = spec_de("quant.regimes")
-    assert spec.semver == "1.0.0"
-    assert spec.exposed_to_llm is False
+    assert spec.semver == "1.0.1"
+    assert spec.exposed_to_llm is True
     names = {p.rsplit("/", 1)[-1] for p in spec.source_files}
     assert {"regimes.py", "conditional.py", "series.py", "statistics.py"}.issubset(names)
 
@@ -375,13 +375,13 @@ async def test_preparar_regime_taxa_deriva_level_change_e_adjusted_sem_tool_acop
     assert calls[0][1]["temporal_semantics"] == TemporalSemantics.RETROSPECTIVE_AS_KNOWN_NOW
 
 
-def test_shadow_nao_entra_no_catalogo_do_analista():
+def test_promovida_entra_no_catalogo_do_analista():
     from app.agents.turn import filtrar_tools
     from app.tools.registry import specs_registradas
 
     carregar_tools()
     visible = {s.code for s in filtrar_tools(specs_registradas(), familias=("quant", "dados"), plano="advanced")}
-    assert "quant.regimes" not in visible
+    assert "quant.regimes" in visible
     assert "quant.risco_retorno" in visible
     assert "quant.dependencia" in visible
 
