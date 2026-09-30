@@ -104,6 +104,20 @@ jobs:
       - name: tools locais sem drift
         run: python -m app.cli tools sync --check
 
+      # Snapshot exato do commit para handoff. git archive inclui somente arquivos versionados,
+      # portanto não leva .env, .git, caches ou outros arquivos gerados durante o job.
+      - name: empacotar snapshot de handoff
+        if: always()
+        run: git archive --format=zip --output="$RUNNER_TEMP/plexo-backend-next-chat.zip" HEAD
+
+      - name: publicar snapshot de handoff
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plexo-backend-next-chat
+          path: ${{ runner.temp }}/plexo-backend-next-chat.zip
+          if-no-files-found: error
+
       # Snapshot exato do commit que passou por todos os gates. A .env é descartável e não entra no artefato.
       - name: preparar snapshot de handoff
         run: |
