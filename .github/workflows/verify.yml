@@ -1,0 +1,105 @@
+# Verificação isolada do backend: banco PostgreSQL descartável, sem deploy e sem segredos de produção.
+#
+# Objetivo: permitir que PRs e execuções manuais provem migrations + invariantes SQL + pytest
+# contra PostgreSQL 18 real antes de qualquer merge/deploy. Nenhum passo aponta para infraestrutura remota.
+name: verificar backend (isolado)
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-verify-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  postgres:
+    name: PostgreSQL 18 + suíte completa
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: plexo
+          POSTGRES_DB: plexo
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: instalar dependências
+        run: pip install -r requirements.txt
+
+      # Somente banco local do runner. Não usa segredos, banco remoto, DeepSeek nem Redis externo.
+      - name: criar .env isolado
+        run: |
+          set -euo pipefail
+          umask 077
+          cat > .env <<'EOF'
+          DATABASE_URL=postgresql://postgres:plexo@localhost:5432/plexo?sslmode=disable
+          ENV=test
+          AUTH_HEADERS_DEV=true
+          COOKIE_SECURE=false
+          EOF
+
+      - name: aplicar migrations do zero
+        run: |
+          set -euo pipefail
+          python -m alembic upgrade head
+          python -m alembic current
+
+      - name: preparar seeds, tools, policies e prompts do banco descartável
+        run: python tools/preparar_ambiente.py
+
+      - name: "validador estático (erros: 0 · avisos: 0)"
+        run: |
+          set -euo pipefail
+          python tools/validador.py | tee "$RUNNER_TEMP/validador.log"
+          if grep -qE '^(ERRO|aviso)' "$RUNNER_TEMP/validador.log"; then
+            echo "::error::validador com erros ou avisos"
+            exit 1
+          fi
+
+      - name: regras invioláveis SQL
+        run: python tools/db_runner.py tests
+
+      - name: regras invioláveis SQL sob plexo_service
+        run: python tools/db_runner.py tests plexo_service
+
+      # Gate explícito da fundação quantitativa antes da suíte inteira: facilita diagnosticar
+      # regressões de preço ajustado, calendário, loaders e tools do Analista/F22.
+      - name: gate FQ1 + F5 + F22 + FQ4 E2E
+        run: >-
+          python -m pytest -q
+          tests/test_fq1_market_series.py
+          tests/test_f5_analista_tools.py
+          tests/test_f22_acervo.py
+          tests/test_fq4_integration_db.py
+
+      - name: suíte Python completa
+        run: python -m pytest -q
+
+      # No banco local, preparar_ambiente acabou de sincronizar ambos. Estes checks provam que
+      # registry/prompt em código e estado persistido continuam coerentes depois da suíte.
+      - name: prompts locais sem drift
+        run: python -m app.cli prompts check
+
+      - name: tools locais sem drift
+        run: python -m app.cli tools sync --check
