@@ -461,3 +461,13 @@ incompatível o suficiente para justificar major bump.
 **Motivo:** separar validação de integração de mudança de catálogo/versionamento torna o cutover reversível e auditável.
 
 **Consequências:** o PR de bootstrap/validação permanece sem mudança de `exposed_to_llm`; semver/exposição serão alterados apenas na promoção controlada.
+
+## 2026-09-30 — FQ4 promovido após gate PostgreSQL real
+
+- O run GitHub Actions 36754171560 passou em PostgreSQL 18 com migrations, FQ1/F5/F22/FQ4 E2E, suíte completa, prompts check e tools sync --check.
+- `quant.analise_condicional`, `quant.sensibilidade` e `quant.regimes` foram promovidas com patch bump 1.0.0 -> 1.0.1 e `exposed_to_llm=True`.
+- A implementação FQ4.4 de Event Study tornou-se a tool canônica `quant.event_study` 2.0.0.
+- O alias temporário `quant.event_study_v2` deixa de ser registrado.
+- A implementação antiga de `quant.event_study` permanece como código legacy/golden/replay, sem decorator no catálogo atual.
+- O mapper de blocos canônico de `quant.event_study` aponta exclusivamente para o bloco v2.
+- O branch de validação continua sendo o único alvo desta promoção; nenhum outro repositório foi tocado.
