@@ -132,7 +132,7 @@ async def test_pipeline_ponta_a_ponta_final(db, mundo7):
 
     fake = FakeLLM([_json(PLANO_OK), _resp(RELATORIO)])
     r = await _pipeline(db, fake, mundo7)
-    assert r.status == "final" and r.report_id and r.message_id
+    assert r.status == "final_with_warnings" and r.report_id and r.message_id
     async with db.service_session() as conn:
         cur = await conn.execute(
             "select content_md, evidence_hash, status, synthesis_model_call_id is not null, version from analysis.reports where id = %s", (r.report_id,))
@@ -147,7 +147,9 @@ async def test_pipeline_ponta_a_ponta_final(db, mundo7):
             "select kind, finding, provenance from analysis.evidence_findings where analysis_id = %s order by kind, id", (mundo7["aid"],))
         findings = [{"kind": k, "finding": f, "provenance": p} for k, f, p in await cur.fetchall()]
         assert ehash == sha256_hex(canonical_json(findings))          # hash do bundle que fundamentou o texto
-        assert {f["kind"] for f in findings} >= {"quantitative", "methodology"}
+        assert {f["kind"] for f in findings} >= {"quantitative", "methodology", "warning"}
+        warnings = {f["finding"]["aviso"] for f in findings if f["kind"] == "warning"}
+        assert "adjusted_close_retrospective" in warnings
         cur = await conn.execute(
             "select role, content_json, cited_refs from agents.messages where conversation_id = %s order by seq desc limit 1", (mundo7["cid"],))
         role, cj, refs = await cur.fetchone()
@@ -167,9 +169,9 @@ async def test_pipeline_required_falho_replaneja_e_conclui(db, mundo7, monkeypat
     plano_ruim = _plano(_no("orc", tool="orcamento.reserva_emergencia", params={"custo_mensal_brl": 5000}))
     fake = FakeLLM([_json(plano_ruim), _json(PLANO_OK), _resp(RELATORIO)])
     r = await _pipeline(db, fake, mundo7)
-    assert r.status == "final" and r.replans == 1
+    assert r.status == "final_with_warnings" and r.replans == 1
     status, replans = await _status(db, mundo7["aid"])
-    assert status == "final" and replans == 1
+    assert status == "final_with_warnings" and replans == 1
     segundo = fake.requisicoes[1].messages[0].content
     assert "orcamento.reserva_emergencia" in segundo and "família" in segundo        # falhas anteriores no prompt do replan
 
@@ -201,7 +203,7 @@ async def test_report_vocabulario_vetado_reescrito_ou_bloqueado_antes_do_insert(
     fake = FakeLLM([_json(PLANO_OK), _resp("Recomendamos comprar PETR4, é a melhor opção."),
                     _resp("A métrica descreve o passado. " + RELATORIO)])
     r = await _pipeline(db, fake, mundo7)
-    assert r.status == "final"
+    assert r.status == "final_with_warnings"
     async with db.service_session() as conn:
         cur = await conn.execute("select content_md from analysis.reports where id = %s", (r.report_id,))
         content = (await cur.fetchone())[0]
@@ -245,7 +247,7 @@ async def test_pipeline_idempotente_segunda_chamada_noop(db, mundo7):
     fake = FakeLLM([_json(PLANO_OK), _resp(RELATORIO)])
     r1 = await _pipeline(db, fake, mundo7)
     r2 = await _pipeline(db, fake, mundo7)
-    assert r1.status == "final" and r2.status == "final" and r2.noop and len(fake.requisicoes) == 2
+    assert r1.status == "final_with_warnings" and r2.status == "final_with_warnings" and r2.noop and len(fake.requisicoes) == 2
 
 
 async def test_pipeline_prompt_nao_aprovado_falha_com_audit(db, mundo7):
@@ -316,7 +318,7 @@ async def test_task_analisar_via_ctx_direto_conclui(db, mundo7):
     fake = FakeLLM([_json(PLANO_OK), _resp(RELATORIO)])
     ctx = {"db": db, "llm": fake, "policies": _policies(db), "enfileirar": None, "enfileirar_analise": None}
     r = await tasks.analisar(ctx, mundo7["aid"])
-    assert r["status"] == "final" and r["report_id"]
+    assert r["status"] == "final_with_warnings" and r["report_id"]
     pendentes = await tasks.varrer_analises_pendentes(ctx)
     assert mundo7["aid"] not in pendentes
 
@@ -347,7 +349,7 @@ async def test_api_get_analyses_e_report_404_para_outro_escopo(db, mundo7):
         ok = await c.get(f"/analyses/{mundo7['aid']}", headers=HEADERS(e.u1, e.s1))
         assert ok.status_code == 200
         corpo = ok.json()
-        assert corpo["status"] == "final" and corpo["plano"]["version"] == 1 and len(corpo["tasks"]) == 2 and corpo["findings"] >= 2
+        assert corpo["status"] == "final_with_warnings" and corpo["plano"]["version"] == 1 and len(corpo["tasks"]) == 2 and corpo["findings"] >= 2
         rep = await c.get(f"/analyses/{mundo7['aid']}/report", headers=HEADERS(e.u1, e.s1))
         assert rep.status_code == 200 and rep.json()["report"]["id"] == r.report_id and "ilustrativ" in rep.json()["report"]["content_md"].lower()
         lista = await c.get("/analyses", headers=HEADERS(e.u1, e.s1))
