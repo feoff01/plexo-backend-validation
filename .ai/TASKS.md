@@ -155,5 +155,14 @@ Planejamento financeiro pessoal, orçamento, aposentadoria, suitability individu
 - [x] Promover analise_condicional/sensibilidade/regimes com patch bump.
 - [x] Fazer cutover de event study para código canônico 2.0.0.
 - [x] Retirar alias `quant.event_study_v2` do registry.
-- [ ] Exigir CI pós-promoção totalmente verde.
-- [ ] Se verde, encerrar FQ4 e iniciar próxima camada sem reabrir matemática base.
+- [x] Exigir CI pós-promoção totalmente verde — run 36760273363 (#39), PostgreSQL 18.
+- [x] Encerrar FQ4 após CI pós-promoção verde; próxima camada pode iniciar sem reabrir matemática base.
+
+## Fechamento FQ4 — 2026-09-30
+
+- [x] Run pós-promoção #39 (`36760273363`) totalmente verde.
+- [x] Suíte completa: **806 passed, 52 skipped, 19 warnings**.
+- [x] `prompts check` verde.
+- [x] `tools sync --check` verde.
+- [x] Golden visual de Event Study atualizado de forma explícita para o mapper canônico v2; números históricos preservados.
+- [x] FQ4 encerrado no branch de validação.
