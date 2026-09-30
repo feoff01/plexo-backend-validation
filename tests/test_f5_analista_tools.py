@@ -57,8 +57,10 @@ ANALISE_PARAMS = {
 # é ela que denuncia tool vazando de outra família. `dados.expectativas_mercado` entrou na F13b.
 TOOLS_ANALISTA = {"dados.resolver_instrumento", "dados.serie_precos", "dados.serie_indice",
                   "dados.historico_comparado", "dados.expectativas_mercado",
+                  "dados.fundamentos_empresa",
                   "quant.risco_retorno", "quant.dependencia", "quant.analise_condicional",
-                  "quant.sensibilidade", "quant.regimes", "quant.event_study"}
+                  "quant.sensibilidade", "quant.regimes", "quant.event_study",
+                  "quant.valor_mercado", "quant.cenario_sensibilidade", "quant.dependencia_macro"}
 
 
 def _resp(texto="", tool_calls=(), out=40):
@@ -136,7 +138,7 @@ async def _executar(db, mundo, code, params, *, cutoff=CUTOFF, conversa=False):
 
 
 # ---------------------------------------------------------------- registro
-def test_registro_tem_as_sete_tools_do_analista():
+def test_registro_tem_catalogo_publico_do_analista():
     specs = {s.code: s for s in specs_registradas()}
     assert TOOLS_ANALISTA <= set(specs)
     for code in TOOLS_ANALISTA:
