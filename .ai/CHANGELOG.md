@@ -268,3 +268,11 @@
 
 ### Código
 - nenhuma alteração de código, migration, semver, exposição ou source fingerprint nesta rodada.
+
+
+## 2026-09-30 — Protocolo de memória persistente
+
+- adicionado `.ai/WORKING_PROTOCOL.md` como protocolo canônico de continuidade;
+- formalizado que decisões, estado, tarefas, changelog e checkpoints devem ser persistidos em `.ai/` e não depender de memória de chat;
+- registrada sequência recomendada pós-auditoria como proposta: consolidação de fatores/dependência -> cutover versionado -> retomada de Fundamentals + Valuation;
+- nenhuma alteração de código, migration, tool, semver, exposição ou fingerprint.

@@ -445,3 +445,12 @@ Mapa importante de reuso antes de qualquer nova matemática:
 - `class_correlations`/simulação de carteira pertencem ao domínio de planejamento do cliente e não são estatística histórica do Analista.
 
 Estado remoto confirmado antes desta auditoria documental: HEAD `efd27727615cb9fdffa00ac250813798dbbd38e5`; run #50 `36785509026` totalmente verde; 74 E2E, 816 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes.
+
+
+## Protocolo obrigatório de continuidade
+
+Além da ordem de leitura já definida, ler `.ai/WORKING_PROTOCOL.md` antes de qualquer implementação nova.
+
+Regra permanente: não depender de memória de chat. Decisões, estado, tarefas, changelog e checkpoints devem ser atualizados em `.ai/` a cada etapa relevante.
+
+Próxima sequência recomendada (proposta, não implementada): consolidar factor resolver/dependência primeiro; depois retomar FQ5.5/FQ5.6.

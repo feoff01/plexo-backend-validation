@@ -377,3 +377,10 @@ Nova regra canônica: **reuse-before-build**. Antes de nova tool deve ser provad
 Próxima etapa antes de FQ5.5: design de consolidação de factor resolver + dependência, preservando semver/fingerprint/replay e sem reabrir a matemática FQ3/FQ4.
 
 Estado remoto de referência confirmado nesta auditoria: branch `bootstrap/plexo-project`, HEAD `efd27727615cb9fdffa00ac250813798dbbd38e5`; run #50 `36785509026` verde: 74 E2E, 816 passed, 52 skipped, 19 warnings, 0 failed.
+
+
+## Protocolo de continuidade adotado — 2026-09-30
+
+`.ai/WORKING_PROTOCOL.md` passa a ser referência operacional canônica para impedir dependência de memória de chat. Toda etapa relevante deve atualizar `.ai/` antes de ser considerada encerrada.
+
+Próxima sequência recomendada, ainda sem implementação: design de consolidação de fatores/dependência -> cutover versionado -> retomada de Fundamentals + Valuation.

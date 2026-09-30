@@ -204,3 +204,14 @@ Próximas tranches, ainda **sem Portfolio Analytics**:
 - [ ] só depois liberar FQ5.5 tendências fundamentais / FQ5.6 peers-setor.
 
 **Bloqueio:** nenhuma nova matemática/tool de análise deve ser iniciada antes do design de consolidação de fatores/dependência.
+
+
+## Próxima sequência proposta após a auditoria — aguardando aprovação
+
+- [ ] desenhar consolidação de fatores/dependência (`ResolvedFactor`/factor loader);
+- [ ] definir cutover versionado de `quant.dependencia_macro` para a interface canônica, preservando replay/fingerprint;
+- [ ] implementar apenas após aprovação do design;
+- [ ] validar equivalência numérica + PostgreSQL 18 + E2E + suíte completa + prompts/tools sync;
+- [ ] só então retomar FQ5.5 tendências fundamentais e FQ5.6 peers/setor.
+
+Referência operacional: `.ai/WORKING_PROTOCOL.md`.

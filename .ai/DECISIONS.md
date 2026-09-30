@@ -499,3 +499,10 @@ incompatível o suficiente para justificar major bump.
 **Decisão:** `market.class_correlations` e a matemática de `app/engine/simulacao.py` permanecem no domínio de planejamento/portfolio do cliente. Não serão usadas como substituto de correlação empírica do Analista.
 
 **Motivo:** são premissas aprovadas para projeção de carteira, enquanto `app/market/analytics/dependence.py` mede associação observada em séries históricas. Misturar as duas fontes quebraria provenance e semântica.
+
+
+## 2026-09-30 — .ai é a memória operacional canônica do projeto
+
+**Decisão:** o desenvolvimento não deve depender da memória de chats. Toda decisão, mudança de escopo, implementação relevante, validação/gate e próximo passo aprovado deve ser persistido em `.ai/`.
+
+**Aplicação:** usar `.ai/WORKING_PROTOCOL.md` como protocolo canônico de continuidade. Recomendações ainda não aprovadas devem ser marcadas como propostas, não como decisões executadas.
