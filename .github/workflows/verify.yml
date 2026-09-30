@@ -85,13 +85,14 @@ jobs:
 
       # Gate explícito da fundação quantitativa antes da suíte inteira: facilita diagnosticar
       # regressões de preço ajustado, calendário, loaders e tools do Analista/F22.
-      - name: gate FQ1 + F5 + F22 + FQ4 E2E
+      - name: gate FQ1 + F5 + F22 + FQ4 + FQ5 E2E
         run: >-
           python -m pytest -q
           tests/test_fq1_market_series.py
           tests/test_f5_analista_tools.py
           tests/test_f22_acervo.py
           tests/test_fq4_integration_db.py
+          tests/test_fq5_integration_db.py
 
       - name: suíte Python completa
         run: python -m pytest -q
