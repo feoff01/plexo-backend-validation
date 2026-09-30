@@ -432,3 +432,16 @@ Execução:
 - run 36754171560 confirmado verde de ponta a ponta;
 - promoção FQ4 aplicada somente nesse repositório/branch;
 - main e demais repositórios não foram alterados.
+
+## 2026-09-30 — handoff completo para outro chat
+
+Pedido do usuário: produzir documentação completa para outro ChatGPT entender o projeto, como a trilha Quant foi construída, o estado exato, o que falta e o passo a passo para continuar sem se perder.
+
+Estado usado como fonte:
+- repo `feoff01/plexo-backend-validation`;
+- branch `bootstrap/plexo-project`;
+- HEAD `c11cb160743c00d18a06b2fa5689fdb56cd64dff`;
+- run #40 / `36760679156` verde;
+- suíte completa 806 passed / 52 skipped / 19 warnings.
+
+O handoff deve distinguir explicitamente FQ4 fechado no repo de validação de eventual integração/deploy em produção, que não foi presumida.
