@@ -403,3 +403,21 @@ executado e não é considerado aprovado.
 ### Próximo passo
 Rodar `.github/workflows/verify.yml` em runner com PostgreSQL 18. Só após verde fazer bumps de
 promoção, tools sync/prompt sync e cutover controlado.
+
+
+## 2026-09-30 — GitHub/PostgreSQL real: fechamento do gate FQ4
+
+### Pedido do usuário
+Usar somente o novo repositório `plexo-backend-validation` para testar livremente e validar o backend de forma melhor, sem tocar em projetos antigos.
+
+### Execução
+- conteúdo do checkpoint foi expandido numa branch dedicada `bootstrap/plexo-project`;
+- PR #1 aberto para `main`;
+- PostgreSQL 18 descartável executou migrations, invariantes, FQ1/F5/F22/FQ4 E2E, suíte completa, prompts check e tools sync --check;
+- falhas de integração/testes encontradas pelo ambiente real foram corrigidas sem alterar a matemática FQ4;
+- run verde final: `36753446081`, commit `7a634ef22d1700635ffbfa6cf383be213de10171`;
+- suíte: 806 passed, 52 skipped, 19 warnings;
+- FQ4 continua shadow; promoção fica para branch/PR separado.
+
+### Próximo passo
+Limpar artefatos temporários do bootstrap, confirmar um CI final de PR limpo e então abrir a fase de promoção controlada.
