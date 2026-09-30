@@ -284,11 +284,11 @@ def test_sem_eventos_condicao_tem_warning_especifico():
     assert "sem_eventos_condicao" in out.evidencia.avisos
 
 
-def test_tool_nasce_shadow_e_fingerprint_cobre_engine():
+def test_tool_promovida_e_fingerprint_cobre_engine():
     carregar_tools()
     spec = spec_de("quant.analise_condicional")
-    assert spec.semver == "1.0.0"
-    assert spec.exposed_to_llm is False
+    assert spec.semver == "1.0.1"
+    assert spec.exposed_to_llm is True
     names = {Path(path).name for path in spec.source_files}
     assert {"analise_condicional.py", "_comum.py", "series.py", "models.py", "returns.py", "statistics.py", "conditional.py"} <= names
 
@@ -406,13 +406,13 @@ def test_bloco_condicional_mostra_amostra_curta_com_warning_em_vez_de_apagar_met
     assert any("poucos pontos" in warning for warning in blocks[0]["proveniencia"]["avisos"])
 
 
-def test_shadow_nao_entra_no_catalogo_do_analista():
+def test_promovida_entra_no_catalogo_do_analista():
     from app.agents.turn import filtrar_tools
     from app.tools.registry import specs_registradas
 
     carregar_tools()
     codes = {s.code for s in filtrar_tools(specs_registradas(), familias=("dados", "quant"), plano="wealth")}
-    assert "quant.analise_condicional" not in codes
+    assert "quant.analise_condicional" in codes
     assert "quant.risco_retorno" in codes and "quant.dependencia" in codes
 
 
