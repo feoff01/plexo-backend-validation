@@ -452,3 +452,12 @@ deve assumir `quant.event_study` com major bump 2.0.0; o alias `_v2` deve ser de
 
 **Motivo:** o usuário/planner não deve carregar nomes de migração permanentes e o output v2 é
 incompatível o suficiente para justificar major bump.
+
+
+## 2026-09-30 — CI PostgreSQL verde autoriza promoção, não a executa
+
+**Decisão:** o run verde do gate FQ4 é pré-condição satisfeita para abrir a fase de promoção, mas a exposição das shadows e o cutover de Event Study serão feitos em branch/PR separado.
+
+**Motivo:** separar validação de integração de mudança de catálogo/versionamento torna o cutover reversível e auditável.
+
+**Consequências:** o PR de bootstrap/validação permanece sem mudança de `exposed_to_llm`; semver/exposição serão alterados apenas na promoção controlada.
