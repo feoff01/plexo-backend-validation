@@ -1,4 +1,4 @@
-"""Tool FQ4.2 `quant.sensibilidade` em shadow mode.
+"""Tool FQ4.2 `quant.sensibilidade` em canônica mode.
 
 Estima associação linear histórica entre a mudança de um driver e o retorno de um ativo nos mesmos
 intervalos. O ponto é OLS; a incerteza usa HAC/Newey–West. Não implica causalidade ou previsão.
@@ -283,7 +283,7 @@ def _nota_metodo(r: SensibilidadeResolvida, hac_lags: int) -> str:
 @tool(
     code="quant.sensibilidade",
     family="quant",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Sensibilidade histórica",
     description=("Estima a associação linear histórica entre a mudança de um ativo, índice ou taxa e o retorno de "
                  "outro ativo nos mesmos intervalos. OLS com incerteza HAC/Newey-West; não implica causalidade, "
@@ -295,7 +295,7 @@ def _nota_metodo(r: SensibilidadeResolvida, hac_lags: int) -> str:
         quant_estimates.__file__, quant_regression.__file__, quant_sensitivity.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_sensibilidade(r: SensibilidadeResolvida) -> SensibilidadeOutput:
     response_points = r.serie_resposta.points if r.serie_resposta is not None else []
