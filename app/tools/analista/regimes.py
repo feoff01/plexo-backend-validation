@@ -1,4 +1,4 @@
-"""Tool FQ4.3 `quant.regimes` em shadow mode.
+"""Tool FQ4.3 `quant.regimes` em canônica mode.
 
 Compara o comportamento histórico de um ativo entre dois regimes explícitos do driver. A v1 usa
 regras auditáveis de nível ou direção; não faz clustering, otimização de threshold, causalidade ou
@@ -382,7 +382,7 @@ def _nota_metodo(r: RegimesResolvida, analysis: quant_regimes.RegimeAnalysis) ->
 @tool(
     code="quant.regimes",
     family="quant",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Regimes históricos",
     description=("Compara o retorno histórico de um ativo entre dois regimes explícitos de outro ativo, índice ou "
                  "taxa: nível alto/baixo ou direção alta/queda. A classificação é auditável e não usa clustering, "
@@ -393,7 +393,7 @@ def _nota_metodo(r: RegimesResolvida, analysis: quant_regimes.RegimeAnalysis) ->
         quant_statistics.__file__, quant_conditional.__file__, quant_regimes.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_regimes(r: RegimesResolvida) -> RegimesOutput:
     response_points = r.serie_resposta.points if r.serie_resposta is not None else []
