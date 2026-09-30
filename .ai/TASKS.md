@@ -146,3 +146,14 @@ Planejamento financeiro pessoal, orçamento, aposentadoria, suitability individu
 - [ ] Abrir branch/PR separado para promoção controlada de FQ4.
 - [ ] Promover `quant.analise_condicional`, `quant.sensibilidade`, `quant.regimes` com patch semver.
 - [ ] Fazer cutover versionado de Event Study v2 para `quant.event_study`, preservando replay histórico.
+
+## FQ4 — pós-promoção
+
+- [x] Executar PostgreSQL 18 real em CI.
+- [x] Validar migrations + FQ1/F5/F22/FQ4 E2E.
+- [x] Validar suíte completa + prompts check + tools sync --check.
+- [x] Promover analise_condicional/sensibilidade/regimes com patch bump.
+- [x] Fazer cutover de event study para código canônico 2.0.0.
+- [x] Retirar alias `quant.event_study_v2` do registry.
+- [ ] Exigir CI pós-promoção totalmente verde.
+- [ ] Se verde, encerrar FQ4 e iniciar próxima camada sem reabrir matemática base.
