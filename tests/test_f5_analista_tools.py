@@ -57,7 +57,8 @@ ANALISE_PARAMS = {
 # é ela que denuncia tool vazando de outra família. `dados.expectativas_mercado` entrou na F13b.
 TOOLS_ANALISTA = {"dados.resolver_instrumento", "dados.serie_precos", "dados.serie_indice",
                   "dados.historico_comparado", "dados.expectativas_mercado",
-                  "quant.risco_retorno", "quant.dependencia", "quant.event_study"}
+                  "quant.risco_retorno", "quant.dependencia", "quant.analise_condicional",
+                  "quant.sensibilidade", "quant.regimes", "quant.event_study"}
 
 
 def _resp(texto="", tool_calls=(), out=40):
@@ -341,8 +342,10 @@ def test_event_study_market_model_recupera_alpha_beta_de_serie_sintetica():
 async def test_event_study_janela_pos_alem_do_cutoff_e_truncada(db, mundo):
     r = await _executar(db, mundo, "quant.event_study", {"ticker": "F5PETR", "data_evento": "2024-01-17"})   # último pregão: pós-janela não existe
     o = r.output
-    assert o.truncada and "janela_pos_truncada" in o.evidencia.avisos and o.janela_evento.ate == CUTOFF
-    assert o.benchmark == "F5BOVA" and o.evidencia.suficiente
+    assert o.truncada_pre is False and o.truncada_pos is True
+    assert "janela_pos_truncada" in o.evidencia.avisos and o.janela_evento.ate == CUTOFF
+    # A v2 preserva o CAR parcial como descrição, mas janela truncada não é evidência suficiente.
+    assert o.benchmark == "F5BOVA" and o.evidencia.suficiente is False
 
 
 async def test_event_study_evento_em_dia_sem_pregao_ajusta_para_o_proximo(db, mundo):
