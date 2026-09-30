@@ -396,3 +396,31 @@ O novo chat deve conseguir apenas com este ZIP + prompt:
 - saber o que ainda falta;
 - não repetir trabalho;
 - continuar com disciplina de versionamento/auditoria.
+
+
+---
+
+# Atualização de handoff — FQ5.1–FQ5.4 encerrado em 2026-09-30
+
+Company / Market Analytics está pública e verde; Portfolio Analytics e análise de carteira/cliente continuam fora do escopo.
+
+Tools novas:
+- `dados.fundamentos_empresa` 1.0.0;
+- `quant.valor_mercado` 1.0.0;
+- `quant.cenario_sensibilidade` 1.0.0;
+- `quant.dependencia_macro` 1.0.0.
+
+Pergunta de referência Petrobras:
+1. valuation → `quant.valor_mercado`;
+2. choque explícito de juros → `quant.cenario_sensibilidade`; sem magnitude → `quant.sensibilidade`, sem inventar choque;
+3. câmbio USD/BRL → `quant.dependencia_macro`.
+
+Nunca chamar market cap/EV de fair value. DCF/fair value ainda não existe.
+
+Estado verde de código: commit `14c522cba2ebabaa95e32e6937879be1557b3256`, run #49 `36784983441`.
+- E2E: 74 passed;
+- full suite: 816 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18/migrations/invariantes: verdes;
+- prompts check / tools sync --check: verdes.
+
+Próximo foco recomendado: FQ5.5 tendências fundamentais + FQ5.6 peers/setor, depois fatores como petróleo/commodities; fair value/reverse DCF somente com contrato explícito de forecasts/WACC/ERP/growth.

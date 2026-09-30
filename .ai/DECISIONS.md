@@ -471,3 +471,11 @@ incompatível o suficiente para justificar major bump.
 - A implementação antiga de `quant.event_study` permanece como código legacy/golden/replay, sem decorator no catálogo atual.
 - O mapper de blocos canônico de `quant.event_study` aponta exclusivamente para o bloco v2.
 - O branch de validação continua sendo o único alvo desta promoção; nenhum outro repositório foi tocado.
+
+
+## 2026-09-30 — FQ5.1–FQ5.4 encerrado; escopo permanece empresa/mercado
+**Decisão:** não abrir Portfolio Analytics nem análise da carteira/cliente nesta frente. Próximas expansões são tendências fundamentais, peers/setor, fatores e depois fair value governado.
+
+**Decisão:** fair value só nasce de engine determinístico com forecasts/premissas explícitas e provenance. O planner não pode inventar WACC, ERP, crescimento terminal, múltiplo-alvo ou choque macro.
+
+**Decisão:** `market.fx_rates` sustenta observation-cutoff, mas não deve ser apresentado como vintage PIT perfeito enquanto faltar availability/ingestion provenance suficiente.

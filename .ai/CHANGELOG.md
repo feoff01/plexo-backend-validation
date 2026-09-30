@@ -237,3 +237,17 @@
 - documentação de fechamento atualizada;
 - run #40 (`36760679156`) também verde no HEAD `c11cb160743c00d18a06b2fa5689fdb56cd64dff`;
 - FQ4 encerrado no repositório dedicado de validação.
+
+
+## 2026-09-30 — FQ5.1–FQ5.4 promovido e encerrado
+- migration 0062 para unidade/currency e fundamentals multi-classe;
+- novas foundations: fundamentals PIT, raw price snapshots, FX factors;
+- publicadas `dados.fundamentos_empresa`, `quant.valor_mercado`, `quant.cenario_sensibilidade`, `quant.dependencia_macro` 1.0.0;
+- market cap exige cobertura completa de classes; múltiplos falham fechado com inputs inadequados;
+- cenário usa somente `slope × choque`, sem intercepto, previsão ou fair value;
+- planner decompõe empresa/juros/câmbio e não inventa choque;
+- blocos determinísticos compactos adicionados;
+- shadow run #47 verde: 74 E2E / 810 passed full suite;
+- run #48 bloqueou corretamente catálogo F5 desatualizado após promoção;
+- run #49 pós-correção totalmente verde: **74 E2E / 816 passed / 52 skipped / 19 warnings / prompts/tools sync verdes**;
+- FQ4 permaneceu intacto; nenhuma migration histórica foi editada.

@@ -325,3 +325,36 @@ Esta seção substitui qualquer frase anterior deste arquivo que ainda trate o C
 **FQ4 está encerrado no repositório de validação.**
 
 Pendências reais passam a ser transversais: destino de integração/produção, storage histórico, prioridade de múltiplas fontes, availability/vintage real e mecanismo de payload/artifacts antes de abrir outra grande família Quant.
+
+
+## Fechamento FQ5.1–FQ5.4 — Company / Market Analytics — 2026-09-30
+
+Escopo confirmado: Analista permanece focado em **empresa e mercado**. Portfolio Analytics, suitability, `wealth.*` e análise da carteira/cliente ficam fora desta frente.
+
+Tools públicas novas:
+- `dados.fundamentos_empresa` 1.0.0 — DFP point-in-time por `availability_date`, unidade/currency e provenance;
+- `quant.valor_mercado` 1.0.0 — fechamento bruto, market cap multi-classe, dívida líquida, EV e múltiplos; não produz fair value;
+- `quant.cenario_sensibilidade` 1.0.0 — cenário mecânico `slope × choque explícito` reutilizando FQ4.2; não é forecast/causalidade/preço-alvo;
+- `quant.dependencia_macro` 1.0.0 — Pearson/Spearman entre ativo e índice/taxa ou FX canônico, incluindo USD/BRL.
+
+Schema/Data Foundation:
+- migration nova `0062_fundamentals_units`, sem editar 0061;
+- `value_unit`/currency explícitos e chave de vintage com `instrument_id` + `NULLS NOT DISTINCT`;
+- `value_unit=raw` é preservado, mas não entra silenciosamente em valuation monetário;
+- FX declara `fx_observation_date_cutoff_sem_vintage` porque o schema atual não prova availability/vintage contra backfills.
+
+Planner:
+- perguntas compostas são decompostas em medições independentes; o LLM não calcula entre outputs;
+- sem magnitude de choque, não inventar 1 p.p.; usar `quant.sensibilidade`;
+- market cap/EV/múltiplos nunca são chamados de valor justo.
+
+Gates:
+- shadow commit `3611b29a2d39af517eead9b599793b51404fed64`, run #47 `36783804502`: verde;
+- promoção `8271df65f4db7dbe945a7defc800f9705ed0c30d`; run #48 detectou apenas gate de catálogo F5 desatualizado;
+- correção `14c522cba2ebabaa95e32e6937879be1557b3256`;
+- run pós-promoção #49 `36784983441`: **totalmente verde**;
+- E2E FQ1/F5/F22/FQ4/FQ5: **74 passed**;
+- full suite: **816 passed, 52 skipped, 19 warnings, 0 failed**;
+- validador 0/0; invariantes SQL normal + `plexo_service`, `prompts check` e `tools sync --check`: verdes.
+
+FQ4 não foi reaberto.

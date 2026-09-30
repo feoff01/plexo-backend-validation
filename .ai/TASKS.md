@@ -166,3 +166,26 @@ Planejamento financeiro pessoal, orçamento, aposentadoria, suitability individu
 - [x] `tools sync --check` verde.
 - [x] Golden visual de Event Study atualizado de forma explícita para o mapper canônico v2; números históricos preservados.
 - [x] FQ4 encerrado no branch de validação.
+
+
+## Fechamento FQ5.1–FQ5.4 — 2026-09-30
+- [x] 0062: unidade/currency e coordenada multi-classe sem editar migration histórica;
+- [x] Fundamentals Data Foundation PIT;
+- [x] `dados.fundamentos_empresa` 1.0.0 pública;
+- [x] `quant.valor_mercado` 1.0.0 pública;
+- [x] `quant.cenario_sensibilidade` 1.0.0 pública, reutilizando FQ4.2;
+- [x] `quant.dependencia_macro` 1.0.0 pública, incluindo USD/BRL;
+- [x] blocos compactos e planner governado;
+- [x] shadow run #47 verde;
+- [x] pós-promoção run #49 verde;
+- [x] E2E 74 passed;
+- [x] full suite 816 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts/tools sync verdes;
+- [x] FQ5.1–FQ5.4 encerrado.
+
+Próximas tranches, ainda **sem Portfolio Analytics**:
+- [ ] FQ5.5 tendências fundamentais PIT: crescimento, margens, ROE/ROIC e leverage;
+- [ ] FQ5.6 peers/setor cross-sectional;
+- [ ] ampliar fatores canônicos (ex.: petróleo/Brent);
+- [ ] FQ5.7 fair value/reverse DCF só com forecasts e premissas explícitas/auditáveis;
+- [ ] resolver prioridade de fontes e availability/vintage de FX/macro.
