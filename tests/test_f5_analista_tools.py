@@ -60,7 +60,7 @@ TOOLS_ANALISTA = {"dados.resolver_instrumento", "dados.serie_precos", "dados.ser
                   "dados.fundamentos_empresa",
                   "quant.risco_retorno", "quant.dependencia", "quant.analise_condicional",
                   "quant.sensibilidade", "quant.regimes", "quant.event_study",
-                  "quant.valor_mercado", "quant.cenario_sensibilidade", "quant.dependencia_macro"}
+                  "quant.valor_mercado", "quant.cenario_sensibilidade"}
 
 
 def _resp(texto="", tool_calls=(), out=40):
@@ -356,7 +356,7 @@ async def test_event_study_evento_em_dia_sem_pregao_ajusta_para_o_proximo(db, mu
 
 
 async def test_correlacao_com_indice_alinha_por_data(db, mundo):
-    r = await _executar(db, mundo, "quant.dependencia", {"ticker_a": "F5PETR", "indice_b": "f5_cdi"})
+    r = await _executar(db, mundo, "quant.dependencia", {"ticker_a": "F5PETR", "serie_b": {"tipo": "indice", "codigo": "f5_cdi"}})
     o = r.output
     assert o.n_pares == 11 and o.coeficiente is None and "serie_constante" in o.evidencia.avisos
     assert o.evidencia.index_codes == ["f5_cdi"] and o.evidencia.instrument_ids == [mundo["ids"]["F5PETR"]]
@@ -470,7 +470,7 @@ async def test_turno_analista_serie_curta_grava_missing_e_status_with_warnings(d
     async with db.service_session() as conn:
         await policies_repo.set_policy(conn, "ANALISE_PARAMS", {**ANALISE_PARAMS, "min_observacoes": 30})
         await policies_repo.approve_current(conn, "ANALISE_PARAMS", approved_by=e.u1)
-    fake = FakeLLM([_resp(tool_calls=[_tc("quant.dependencia", {"ticker_a": "F5PETR", "ticker_b": "F5VALE"})]),
+    fake = FakeLLM([_resp(tool_calls=[_tc("quant.dependencia", {"ticker_a": "F5PETR", "serie_b": {"tipo": "ativo", "codigo": "F5VALE"}})]),
                     _resp("Não há base suficiente para estimar a correlação no período.")])
     eventos = await _rodar(db, fake, user_id=e.u1, scope_id=e.s1, texto="F5PETR e F5VALE andam juntas?", agent_code="analista")
     done = next(x for x in eventos if isinstance(x, ev.Done))

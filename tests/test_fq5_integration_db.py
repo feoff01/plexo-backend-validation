@@ -156,14 +156,15 @@ def test_fq5_promovido_registrado_sem_alterar_fq4_publico():
         "dados.fundamentos_empresa",
         "quant.valor_mercado",
         "quant.cenario_sensibilidade",
-        "quant.dependencia_macro",
     ):
         spec = spec_de(code)
         assert spec.semver == "1.0.0"
         assert spec.exposed_to_llm is True
         assert spec.requires_market_data is True
     assert spec_de("quant.sensibilidade").semver == "1.0.1"
-    assert spec_de("quant.dependencia").semver == "1.0.1"
+    assert spec_de("quant.dependencia").semver == "2.0.0"
+    macro = spec_de("quant.dependencia_macro")
+    assert macro.semver == "1.0.1" and macro.exposed_to_llm is False
 
 
 async def test_fq5_fundamentos_e_valuation_multiclasse_pit(db, fq5_mundo):
@@ -211,11 +212,11 @@ async def test_fq5_cenario_juros_e_dependencia_cambio_end_to_end(db, fq5_mundo):
     assert "cenario_associacional_nao_previsao" in scenario.output.evidencia.avisos
 
     fx = await _executar(
-        db, fq5_mundo, "quant.dependencia_macro",
-        {"ticker": "FQ5ON", "base_currency": "USD", "quote_currency": "BRL"},
+        db, fq5_mundo, "quant.dependencia",
+        {"ticker_a": "FQ5ON", "serie_b": {"tipo": "cambio", "codigo": "USD/BRL"}},
     )
-    assert fx.output.factor_type == "cambio"
-    assert fx.output.factor_code == "USD/BRL"
+    assert fx.output.tipo_b == "cambio"
+    assert fx.output.par == "FQ5ON × USD/BRL"
     assert fx.output.n_pares >= 5
     assert fx.output.coeficiente is not None
     assert -1 <= fx.output.coeficiente <= 1

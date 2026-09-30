@@ -73,3 +73,17 @@ def test_bloco_fundamentos_e_tabela_pit_compacta():
     assert len(blocks) == 1 and blocks[0]["tipo"] == "tabela"
     assert blocks[0]["dados"]["linhas"][0]["metrica"] == "net_income"
     assert blocks[0]["dados"]["linhas"][0]["disponivel_em"] == "2026-03-01"
+
+
+def test_bloco_dependencia_canonica_renderiza_fx_sem_mapper_novo():
+    payload = {
+        "par": "PETR4 × USD/BRL", "metodo": "pearson", "coeficiente": 0.42,
+        "n_pares": 200, "defasagem_observacoes": 0, "price_basis_ativos": "adjusted_close",
+        "temporal_semantics_ativos": "retrospective_as_known_now", "tipo_b": "cambio",
+        "evidencia": ev(avisos=["fx_observation_date_cutoff_sem_vintage"]),
+    }
+    blocks = blocos_de("quant.dependencia", payload, execution_id="e3b")
+    assert len(blocks) == 2
+    assert blocks[0]["dados"]["valor"] == 0.42
+    assert "USD/BRL" in blocks[0]["titulo"]
+    assert any("vintage histórico" in x for x in blocks[0]["proveniencia"]["avisos"])

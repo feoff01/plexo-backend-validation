@@ -50,7 +50,7 @@ def _json(obj):
 
 
 PLANO_OK = _plano(_no("ret", params={"ticker": "F5PETR", "data_referencia": "2024-01-17", **PERIODO}),
-                  _no("corr", tool="quant.dependencia", params={"ticker_a": "F5PETR", "ticker_b": "F5VALE", "janela_dias": 60,
+                  _no("corr", tool="quant.dependencia", params={"ticker_a": "F5PETR", "serie_b": {"tipo": "ativo", "codigo": "F5VALE"}, "janela_dias": 60,
                                                               "data_referencia": "2024-01-17"}, criticality="important"))
 RELATORIO = ("## Pergunta\nPETR4 em janeiro de 2024.\n\n## Métricas\nRetorno acumulado conforme a evidência, as_of 2024-01-17, "
              "fonte B3, 12 observações, método log. Retorno passado não indica retorno futuro; correlação não é causalidade.\n\n"

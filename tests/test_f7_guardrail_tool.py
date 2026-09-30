@@ -14,7 +14,7 @@ from app.llm.client import ToolCall
 def test_limpeza_corta_variante_fullwidth_truncada_sem_vazar_parametros():
     bruto = ("<｜｜DSML｜｜tool_calls><｜｜DSML｜｜invoke name=\"quant.dependencia\">"
              "<｜｜DSML｜｜parameter name=\"ticker_a\">VALE3</｜｜DSML｜｜parameter>"
-             "<｜｜DSML｜｜parameter name=\"ticker_b\">PETR4</｜｜DSML｜｜parameter>"
+             "<｜｜DSML｜｜parameter name=\"serie_b\">{\"tipo\":\"ativo\",\"codigo\":\"PETR4\"}</｜｜DSML｜｜parameter>"
              "<｜｜DSML｜｜parameter name=\"de")
     limpo, vazou = guardrails.limpar_marcacao_de_tool(bruto)
     assert vazou and limpo == ""

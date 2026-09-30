@@ -32,7 +32,7 @@ def test_canonicas_expostas_com_novas_versoes():
     rr = spec_de("quant.risco_retorno")
     dep = spec_de("quant.dependencia")
     assert rr.exposed_to_llm is True and rr.semver == "1.0.1"
-    assert dep.exposed_to_llm is True and dep.semver == "1.0.1"
+    assert dep.exposed_to_llm is True and dep.semver == "2.0.0"
 
 
 def test_planner_nao_instrui_mais_tools_legacy():

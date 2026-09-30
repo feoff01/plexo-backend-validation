@@ -117,7 +117,7 @@ def test_dsl_plano_vazio_apos_descartes_levanta():
 # ---------------------------------------------------------------- compiler
 async def test_compiler_grava_plans_e_tasks_pending_com_params(db, mundo6):
     c = await _compilar(db, mundo6, _plano(_no("a"), _no("b", tool="quant.dependencia",
-                                                        params={"ticker_a": "F5PETR", "indice_b": "f5_cdi"}, depends_on=["a"])))
+                                                        params={"ticker_a": "F5PETR", "serie_b": {"tipo": "indice", "codigo": "f5_cdi"}}, depends_on=["a"])))
     assert c.version == 1 and c.ordem == ["a", "b"]
     async with db.service_session() as conn:
         cur = await conn.execute(
@@ -218,7 +218,7 @@ async def _executar(db, mundo6, plan_id):
 
 async def test_executor_roda_em_ordem_topologica_e_grava_findings_por_task(db, mundo6):
     c = await _compilar(db, mundo6, _plano(
-        _no("b", tool="quant.dependencia", params={"ticker_a": "F5PETR", "ticker_b": "F5VALE", "janela_dias": 60,
+        _no("b", tool="quant.dependencia", params={"ticker_a": "F5PETR", "serie_b": {"tipo": "ativo", "codigo": "F5VALE"}, "janela_dias": 60,
                                                    "data_referencia": "2024-01-17"}, depends_on=["a"]),
         _no("a", params={"ticker": "F5PETR", "data_referencia": "2024-01-17", **PERIODO})))
     assert c.ordem == ["a", "b"]

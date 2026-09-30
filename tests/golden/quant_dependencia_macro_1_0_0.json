@@ -1,0 +1,174 @@
+{
+  "esperado": {
+    "coeficiente": 0.7149978479190765,
+    "defasagem_observacoes": 0,
+    "evidencia": {
+      "as_of": "2024-01-08",
+      "avisos": [
+        "adjusted_close_retrospective",
+        "fx_observation_date_cutoff_sem_vintage"
+      ],
+      "cutoff_date": "2024-01-08",
+      "fonte": "b3+bacen_sgs",
+      "index_codes": [],
+      "ingestion_batch_ids": [
+        "batch-aaa3"
+      ],
+      "instrument_ids": [
+        "iid-a"
+      ],
+      "lacunas": [],
+      "metodo": "pearson_ativo_cambio_retornos_log_lag_0",
+      "metricas": {
+        "coeficiente": 0.7149978479190765,
+        "n_pares": 4.0
+      },
+      "n_observacoes": 4,
+      "nota_metodo": "O ativo usa preços ajustados retrospectivamente com corporate actions conhecidas hoje; não é vintage histórico. O fator USD/BRL é nível cambial de market.fx_rates; o schema atual não possui availability_date/ingestion_batch_id para provar vintage histórico. Pearson mede associação linear sobre retornos alinhados pela interseção de datas; lag assinado de 0 observações (positivo=ativo antecede fator; negativo=fator antecede ativo). Dependência não implica causalidade. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "tickers": [
+        "AAA3"
+      ]
+    },
+    "factor_code": "USD/BRL",
+    "factor_type": "cambio",
+    "metodo": "pearson",
+    "n_pares": 4,
+    "par": "AAA3 × USD/BRL",
+    "price_basis_ativo": "adjusted_close",
+    "temporal_semantics_ativo": "retrospective_as_known_now"
+  },
+  "resolvido": {
+    "cutoff_date": "2024-01-08",
+    "defasagem_observacoes": 0,
+    "dias_uteis_ano": 252,
+    "factor_code": "USD/BRL",
+    "factor_found": true,
+    "factor_index_code": null,
+    "factor_type": "cambio",
+    "instrument_id": "iid-a",
+    "max_dias_defasagem": 5,
+    "metodo": "pearson",
+    "metodo_retorno": "log",
+    "min_observacoes": 2,
+    "price_basis": "adjusted_close",
+    "response_in_universe": true,
+    "serie_fator": {
+      "code": "USD/BRL",
+      "currency": null,
+      "index_code": null,
+      "instrument_id": null,
+      "points": [
+        {
+          "data": "2024-01-02",
+          "valor": 4.9
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 4.95
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 4.92
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 5.02
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 5.08
+        }
+      ],
+      "provenance": {
+        "calendar_ingestion_batch_ids": [
+          "cal"
+        ],
+        "cutoff_date": "2024-01-08",
+        "dataset": "market.fx_rates",
+        "ingestion_batch_ids": [],
+        "price_basis": null,
+        "source_codes": [
+          "bacen_sgs"
+        ],
+        "temporal_semantics": "observation_date_cutoff",
+        "warnings": [
+          "fx_observation_date_cutoff_sem_vintage"
+        ]
+      },
+      "quality": {
+        "calendar_fallback_used": false,
+        "calendar_source": "market.trading_calendar",
+        "coverage_ratio": 1.0,
+        "first_date": "2024-01-02",
+        "last_date": "2024-01-08",
+        "missing_dates": [],
+        "observations": 5,
+        "stale_days": 0,
+        "unexpected_dates": []
+      },
+      "unit": "pontos"
+    },
+    "serie_resposta": {
+      "code": "AAA3",
+      "currency": "BRL",
+      "index_code": null,
+      "instrument_id": "iid-a",
+      "points": [
+        {
+          "data": "2024-01-02",
+          "valor": 100.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 103.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 101.0
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 106.0
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 104.0
+        }
+      ],
+      "provenance": {
+        "calendar_ingestion_batch_ids": [
+          "cal"
+        ],
+        "cutoff_date": "2024-01-08",
+        "dataset": "market.v_precos_ajustados",
+        "ingestion_batch_ids": [
+          "batch-aaa3"
+        ],
+        "price_basis": "adjusted_close",
+        "source_codes": [
+          "b3"
+        ],
+        "temporal_semantics": "retrospective_as_known_now",
+        "warnings": [
+          "adjusted_close_retrospective"
+        ]
+      },
+      "quality": {
+        "calendar_fallback_used": false,
+        "calendar_source": "market.trading_calendar",
+        "coverage_ratio": 1.0,
+        "first_date": "2024-01-02",
+        "last_date": "2024-01-08",
+        "missing_dates": [],
+        "observations": 5,
+        "stale_days": 0,
+        "unexpected_dates": []
+      },
+      "unit": null
+    },
+    "temporal_semantics": "retrospective_as_known_now",
+    "ticker": "AAA3",
+    "unidade_fator": "pontos"
+  }
+}
