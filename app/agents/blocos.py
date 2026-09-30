@@ -1016,7 +1016,6 @@ MAPEADORES: dict[str, Callable[[dict, str, int], list[dict]]] = {
     "quant.analise_condicional": _analise_condicional,
     "quant.sensibilidade": _sensibilidade,
     "quant.regimes": _regimes,
-    "quant.event_study": _event_study,
     "quant.event_study": _event_study_v2,
     "contexto.verificar_mudanca": _verificar_mudanca,
     "contexto.perfil_financeiro": _perfil_financeiro,
