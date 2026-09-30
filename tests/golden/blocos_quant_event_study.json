@@ -1,11 +1,42 @@
 {
-  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output quant_event_study.json pela tool quant.event_study. Representação, não número: se um bloco mudar, é decisão humana.",
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden histórico de output quant_event_study.json pelo mapper canônico v2. Representação atualizada no cutover FQ4: indicadores + CAR acumulado + AR por observação; os números do golden histórico não foram alterados.",
   "blocos": [
     {
-      "tipo": "serie",
+      "tipo": "indicadores",
       "id": "exec-1:1",
-      "titulo": "Retorno anormal acumulado (CAR) · A",
+      "titulo": "Estudo de evento · A",
       "subtitulo": "benchmark B · método market_model",
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "CAR",
+            "valor": -9.8879238130678e-15,
+            "formato": "pct"
+          },
+          {
+            "rotulo": "Desvio dos resíduos",
+            "valor": 1.0538299365464916e-14,
+            "formato": "pct"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-14",
+        "cutoff_date": "2024-01-14",
+        "n": 12,
+        "metodo": "event_study_market_model_simples",
+        "premissas": {},
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Estudo histórico de evento; AR/CAR não provam causalidade nem preveem reação futura. Quando há intervalo de confiança, ele usa hipóteses clássicas explícitas e não é um rótulo automático de significância. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    },
+    {
+      "tipo": "serie",
+      "id": "exec-1:2",
+      "titulo": "Retorno anormal acumulado (CAR) · A",
+      "subtitulo": null,
       "dados": {
         "series": [
           {
@@ -45,12 +76,12 @@
         "avisos": [],
         "lacunas": 0
       },
-      "nota": "Descreve o que aconteceu na janela; não infere significância nem projeta reação futura. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+      "nota": "Estudo histórico de evento; AR/CAR não provam causalidade nem preveem reação futura. Quando há intervalo de confiança, ele usa hipóteses clássicas explícitas e não é um rótulo automático de significância. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
     },
     {
       "tipo": "barras",
-      "id": "exec-1:2",
-      "titulo": "Retorno anormal por pregão",
+      "id": "exec-1:3",
+      "titulo": "Retorno anormal por observação",
       "subtitulo": null,
       "dados": {
         "itens": [
@@ -80,7 +111,7 @@
         "avisos": [],
         "lacunas": 0
       },
-      "nota": "Descreve o que aconteceu na janela; não infere significância nem projeta reação futura. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+      "nota": "Estudo histórico de evento; AR/CAR não provam causalidade nem preveem reação futura. Quando há intervalo de confiança, ele usa hipóteses clássicas explícitas e não é um rótulo automático de significância. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
     }
   ]
 }
