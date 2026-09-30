@@ -225,3 +225,15 @@
 - testes de catálogo, blocos e E2E PostgreSQL foram atualizados para o estado promovido;
 - promoção aplicada somente em `feoff01/plexo-backend-validation`, branch `bootstrap/plexo-project`;
 - CI pós-promoção é gate obrigatório antes de considerar o cutover encerrado.
+
+## 2026-09-30 — Fechamento do FQ4 pós-promoção
+
+- CI detectou e corrigiu contratos F5 ainda presos ao catálogo/shape legacy;
+- golden de blocos de `quant.event_study` foi atualizado explicitamente para a representação canônica v2;
+- números históricos do golden foram preservados;
+- run #39 (`36760273363`) ficou totalmente verde;
+- suíte: **806 passed, 52 skipped, 19 warnings**;
+- FQ1/F5/F22/FQ4 E2E, prompts check e tools sync --check verdes;
+- documentação de fechamento atualizada;
+- run #40 (`36760679156`) também verde no HEAD `c11cb160743c00d18a06b2fa5689fdb56cd64dff`;
+- FQ4 encerrado no repositório dedicado de validação.
