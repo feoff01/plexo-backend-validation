@@ -172,7 +172,7 @@ def _unique(values: list[str]) -> list[str]:
     preparar=preparar_fundamentos_empresa,
     source_dependencies=(market_fundamentals.__file__,),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_fundamentos_empresa(r: FundamentosEmpresaResolvida) -> FundamentosEmpresaOutput:
     rows = r.resolved.records if r.resolved is not None else []

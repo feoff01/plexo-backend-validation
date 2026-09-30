@@ -292,7 +292,7 @@ def _nota_metodo(r: DependenciaMacroResolvida) -> str:
         quant_dependence.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_dependencia_macro(r: DependenciaMacroResolvida) -> DependenciaMacroOutput:
     response_points = r.serie_resposta.points if r.serie_resposta is not None else []

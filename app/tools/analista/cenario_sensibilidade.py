@@ -140,7 +140,7 @@ def _unique(values: list[str]) -> list[str]:
     preparar=preparar_cenario_sensibilidade,
     source_dependencies=(sens_tool.__file__, market_snapshots.__file__, scenario_engine.__file__),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_cenario_sensibilidade(r: CenarioSensibilidadeResolvida) -> CenarioSensibilidadeOutput:
     sens = sens_tool.calcular_sensibilidade(r.sensibilidade)

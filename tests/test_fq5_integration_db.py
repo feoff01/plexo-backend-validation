@@ -151,7 +151,7 @@ async def _executar(db, mundo, code: str, params: dict):
         )
 
 
-def test_fq5_shadow_registrado_sem_alterar_fq4_publico():
+def test_fq5_promovido_registrado_sem_alterar_fq4_publico():
     for code in (
         "dados.fundamentos_empresa",
         "quant.valor_mercado",
@@ -160,7 +160,7 @@ def test_fq5_shadow_registrado_sem_alterar_fq4_publico():
     ):
         spec = spec_de(code)
         assert spec.semver == "1.0.0"
-        assert spec.exposed_to_llm is False
+        assert spec.exposed_to_llm is True
         assert spec.requires_market_data is True
     assert spec_de("quant.sensibilidade").semver == "1.0.1"
     assert spec_de("quant.dependencia").semver == "1.0.1"

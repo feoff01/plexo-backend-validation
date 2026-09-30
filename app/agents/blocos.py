@@ -76,6 +76,25 @@ AVISOS_CLIENTE: dict[str, str] = {
     "sem_datas_comuns": "As séries não têm datas em comum suficientes para comparar.",
     "sem_horizonte_na_coleta": "A pesquisa de mercado não trouxe esse horizonte.",
     "horizonte_sem_mediana": "A pesquisa de mercado não trouxe mediana para esse horizonte.",
+    "fundamental_unit_raw": "Há fundamento preservado sem unidade canônica; ele não entra nas contas de valuation.",
+    "fundamental_unit_incompativel": "Há fundamento com unidade incompatível com a conta pedida; ele foi excluído do cálculo.",
+    "shares_outstanding_indisponivel": "Faltam ações em circulação de pelo menos uma classe, então o valor de mercado total não foi estimado.",
+    "preco_bruto_indisponivel": "Falta preço de fechamento bruto válido para pelo menos uma classe.",
+    "market_cap_cobertura_incompleta": "O valor de mercado total exige preço e ações de todas as classes identificadas; a cobertura está incompleta.",
+    "market_cap_indisponivel": "Não foi possível calcular o valor de mercado total com segurança.",
+    "divida_liquida_indisponivel": "Não há dívida líquida, nem dívida bruta e caixa suficientes para derivá-la.",
+    "lucro_liquido_nao_positivo": "O lucro líquido não é positivo; P/L não é exibido para evitar um múltiplo enganoso.",
+    "ebitda_nao_positivo": "O EBITDA não é positivo; EV/EBITDA não é exibido para evitar um múltiplo enganoso.",
+    "patrimonio_liquido_nao_positivo": "O patrimônio líquido não é positivo; P/VP não é exibido para evitar um múltiplo enganoso.",
+    "preco_multiplas_fontes_sem_prioridade": "Há preços divergentes de fontes diferentes e ainda não existe prioridade canônica entre elas; o preço foi omitido.",
+    "preco_moeda_nao_brl": "O preço disponível não está em reais; ele não entrou no valuation em BRL.",
+    "cenario_associacional_nao_previsao": "Este valor é um cenário mecânico baseado em associação histórica, não previsão, valor justo ou preço-alvo.",
+    "preco_base_indisponivel": "Não há fechamento bruto válido para servir de preço-base do cenário.",
+    "cenario_implica_preco_nao_positivo": "O choque extrapola a relação linear para um preço inválido; o preço de cenário foi omitido.",
+    "cenario_intervalo_implica_preco_nao_positivo": "Parte do intervalo extrapolado implicaria preço inválido; o intervalo de preço foi omitido.",
+    "sensibilidade_indisponivel": "Não há sensibilidade estimável para aplicar ao cenário.",
+    "fx_observation_date_cutoff_sem_vintage": "O câmbio respeita a data da observação, mas a fonte atual não prova o vintage histórico contra revisões ou backfills.",
+    "par_cambio_desconhecido": "Não encontrei esse par de moedas na cobertura cambial atual.",
     # --- orçamento
     "saldo_reserva_desconhecido": "Não há saldo de reserva registrado.",
     "ha_divida_cara_ativa": "Existe dívida cara ativa, e ela vem antes de aportar.",
@@ -867,6 +886,157 @@ def _event_study_v2(out: dict, eid: str, max_pontos: int) -> list[dict]:
     return blocks
 
 
+# ------------------------------------------------------------------ FQ5 · fundamentos, valuation e cenários de mercado
+def _fundamentos_empresa(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    ev = out.get("evidencia") or {}
+    if not ev.get("suficiente"):
+        return []
+    rows = out.get("fundamentos")
+    if not isinstance(rows, list) or not rows:
+        return []
+    linhas = []
+    for row in rows[:max_pontos]:
+        if not isinstance(row, dict) or _num(row.get("value")) is None:
+            continue
+        unidade = row.get("value_unit") or ""
+        valor = row.get("value")
+        if unidade == "brl":
+            formato = "brl"
+        elif unidade == "percent":
+            formato = "pct"
+        else:
+            formato = "numero"
+        linhas.append({
+            "metrica": row.get("metric"),
+            "valor": valor,
+            "formato": formato,
+            "unidade": unidade,
+            "referencia": row.get("reference_date"),
+            "disponivel_em": row.get("availability_date"),
+            "classe": row.get("instrument_id"),
+        })
+    if not linhas:
+        return []
+    prov = _prov_evidencia(ev)
+    nota = ("Fundamentos point-in-time: entram apenas vintages já disponíveis no cutoff; unidade raw não entra em valuation. "
+            + NOTA_MERCADO)
+    return [_bloco(
+        "tabela", eid, 1, f"Fundamentos disponíveis · {out.get('ticker', '')}".strip(),
+        {"colunas": [
+            {"chave": "metrica", "rotulo": "Métrica"},
+            {"chave": "valor", "rotulo": "Valor"},
+            {"chave": "unidade", "rotulo": "Unidade"},
+            {"chave": "referencia", "rotulo": "Referência"},
+            {"chave": "disponivel_em", "rotulo": "Disponível em"},
+        ], "linhas": linhas}, prov, nota,
+        subtitulo=str(out.get("periodo") or "último DFP anual disponível no cutoff"),
+    )]
+
+
+def _valor_mercado(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    ev = out.get("evidencia") or {}
+    if not ev.get("suficiente"):
+        return []
+    prov = _prov_evidencia(ev)
+    nota = ("Market cap, EV e múltiplos são medidas de precificação observada; não são valor intrínseco, fair value ou recomendação. "
+            + NOTA_MERCADO)
+    itens = []
+    for label, key, formato in (
+        ("Preço da classe consultada", "requested_price_brl", "brl"),
+        ("Valor de mercado", "market_cap_brl", "brl"),
+        ("Dívida líquida", "net_debt_brl", "brl"),
+        ("Enterprise value (EV)", "enterprise_value_brl", "brl"),
+    ):
+        if _num(out.get(key)) is not None:
+            itens.append({"rotulo": label, "valor": out.get(key), "formato": formato})
+    multiples = out.get("multiples") or {}
+    for label, key, formato in (
+        ("P/L", "pe", "numero"),
+        ("EV/EBITDA", "ev_ebitda", "numero"),
+        ("P/VP", "price_to_book", "numero"),
+        ("FCF yield", "fcf_yield_pct", "pct"),
+    ):
+        if _num(multiples.get(key)) is not None:
+            itens.append({"rotulo": label, "valor": multiples.get(key), "formato": formato})
+    blocks = []
+    if itens:
+        blocks.append(_bloco(
+            "indicadores", eid, 1, f"Precificação de mercado · {out.get('ticker', '')}".strip(),
+            {"itens": itens}, prov, nota,
+            subtitulo=(f"fechamento {out.get('requested_price_date')}" if out.get("requested_price_date") else None),
+        ))
+    classes = out.get("classes")
+    if isinstance(classes, list) and len(classes) > 1:
+        linhas = []
+        for row in classes[:max_pontos]:
+            if not isinstance(row, dict):
+                continue
+            linhas.append({
+                "ticker": row.get("ticker"),
+                "preco": row.get("price_brl"),
+                "acoes": row.get("shares_outstanding"),
+                "valor_mercado": row.get("market_value_brl"),
+                "data": row.get("price_date"),
+            })
+        if linhas:
+            blocks.append(_bloco(
+                "tabela", eid, len(blocks) + 1, "Classes consideradas no valor de mercado",
+                {"colunas": [
+                    {"chave": "ticker", "rotulo": "Classe"},
+                    {"chave": "preco", "rotulo": "Preço"},
+                    {"chave": "acoes", "rotulo": "Ações"},
+                    {"chave": "valor_mercado", "rotulo": "Valor de mercado"},
+                    {"chave": "data", "rotulo": "Data"},
+                ], "linhas": linhas}, prov, nota,
+            ))
+    return blocks
+
+
+def _cenario_sensibilidade(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    ev = out.get("evidencia") or {}
+    if not ev.get("suficiente"):
+        return []
+    base = _num(out.get("base_price_brl"))
+    scenario = _num(out.get("scenario_price_brl"))
+    impact = _num(out.get("impacto_incremental_pct"))
+    if base is None or scenario is None or impact is None:
+        return []
+    prov = _prov_evidencia(ev)
+    nota = ("Cenário linear associacional: slope histórico × choque explícito sobre o fechamento bruto. "
+            "Não é previsão, causalidade, fair value nem preço-alvo. " + NOTA_MERCADO)
+    itens = [
+        {"rotulo": "Preço-base", "valor": base, "formato": "brl"},
+        {"rotulo": "Choque no driver", "valor": out.get("choque_driver"), "formato": "numero",
+         "detalhe": str(out.get("unidade_choque") or "")},
+        {"rotulo": "Impacto incremental", "valor": impact, "formato": "pct"},
+        {"rotulo": "Preço no cenário mecânico", "valor": scenario, "formato": "brl"},
+    ]
+    if _num(out.get("r_squared")) is not None:
+        itens.append({"rotulo": "R² histórico", "valor": float(out["r_squared"]) * 100.0, "formato": "pct"})
+    ci = out.get("scenario_price_interval_brl") or {}
+    if _num(ci.get("lower")) is not None:
+        itens.append({"rotulo": "Faixa do cenário · limite inferior", "valor": ci.get("lower"), "formato": "brl"})
+    if _num(ci.get("upper")) is not None:
+        itens.append({"rotulo": "Faixa do cenário · limite superior", "valor": ci.get("upper"), "formato": "brl"})
+    return [_bloco(
+        "indicadores", eid, 1,
+        f"Cenário por sensibilidade · {out.get('ticker', '')} × {out.get('driver', '')}".strip(),
+        {"itens": itens}, prov, nota,
+        subtitulo=(f"preço-base em {out.get('base_price_date')} · {out.get('n', 0)} pares históricos"),
+    )]
+
+
+def _dependencia_macro(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    blocks = _dependencia(out, eid, max_pontos)
+    if blocks:
+        tipo = out.get("factor_type")
+        codigo = out.get("factor_code")
+        for block in blocks:
+            if block.get("subtitulo") is None and codigo:
+                block["subtitulo"] = f"fator {tipo}: {codigo}"
+    return blocks
+
+
 # ------------------------------------------------------------------ contexto (F14)
 def _verificar_mudanca(out: dict, eid: str, max_pontos: int) -> list[dict]:
     """O card não é bloco: ele chega pelo evento `proposta`. O bloco aqui é o ANTES × DEPOIS,
@@ -1009,10 +1179,14 @@ MAPEADORES: dict[str, Callable[[dict, str, int], list[dict]]] = {
     "dados.serie_precos": _serie_precos,
     "dados.historico_comparado": _historico_comparado,
     "dados.serie_indice": _serie_indice,
+    "dados.fundamentos_empresa": _fundamentos_empresa,
     "quant.retorno_volatilidade": _retorno_vol,
     "quant.correlacao": _correlacao,
     "quant.risco_retorno": _retorno_vol,
     "quant.dependencia": _dependencia,
+    "quant.dependencia_macro": _dependencia_macro,
+    "quant.valor_mercado": _valor_mercado,
+    "quant.cenario_sensibilidade": _cenario_sensibilidade,
     "quant.analise_condicional": _analise_condicional,
     "quant.sensibilidade": _sensibilidade,
     "quant.regimes": _regimes,

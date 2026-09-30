@@ -278,7 +278,7 @@ def _used(rows: list[market_fundamentals.FundamentalRecord | None]) -> list[Fund
         valuation_engine.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_valor_mercado(r: ValorMercadoResolvido) -> ValorMercadoOutput:
     warnings: list[str] = []
