@@ -439,11 +439,17 @@ async def test_turno_analista_grava_analysis_e_findings_com_provenance(db, mundo
         rows = await cur.fetchall()
         assert len(rows) == 1
         aid, mode, status, cutoff, question = rows[0]
-        assert (mode, status, question) == ("standard", "final", "como foi a F5PETR?") and cutoff is not None
+        # adjusted_close é retrospectivo e a fixture não carrega trading_calendar oficial;
+        # ambos são avisos metodológicos materiais, então a análise deve terminar com warnings.
+        assert (mode, status, question) == ("standard", "final_with_warnings", "como foi a F5PETR?") and cutoff is not None
         cur = await conn.execute(
             "select kind, finding, provenance from analysis.evidence_findings where analysis_id = %s order by kind", (aid,))
-        findings = {k: (f, p) for k, f, p in await cur.fetchall()}
-        assert {"quantitative", "methodology"} <= set(findings) and "missing" not in findings
+        rows_findings = await cur.fetchall()
+        findings = {k: (f, p) for k, f, p in rows_findings if k != "warning"}
+        warnings = [f["aviso"] for k, f, _ in rows_findings if k == "warning"]
+        assert {"quantitative", "methodology"} <= set(findings) and "missing" not in {k for k, _, _ in rows_findings}
+        assert "adjusted_close_retrospective" in warnings
+        assert "calendar_fallback_from_prices" in warnings
         assert findings["quantitative"][1][0]["tool_execution_id"] == tool_done.execution_id
         assert "retorno_acumulado_pct" in findings["quantitative"][0]["metricas"]
         assert findings["methodology"][0]["metodo"]
