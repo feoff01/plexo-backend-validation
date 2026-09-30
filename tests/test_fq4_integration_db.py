@@ -91,10 +91,11 @@ async def fq4_mundo(db, escopos, tmp_path):
         # Alterna subida/queda de nível para garantir os dois regimes e variância no driver.
         valores = [10.00, 10.25, 10.10, 10.40, 10.20, 10.55, 10.35, 10.70, 10.45, 10.80, 10.60, 10.95]
         assert len(datas) == len(valores)
-        await conn.executemany(
-            "insert into market.index_values (index_code, value_date, value) values ('f4_selic', %s, %s)",
-            list(zip(datas, valores)),
-        )
+        for data_valor, valor in zip(datas, valores):
+            await conn.execute(
+                "insert into market.index_values (index_code, value_date, value) values ('f4_selic', %s, %s)",
+                (data_valor, valor),
+            )
 
     return {"e": e, "ids": ids, "batch_id": ing["batch_id"]}
 
