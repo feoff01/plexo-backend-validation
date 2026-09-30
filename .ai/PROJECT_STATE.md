@@ -291,3 +291,18 @@ Executar os gates DB/sync do FQ3.3. Depois abrir FQ4 (`quant.analise_condicional
 O gate de integração que estava pendente foi executado em PostgreSQL 18 real e descartável no repositório dedicado de validação. Run `36753446081`: migrations, invariantes SQL, FQ1/F5/F22/FQ4 E2E, suíte completa, prompts check e tools sync --check verdes. Suíte completa: 806 passed, 52 skipped, 19 warnings.
 
 As quatro capacidades FQ4 continuam em shadow. O projeto está autorizado tecnicamente a entrar na etapa de promoção controlada, mas nenhuma exposição/cutover foi aplicada ainda.
+
+## Atualização 2026-09-30 — FQ4 promovido em validação
+
+Após o gate PostgreSQL 18 verde, a branch `bootstrap/plexo-project` entrou em promoção controlada:
+
+- `quant.analise_condicional` 1.0.1 exposta;
+- `quant.sensibilidade` 1.0.1 exposta;
+- `quant.regimes` 1.0.1 exposta;
+- `quant.event_study` 2.0.0 agora usa a implementação FQ4.4 sobre MarketSeriesLoader/Quant Core;
+- `quant.event_study_v2` não é mais registrado;
+- implementação legacy do event study continua preservada para golden/replay;
+- mapper de blocos canônico aponta para o contrato v2.
+
+Estado atual: a promoção está aplicada apenas no repositório dedicado de validação e ainda precisa do CI pós-promoção totalmente verde para ser considerada encerrada.
+
