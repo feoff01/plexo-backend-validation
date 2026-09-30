@@ -424,3 +424,24 @@ Estado verde de código: commit `14c522cba2ebabaa95e32e6937879be1557b3256`, run 
 - prompts check / tools sync --check: verdes.
 
 Próximo foco recomendado: FQ5.5 tendências fundamentais + FQ5.6 peers/setor, depois fatores como petróleo/commodities; fair value/reverse DCF somente com contrato explícito de forecasts/WACC/ERP/growth.
+
+
+---
+
+# Atualização canônica — auditoria de capacidades — 2026-09-30
+
+**Esta seção substitui a recomendação anterior de iniciar diretamente FQ5.5/FQ5.6.**
+
+Antes de qualquer nova feature, ler `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` e o checkpoint `.ai/checkpoints/2026-09-30_ARCHITECTURE_CAPABILITY_AUDIT.md`.
+
+Achado principal: `quant.dependencia_macro` reutiliza a mesma matemática de `quant.dependencia` e duplicou parte relevante da orquestração; o gap real era carregar FX. Não criar variantes por fonte no futuro.
+
+Próxima etapa obrigatória: design de um factor resolver/loader compartilhado (asset/index/FX e fatores futuros) e plano de cutover versionado da dependência canônica, preservando replay/fingerprint. Não reabrir matemática FQ3/FQ4.
+
+Mapa importante de reuso antes de qualquer nova matemática:
+- rolling volatility, downside deviation, drawdown duration/recovery já existem;
+- rolling dependence e up/down-market dependence já existem;
+- `sector_classification`, `index_weights`, `yield_curve` já existem no schema;
+- `class_correlations`/simulação de carteira pertencem ao domínio de planejamento do cliente e não são estatística histórica do Analista.
+
+Estado remoto confirmado antes desta auditoria documental: HEAD `efd27727615cb9fdffa00ac250813798dbbd38e5`; run #50 `36785509026` totalmente verde; 74 E2E, 816 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes.

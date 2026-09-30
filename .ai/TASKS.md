@@ -189,3 +189,18 @@ Próximas tranches, ainda **sem Portfolio Analytics**:
 - [ ] ampliar fatores canônicos (ex.: petróleo/Brent);
 - [ ] FQ5.7 fair value/reverse DCF só com forecasts e premissas explícitas/auditáveis;
 - [ ] resolver prioridade de fontes e availability/vintage de FX/macro.
+
+
+## Gate antes da próxima feature — Architecture / Capability Audit — 2026-09-30
+
+- [x] inventariar todas as tools do Analista e separar públicas vs legacy;
+- [x] inventariar Quant Core e capacidades já implementadas;
+- [x] mapear loaders/adapters e fontes de dados existentes;
+- [x] mapear schemas latentes (`sector_classification`, `index_weights`, `yield_curve`);
+- [x] classificar duplicação real vs legacy intencional vs composição legítima;
+- [x] registrar regra `reuse-before-build`;
+- [ ] desenhar consolidação `ResolvedFactor`/factor loader para asset/index/FX e extensões futuras;
+- [ ] desenhar cutover versionado para remover a duplicação pública `quant.dependencia_macro` × `quant.dependencia` sem quebrar replay/fingerprint;
+- [ ] só depois liberar FQ5.5 tendências fundamentais / FQ5.6 peers-setor.
+
+**Bloqueio:** nenhuma nova matemática/tool de análise deve ser iniciada antes do design de consolidação de fatores/dependência.

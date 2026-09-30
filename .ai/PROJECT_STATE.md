@@ -358,3 +358,22 @@ Gates:
 - validador 0/0; invariantes SQL normal + `plexo_service`, `prompts check` e `tools sync --check`: verdes.
 
 FQ4 não foi reaberto.
+
+
+## Atualização canônica — auditoria arquitetural/capability inventory — 2026-09-30
+
+Antes de abrir nova feature, foi executada uma revisão transversal para impedir duplicação de capacidades já existentes. Documento canônico: `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md`.
+
+Achados principais:
+- `quant.dependencia_macro` sobrepõe a orquestração de `quant.dependencia`; a lacuna real que justificou FQ5 foi o adapter de FX, não nova matemática de dependência;
+- legacy `quant.correlacao`/`quant.retorno_volatilidade` e Event Study legacy são preservação intencional de replay, não base para features novas;
+- `quant.cenario_sensibilidade` é composição válida: reutiliza `quant.sensibilidade` e só aplica choque/preço de cenário deterministicamente;
+- Quant Core já contém capacidades ainda não plenamente expostas: rolling vol, downside deviation, drawdown duration/recovery, rolling dependence e up/down-market dependence;
+- `market.sector_classification`, `market.index_weights` e `market.yield_curve` já existem no schema, mas ainda não têm consumer Python do Analista;
+- matemática de carteira/`market.class_correlations` pertence ao domínio de planejamento e não deve ser confundida com estatística empírica do Analista.
+
+Nova regra canônica: **reuse-before-build**. Antes de nova tool deve ser provado qual é o gap real (fonte, loader, contrato, composição ou matemática). Não criar tools por fonte (`*_macro`, `*_fx`, `*_petroleo`).
+
+Próxima etapa antes de FQ5.5: design de consolidação de factor resolver + dependência, preservando semver/fingerprint/replay e sem reabrir a matemática FQ3/FQ4.
+
+Estado remoto de referência confirmado nesta auditoria: branch `bootstrap/plexo-project`, HEAD `efd27727615cb9fdffa00ac250813798dbbd38e5`; run #50 `36785509026` verde: 74 E2E, 816 passed, 52 skipped, 19 warnings, 0 failed.

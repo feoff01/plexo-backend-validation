@@ -479,3 +479,23 @@ incompatível o suficiente para justificar major bump.
 **Decisão:** fair value só nasce de engine determinístico com forecasts/premissas explícitas e provenance. O planner não pode inventar WACC, ERP, crescimento terminal, múltiplo-alvo ou choque macro.
 
 **Decisão:** `market.fx_rates` sustenta observation-cutoff, mas não deve ser apresentado como vintage PIT perfeito enquanto faltar availability/ingestion provenance suficiente.
+
+
+## 2026-09-30 — Reuse-before-build é gate arquitetural obrigatório
+
+**Decisão:** antes de criar qualquer nova tabela, engine, cálculo ou tool do Analista, verificar nesta ordem: matemática existente no Quant Core; schema/fonte existente; loader/adapter existente; tool com a mesma intenção; necessidade real de composição determinística.
+
+**Motivo:** a auditoria pós-FQ5 mostrou que `quant.dependencia_macro` resolveu uma lacuna real de FX, mas duplicou interface/orquestração de `quant.dependencia`. O projeto deve distinguir fonte nova de matemática nova.
+
+**Consequências:**
+- não criar tool por fonte/fator (`dependencia_fx`, `sensibilidade_macro`, `correlacao_petroleo` etc.);
+- novos fatores entram por adapters/resolver compartilhado e reutilizam os engines existentes;
+- legacy oculto continua preservado para replay e não deve ser escolhido como base de feature nova;
+- uma tool composta só é justificada quando há uma intenção/output determinístico próprio ou quando o DSL não consegue transportar numericamente outputs entre nós; ainda assim deve reutilizar o core existente;
+- refactors de módulos presentes em `source_dependencies` exigem planejamento de semver/fingerprint/replay e não podem ocorrer como cleanup silencioso.
+
+## 2026-09-30 — Planning correlations não são market dependence
+
+**Decisão:** `market.class_correlations` e a matemática de `app/engine/simulacao.py` permanecem no domínio de planejamento/portfolio do cliente. Não serão usadas como substituto de correlação empírica do Analista.
+
+**Motivo:** são premissas aprovadas para projeção de carteira, enquanto `app/market/analytics/dependence.py` mede associação observada em séries históricas. Misturar as duas fontes quebraria provenance e semântica.

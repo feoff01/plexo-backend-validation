@@ -251,3 +251,20 @@
 - run #48 bloqueou corretamente catálogo F5 desatualizado após promoção;
 - run #49 pós-correção totalmente verde: **74 E2E / 816 passed / 52 skipped / 19 warnings / prompts/tools sync verdes**;
 - FQ4 permaneceu intacto; nenhuma migration histórica foi editada.
+
+
+## 2026-09-30 — Auditoria arquitetural / capability inventory pós-FQ5
+
+### Documentação
+- novo `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` com inventário de tools, Quant Core, loaders, schema e gaps reais;
+- novo checkpoint `.ai/checkpoints/2026-09-30_ARCHITECTURE_CAPABILITY_AUDIT.md`;
+- regra `reuse-before-build` formalizada em `DECISIONS.md` e `TASKS.md`.
+
+### Achados
+- `quant.dependencia_macro` classificada como sobreposição real de interface/orquestração com `quant.dependencia`; adapter FX é a adição de dados legítima;
+- legacy de correlação/risco/Event Study permanece intencional para replay;
+- `quant.cenario_sensibilidade` permanece composição legítima por reutilizar a sensibilidade existente e evitar cálculo numérico pelo LLM;
+- capacidades Quant latentes e schemas existentes sem consumer foram catalogados para evitar reinvenção.
+
+### Código
+- nenhuma alteração de código, migration, semver, exposição ou source fingerprint nesta rodada.
