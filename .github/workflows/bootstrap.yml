@@ -55,13 +55,14 @@ jobs:
                   raise SystemExit(f"entradas proibidas no ZIP: {forbidden[:10]}")
 
               for member in z.infolist():
+                  if member.filename.startswith(".github/workflows/"):
+                      continue
                   dest = (target / member.filename).resolve()
                   if target not in dest.parents and dest != target:
                       raise SystemExit(f"path traversal detectado: {member.filename}")
                   z.extract(member, target)
           PY
 
-          test -f "$TMP_DIR/.github/workflows/verify.yml"
           test -f "$TMP_DIR/pyproject.toml"
           test -d "$TMP_DIR/app"
           test -d "$TMP_DIR/tests"
@@ -70,7 +71,7 @@ jobs:
           cp -a "$TMP_DIR"/* ./
 
           rm -f "$ARCHIVE"
-          rm -f .github/workflows/bootstrap.yml
+          rm -f .bootstrap-trigger
 
       - name: publicar árvore extraída na branch
         shell: bash
