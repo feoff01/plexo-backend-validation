@@ -1,4 +1,4 @@
-"""Tool FQ4.1 `quant.analise_condicional` em shadow mode.
+"""Tool canônica FQ4.1 `quant.analise_condicional`.
 
 Compara o retorno histórico de um ativo nos mesmos intervalos em que outra série subiu ou caiu.
 É análise descritiva: não implica causalidade, significância estatística nem previsão.
@@ -323,7 +323,7 @@ def _nota_metodo(r: AnaliseCondicionalResolvida) -> str:
 @tool(
     code="quant.analise_condicional",
     family="quant",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Análise condicional",
     description=("Descreve como um ativo se comportou nos mesmos intervalos em que outro ativo, índice ou taxa "
                  "subiu ou caiu. Taxas são condicionadas pela mudança do nível; ativos/índices em pontos pelo "
@@ -334,7 +334,7 @@ def _nota_metodo(r: AnaliseCondicionalResolvida) -> str:
         quant_returns.__file__, quant_statistics.__file__, quant_conditional.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_analise_condicional(r: AnaliseCondicionalResolvida) -> AnaliseCondicionalOutput:
     response_points = r.serie_resposta.points if r.serie_resposta is not None else []
