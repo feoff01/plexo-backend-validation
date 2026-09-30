@@ -215,3 +215,13 @@
 - corrigidas fixtures FQ4 para API async real e asserts para os schemas públicos reais de condicional/sensibilidade/regimes;
 - testes F5/F6 atualizados para exigir propagação auditável de warnings metodológicos;
 - nenhuma tool FQ4 foi promovida nesta etapa.
+
+## 2026-09-30 — Promoção controlada do FQ4
+
+- após gate PostgreSQL 18 verde, promovidas `quant.analise_condicional` 1.0.1, `quant.sensibilidade` 1.0.1 e `quant.regimes` 1.0.1;
+- `quant.event_study` passou para a implementação Quant Core/MarketSeriesLoader em 2.0.0;
+- `quant.event_study_v2` deixou de ser um código registrado;
+- legacy event study continua disponível apenas para golden/replay;
+- testes de catálogo, blocos e E2E PostgreSQL foram atualizados para o estado promovido;
+- promoção aplicada somente em `feoff01/plexo-backend-validation`, branch `bootstrap/plexo-project`;
+- CI pós-promoção é gate obrigatório antes de considerar o cutover encerrado.
