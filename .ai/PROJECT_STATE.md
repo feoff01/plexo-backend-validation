@@ -284,3 +284,10 @@ Executar os gates DB/sync do FQ3.3. Depois abrir FQ4 (`quant.analise_condicional
 - regressão sem DB após o gate: 429 passed / 16 skipped / 357 DB-deselected / 0 failed;
 - execução PostgreSQL real permanece pendente porque este runtime não possui servidor/container e DNS externo está bloqueado;
 - promoção/cutover está documentado em `.ai/FQ4_INTEGRATION_PROMOTION_PLAN.md`.
+
+
+## Atualização 2026-09-30 — FQ4 PostgreSQL gate verde
+
+O gate de integração que estava pendente foi executado em PostgreSQL 18 real e descartável no repositório dedicado de validação. Run `36753446081`: migrations, invariantes SQL, FQ1/F5/F22/FQ4 E2E, suíte completa, prompts check e tools sync --check verdes. Suíte completa: 806 passed, 52 skipped, 19 warnings.
+
+As quatro capacidades FQ4 continuam em shadow. O projeto está autorizado tecnicamente a entrar na etapa de promoção controlada, mas nenhuma exposição/cutover foi aplicada ainda.
