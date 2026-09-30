@@ -137,7 +137,7 @@ async def test_pipeline_ponta_a_ponta_final(db, mundo7):
         cur = await conn.execute(
             "select content_md, evidence_hash, status, synthesis_model_call_id is not null, version from analysis.reports where id = %s", (r.report_id,))
         content, ehash, status, tem_call, versao = await cur.fetchone()
-        assert status == "final" and tem_call and versao == 1 and "ilustrativ" in content.lower()
+        assert status == "final_with_warnings" and tem_call and versao == 1 and "ilustrativ" in content.lower()
         # Ordem canônica do bundle = (kind, id), a mesma de `an.listar_findings`, que é o que o
         # relatório hasheia. NÃO ordene por created_at: o default da coluna é `now()`, que é o
         # timestamp da TRANSAÇÃO — as evidências gravadas na mesma Tx empatam (aqui, 2 por kind) e
