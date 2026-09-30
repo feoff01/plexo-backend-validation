@@ -139,8 +139,9 @@ async def test_fq4_shadow_tools_executam_end_to_end_no_postgres(db, fq4_mundo):
     )
     assert cond.output.ticker == "F4PETR"
     assert cond.output.evidencia.index_codes == ["f4_selic"]
-    assert cond.output.evidencia.n_observacoes >= 10
-    assert cond.output.condicional.n > 0
+    assert cond.output.n_total >= 10
+    assert cond.output.evidencia.n_observacoes == cond.output.n_condicional
+    assert cond.output.n_condicional == cond.output.condicional.n > 0
 
     sens = await _executar(
         db,
