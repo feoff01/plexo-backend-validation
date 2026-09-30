@@ -421,3 +421,14 @@ Usar somente o novo repositório `plexo-backend-validation` para testar livremen
 
 ### Próximo passo
 Limpar artefatos temporários do bootstrap, confirmar um CI final de PR limpo e então abrir a fase de promoção controlada.
+
+## 2026-09-30 — continuar validação via GitHub
+
+Pedido do usuário: usar livremente apenas o novo repositório `plexo-backend-validation` para testar e prosseguir corretamente.
+
+Execução:
+- conexão GitHub confirmada;
+- projeto completo localizado em `bootstrap/plexo-project`;
+- run 36754171560 confirmado verde de ponta a ponta;
+- promoção FQ4 aplicada somente nesse repositório/branch;
+- main e demais repositórios não foram alterados.
