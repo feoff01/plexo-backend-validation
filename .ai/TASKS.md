@@ -215,3 +215,21 @@ Próximas tranches, ainda **sem Portfolio Analytics**:
 - [ ] só então retomar FQ5.5 tendências fundamentais e FQ5.6 peers/setor.
 
 Referência operacional: `.ai/WORKING_PROTOCOL.md`.
+
+
+## Consolidação fatores/dependência — design
+
+- [x] desenhar `FactorRef`/`ResolvedFactor`;
+- [x] separar resolução de dados de transformação estatística;
+- [x] definir cobertura inicial ativo/índice/FX;
+- [x] desenhar contrato recomendado `quant.dependencia` 2.0.0;
+- [x] desenhar estratégia de replay para dependência 1.0.1 e macro 1.0.0;
+- [x] definir testes de equivalência e gates de promoção;
+- [ ] **revisar/aprovar design antes de código**;
+- [ ] implementar factor resolver em shadow;
+- [ ] implementar dependência 2.0.0 em shadow;
+- [ ] executar equivalência/replay;
+- [ ] promover cutover atômico;
+- [ ] só depois desbloquear FQ5.5/FQ5.6.
+
+Documento: `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`.

@@ -384,3 +384,18 @@ Estado remoto de referência confirmado nesta auditoria: branch `bootstrap/plexo
 `.ai/WORKING_PROTOCOL.md` passa a ser referência operacional canônica para impedir dependência de memória de chat. Toda etapa relevante deve atualizar `.ai/` antes de ser considerada encerrada.
 
 Próxima sequência recomendada, ainda sem implementação: design de consolidação de fatores/dependência -> cutover versionado -> retomada de Fundamentals + Valuation.
+
+
+## Design de consolidação de fatores/dependência — 2026-09-30
+
+Design concluído em `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`; implementação ainda não iniciada.
+
+Proposta principal para revisão:
+- nova camada compartilhada `FactorRef`/`ResolvedFactor` no domínio de resolução do Analista;
+- ativo/índice/FX usam a mesma abstração de resolução, mas cada análise continua escolhendo sua transformação matemática;
+- `quant.dependencia` recomendada para 2.0.0 com `serie_b={tipo,codigo}`;
+- `quant.dependencia_macro` passa a compatibilidade oculta somente após cutover verde;
+- sem big-bang em sensibilidade/condicional/regimes;
+- nenhum FQ3/FQ4 engine será alterado.
+
+Estado de referência anterior ao design: commit `fe268e2213a5c8524f7bb4baa852f2a6ecd5739e`; run #52 `36789531777` success.

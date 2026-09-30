@@ -276,3 +276,13 @@
 - formalizado que decisões, estado, tarefas, changelog e checkpoints devem ser persistidos em `.ai/` e não depender de memória de chat;
 - registrada sequência recomendada pós-auditoria como proposta: consolidação de fatores/dependência -> cutover versionado -> retomada de Fundamentals + Valuation;
 - nenhuma alteração de código, migration, tool, semver, exposição ou fingerprint.
+
+
+## 2026-09-30 — Design de consolidação de fatores/dependência
+
+- criado `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`;
+- criado checkpoint `.ai/checkpoints/2026-09-30_FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`;
+- proposta `FactorRef`/`ResolvedFactor` para resolver ativo/índice/FX sem tool por fonte;
+- recomendado cutover `quant.dependencia` 2.0.0 e macro como compatibilidade oculta;
+- definido plano de semver/fingerprint/replay, equivalência numérica e gates;
+- nenhuma alteração de código, SQL, migration, prompt, tool ou matemática nesta etapa.

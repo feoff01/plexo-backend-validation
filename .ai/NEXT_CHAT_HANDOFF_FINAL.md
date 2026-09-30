@@ -454,3 +454,22 @@ Além da ordem de leitura já definida, ler `.ai/WORKING_PROTOCOL.md` antes de q
 Regra permanente: não depender de memória de chat. Decisões, estado, tarefas, changelog e checkpoints devem ser atualizados em `.ai/` a cada etapa relevante.
 
 Próxima sequência recomendada (proposta, não implementada): consolidar factor resolver/dependência primeiro; depois retomar FQ5.5/FQ5.6.
+
+
+## Design pronto — consolidação de fatores/dependência
+
+Antes de implementar qualquer nova análise, ler `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`.
+
+O design está concluído, mas **não autoriza implementação até revisão/aprovação**.
+
+Resumo:
+- resolver compartilhado `FactorRef`/`ResolvedFactor` para ativo/índice/FX;
+- transformação estatística continua específica de cada análise;
+- proposta: `quant.dependencia` 2.0.0 com `serie_b={tipo,codigo}`;
+- macro atual vira compatibilidade/replay oculta após cutover;
+- sem alteração de FQ3/FQ4;
+- sem migration;
+- sem migração conjunta de sensibilidade/condicional/regimes;
+- commodity/yield curve fora desta etapa.
+
+Estado anterior confirmado: commit `fe268e2213a5c8524f7bb4baa852f2a6ecd5739e`, run #52 `36789531777` verde.
