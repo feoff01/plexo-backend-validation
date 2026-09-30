@@ -152,11 +152,11 @@ def test_output_e_compacto_sem_pares_ou_series_longas():
     assert {"pairs", "pontos", "points", "residuals"}.isdisjoint(set(keys(payload)))
 
 
-def test_tool_nasce_shadow_e_fingerprint_cobre_regressao_estimativas_e_evidencia():
+def test_tool_promovida_e_fingerprint_cobre_regressao_estimativas_e_evidencia():
     carregar_tools()
     spec = spec_de("quant.sensibilidade")
-    assert spec.semver == "1.0.0"
-    assert spec.exposed_to_llm is False
+    assert spec.semver == "1.0.1"
+    assert spec.exposed_to_llm is True
     names = {Path(path).name for path in spec.source_files}
     assert {
         "sensibilidade.py", "_comum.py", "evidencia_estatistica.py", "series.py", "models.py",
@@ -226,9 +226,9 @@ def test_bloco_de_sensibilidade_expoe_beta_ci_e_diagnosticos_sem_causalidade():
     assert "não implica causalidade" in texto
 
 
-def test_shadow_nao_entra_no_catalogo_do_analista():
+def test_promovida_entra_no_catalogo_do_analista():
     carregar_tools()
     visiveis = {s.code for s in filtrar_tools(specs_registradas(), familias=("quant", "dados"), plano="advanced")}
-    assert "quant.sensibilidade" not in visiveis
+    assert "quant.sensibilidade" in visiveis
     assert "quant.risco_retorno" in visiveis
     assert "quant.dependencia" in visiveis
