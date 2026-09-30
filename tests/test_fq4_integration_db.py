@@ -170,9 +170,11 @@ async def test_fq4_shadow_tools_executam_end_to_end_no_postgres(db, fq4_mundo):
         },
     )
     assert regimes.output.ticker == "F4PETR"
-    assert regimes.output.regime_a.n > 0
-    assert regimes.output.regime_b.n > 0
-    assert regimes.output.n_total >= regimes.output.regime_a.n + regimes.output.regime_b.n
+    grupos = {grupo.rotulo: grupo for grupo in regimes.output.grupos}
+    assert set(grupos) == {"alta", "queda"}
+    assert grupos["alta"].n > 0
+    assert grupos["queda"].n > 0
+    assert regimes.output.n_total >= grupos["alta"].n + grupos["queda"].n
 
     evento = await _executar(
         db,
