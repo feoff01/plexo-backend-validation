@@ -1,0 +1,398 @@
+# Plexo Backend — Handoff Final para Novo Chat
+
+Atualizado em: 2026-09-30
+
+## Fonte de verdade
+
+Use este arquivo como ponto inicial. Ele supersede qualquer trecho histórico antigo em outros documentos que ainda diga que o FQ4 está pendente.
+
+Repositório autorizado: `feoff01/plexo-backend-validation`  
+Branch atual: `bootstrap/plexo-project`
+
+Não tocar em outros repositórios sem autorização explícita do usuário.
+
+## Estado executivo
+
+O núcleo Quant do Analista de Mercado foi construído de FQ0.5 até FQ4 e o **FQ4 está encerrado com CI PostgreSQL 18 totalmente verde**.
+
+Run mais recente confirmado:
+- GitHub Actions run #44
+- run id: `36775645782`
+- commit: `ac935bb14b44be42d0258fe613f1297a1ca5ed98`
+- conclusão: `success`
+- suíte completa: **806 passed, 52 skipped, 19 warnings, 0 failed**
+- FQ1 + F5 + F22 + FQ4 E2E: verde
+- `prompts check`: verde
+- `tools sync --check`: verde
+- migrations PostgreSQL 18 do zero: verdes
+- invariantes SQL admin + `plexo_service`: verdes
+
+O golden de blocos de `quant.event_study` que havia falhado num run intermediário já foi corrigido conscientemente para o contrato v2 e passou nos runs posteriores.
+
+## Arquitetura que deve ser preservada
+
+Princípio:
+```
+usuário -> LLM -> tool call JSON -> registry/executor -> cálculo determinístico -> output estruturado -> LLM explica
+```
+
+O LLM:
+- entende;
+- escolhe a tool;
+- preenche parâmetros;
+- explica o resultado.
+
+O código:
+- carrega dados;
+- calcula;
+- valida;
+- versiona;
+- registra provenance;
+- produz evidência auditável.
+
+Não transferir cálculo financeiro importante para o LLM.
+
+## Infraestrutura central
+
+Arquivos:
+- `app/tools/registry.py`
+- `app/tools/executor.py`
+- `app/tools/sync.py`
+- `app/tools/hashing.py`
+- `app/agents/turn.py`
+- `app/analysis/compiler.py`
+
+Conceitos:
+- `exposed_to_llm` separa replay/executável de tool ofertada ao modelo;
+- fingerprint composto inclui dependencies relevantes;
+- mesma semver + source alterado é conflito;
+- cache é content-addressed;
+- execução persiste `tools.tool_executions`;
+- replay histórico deve ser preservado.
+
+## Data Foundation
+
+Arquivo principal:
+- `app/market/series.py`
+
+Conceitos:
+- `MarketSeriesLoader`
+- `ResolvedMarketSeries`
+- `SeriesQuality`
+- `SeriesProvenance`
+- `PriceBasis.RAW_CLOSE`
+- `PriceBasis.ADJUSTED_CLOSE`
+- `TemporalSemantics.OBSERVATION_DATE_CUTOFF`
+- `TemporalSemantics.RETROSPECTIVE_AS_KNOWN_NOW`
+
+Regra crítica:
+- adjusted close é retrospectivo com corporate actions conhecidas hoje;
+- não prometer strict historical point-in-time;
+- strict vintage exige availability/announcement metadata que ainda não existe de forma suficiente.
+
+## Quant Core já construído
+
+Diretório:
+- `app/market/analytics/`
+
+Engines principais:
+- `models.py`
+- `returns.py`
+- `statistics.py`
+- `risk.py`
+- `dependence.py`
+- `conditional.py`
+- `estimates.py`
+- `regression.py`
+- `sensitivity.py`
+- `regimes.py`
+- `event_study.py`
+
+Já existem:
+- retornos simples/log;
+- composição/anualização;
+- estatística descritiva;
+- volatilidade;
+- rolling volatility;
+- downside deviation;
+- drawdown;
+- Pearson/Spearman;
+- lag/alinhamento;
+- análise condicional;
+- OLS;
+- HAC/Newey-West;
+- CI estruturado;
+- sensibilidade;
+- regimes;
+- event study.
+
+Não criar novas funções matemáticas apenas para “completar biblioteca”. Só adicionar quando uma capacidade real exigir.
+
+## Catálogo canônico atual
+
+### Públicas
+- `quant.risco_retorno` — 1.0.1
+- `quant.dependencia` — 1.0.1
+- `quant.analise_condicional` — 1.0.1
+- `quant.sensibilidade` — 1.0.1
+- `quant.regimes` — 1.0.1
+- `quant.event_study` — 2.0.0
+
+### Legacy/replay
+- `quant.retorno_volatilidade` — oculto
+- `quant.correlacao` — oculto
+
+### Event Study
+Arquivo da implementação canônica:
+- `app/tools/analista/event_study_v2.py`
+
+Apesar do nome do arquivo, ele registra:
+- code `quant.event_study`
+- semver `2.0.0`
+- público
+
+Não registrar novamente `quant.event_study_v2`.
+
+Legacy:
+- `app/tools/analista/event_study.py` permanece sem decorator para compatibilidade/golden/replay;
+- `app/tools/analista/event_study_legacy_1_0_1.py` é replay congelado.
+
+## Event Study — regra temporal crítica
+
+Não calcular retornos de ativo e benchmark em calendários diferentes e depois apenas casar data final.
+
+V2:
+1. intersecta datas dos níveis de preço;
+2. forma caminhos sincronizados;
+3. calcula retornos com endpoints idênticos.
+
+A data efetiva é o primeiro retorno sincronizado >= data civil do evento.
+
+Janelas:
+- contam observações sincronizadas;
+- estimation window não sobrepõe event window;
+- `truncada_pre` e `truncada_pos` são separadas;
+- CAR parcial pode existir;
+- janela truncada torna a evidência insuficiente.
+
+Inferência:
+- default `none`;
+- opcional `classic_iid_normal`;
+- sem p-value;
+- sem booleano de significância;
+- sem alegação causal/preditiva.
+
+## Sensibilidade
+
+Engine:
+- OLS univariada com intercepto;
+- HAC/Newey-West Bartlett;
+- correção finita;
+- CI 95% normal assintótico;
+- sem SciPy/statsmodels;
+- sem imputação/winsorização/trimming.
+
+Taxa:
+- mudança de nível em pontos percentuais.
+
+Ativo/índice em pontos:
+- retorno.
+
+A resposta é alinhada ao mesmo intervalo do driver.
+
+## Regimes
+
+Critérios:
+- `level`
+- `direction`
+
+`level` usa nível do driver no começo do intervalo.
+
+Default sem limiar:
+- mediana retrospectiva da amostra válida.
+
+Não existe no v1:
+- HMM;
+- clustering;
+- threshold otimizado;
+- drawdown em regime descontínuo.
+
+## Planner
+
+Arquivo:
+- `prompts/analista.planner.j2`
+
+Roteamento:
+- comportamento de X quando Y sobe/cai -> `quant.analise_condicional`
+- quanto X varia por 1 p.p./1% de Y -> `quant.sensibilidade`
+- comparação alto/baixo/subindo/caindo -> `quant.regimes`
+- evento datado -> `quant.event_study`
+
+Não usar `quant.event_study_v2`.
+
+Não substituir pergunta especializada por simples correlação quando a tool especializada responde melhor.
+
+## Blocos
+
+Arquivo:
+- `app/agents/blocos.py`
+
+`quant.event_study` aponta para o mapper v2.
+
+Golden visual do Event Study foi atualizado explicitamente para o contrato 2.0.0 e já passou no CI.
+
+## CI
+
+Workflow:
+- `.github/workflows/verify.yml`
+
+Fluxo:
+1. PostgreSQL 18 descartável;
+2. Python 3.12;
+3. dependências;
+4. `.env` local descartável;
+5. Alembic do zero;
+6. preparação de ambiente;
+7. validador;
+8. SQL invariants;
+9. SQL invariants como `plexo_service`;
+10. FQ1/F5/F22/FQ4 E2E;
+11. pytest completo;
+12. prompts drift check;
+13. tools drift check.
+
+Nunca usar Aiven/produção para esse gate.
+
+## Memória persistente
+
+Sempre atualizar, conforme necessário:
+- `.ai/PROJECT_STATE.md`
+- `.ai/DECISIONS.md`
+- `.ai/TASKS.md`
+- `.ai/CHANGELOG.md`
+- `.ai/PROMPT_LOG.md`
+- `.ai/checkpoints/`
+
+Ler também:
+- `.ai/FQ4_INTEGRATION_PROMOTION_PLAN.md`
+- `.ai/checkpoints/2026-09-30_FQ4_POSTGRES_CI_GREEN.md`
+- `.ai/checkpoints/2026-09-30_FQ4_PROMOTION.md`
+
+## Pendências reais agora
+
+FQ4 não é mais pendência.
+
+Antes da próxima grande família, revisar os gates transversais:
+
+1. storage histórico:
+   - Parquet;
+   - PostgreSQL;
+   - híbrido;
+   - evitar carregar milhões de preços indiscriminadamente no Postgres remoto.
+
+2. múltiplas fontes:
+   - prioridade explícita;
+   - conflitos;
+   - provenance.
+
+3. temporalidade real:
+   - availability/vintage para corporate actions;
+   - macro revisável;
+   - revisões/backfills.
+
+4. payload/artifacts:
+   - outputs longos devem ficar fora do payload enviado ao LLM;
+   - LLM deve receber resumo estruturado compacto.
+
+5. integração final:
+   - decidir destino do código validado;
+   - não mexer em outros repositórios sem autorização.
+
+## Próxima camada funcional
+
+Não abrir mais matemática base por enquanto.
+
+Duas direções naturais:
+- **Fundamentals + Valuation**
+- **Portfolio Analytics**
+
+A escolha deve ser feita pelo objetivo do produto.
+
+Antes de codar:
+- escrever design em `.ai/`;
+- definir perguntas que a camada responderá;
+- definir fontes;
+- definir contratos;
+- definir engines;
+- definir tools;
+- definir edge cases;
+- definir semver/fingerprint;
+- definir testes/E2E.
+
+## Regras de segurança e continuidade
+
+- não ler/publicar `.env` real;
+- não commitar segredos;
+- não resetar/drop banco remoto;
+- não editar migrations históricas;
+- não mexer em repositórios antigos;
+- não reexpor legacy;
+- não recriar `quant.event_study_v2`;
+- não chamar adjusted retrospective de PIT estrito;
+- não declarar CI verde sem run real;
+- não desfazer major bump só para preservar golden antigo.
+
+## Observação GitHub
+
+O repositório de validação apareceu como público nesta sessão. O snapshot não deve conter `.env` nem segredos. Se o usuário quiser restringir acesso, alterar o repo para Private no GitHub.
+
+## Prompt para o próximo chat
+
+Anexe o ZIP completo e envie:
+
+> Quero continuar o desenvolvimento do backend Plexo exatamente do ponto em que o chat anterior terminou.
+>
+> Antes de alterar qualquer código, leia nesta ordem:
+> 1. `.ai/NEXT_CHAT_HANDOFF_FINAL.md`
+> 2. `.ai/PROJECT_STATE.md`
+> 3. `.ai/DECISIONS.md`
+> 4. `.ai/TASKS.md`
+> 5. `.ai/CHANGELOG.md`
+> 6. os checkpoints citados no handoff.
+>
+> Trate `.ai/` como memória persistente do projeto e atualize esses arquivos a cada etapa relevante.
+>
+> Preserve a arquitetura do Plexo: o LLM interpreta, roteia e explica; código determinístico carrega dados e calcula. Preserve semver, source fingerprint, provenance, replay e gates.
+>
+> Não leia/publique `.env` ou segredos. Não altere migrations históricas. Não use banco remoto destrutivamente. Não mexa em nenhum repositório antigo. O único repo de validação autorizado é `feoff01/plexo-backend-validation`, branch `bootstrap/plexo-project`.
+>
+> Estado que você deve confirmar:
+> - FQ0.5–FQ4 já foram construídos;
+> - `quant.risco_retorno` 1.0.1 pública;
+> - `quant.dependencia` 1.0.1 pública;
+> - `quant.analise_condicional` 1.0.1 pública;
+> - `quant.sensibilidade` 1.0.1 pública;
+> - `quant.regimes` 1.0.1 pública;
+> - `quant.event_study` 2.0.0 pública e usa a implementação FQ4.4;
+> - `quant.event_study_v2` não está registrado;
+> - replay legacy está preservado;
+> - FQ4 está encerrado;
+> - GitHub Actions run #44 / id `36775645782` ficou totalmente verde;
+> - suíte completa: 806 passed, 52 skipped, 19 warnings, 0 failed;
+> - FQ1/F5/F22/FQ4 E2E, prompts check e tools sync --check estão verdes.
+>
+> Sua primeira tarefa é fazer uma revisão de integridade curta do snapshot e me apresentar as pendências transversais reais e a recomendação de próxima camada funcional. Não reabra o FQ4 nem crie matemática nova sem necessidade. Se eu aprovar a próxima camada, crie primeiro o design em `.ai/`, depois implemente com testes e registre tudo.
+>
+> Não faça perguntas que os arquivos já respondem. Faça best effort e mantenha-me informado em trabalhos longos.
+
+## Definição de sucesso do handoff
+
+O novo chat deve conseguir apenas com este ZIP + prompt:
+- entender a arquitetura;
+- entender todo o Quant Core;
+- saber o catálogo atual;
+- saber o estado real do CI;
+- saber o que já foi encerrado;
+- saber o que ainda falta;
+- não repetir trabalho;
+- continuar com disciplina de versionamento/auditoria.
