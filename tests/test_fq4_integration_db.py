@@ -154,9 +154,10 @@ async def test_fq4_shadow_tools_executam_end_to_end_no_postgres(db, fq4_mundo):
     )
     assert sens.output.ticker == "F4PETR"
     assert sens.output.driver == "f4_selic"
-    assert sens.output.beta is not None
-    assert sens.output.n_pares >= 3
+    assert sens.output.n >= 3
+    assert sens.output.sensibilidade.estimate is not None
     assert "sensibilidade" in sens.output.evidencia.estimativas
+    assert sens.output.evidencia.estimativas["sensibilidade"] == sens.output.sensibilidade
 
     regimes = await _executar(
         db,
