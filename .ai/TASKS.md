@@ -350,3 +350,16 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] CI PostgreSQL 18 completo;
 - [ ] somente após fixture oficial implementar parser/ingestão;
 - [ ] coverage gate real antes de FQ5.6B.
+
+
+### FQ5.6A2a — fechamento do loader shadow
+- [x] CI PostgreSQL 18 completo — run #61 / `36799893075`;
+- [x] gate explícito com loader setorial: 98 passed;
+- [x] suíte completa: 849 passed, 52 skipped, 19 warnings, 0 failed;
+- [x] prompts check e tools sync --check verdes;
+- [x] loader PIT setorial shadow considerado GREEN;
+- [ ] obter fixture real oficial B3/UP2DATA ou export oficial equivalente;
+- [ ] implementar parser fail-closed somente depois da fixture;
+- [ ] implementar ingestão append-only + relatório de cobertura;
+- [ ] medir coverage real;
+- [ ] somente depois desbloquear FQ5.6B peers.

@@ -553,3 +553,15 @@ Decisão de fonte:
 - parser/ingestão só depois de fixture real oficial.
 
 Shadow de código: `08bda53fa47eeef576a5fa525260f69d7818d906`. Existe apenas loader setorial PIT sobre o schema atual; nenhuma tool pública foi criada.
+
+
+## FQ5.6A2a loader setorial — GREEN
+
+HEAD validado: `e039d771c1b086e0f425d73d6c73822e688d3faa`. Run #61 / `36799893075`: success.
+
+- gate explícito: 98 passed;
+- suíte: 849 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18, invariantes, validador, prompts e tools sync verdes;
+- nenhuma tool nova ou drift de catálogo.
+
+**Não iniciar FQ5.6B ainda.** O bloqueio real é dados: obter fixture oficial B3/UP2DATA (ou export oficial equivalente), implementar parser/ingestão e medir cobertura antes de qualquer tool de comparáveis.

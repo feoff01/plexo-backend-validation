@@ -497,3 +497,15 @@ Estado:
 Validação local pura: 6 passed; registry 34 -> 34 com zero drift.
 Commit shadow: `08bda53fa47eeef576a5fa525260f69d7818d906`.
 PostgreSQL real pendente no CI.
+
+
+## FQ5.6A2a — loader setorial shadow GREEN
+
+O loader PIT setorial foi validado em PostgreSQL 18 no HEAD `e039d771c1b086e0f425d73d6c73822e688d3faa`, run #61 / `36799893075`.
+
+- gate explícito: 98 passed;
+- full suite: 849 passed, 52 skipped, 19 warnings, 0 failed;
+- validador/invariantes/prompts/tools sync: verdes;
+- catálogo permanece com 34 tools inalteradas.
+
+FQ5.6B continua bloqueado: ainda não existe ingestão oficial populando `market.sector_classification` com cobertura medida. O próximo desbloqueio exige fixture real oficial B3/UP2DATA (ou export oficial equivalente) e então parser + ingestão + coverage gate.

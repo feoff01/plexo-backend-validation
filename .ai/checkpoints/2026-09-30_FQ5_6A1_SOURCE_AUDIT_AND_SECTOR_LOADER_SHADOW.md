@@ -1,7 +1,7 @@
 # Checkpoint — FQ5.6A1 fonte B3 + loader setorial shadow
 
 Data: 2026-09-30
-Estado: **shadow publicado; aguardando gate PostgreSQL 18**
+Estado: **GREEN no PostgreSQL 18; ingestão externa ainda bloqueada por contrato de fonte**
 
 ## Fonte
 - B3/UP2DATA Empresas Listadas / SummaryData é o contrato estruturado oficial preferido;
@@ -30,3 +30,22 @@ Commit de código: `08bda53fa47eeef576a5fa525260f69d7818d906`.
 
 ## Invariantes
 Nenhuma tool nova, migration/schema, semver/exposição/fingerprint, coletor de rede ou matemática nova.
+
+
+## Gate remoto GREEN
+
+HEAD: `e039d771c1b086e0f425d73d6c73822e688d3faa`  
+Run: #61 / `36799893075`  
+Conclusão: success
+
+- migrations do zero: verde;
+- validador: 0 erros / 0 avisos;
+- invariantes SQL admin e `plexo_service`: verdes;
+- gate explícito incluindo `test_fq56_sectors_db.py`: **98 passed**;
+- suíte completa: **849 passed, 52 skipped, 19 warnings, 0 failed**;
+- prompts check: verde;
+- tools sync --check: verde.
+
+## Próximo bloqueio
+
+Loader setorial está pronto em shadow, mas `market.sector_classification` ainda não tem ingestão oficial/cobertura comprovada. Não abrir FQ5.6B até obter fixture oficial B3/UP2DATA ou export oficial equivalente, implementar parser/ingestão e executar coverage gate.

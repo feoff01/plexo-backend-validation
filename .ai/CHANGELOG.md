@@ -367,3 +367,14 @@
 - registry local: 34 -> 34, zero drift;
 - commit shadow de código: `08bda53fa47eeef576a5fa525260f69d7818d906`;
 - nenhuma tool, migration, semver, exposição, Quant Core ou cálculo alterado.
+
+
+## 2026-09-30 — FQ5.6A2a loader setorial shadow — GREEN
+
+- HEAD `e039d771c1b086e0f425d73d6c73822e688d3faa` validado no run #61 / `36799893075`;
+- gate explícito com `test_fq56_sectors_db.py`: **98 passed**;
+- suíte completa: **849 passed, 52 skipped, 19 warnings, 0 failed**;
+- migrations PostgreSQL 18, validador e invariantes admin/`plexo_service`: verdes;
+- `prompts check` e `tools sync --check`: verdes;
+- nenhuma tool existente mudou; loader setorial permanece infraestrutura shadow;
+- parser/ingestão B3 continua bloqueado até fixture oficial/UP2DATA autorizado.
