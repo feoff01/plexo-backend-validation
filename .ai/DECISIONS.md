@@ -577,3 +577,14 @@ FQ5.6 será dividido em:
 **PIT:** `market.sector_classification.reference_date` identifica o snapshot; disponibilidade conhecida pelo Plexo é `market.ingestion_batches.finished_at` de lote `succeeded`. Isso não é equivalente a effective date econômico da reclassificação.
 
 **Peer universe:** target precisa ser ação `is_in_universe`; uma única classe observada não é evidência suficiente para emitir warning de cobertura parcial.
+
+
+## 2026-09-30 — FQ5.6A separa parser físico de ingestão semântica
+
+**Decisão:** o parser do UP2DATA continua bloqueado até existir fixture real dos bytes oficiais. A fundação de ingestão pode avançar de forma independente recebendo somente `SectorSourceRecord` já normalizado.
+
+**Motivo:** a página oficial da B3 expõe a amostra `Listed_Companies.zip`, e o Catálogo de Taxonomia confirma campos de identidade/classificação de emissor, mas o ZIP não foi materializado neste ambiente e o catálogo sozinho não prova o layout exato do `SummaryData` atual. Inventar um parser violaria o gate fail-closed.
+
+**Consequência:** `app/market/sector_ingest.py` não conhece CSV/JSON/XML, não faz rede e não cria nova source policy. A fonte v1 permanece exclusivamente `b3`; matching é somente CNPJ -> issuer.
+
+**Coverage:** será medido por nível (`segmento`/`subsetor`/`setor`) sem threshold automático. O limiar de promoção só pode ser definido depois de observar cobertura real.

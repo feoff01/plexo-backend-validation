@@ -378,3 +378,14 @@
 - `prompts check` e `tools sync --check`: verdes;
 - nenhuma tool existente mudou; loader setorial permanece infraestrutura shadow;
 - parser/ingestão B3 continua bloqueado até fixture oficial/UP2DATA autorizado.
+
+
+## 2026-09-30 — FQ5.6A2 ingestão setorial semântica shadow
+
+- localizada a amostra oficial B3 `Listed_Companies.zip`, sem conseguir materializar os bytes neste runtime;
+- parser físico mantido bloqueado, sem inferir formato;
+- adicionado `app/market/sector_ingest.py` com contrato semântico, idempotência, CNPJ->issuer, expansão multi-classe, append-only e conflitos fail-closed;
+- adicionado coverage PIT por nível explícito, sem threshold automático;
+- adicionados testes puros e PostgreSQL da ingestão;
+- workflow explícito passa a incluir `tests/test_fq56_sector_ingest_db.py`;
+- nenhuma migration, tool, semver, exposição, Quant Core ou schema alterado.

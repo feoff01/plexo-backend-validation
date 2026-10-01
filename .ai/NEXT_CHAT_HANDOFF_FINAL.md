@@ -565,3 +565,21 @@ HEAD validado: `e039d771c1b086e0f425d73d6c73822e688d3faa`. Run #61 / `3679989307
 - nenhuma tool nova ou drift de catálogo.
 
 **Não iniciar FQ5.6B ainda.** O bloqueio real é dados: obter fixture oficial B3/UP2DATA (ou export oficial equivalente), implementar parser/ingestão e medir cobertura antes de qualquer tool de comparáveis.
+
+
+---
+
+# Atualização canônica — FQ5.6A2 ingestão setorial shadow — 2026-09-30
+
+Ler `.ai/FQ5_6A2_SECTOR_INGEST_SHADOW.md` antes de continuar FQ5.6.
+
+Estado:
+- loader PIT setorial já estava GREEN;
+- amostra oficial B3 `Listed_Companies.zip` foi localizada, mas os bytes não foram materializados neste runtime;
+- parser físico SummaryData **continua bloqueado** e não deve ser inventado;
+- `app/market/sector_ingest.py` implementa apenas ingestão de registros semânticos validados;
+- matching CNPJ->issuer, expansão multi-classe, idempotência e conflito fail-closed;
+- coverage PIT pode ser medido por segmento/subsetor/setor, sem threshold automático;
+- nenhuma tool de peers foi aberta.
+
+Próximo gate imediato: PostgreSQL 18 para a ingestão shadow. Depois, obter bytes oficiais reais para parser + coverage real antes de FQ5.6B.

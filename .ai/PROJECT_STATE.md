@@ -509,3 +509,19 @@ O loader PIT setorial foi validado em PostgreSQL 18 no HEAD `e039d771c1b086e0f42
 - catálogo permanece com 34 tools inalteradas.
 
 FQ5.6B continua bloqueado: ainda não existe ingestão oficial populando `market.sector_classification` com cobertura medida. O próximo desbloqueio exige fixture real oficial B3/UP2DATA (ou export oficial equivalente) e então parser + ingestão + coverage gate.
+
+
+## FQ5.6A2 — ingestão setorial semântica shadow — 2026-09-30
+
+Amostra pública oficial do canal Empresas Listadas foi localizada (`Listed_Companies.zip`), mas os bytes não puderam ser materializados neste runtime. O parser físico continua bloqueado; não foi inferido layout a partir de terceiros nem do catálogo isoladamente.
+
+Implementação shadow criada em `app/market/sector_ingest.py`:
+- contrato semântico `SectorSourceRecord`;
+- lote idempotente via `market.ingestion_batches`;
+- matching estrito CNPJ -> issuer;
+- expansão para todas as classes `acao`;
+- append-only com conflito fail-closed;
+- relatório de ingestão;
+- coverage PIT por nível explícito, sem limiar inventado.
+
+Nenhuma migration, tool, engine Quant ou contrato público foi alterado. Próximo gate: CI PostgreSQL 18 do shadow. Parser e coverage real continuam dependentes de bytes oficiais da B3.

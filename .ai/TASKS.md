@@ -363,3 +363,20 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] implementar ingestão append-only + relatório de cobertura;
 - [ ] medir coverage real;
 - [ ] somente depois desbloquear FQ5.6B peers.
+
+
+### FQ5.6A2 — ingestão semântica / coverage shadow
+- [x] localizar link oficial da amostra `Listed_Companies.zip` na página B3;
+- [x] confirmar que Catálogo de Taxonomia não substitui fixture real do `SummaryData`;
+- [x] manter parser físico bloqueado sem bytes oficiais;
+- [x] criar `SectorSourceRecord` independente do formato do fornecedor;
+- [x] reutilizar `market.ingestion_batches` para idempotência/provenance;
+- [x] matching estrito CNPJ -> issuer;
+- [x] expandir companhia para todas as classes `acao`;
+- [x] conflito de mesma chave/conteúdo divergente falha fechado;
+- [x] criar measurement de coverage PIT por nível explícito;
+- [x] adicionar testes puros + E2E PostgreSQL ao gate explícito;
+- [ ] executar CI PostgreSQL 18 do shadow;
+- [ ] materializar fixture oficial real `Listed_Companies.zip`/SummaryData;
+- [ ] somente então implementar parser físico e medir cobertura real;
+- [ ] `quant.comparaveis_setor` continua bloqueada.
