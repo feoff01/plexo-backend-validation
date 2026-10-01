@@ -57,7 +57,7 @@ async def test_coverage_is_company_level_and_separates_catalog_gaps(db):
         assert report.matched_issuers_in_universe == 1
         assert report.issuers_outside_universe == 1
         # seed dev já possui ações no universo sem issuer; o denominador é somente issuer ligado.
-        assert report.eligible_universe_issuers: == 2
+        assert report.eligible_universe_issuers == 2
         assert report.covered_universe_issuers == 1
         assert report.uncovered_universe_issuers == 1
         assert report.universe_coverage_pct == Decimal("50.00")
