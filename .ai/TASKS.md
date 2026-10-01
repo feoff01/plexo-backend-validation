@@ -307,3 +307,29 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] desenhar universo de peers company-level com deduplicação de classes;
 - [ ] mapear reuso de fundamentos/tendências/valuation sem duplicar matemática;
 - [ ] somente depois decidir se há implementação/promocão segura.
+
+
+## FQ5.6 — Peers/Setor
+
+### Design / audit
+- [x] confirmar schema existente `market.sector_classification`;
+- [x] confirmar ausência de ingestão/consumer real no repo;
+- [x] escolher B3 como única fonte da v1;
+- [x] definir identidade CNPJ -> issuer e dedupe company-level;
+- [x] definir PIT por `ingestion_batches.finished_at` sem migration nova;
+- [x] separar FQ5.6A fundação de FQ5.6B comparação;
+- [x] documentar reuso de valuation, FQ5.5 e `statistics.describe`.
+
+### FQ5.6A — data foundation
+- [ ] validar contrato técnico oficial B3 de download/API;
+- [ ] capturar fixture real oficial e testar parser fail-closed;
+- [ ] implementar ingestão append-only + relatório de cobertura em shadow;
+- [ ] implementar loader PIT setorial em shadow;
+- [ ] medir matched/unmatched/ambiguous no universo real;
+- [ ] CI PostgreSQL 18 completo.
+
+### FQ5.6B — peers
+- [ ] só desbloquear após coverage gate FQ5.6A;
+- [ ] design final de métricas/output compacto;
+- [ ] implementação shadow reutilizando engines existentes;
+- [ ] promoção apenas após registry/fingerprint/CI verdes.

@@ -551,3 +551,18 @@ Prova: commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` 
 **Motivo:** evitar interpretação contábil silenciosa de fluxos trimestrais acumulados e manter separação entre histórico observado e projeção/valuation.
 
 Prova: commit `a8eb2bfeee7c77361fbefffe4d689b4328c70122`; run #57 `36796184892` success — 93 gate; 838 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, invariantes, prompts e tools sync verdes.
+
+
+## 2026-09-30 — FQ5.6 será dividido em fundação setorial e comparação de peers
+
+**Decisão:** não criar `quant.comparaveis_setor` sobre `market.sector_classification` enquanto a tabela não tiver ingestão oficial e cobertura medida.
+
+FQ5.6 será dividido em:
+- **FQ5.6A — Sector Data Foundation**: contrato oficial B3, parser, ingestão, loader PIT e coverage gate;
+- **FQ5.6B — Peer Comparison**: universo company-level e comparação que reutiliza valuation, FQ5.5 e estatística existente.
+
+**Temporalidade:** para novos snapshots, não criar `availability_date` redundante. A disponibilidade conhecida pelo Plexo será o `finished_at` do `market.ingestion_batches` associado, com lote `succeeded`; `reference_date` representa a data do snapshot. Linhas sem lote não são elegíveis para strict PIT.
+
+**Identidade:** matching oficial por CNPJ -> issuer. É proibido inferir classes por prefixo/root code do ticker.
+
+**Fonte v1:** somente B3. Não introduzir prioridade multi-source nesta tranche.

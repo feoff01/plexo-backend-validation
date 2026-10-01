@@ -466,3 +466,14 @@ Promoção: commit `a8eb2bfeee7c77361fbefffe4d689b4328c70122`; run #57 `36796184
 Checkpoint: `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.
 
 Próxima frente: FQ5.6 peers/setor somente após design reuse-before-build e verificação de ingestão/cobertura/temporalidade de `market.sector_classification`.
+
+
+## FQ5.6 Peers/Setor — design/data audit — 2026-09-30
+
+FQ5.5 permanece GREEN; run documental #58 também passou com 93 no gate e 838 passed, 52 skipped, 19 warnings, 0 failed.
+
+FQ5.6 foi auditado antes de código. O schema `market.sector_classification` existe, mas não há coletor/projetor no repo que o popule. Por isso nenhuma tool de peers foi criada.
+
+Design canônico: `.ai/FQ5_6_PEERS_SECTOR_DESIGN.md`.
+
+Decisão: FQ5.6A primeiro resolve fonte B3 + ingestão + loader PIT + cobertura; FQ5.6B só depois implementa comparáveis. Para novos snapshots, strict PIT usa `ingestion_batches.finished_at` em vez de adicionar migration apenas para availability. Matching é CNPJ -> issuer e dedupe é company-level.

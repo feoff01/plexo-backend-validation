@@ -514,3 +514,27 @@ Promoção: commit `a8eb2bfeee7c77361fbefffe4d689b4328c70122`; run #57 `36796184
 Checkpoint: `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.
 
 Próxima frente: FQ5.6 peers/setor. Antes de código, auditar ingestão/cobertura de `market.sector_classification`, reconhecer que ela possui `reference_date` mas não `availability_date`, deduplicar múltiplas classes por emissor e provar reuso dos engines/loaders existentes.
+
+
+---
+
+# Atualização canônica — FQ5.6 Peers/Setor — design/data gate — 2026-09-30
+
+FQ5.5 está GREEN e encerrado; run documental #58 também está verde (93 gate; 838 passed, 52 skipped, 19 warnings, 0 failed).
+
+Antes de qualquer código de peers, ler `.ai/FQ5_6_PEERS_SECTOR_DESIGN.md`.
+
+Achado principal: `market.sector_classification` existe, mas o repo não possui ingestão real para essa tabela. Portanto `quant.comparaveis_setor` **não deve ser criada ainda**.
+
+FQ5.6 foi dividido:
+- FQ5.6A: validar fonte oficial B3, parser, ingestão, loader PIT e coverage gate;
+- FQ5.6B: comparação company-level reutilizando valuation, tendências fundamentais e estatística existente.
+
+Regras fixadas:
+- fonte v1 = B3;
+- identidade = CNPJ -> issuer; sem inferência por prefixo/root code;
+- dedupe por issuer para múltiplas classes;
+- strict PIT usa lote `succeeded` e `ingestion_batches.finished_at`; não foi criada migration de availability;
+- linhas legadas sem lote não sustentam strict PIT.
+
+Próxima ação: FQ5.6A1 — validar o contrato técnico oficial de download/API B3 e capturar fixture real antes de escrever parser de rede.

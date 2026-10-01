@@ -341,3 +341,15 @@
 - commit de promoção `a8eb2bfeee7c77361fbefffe4d689b4328c70122`;
 - run #57 `36796184892`: 93 gate; **838 passed, 52 skipped, 19 warnings, 0 failed**; PostgreSQL 18, invariantes, validador, prompts e tools sync verdes;
 - criado checkpoint `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.
+
+
+## 2026-09-30 — FQ5.6 peers/setor — design e data readiness audit
+
+- auditado `market.sector_classification`: schema existe, mas não há coletor/projetor que o preencha no repo;
+- criada `.ai/FQ5_6_PEERS_SECTOR_DESIGN.md` e checkpoint correspondente;
+- FQ5.6 dividido em Sector Data Foundation (A) e Peer Comparison (B);
+- definida B3 como única fonte da v1;
+- definido matching CNPJ -> issuer e projeção para classes de ação, sem heurística por prefixo de ticker;
+- definido strict PIT de novos snapshots via `ingestion_batches.finished_at`, sem migration redundante;
+- comparação futura deve reutilizar valuation/FQ5.5/statistics existentes;
+- nenhuma alteração de código, migration, tool, semver ou fingerprint nesta etapa.
