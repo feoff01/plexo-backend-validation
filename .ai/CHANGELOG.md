@@ -411,3 +411,11 @@
 - Economatica classificada como fonte auxiliar de validação, não como B3/CVM;
 - raw files permanecem fora do repositório;
 - nenhuma alteração de código, migration, tool, semver ou fingerprint.
+
+
+## 2026-10-01 — Design da integração auxiliar Economatica
+- definido source próprio, sem masquerade como B3;
+- limitada a classificação corrente por ticker exato;
+- proibida retrodatação pelos anos dos workbooks;
+- preços/fundamentos vendor-derived permanecem fora;
+- ainda sem código nesta etapa documental.

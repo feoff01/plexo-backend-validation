@@ -408,3 +408,16 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] se aprovada, desenhar match ticker exato -> instrument -> issuer;
 - [ ] manter B3/UP2DATA como fonte canônica desejada para strict PIT/segmento;
 - [ ] não ingerir preços/fundamentos Economatica no acervo canônico antes de policy específica.
+
+
+## FQ5.6 — Economatica auxiliar shadow
+- [x] auditar arquivos e semântica temporal;
+- [x] desenhar source separado e match ticker exato;
+- [ ] registrar source `economatica` via migration nova;
+- [ ] implementar parser XLSX fail-closed;
+- [ ] implementar ingestão corrente por ticker/issuer;
+- [ ] testar arquivo real local sem versionar raw;
+- [ ] testar PostgreSQL 18;
+- [ ] provar zero drift no registry;
+- [ ] registrar checkpoint GREEN;
+- [ ] decidir política de consumo antes de FQ5.6B.

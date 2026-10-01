@@ -550,3 +550,8 @@ Foram auditados os dois ZIPs fornecidos pelo usuário. Eles são úteis como fon
 Achado crítico: os workbooks anuais não são snapshots históricos de cadastro/setor; arquivo 2009 contém tickers modernos. Não retrodatá-los.
 
 Nenhuma ingestão ou tool foi alterada nesta etapa. Documento canônico: `.ai/ECONOMATICA_DATA_AUDIT_2026-10-01.md`.
+
+
+## FQ5.6 Economatica auxiliar — design — 2026-10-01
+
+Integração auxiliar autorizada em shadow: source próprio `economatica`, setor/subsetor corrente, ticker exato e sem retrodatação. B3 permanece a fonte preferida para contrato oficial/segmento. Nenhuma tool pública será criada nesta etapa.

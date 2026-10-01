@@ -599,3 +599,10 @@ FQ5.6 será dividido em:
 **Preços:** não ingerir os preços mensais ajustados em `market.prices` antes de uma source-priority policy explícita, porque frequência e metodologia de ajuste diferem do contrato canônico.
 
 Documento: `.ai/ECONOMATICA_DATA_AUDIT_2026-10-01.md`.
+
+
+## 2026-10-01 — integração auxiliar Economatica limitada a classificação corrente
+
+**Decisão:** implementar em shadow uma fonte `economatica` separada, somente para setor/subsetor corrente, com match por ticker exato. Não usar o ano do workbook como vintage e não criar fallback automático contra B3.
+
+Documento: `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md`.
