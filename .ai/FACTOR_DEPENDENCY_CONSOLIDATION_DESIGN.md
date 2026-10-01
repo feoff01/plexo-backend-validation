@@ -537,3 +537,24 @@ Antes de implementar, confirmar:
 6. nenhuma matemática FQ3/FQ4 será modificada.
 
 Até essa aprovação, este documento é design e não autorização de código.
+
+
+---
+
+## 21. Implementação realizada — 2026-09-30
+
+O design foi aprovado e executado sem mudança de escopo.
+
+- `FactorRef`/`ResolvedFactor` implementados em `factor_resolution.py`;
+- `quant.dependencia` promovida para 2.0.0 e pública;
+- `quant.dependencia_macro` 1.0.1 mantida oculta para compatibilidade;
+- replay 1.0.1/1.0.0 congelado em módulos legacy e goldens;
+- equivalência numérica comprovada antes do cutover;
+- nenhum engine FQ3/FQ4, migration ou schema alterado.
+
+Commit de código: `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`.
+CI: run #54 `36793672760` success — 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes.
+
+Checkpoint: `.ai/checkpoints/2026-09-30_FACTOR_DEPENDENCY_CUTOVER_GREEN.md`.
+
+Estado deste documento: realizado/encerrado. Migrações futuras de sensibilidade, condicional, regimes, commodity ou curva exigem novo gate reuse-before-build.

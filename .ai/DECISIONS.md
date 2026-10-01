@@ -506,3 +506,17 @@ incompatível o suficiente para justificar major bump.
 **Decisão:** o desenvolvimento não deve depender da memória de chats. Toda decisão, mudança de escopo, implementação relevante, validação/gate e próximo passo aprovado deve ser persistido em `.ai/`.
 
 **Aplicação:** usar `.ai/WORKING_PROTOCOL.md` como protocolo canônico de continuidade. Recomendações ainda não aprovadas devem ser marcadas como propostas, não como decisões executadas.
+
+
+## 2026-09-30 — Cutover canônico de dependência concluído
+
+**Decisão implementada:** `quant.dependencia` passa a ser a única interface pública canônica de dependência para ativo × ativo, ativo × índice/taxa e ativo × câmbio.
+
+- `quant.dependencia` = **2.0.0**, pública, com `serie_b={tipo,codigo}`;
+- `quant.dependencia_macro` = **1.0.1**, executável porém `exposed_to_llm=false`, somente compatibilidade;
+- as versões históricas 1.0.1/1.0.0 foram congeladas em módulos legacy para replay;
+- `FactorRef`/`ResolvedFactor` compartilham somente resolução/carregamento/provenance;
+- nenhum engine FQ3/FQ4, migration ou schema foi alterado;
+- sensibilidade, condicional e regimes não foram migrados neste cutover.
+
+Prova: commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` success — 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes.

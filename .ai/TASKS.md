@@ -233,3 +233,23 @@ Referência operacional: `.ai/WORKING_PROTOCOL.md`.
 - [ ] só depois desbloquear FQ5.5/FQ5.6.
 
 Documento: `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`.
+
+
+## Consolidação fatores/dependência — fechamento
+
+- [x] aprovar design;
+- [x] implementar FactorRef/ResolvedFactor em shadow;
+- [x] congelar replay de dependência 1.0.1 e macro 1.0.0;
+- [x] implementar quant.dependencia 2.0.0;
+- [x] provar equivalência ativo×ativo, ativo×índice e ativo×FX;
+- [x] cobrir Pearson, Spearman e lags assinados;
+- [x] ocultar quant.dependencia_macro 1.0.1 do LLM;
+- [x] atualizar planner, Research, E2E, blocos e goldens;
+- [x] confirmar 33 -> 33 tools e drift somente nas duas interfaces previstas;
+- [x] executar cutover atômico no branch autorizado;
+- [x] validar PostgreSQL 18, invariantes e E2E;
+- [x] validar suíte: 831 passed, 52 skipped, 19 warnings, 0 failed;
+- [x] validar prompts check e tools sync --check;
+- [x] registrar checkpoint final.
+
+Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob o gate reuse-before-build.

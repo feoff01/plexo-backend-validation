@@ -473,3 +473,24 @@ Resumo:
 - commodity/yield curve fora desta etapa.
 
 Estado anterior confirmado: commit `fe268e2213a5c8524f7bb4baa852f2a6ecd5739e`, run #52 `36789531777` verde.
+
+
+---
+
+# Atualização canônica — factor/dependence cutover GREEN — 2026-09-30
+
+A consolidação de `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md` está implementada e encerrada.
+
+- `quant.dependencia` 2.0.0 é a única interface pública de dependência;
+- `serie_b={tipo,codigo}` aceita ativo, indice e cambio;
+- `quant.dependencia_macro` 1.0.1 está oculta e existe apenas para compatibilidade;
+- replay de dependência 1.0.1 e macro 1.0.0 está congelado em módulos legacy + goldens;
+- planner usa `quant.dependencia` para USD/BRL;
+- não houve alteração de matemática FQ3/FQ4, migration ou schema;
+- sensibilidade/condicional/regimes não devem ser migrados automaticamente.
+
+Isolamento: 33 tools antes/depois; somente dependência e macro mudaram.
+
+Gate de referência: código `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` success; 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; validador 0/0; PostgreSQL 18, invariantes, prompts e tools sync verdes.
+
+Próxima frente possível, ainda não iniciada: Fundamentals + Valuation. Aplicar primeiro `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` e `.ai/WORKING_PROTOCOL.md`.

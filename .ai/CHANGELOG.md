@@ -286,3 +286,16 @@
 - recomendado cutover `quant.dependencia` 2.0.0 e macro como compatibilidade oculta;
 - definido plano de semver/fingerprint/replay, equivalência numérica e gates;
 - nenhuma alteração de código, SQL, migration, prompt, tool ou matemática nesta etapa.
+
+
+## 2026-09-30 — Cutover de dependência / factor resolver — GREEN
+
+- criado `factor_resolution.py` com `FactorRef`/`ResolvedFactor` para ativo, índice/taxa e FX;
+- `quant.dependencia` promovida de 1.0.1 para **2.0.0** com `serie_b={tipo,codigo}`;
+- `quant.dependencia_macro` promovida de 1.0.0 para **1.0.1** e ocultada do LLM;
+- versões históricas congeladas em módulos legacy + goldens;
+- planner passa a usar dependência canônica para ativos, índices/taxas e USD/BRL;
+- nenhum engine Quant Core FQ3/FQ4, migration ou schema foi alterado;
+- registry permaneceu 33 -> 33; apenas as duas interfaces previstas mudaram;
+- commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`;
+- run #54 `36793672760`: 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, invariantes, validador 0/0, prompts e tools sync verdes.
