@@ -401,3 +401,13 @@
 - `prompts check` e `tools sync --check` verdes;
 - nenhuma tool adicionada/alterada; catálogo permaneceu inalterado;
 - parser físico e coverage real permanecem bloqueados até bytes oficiais reais.
+
+
+## 2026-10-01 — Auditoria de dados Economatica fornecidos pelo usuário
+
+- auditados exports 2009–2025 de fundamentos/cadastro e preços;
+- setor/subsetor mostrou forte cobertura nas ações B3 ativas do export 2025;
+- identificado look-ahead potencial: metadata moderna aparece em workbook 2009;
+- Economatica classificada como fonte auxiliar de validação, não como B3/CVM;
+- raw files permanecem fora do repositório;
+- nenhuma alteração de código, migration, tool, semver ou fingerprint.

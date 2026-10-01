@@ -591,3 +591,17 @@ Próximo gate imediato: PostgreSQL 18 para a ingestão shadow. Depois, obter byt
 - checkpoint: `.ai/checkpoints/2026-09-30_FQ5_6A2_SECTOR_INGEST_SHADOW_GREEN.md`;
 - parser físico e coverage real continuam pendentes;
 - FQ5.6B peers continua bloqueado até o coverage gate real.
+
+
+## Dados Economatica fornecidos pelo usuário — 2026-10-01
+
+Ler `.ai/ECONOMATICA_DATA_AUDIT_2026-10-01.md` antes de usar esses arquivos.
+
+Regras:
+- Economatica é fonte auxiliar, não `b3`;
+- não retrodata setor pelo ano do workbook;
+- não há CNPJ/segmento suficiente para substituir SummaryData B3;
+- match futuro, se aprovado, deve ser ticker exato -> instrument -> issuer;
+- não misturar preços/fundamentos vendor-derived ao acervo canônico sem policy própria.
+
+FQ5.6B continua dependente de uma decisão explícita: aguardar SummaryData B3 ou criar uma integração auxiliar Economatica para classificação corrente/subsetor.

@@ -394,3 +394,17 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] ingerir snapshot oficial real e medir cobertura por nível;
 - [ ] decidir limiar de promoção somente com dados observados;
 - [ ] FQ5.6B / `quant.comparaveis_setor` permanece bloqueada.
+
+
+## Economatica — fonte auxiliar
+
+- [x] auditar estrutura dos ZIPs fornecidos pelo usuário;
+- [x] confirmar campos de setor/subsetor e métricas financeiras;
+- [x] confirmar ausência de CNPJ/segmento B3 no export auditado;
+- [x] detectar que metadata de cadastro/setor não é vintage anual;
+- [x] proibir retrodatação de classificação pelos anos dos workbooks;
+- [x] classificar Economatica como validação auxiliar;
+- [ ] decidir integração auxiliar de classificação corrente com source_code próprio;
+- [ ] se aprovada, desenhar match ticker exato -> instrument -> issuer;
+- [ ] manter B3/UP2DATA como fonte canônica desejada para strict PIT/segmento;
+- [ ] não ingerir preços/fundamentos Economatica no acervo canônico antes de policy específica.

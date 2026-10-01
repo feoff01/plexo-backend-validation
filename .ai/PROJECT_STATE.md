@@ -541,3 +541,12 @@ Prova:
 Checkpoint: `.ai/checkpoints/2026-09-30_FQ5_6A2_SECTOR_INGEST_SHADOW_GREEN.md`.
 
 A camada aceita registros semânticos validados e não depende do layout UP2DATA. O parser físico continua bloqueado até bytes oficiais reais; portanto ainda não há coverage real e FQ5.6B peers permanece bloqueado.
+
+
+## Auditoria Economatica — 2026-10-01
+
+Foram auditados os dois ZIPs fornecidos pelo usuário. Eles são úteis como fonte auxiliar, especialmente para cobertura atual de setor/subsetor e validação de fundamentos/múltiplos, mas não substituem o contrato B3/CVM.
+
+Achado crítico: os workbooks anuais não são snapshots históricos de cadastro/setor; arquivo 2009 contém tickers modernos. Não retrodatá-los.
+
+Nenhuma ingestão ou tool foi alterada nesta etapa. Documento canônico: `.ai/ECONOMATICA_DATA_AUDIT_2026-10-01.md`.

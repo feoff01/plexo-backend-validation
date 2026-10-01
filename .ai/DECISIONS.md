@@ -588,3 +588,14 @@ FQ5.6 será dividido em:
 **Consequência:** `app/market/sector_ingest.py` não conhece CSV/JSON/XML, não faz rede e não cria nova source policy. A fonte v1 permanece exclusivamente `b3`; matching é somente CNPJ -> issuer.
 
 **Coverage:** será medido por nível (`segmento`/`subsetor`/`setor`) sem threshold automático. O limiar de promoção só pode ser definido depois de observar cobertura real.
+
+
+## 2026-10-01 — Economatica é fonte auxiliar, não substituta de B3/CVM
+
+**Decisão:** os arquivos Economatica fornecidos pelo usuário podem ser usados para validação cruzada, cobertura e investigação de instrumentos cancelados, mas não devem ser gravados como `source_code='b3'` nem substituir fundamentos CVM PIT.
+
+**Temporalidade:** os workbooks anuais não são snapshots históricos de cadastro/setor; metadata moderna aparece em arquivos antigos. Classificação Economatica só pode ser tratada como conhecida na data de exportação/ingestão, nunca retrodatada ao ano do workbook.
+
+**Preços:** não ingerir os preços mensais ajustados em `market.prices` antes de uma source-priority policy explícita, porque frequência e metodologia de ajuste diferem do contrato canônico.
+
+Documento: `.ai/ECONOMATICA_DATA_AUDIT_2026-10-01.md`.
