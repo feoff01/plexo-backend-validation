@@ -538,3 +538,18 @@ Regras fixadas:
 - linhas legadas sem lote não sustentam strict PIT.
 
 Próxima ação: FQ5.6A1 — validar o contrato técnico oficial de download/API B3 e capturar fixture real antes de escrever parser de rede.
+
+
+---
+
+# Atualização canônica — FQ5.6A1 source audit / loader shadow
+
+Antes de continuar FQ5.6, ler `.ai/FQ5_6A1_B3_SOURCE_AUDIT.md` e o checkpoint `.ai/checkpoints/2026-09-30_FQ5_6A1_SOURCE_AUDIT_AND_SECTOR_LOADER_SHADOW.md`.
+
+Decisão de fonte:
+- B3 UP2DATA / Empresas Listadas / SummaryData é o contrato estruturado oficial preferido;
+- acesso recorrente é autenticado/contratual;
+- não usar `listedCompaniesProxy` como API de produção sem contrato oficial;
+- parser/ingestão só depois de fixture real oficial.
+
+Shadow de código: `08bda53fa47eeef576a5fa525260f69d7818d906`. Existe apenas loader setorial PIT sobre o schema atual; nenhuma tool pública foi criada.

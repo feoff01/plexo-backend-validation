@@ -333,3 +333,20 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] design final de métricas/output compacto;
 - [ ] implementação shadow reutilizando engines existentes;
 - [ ] promoção apenas após registry/fingerprint/CI verdes.
+
+
+### FQ5.6A1/A2a — atualização
+- [x] validar existência/cadência da classificação oficial B3;
+- [x] identificar UP2DATA Empresas Listadas / SummaryData como contrato estruturado oficial preferido;
+- [x] rejeitar `listedCompaniesProxy` como contrato de produção não documentado;
+- [x] documentar bloqueio de parser/coletor até fixture oficial real;
+- [x] implementar loader PIT setorial em shadow sem rede/tool/migration;
+- [x] testar seleção latest + consistência multi-classe em testes puros;
+- [x] remover warning falso de cobertura baseado apenas em número de classes;
+- [x] exigir target ação `is_in_universe` no peer universe;
+- [x] escrever E2E PostgreSQL para strict PIT/dedupe/conflito/target fora do universo;
+- [x] auditar registry: 34 -> 34, zero drift;
+- [x] publicar shadow de código (`08bda53fa47eeef576a5fa525260f69d7818d906`);
+- [ ] CI PostgreSQL 18 completo;
+- [ ] somente após fixture oficial implementar parser/ingestão;
+- [ ] coverage gate real antes de FQ5.6B.

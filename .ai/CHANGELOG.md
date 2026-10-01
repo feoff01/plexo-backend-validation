@@ -353,3 +353,17 @@
 - definido strict PIT de novos snapshots via `ingestion_batches.finished_at`, sem migration redundante;
 - comparação futura deve reutilizar valuation/FQ5.5/statistics existentes;
 - nenhuma alteração de código, migration, tool, semver ou fingerprint nesta etapa.
+
+
+## 2026-09-30 — FQ5.6A1 fonte B3 + loader setorial shadow
+
+- criada `.ai/FQ5_6A1_B3_SOURCE_AUDIT.md`;
+- UP2DATA Empresas Listadas / SummaryData definido como fonte estruturada oficial preferida;
+- endpoint interno `listedCompaniesProxy` não aceito como contrato estável de produção;
+- criado `app/market/sectors.py` somente leitura com strict PIT por `ingestion_batches.finished_at`;
+- dedupe por issuer, conflito multi-classe fail-closed e peer universe sem auto-widen;
+- target do universo de peers deve ser ação `is_in_universe`;
+- adicionados testes puros e PostgreSQL shadow e o E2E entrou no gate explícito;
+- registry local: 34 -> 34, zero drift;
+- commit shadow de código: `08bda53fa47eeef576a5fa525260f69d7818d906`;
+- nenhuma tool, migration, semver, exposição, Quant Core ou cálculo alterado.

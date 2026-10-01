@@ -311,3 +311,14 @@ Se o feed oficial não oferecer CNPJ em bulk, o design deve prever uma etapa ofi
 Não criar `quant.comparaveis_setor` agora.
 
 O próximo trabalho implementável é **FQ5.6A1: validar o contrato de fonte oficial B3**. O schema já existe e não precisa de migration neste momento. A disponibilidade PIT de novos snapshots pode ser derivada do `ingestion_batch.finished_at`, preservando o histórico conhecido pelo Plexo.
+
+
+---
+
+## 19. Atualização de execução — source audit / loader shadow — 2026-09-30
+
+FQ5.6A1 confirmou o produto oficial B3 UP2DATA `Empresas Listadas / SummaryData`, mas não validou `listedCompaniesProxy` como API pública estável. Por isso o coletor de rede continua bloqueado até fixture oficial real.
+
+A parte independente de rede avançou no commit `08bda53fa47eeef576a5fa525260f69d7818d906`: `app/market/sectors.py` implementa leitura strict PIT, dedupe por issuer, conflito entre classes fail-closed, target de peers restrito a ação no universo e peer universe por nível explícito. Continua shadow e sem tool pública.
+
+Próximo gate: PostgreSQL 18 para o loader. Parser/ingestão somente após bytes reais do contrato oficial.

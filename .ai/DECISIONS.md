@@ -566,3 +566,14 @@ FQ5.6 será dividido em:
 **Identidade:** matching oficial por CNPJ -> issuer. É proibido inferir classes por prefixo/root code do ticker.
 
 **Fonte v1:** somente B3. Não introduzir prioridade multi-source nesta tranche.
+
+
+## 2026-09-30 — FQ5.6A: contrato de fonte setorial B3
+
+**Decisão:** usar como contrato oficial estruturado preferencial o canal B3 UP2DATA `Empresas Listadas / SummaryData`. O endpoint `listedCompaniesProxy` do site público não será tratado como API de produção enquanto não houver documentação oficial de estabilidade/versionamento.
+
+**Consequência:** parser/coletor de rede fica bloqueado até fixture real oficial; loader PIT do schema existente pode avançar independentemente em shadow.
+
+**PIT:** `market.sector_classification.reference_date` identifica o snapshot; disponibilidade conhecida pelo Plexo é `market.ingestion_batches.finished_at` de lote `succeeded`. Isso não é equivalente a effective date econômico da reclassificação.
+
+**Peer universe:** target precisa ser ação `is_in_universe`; uma única classe observada não é evidência suficiente para emitir warning de cobertura parcial.

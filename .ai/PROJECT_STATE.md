@@ -477,3 +477,23 @@ FQ5.6 foi auditado antes de código. O schema `market.sector_classification` exi
 Design canônico: `.ai/FQ5_6_PEERS_SECTOR_DESIGN.md`.
 
 Decisão: FQ5.6A primeiro resolve fonte B3 + ingestão + loader PIT + cobertura; FQ5.6B só depois implementa comparáveis. Para novos snapshots, strict PIT usa `ingestion_batches.finished_at` em vez de adicionar migration apenas para availability. Matching é CNPJ -> issuer e dedupe é company-level.
+
+
+## FQ5.6A1 — source audit + loader setorial shadow — 2026-09-30
+
+Auditoria de fonte registrada em `.ai/FQ5_6A1_B3_SOURCE_AUDIT.md`.
+
+Estado:
+- UP2DATA `Empresas Listadas / SummaryData` = contrato oficial estruturado preferido;
+- acesso recorrente depende de contratação/autenticação e nenhuma credencial foi assumida;
+- `listedCompaniesProxy` não será usado como API estável de produção;
+- coletor/parser externo continua bloqueado até fixture oficial real;
+- `app/market/sectors.py` implementado em shadow somente leitura, sem tool pública/migration;
+- strict PIT usa lote `succeeded` + `finished_at`;
+- dedupe company-level e conflito multi-classe fail-closed;
+- target de peers precisa ser ação `is_in_universe`;
+- E2E setorial incluído no gate explícito do CI.
+
+Validação local pura: 6 passed; registry 34 -> 34 com zero drift.
+Commit shadow: `08bda53fa47eeef576a5fa525260f69d7818d906`.
+PostgreSQL real pendente no CI.
