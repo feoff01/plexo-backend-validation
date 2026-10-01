@@ -380,3 +380,17 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] materializar fixture oficial real `Listed_Companies.zip`/SummaryData;
 - [ ] somente então implementar parser físico e medir cobertura real;
 - [ ] `quant.comparaveis_setor` continua bloqueada.
+
+
+### FQ5.6A2 — fechamento GREEN
+- [x] executar CI PostgreSQL 18 do shadow — run #63;
+- [x] gate explícito 103 passed;
+- [x] suíte completa 861 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts check e tools sync --check verdes;
+- [x] confirmar catálogo sem drift;
+- [x] registrar checkpoint GREEN;
+- [ ] materializar fixture oficial real `Listed_Companies.zip`/SummaryData;
+- [ ] implementar parser físico somente depois da fixture;
+- [ ] ingerir snapshot oficial real e medir cobertura por nível;
+- [ ] decidir limiar de promoção somente com dados observados;
+- [ ] FQ5.6B / `quant.comparaveis_setor` permanece bloqueada.
