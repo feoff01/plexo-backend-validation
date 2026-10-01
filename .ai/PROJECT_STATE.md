@@ -555,3 +555,8 @@ Nenhuma ingestão ou tool foi alterada nesta etapa. Documento canônico: `.ai/EC
 ## FQ5.6 Economatica auxiliar — design — 2026-10-01
 
 Integração auxiliar autorizada em shadow: source próprio `economatica`, setor/subsetor corrente, ticker exato e sem retrodatação. B3 permanece a fonte preferida para contrato oficial/segmento. Nenhuma tool pública será criada nesta etapa.
+
+
+## FQ5.6 Economatica auxiliar — shadow implementado — 2026-10-01
+
+Implementação candidata adiciona apenas provenance/source, parser XLSX stdlib e ingestão corrente por ticker exato. O parser foi validado localmente no arquivo real 2025 fornecido pelo usuário: 478 ações B3 ativas extraídas. Nenhum raw file foi versionado. Nenhuma tool pública foi criada.

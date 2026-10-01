@@ -419,3 +419,11 @@
 - proibida retrodatação pelos anos dos workbooks;
 - preços/fundamentos vendor-derived permanecem fora;
 - ainda sem código nesta etapa documental.
+
+
+## 2026-10-01 — FQ5.6 Economatica auxiliar shadow
+- migration 0063 registra somente provenance da fonte Economatica;
+- parser XLSX stdlib para setor/subsetor de ações B3 ativas;
+- ingestão por ticker exato com expansão company-level e idempotência;
+- sem preços/fundamentos Economatica, sem retrodatação e sem tool pública;
+- raw vendor files não entram no repo.

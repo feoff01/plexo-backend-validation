@@ -611,3 +611,8 @@ FQ5.6B continua dependente de uma decisão explícita: aguardar SummaryData B3 o
 
 Design aprovado em `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md`.
 Implementar somente shadow: parser XLSX + source próprio + ingestão corrente por ticker exato. Não abrir FQ5.6B antes do gate GREEN e da decisão explícita de source policy.
+
+
+## FQ5.6 Economatica shadow candidate
+
+Código shadow implementado conforme `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md`. Aguardar CI PostgreSQL 18 antes de considerar GREEN. FQ5.6B continua bloqueada.

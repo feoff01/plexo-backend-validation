@@ -421,3 +421,16 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] provar zero drift no registry;
 - [ ] registrar checkpoint GREEN;
 - [ ] decidir política de consumo antes de FQ5.6B.
+
+
+### FQ5.6 Economatica auxiliar — shadow
+- [x] registrar source `economatica` via migration nova 0063;
+- [x] implementar parser XLSX fail-closed;
+- [x] validar parser no arquivo real 2025: 478 ações B3 ativas;
+- [x] implementar ingestão corrente por ticker exato -> issuer -> classes;
+- [x] preservar segment/listing como NULL;
+- [x] adicionar testes puros e DB ao gate explícito;
+- [ ] executar PostgreSQL 18 CI;
+- [ ] provar zero drift no registry;
+- [ ] checkpoint GREEN;
+- [ ] decidir source policy de FQ5.6B.

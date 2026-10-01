@@ -96,6 +96,8 @@ jobs:
           tests/test_fq5_5_fundamental_trends.py
           tests/test_factor_dependency_cutover.py
           tests/test_fq56_sectors_db.py
+          tests/test_fq56_economatica_source.py
+          tests/test_fq56_economatica_db.py
           tests/test_fq56_sector_ingest_db.py
 
       - name: suíte Python completa
