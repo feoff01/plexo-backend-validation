@@ -434,3 +434,20 @@ Implementação shadow concluída localmente:
 Auditoria de registry contra o HEAD verde anterior: 33 -> 34; única adição = `quant.tendencias_fundamentais`; **0 mudanças** de semver/exposição/source SHA nas 33 tools existentes.
 
 Validação local: 5 testes focados iniciais verdes; 29 testes puros relevantes verdes. Testes PostgreSQL não são executáveis neste runtime por ausência de `DATABASE_URL`/servidor; o gate CI PostgreSQL 18 é obrigatório antes de promoção.
+
+## FQ5.5 shadow gate GREEN / promoção candidata — 2026-09-30
+
+Shadow commit: `e863e674d2a5b873d9502faa2915c25a65ddefd6`.
+GitHub Actions run #56 / `36795497161`: success.
+- gate explícito: 93 passed;
+- suíte completa: 837 passed, 52 skipped, 19 warnings, 0 failed;
+- migrations PostgreSQL 18, validador, invariantes admin/service, prompts e tools sync: verdes.
+
+Promoção candidata local:
+- `quant.tendencias_fundamentais` 1.0.1 pública;
+- planner distingue snapshot atual de evolução histórica;
+- blocos compactos de resumo + margens;
+- catálogo F5 atualizado;
+- registry: 34 total, 33 specs anteriores sem qualquer drift.
+
+A tranche ainda não está encerrada até CI pós-promoção verde.

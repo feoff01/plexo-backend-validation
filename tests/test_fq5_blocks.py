@@ -87,3 +87,36 @@ def test_bloco_dependencia_canonica_renderiza_fx_sem_mapper_novo():
     assert blocks[0]["dados"]["valor"] == 0.42
     assert "USD/BRL" in blocks[0]["titulo"]
     assert any("vintage histórico" in x for x in blocks[0]["proveniencia"]["avisos"])
+
+
+def test_bloco_tendencias_fundamentais_resume_metricas_e_margens_sem_forecast():
+    payload = {
+        "ticker": "PETR4", "company_cnpj": "33000167000101", "scope": "consolidated",
+        "periodo": "dfp_anual_point_in_time",
+        "metricas": [
+            {"metric": "revenue", "points": [
+                {"reference_date": "2024-12-31", "availability_date": "2025-03-01", "value": 100.0,
+                 "value_unit": "brl", "currency": "BRL", "absolute_change": None, "growth_pct": None,
+                 "source_metric": "revenue", "is_derived": False, "source_code": "cvm"},
+                {"reference_date": "2025-12-31", "availability_date": "2026-03-01", "value": 120.0,
+                 "value_unit": "brl", "currency": "BRL", "absolute_change": 20.0, "growth_pct": 20.0,
+                 "source_metric": "revenue", "is_derived": False, "source_code": "cvm"}],
+             "latest_value": 120.0, "previous_value": 100.0, "absolute_change": 20.0, "growth_pct": 20.0}
+        ],
+        "margens": [
+            {"margin": "net_margin", "points": [
+                {"reference_date": "2024-12-31", "availability_date": "2025-03-01", "value_pct": 10.0,
+                 "numerator_metric": "net_income", "numerator_is_derived": False},
+                {"reference_date": "2025-12-31", "availability_date": "2026-03-01", "value_pct": 12.0,
+                 "numerator_metric": "net_income", "numerator_is_derived": False}],
+             "latest_pct": 12.0, "previous_pct": 10.0, "change_pp": 2.0}
+        ],
+        "evidencia": ev(),
+    }
+    blocks = blocos_de("quant.tendencias_fundamentais", payload, execution_id="e5")
+    assert len(blocks) == 2
+    assert blocks[0]["tipo"] == "tabela"
+    assert blocks[0]["dados"]["linhas"][0]["crescimento_pct"] == 20.0
+    assert blocks[1]["tipo"] == "serie"
+    assert blocks[1]["dados"]["series"][0]["nome"] == "Margem líquida"
+    assert "não há ITR, forecast, CAGR ou fair value" in blocks[0]["nota"]

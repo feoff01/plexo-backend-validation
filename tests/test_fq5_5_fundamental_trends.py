@@ -138,11 +138,11 @@ def test_engine_exclui_unidade_incompativel_e_avisa_historico_curto():
     assert fundamental_trends.INSUFFICIENT_HISTORY in out.warnings
 
 
-def test_tool_fq55_nasce_shadow_sem_afetar_contrato_existente():
+def test_tool_fq55_publica_sem_afetar_contrato_existente():
     carregar_tools()
     spec = spec_de("quant.tendencias_fundamentais")
-    assert spec.semver == "1.0.0"
-    assert spec.exposed_to_llm is False
+    assert spec.semver == "1.0.1"
+    assert spec.exposed_to_llm is True
     assert spec.requires_market_data is True
     assert spec_de("dados.fundamentos_empresa").semver == "1.0.0"
     assert spec_de("quant.valor_mercado").semver == "1.0.0"

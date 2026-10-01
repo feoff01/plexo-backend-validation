@@ -14,6 +14,7 @@ FQ5_PUBLIC = {
     "dados.fundamentos_empresa": "1.0.0",
     "quant.valor_mercado": "1.0.0",
     "quant.cenario_sensibilidade": "1.0.0",
+    "quant.tendencias_fundamentais": "1.0.1",
 }
 
 
@@ -46,3 +47,6 @@ def test_planner_separa_market_value_cenario_e_fx_sem_inventar_choque():
     assert "USD/BRL" in text
     assert "NÃO faça contas entre outputs no LLM" in text
     assert "cenário mecânico associacional" in text
+    assert "`quant.tendencias_fundamentais`" in text
+    assert "DFP anual point-in-time" in text
+    assert "NÃO é forecast" in text

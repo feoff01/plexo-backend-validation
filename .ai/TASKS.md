@@ -277,3 +277,15 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [x] testes puros relevantes: 29 passed;
 - [ ] PostgreSQL 18 shadow gate;
 - [ ] promoção planner/blocos/catalog somente se shadow gate verde;
+
+### FQ5.5 promoção — atualização
+- [x] PostgreSQL 18 shadow gate: run #56 verde (93 gate / 837 full suite);
+- [x] preparar promoção 1.0.1 pública com patch bump de fingerprint;
+- [x] atualizar planner: snapshot vs tendência;
+- [x] adicionar blocos compactos e warnings client-facing;
+- [x] atualizar catálogo exato F5 e promotion readiness;
+- [x] registry promoção: 34 total, 33 anteriores intactas;
+- [ ] publicar promoção no branch autorizado;
+- [ ] CI pós-promoção completamente verde;
+- [ ] checkpoint final + handoff;
+- [ ] somente então abrir FQ5.6 peers/setor.

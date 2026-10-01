@@ -60,7 +60,8 @@ TOOLS_ANALISTA = {"dados.resolver_instrumento", "dados.serie_precos", "dados.ser
                   "dados.fundamentos_empresa",
                   "quant.risco_retorno", "quant.dependencia", "quant.analise_condicional",
                   "quant.sensibilidade", "quant.regimes", "quant.event_study",
-                  "quant.valor_mercado", "quant.cenario_sensibilidade"}
+                  "quant.valor_mercado", "quant.cenario_sensibilidade",
+                  "quant.tendencias_fundamentais"}
 
 
 def _resp(texto="", tool_calls=(), out=40):

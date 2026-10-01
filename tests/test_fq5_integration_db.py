@@ -184,9 +184,10 @@ def test_fq5_promovido_registrado_sem_alterar_fq4_publico():
         "dados.fundamentos_empresa",
         "quant.valor_mercado",
         "quant.cenario_sensibilidade",
+        "quant.tendencias_fundamentais",
     ):
         spec = spec_de(code)
-        assert spec.semver == "1.0.0"
+        assert spec.semver == ("1.0.1" if code == "quant.tendencias_fundamentais" else "1.0.0")
         assert spec.exposed_to_llm is True
         assert spec.requires_market_data is True
     assert spec_de("quant.sensibilidade").semver == "1.0.1"
@@ -289,7 +290,7 @@ async def test_fq55_tendencias_fundamentais_shadow_pit(db, fq5_mundo):
     margins = {x.margin: x for x in out.margens}
     assert margins["ebitda_margin"].latest_pct == pytest.approx(20.0)
     assert margins["net_margin"].latest_pct == pytest.approx(8.0)
-    assert spec_de("quant.tendencias_fundamentais").exposed_to_llm is False
+    assert spec_de("quant.tendencias_fundamentais").exposed_to_llm is True
 
     second = await _executar(
         db, fq5_mundo, "quant.tendencias_fundamentais",

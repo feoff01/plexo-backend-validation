@@ -528,3 +528,9 @@ Prova: commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` 
 **Motivo:** `fundamentals.py` participa do fingerprint de `dados.fundamentos_empresa` e `quant.valor_mercado`; adicionar um método ali provocaria drift/bump artificial em duas tools já públicas.
 
 **Escopo v1:** somente DFP anual point-in-time. ITR/trimestre fica fora até existir contrato explícito para fluxos acumulados. A tool analítica proposta é `quant.tendencias_fundamentais` 1.0.0; `dados.fundamentos_empresa` continua sendo snapshot.
+
+## 2026-09-30 — Promoção FQ5.5 usa patch bump 1.0.0 shadow -> 1.0.1 pública
+
+**Decisão:** `quant.tendencias_fundamentais` será promovida como 1.0.1, não como 1.0.0.
+
+**Motivo:** alterar `exposed_to_llm` modifica o módulo da tool e, portanto, seu source fingerprint. O patch bump evita reutilizar a mesma semver para dois fontes diferentes. A 1.0.0 foi somente shadow de validação; a 1.0.1 é a primeira versão pública proposta.

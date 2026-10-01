@@ -318,3 +318,13 @@
 - registry audit: 33 -> 34, somente nova tool adicionada; 33 fingerprints anteriores intactos;
 - 29 testes puros relevantes passaram localmente;
 - promoção ainda não realizada.
+
+## 2026-09-30 — FQ5.5 shadow GREEN e promoção preparada
+
+- shadow run #56 `36795497161` success: 93 gate / 837 passed / 52 skipped / 19 warnings / 0 failed;
+- `quant.tendencias_fundamentais` preparada para promoção 1.0.1 pública;
+- planner passa a diferenciar fundamentos atuais (`dados.fundamentos_empresa`) de evolução anual (`quant.tendencias_fundamentais`);
+- mapper de blocos adiciona resumo de métricas e série de margens sem criar números novos;
+- warnings de histórico curto, base não positiva, receita não positiva e métrica por classe ganharam tradução client-facing;
+- catálogo F5/promotion readiness atualizados;
+- nenhuma das 33 tools anteriores alterou source fingerprint.

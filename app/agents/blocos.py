@@ -78,6 +78,10 @@ AVISOS_CLIENTE: dict[str, str] = {
     "horizonte_sem_mediana": "A pesquisa de mercado não trouxe mediana para esse horizonte.",
     "fundamental_unit_raw": "Há fundamento preservado sem unidade canônica; ele não entra nas contas de valuation.",
     "fundamental_unit_incompativel": "Há fundamento com unidade incompatível com a conta pedida; ele foi excluído do cálculo.",
+    "historico_fundamental_insuficiente": "Há menos de dois períodos anuais válidos para formar uma tendência fundamental.",
+    "crescimento_percentual_base_nao_positiva": "O crescimento percentual foi omitido quando a base anterior era zero ou negativa; a variação absoluta foi preservada.",
+    "margem_receita_nao_positiva": "A margem foi omitida nos períodos em que a receita não era positiva.",
+    "fundamental_metrica_classe_nao_suportada": "Esta versão de tendências fundamentais analisa métricas da companhia, não séries específicas por classe de ação.",
     "shares_outstanding_indisponivel": "Faltam ações em circulação de pelo menos uma classe, então o valor de mercado total não foi estimado.",
     "preco_bruto_indisponivel": "Falta preço de fechamento bruto válido para pelo menos uma classe.",
     "market_cap_cobertura_incompleta": "O valor de mercado total exige preço e ações de todas as classes identificadas; a cobertura está incompleta.",
@@ -933,6 +937,83 @@ def _fundamentos_empresa(out: dict, eid: str, max_pontos: int) -> list[dict]:
     )]
 
 
+def _tendencias_fundamentais(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    ev = out.get("evidencia") or {}
+    if not ev.get("suficiente"):
+        return []
+    metrics = out.get("metricas")
+    if not isinstance(metrics, list) or not metrics:
+        return []
+    labels = {
+        "revenue": "Receita",
+        "ebitda": "EBITDA",
+        "net_income": "Lucro líquido",
+        "total_equity": "Patrimônio líquido",
+        "cash_and_equivalents": "Caixa e equivalentes",
+        "gross_debt": "Dívida bruta",
+        "net_debt": "Dívida líquida",
+        "free_cash_flow": "Fluxo de caixa livre",
+    }
+    linhas = []
+    for metric in metrics:
+        if not isinstance(metric, dict):
+            continue
+        latest = _num(metric.get("latest_value"))
+        if latest is None:
+            continue
+        linhas.append({
+            "metrica": labels.get(str(metric.get("metric")), metric.get("metric")),
+            "atual": latest,
+            "anterior": metric.get("previous_value"),
+            "variacao_abs": metric.get("absolute_change"),
+            "crescimento_pct": metric.get("growth_pct"),
+        })
+    if not linhas:
+        return []
+    prov = _prov_evidencia(ev)
+    nota = (
+        "Tendência fundamental point-in-time sobre DFP anual: cada período usa somente o último vintage "
+        "que já estava disponível no cutoff. Crescimento percentual só é mostrado com base anterior positiva; "
+        "não há ITR, forecast, CAGR ou fair value. " + NOTA_MERCADO
+    )
+    blocks = [_bloco(
+        "tabela", eid, 1, f"Tendências fundamentais · {out.get('ticker', '')}".strip(),
+        {"colunas": [
+            {"chave": "metrica", "rotulo": "Métrica"},
+            {"chave": "atual", "rotulo": "Atual"},
+            {"chave": "anterior", "rotulo": "Anterior"},
+            {"chave": "variacao_abs", "rotulo": "Variação"},
+            {"chave": "crescimento_pct", "rotulo": "Crescimento"},
+        ], "linhas": linhas}, prov, nota,
+        subtitulo="DFP anual · comparação com o período anterior",
+    )]
+
+    margins = out.get("margens")
+    if isinstance(margins, list):
+        series = []
+        margin_labels = {"ebitda_margin": "Margem EBITDA", "net_margin": "Margem líquida"}
+        for margin in margins:
+            if not isinstance(margin, dict):
+                continue
+            points = margin.get("points")
+            if not isinstance(points, list):
+                continue
+            compact = [
+                {"x": p.get("reference_date"), "y": p.get("value_pct")}
+                for p in points[-max_pontos:]
+                if isinstance(p, dict) and _num(p.get("value_pct")) is not None
+            ]
+            if compact:
+                series.append({"nome": margin_labels.get(str(margin.get("margin")), margin.get("margin")), "pontos": compact})
+        if series:
+            blocks.append(_bloco(
+                "serie", eid, 2, "Evolução das margens anuais",
+                {"series": series, "eixo_y": {"formato": "pct"}, "empilhada": False},
+                prov, nota,
+            ))
+    return blocks
+
+
 def _valor_mercado(out: dict, eid: str, max_pontos: int) -> list[dict]:
     ev = out.get("evidencia") or {}
     if not ev.get("suficiente"):
@@ -1185,6 +1266,7 @@ MAPEADORES: dict[str, Callable[[dict, str, int], list[dict]]] = {
     "quant.risco_retorno": _retorno_vol,
     "quant.dependencia": _dependencia,
     "quant.dependencia_macro": _dependencia_macro,
+    "quant.tendencias_fundamentais": _tendencias_fundamentais,
     "quant.valor_mercado": _valor_mercado,
     "quant.cenario_sensibilidade": _cenario_sensibilidade,
     "quant.analise_condicional": _analise_condicional,

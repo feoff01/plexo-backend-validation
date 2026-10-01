@@ -246,3 +246,14 @@ Fases:
 7. checkpoint e atualização completa de `.ai/`.
 
 Não abrir FQ5.6 peers/setor até FQ5.5 ficar verde.
+
+---
+
+## Atualização de execução — shadow GREEN / promoção candidata
+
+Shadow commit `e863e674d2a5b873d9502faa2915c25a65ddefd6`, run #56 `36795497161`: success.
+- gate explícito 93 passed;
+- full suite 837 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18, validador, invariantes, prompts e tools sync verdes.
+
+Por disciplina de semver/fingerprint, a promoção muda a tool shadow 1.0.0 para **1.0.1 pública**, pois `exposed_to_llm` altera o fonte. As 33 specs anteriores permanecem bit-a-bit iguais no registry audit.

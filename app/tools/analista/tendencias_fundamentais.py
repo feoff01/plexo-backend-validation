@@ -168,7 +168,7 @@ async def preparar_tendencias_fundamentais(
 @tool(
     code="quant.tendencias_fundamentais",
     family="quant",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Tendências fundamentais",
     description=(
         "Analisa a evolução anual point-in-time de fundamentos DFP, incluindo variações YoY e margens "
@@ -181,7 +181,7 @@ async def preparar_tendencias_fundamentais(
         fundamental_trends.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_tendencias_fundamentais(
     r: TendenciasFundamentaisResolvida,
