@@ -616,3 +616,10 @@ Implementar somente shadow: parser XLSX + source próprio + ingestão corrente p
 ## FQ5.6 Economatica shadow candidate
 
 Código shadow implementado conforme `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md`. Aguardar CI PostgreSQL 18 antes de considerar GREEN. FQ5.6B continua bloqueada.
+
+
+## FQ5.6 Economatica auxiliar — GREEN
+
+Checkpoint: `.ai/checkpoints/2026-10-01_FQ5_6_ECONOMATICA_AUX_GREEN.md`.
+
+Source auxiliar está implementado e testado, mas nenhuma tool pública usa Economatica automaticamente. Próximo passo: coverage dry-run por ticker exato contra o universo real do Plexo. FQ5.6B permanece bloqueada até esse gate.

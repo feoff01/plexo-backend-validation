@@ -148,3 +148,15 @@ Após CI GREEN:
 - medir coverage contra universo real quando houver snapshot ingerido no ambiente autorizado;
 - não liberar `quant.comparaveis_setor` automaticamente;
 - decisão de FQ5.6B deve declarar qual source é usada e nível disponível.
+
+
+## 11. Implementação / validação — 2026-10-01
+
+Design executado em shadow:
+- commit `432965518a59d8e2308d7034806d0f36be60701b`;
+- run #71 `36887239117` success;
+- gate 108 passed;
+- full suite 866 passed, 52 skipped, 19 warnings, 0 failed;
+- tools sync confirmou 34 tools inalteradas.
+
+Estado: GREEN em shadow. Próximo gate = coverage dry-run no universo real. Não autoriza promoção de peers automaticamente.

@@ -560,3 +560,12 @@ Integração auxiliar autorizada em shadow: source próprio `economatica`, setor
 ## FQ5.6 Economatica auxiliar — shadow implementado — 2026-10-01
 
 Implementação candidata adiciona apenas provenance/source, parser XLSX stdlib e ingestão corrente por ticker exato. O parser foi validado localmente no arquivo real 2025 fornecido pelo usuário: 478 ações B3 ativas extraídas. Nenhum raw file foi versionado. Nenhuma tool pública foi criada.
+
+
+## FQ5.6 Economatica auxiliar — shadow GREEN — 2026-10-01
+
+A integração auxiliar Economatica está GREEN em shadow. Parser validado contra o export real do usuário (478 ações B3 ativas), migration 0063, ingestão corrente por ticker exato e CI PostgreSQL 18 concluídos.
+
+Run #71 `36887239117`: 108 gate; 866 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes; 34 tools sem drift.
+
+Nenhuma tool pública foi criada. FQ5.6B continua bloqueada até coverage real/dry-run e decisão explícita de source policy.

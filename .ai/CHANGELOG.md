@@ -427,3 +427,13 @@
 - ingestão por ticker exato com expansão company-level e idempotência;
 - sem preços/fundamentos Economatica, sem retrodatação e sem tool pública;
 - raw vendor files não entram no repo.
+
+
+## 2026-10-01 — FQ5.6 Economatica auxiliar shadow GREEN
+- source `economatica` registrado via migration 0063;
+- parser XLSX stdlib validado no export real do usuário;
+- 478 ações B3 ativas extraídas no snapshot 2025;
+- ingestão por ticker exato expandindo company-level;
+- run #71 verde: 108 gate; 866 passed, 52 skipped, 19 warnings;
+- 34 tools inalteradas;
+- sem tool pública e sem ingestão de preços/fundamentos vendor-derived.

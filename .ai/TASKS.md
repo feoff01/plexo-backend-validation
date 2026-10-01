@@ -434,3 +434,20 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] provar zero drift no registry;
 - [ ] checkpoint GREEN;
 - [ ] decidir source policy de FQ5.6B.
+
+
+### FQ5.6 Economatica auxiliar — fechamento shadow
+- [x] migration 0063/source provenance;
+- [x] parser XLSX fail-closed;
+- [x] arquivo real 2025: 478 ações B3 ativas;
+- [x] ingestão por ticker exato/issuer/classes;
+- [x] PostgreSQL 18 CI run #71;
+- [x] gate 108 passed;
+- [x] full suite 866/52/19/0;
+- [x] prompts/tools sync verdes;
+- [x] 34 tools sem drift;
+- [x] checkpoint GREEN;
+- [ ] criar/rodar dry-run de matching contra universo real do Plexo;
+- [ ] medir matched/unmatched por ticker;
+- [ ] decidir fonte e nível da FQ5.6B;
+- [ ] só depois abrir `quant.comparaveis_setor`.
