@@ -102,6 +102,7 @@ async def fq5_mundo(db, escopos, tmp_path):
 
         common = (cnpj, date(2023, 12, 31), "DFP", "consolidated", "FY")
         company_metrics = (
+            ("revenue", 150_000_000_000.0),
             ("net_income", 12_000_000_000.0),
             ("ebitda", 30_000_000_000.0),
             ("total_equity", 80_000_000_000.0),
@@ -133,6 +134,33 @@ async def fq5_mundo(db, escopos, tmp_path):
                values (%s, %s, %s, 'DFP', 'consolidated', 'FY',
                        'net_income', 99000000000, 'brl', 'BRL', false, 'cvm_fundos')""",
             (cnpj, date(2023, 12, 31), date(2024, 2, 20)),
+        )
+
+        # Histórico DFP para FQ5.5. O restatement 2022 publicado depois do cutoff deve ficar fora.
+        historical = (
+            (date(2021, 12, 31), date(2022, 3, 1), "revenue", 100_000_000_000.0, False),
+            (date(2021, 12, 31), date(2022, 3, 1), "ebitda_derived", 20_000_000_000.0, True),
+            (date(2021, 12, 31), date(2022, 3, 1), "net_income", 8_000_000_000.0, False),
+            (date(2022, 12, 31), date(2023, 3, 1), "revenue", 120_000_000_000.0, False),
+            (date(2022, 12, 31), date(2023, 3, 1), "ebitda", 30_000_000_000.0, False),
+            (date(2022, 12, 31), date(2023, 3, 1), "net_income", 9_000_000_000.0, False),
+        )
+        for ref, avail, metric, value, derived in historical:
+            await conn.execute(
+                """insert into market.fundamentals
+                       (company_cnpj, reference_date, availability_date, document_type, scope,
+                        period_label, metric, value, value_unit, currency, is_derived, source_code)
+                   values (%s, %s, %s, 'DFP', 'consolidated', 'FY',
+                           %s, %s, 'brl', 'BRL', %s, 'cvm_fundos')""",
+                (cnpj, ref, avail, metric, value, derived),
+            )
+        await conn.execute(
+            """insert into market.fundamentals
+                   (company_cnpj, reference_date, availability_date, document_type, scope,
+                    period_label, metric, value, value_unit, currency, is_derived, source_code)
+               values (%s, DATE '2022-12-31', DATE '2024-02-01', 'DFP', 'consolidated', 'FY',
+                       'revenue', 999000000000, 'brl', 'BRL', false, 'cvm_fundos')""",
+            (cnpj,),
         )
 
     return {"e": e, "ids": ids, "cnpj": cnpj, "batch_id": ing["batch_id"]}
@@ -240,3 +268,32 @@ async def test_fq5_executor_cacheia_valor_mercado(db, fq5_mundo):
     assert second.cache_hit is True
     assert second.execution_id != first.execution_id
     assert second.output.model_dump(mode="json") == first.output.model_dump(mode="json")
+
+
+async def test_fq55_tendencias_fundamentais_shadow_pit(db, fq5_mundo):
+    run = await _executar(
+        db, fq5_mundo, "quant.tendencias_fundamentais",
+        {"ticker": "FQ5ON", "periodos": 5, "metricas": ["revenue", "ebitda", "net_income"]},
+    )
+    out = run.output
+    assert out.evidencia.suficiente is True
+    revenue = next(x for x in out.metricas if x.metric == "revenue")
+    assert [(p.reference_date, p.value) for p in revenue.points] == [
+        (date(2021, 12, 31), 100_000_000_000.0),
+        (date(2022, 12, 31), 120_000_000_000.0),
+        (date(2023, 12, 31), 150_000_000_000.0),
+    ]
+    assert revenue.growth_pct == pytest.approx(25.0)
+    ebitda = next(x for x in out.metricas if x.metric == "ebitda")
+    assert [p.source_metric for p in ebitda.points] == ["ebitda_derived", "ebitda", "ebitda"]
+    margins = {x.margin: x for x in out.margens}
+    assert margins["ebitda_margin"].latest_pct == pytest.approx(20.0)
+    assert margins["net_margin"].latest_pct == pytest.approx(8.0)
+    assert spec_de("quant.tendencias_fundamentais").exposed_to_llm is False
+
+    second = await _executar(
+        db, fq5_mundo, "quant.tendencias_fundamentais",
+        {"ticker": "FQ5ON", "periodos": 5, "metricas": ["revenue", "ebitda", "net_income"]},
+    )
+    assert second.cache_hit is True
+    assert second.output.model_dump(mode="json") == out.model_dump(mode="json")

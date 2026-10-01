@@ -253,3 +253,27 @@ Documento: `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`.
 - [x] registrar checkpoint final.
 
 Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob o gate reuse-before-build.
+
+## FQ5.5 — Tendências fundamentais PIT
+
+- [x] aplicar reuse-before-build ao snapshot atual;
+- [x] identificar risco de fingerprint ao editar `app/market/fundamentals.py`;
+- [x] desenhar histórico anual em módulo novo, sem migration;
+- [x] limitar v1 a DFP anual; ITR/trimestre fora;
+- [ ] implementar loader histórico em shadow;
+- [ ] implementar engine de crescimento/margens em shadow;
+- [ ] implementar `quant.tendencias_fundamentais` 1.0.0 shadow;
+- [ ] provar fingerprints das 33 tools existentes inalterados;
+- [ ] rodar testes locais + PostgreSQL 18 shadow gate;
+- [ ] promover planner/blocos/catalog somente após shadow verde;
+- [ ] CI pós-promoção e checkpoint;
+- [ ] somente depois avaliar FQ5.6 peers/setor.
+
+### FQ5.5 shadow — atualização
+- [x] implementar loader histórico em módulo novo;
+- [x] implementar engine de YoY/margens;
+- [x] registrar `quant.tendencias_fundamentais` 1.0.0 shadow;
+- [x] auditoria registry: 33 -> 34, zero drift nas 33 existentes;
+- [x] testes puros relevantes: 29 passed;
+- [ ] PostgreSQL 18 shadow gate;
+- [ ] promoção planner/blocos/catalog somente se shadow gate verde;

@@ -520,3 +520,11 @@ incompatível o suficiente para justificar major bump.
 - sensibilidade, condicional e regimes não foram migrados neste cutover.
 
 Prova: commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` success — 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes.
+
+## 2026-09-30 — FQ5.5 usa módulo novo para histórico, sem tocar no foundation fingerprintado
+
+**Decisão:** tendências fundamentais anuais serão implementadas em `app/market/fundamental_history.py`, consumindo `PostgresFundamentalsReader`, sem editar `app/market/fundamentals.py`.
+
+**Motivo:** `fundamentals.py` participa do fingerprint de `dados.fundamentos_empresa` e `quant.valor_mercado`; adicionar um método ali provocaria drift/bump artificial em duas tools já públicas.
+
+**Escopo v1:** somente DFP anual point-in-time. ITR/trimestre fica fora até existir contrato explícito para fluxos acumulados. A tool analítica proposta é `quant.tendencias_fundamentais` 1.0.0; `dados.fundamentos_empresa` continua sendo snapshot.

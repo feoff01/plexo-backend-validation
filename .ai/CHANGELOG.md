@@ -299,3 +299,22 @@
 - registry permaneceu 33 -> 33; apenas as duas interfaces previstas mudaram;
 - commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`;
 - run #54 `36793672760`: 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, invariantes, validador 0/0, prompts e tools sync verdes.
+
+## 2026-09-30 — Design FQ5.5 tendências fundamentais PIT
+
+- criado `.ai/FQ5_5_FUNDAMENTAL_TRENDS_DESIGN.md`;
+- reuse-before-build confirmou que `market.fundamentals` e o reader atual já fornecem a base necessária;
+- detectado e evitado drift de fingerprint: histórico será módulo novo em vez de alteração de `app/market/fundamentals.py`;
+- v1 limitada a DFP anual; ITR/trimestre explicitamente fora para evitar interpretação errada de fluxos acumulados;
+- nenhuma alteração de código/schema/tool nesta etapa de design.
+
+## 2026-09-30 — FQ5.5 shadow ready
+
+- criado `app/market/fundamental_history.py` sem tocar no foundation fingerprintado;
+- criado `app/market/analytics/fundamental_trends.py`;
+- criada `quant.tendencias_fundamentais` 1.0.0 shadow;
+- adicionados testes de vintage/restatement, YoY, margens, base não positiva, unidade incompatível e E2E PostgreSQL;
+- workflow CI atualizado para incluir FQ5.5 shadow no gate explícito;
+- registry audit: 33 -> 34, somente nova tool adicionada; 33 fingerprints anteriores intactos;
+- 29 testes puros relevantes passaram localmente;
+- promoção ainda não realizada.

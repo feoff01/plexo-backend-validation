@@ -37,6 +37,7 @@ def test_verify_ci_roda_postgres_18_e_suite_quant() -> None:
         "tests/test_f22_acervo.py",
         "tests/test_fq4_integration_db.py",
         "tests/test_fq5_integration_db.py",
+        "tests/test_fq5_5_fundamental_trends.py",
         "python -m pytest -q",
         "python -m app.cli prompts check",
         "python -m app.cli tools sync --check",

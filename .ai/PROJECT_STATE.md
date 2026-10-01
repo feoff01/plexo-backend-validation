@@ -415,3 +415,22 @@ Estado:
 Isolamento: 33 tools antes -> 33 depois; somente dependência e macro mudaram semver/exposição/fingerprint; as outras 31 ficaram inalteradas.
 
 Validação: commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` success; 87 E2E; suíte 831 passed, 52 skipped, 19 warnings, 0 failed; validador 0/0; PostgreSQL 18, invariantes, prompts e tools sync verdes.
+
+## FQ5.5 aberto — tendências fundamentais PIT — 2026-09-30
+
+Design canônico: `.ai/FQ5_5_FUNDAMENTAL_TRENDS_DESIGN.md`.
+
+A tranche começa por histórico anual DFP point-in-time, sem ITR e sem migration. Para preservar fingerprints de `dados.fundamentos_empresa` e `quant.valor_mercado`, o histórico será implementado em módulo novo e não alterará `app/market/fundamentals.py`.
+
+Tool proposta: `quant.tendencias_fundamentais` 1.0.0, inicialmente shadow. FQ5.6 peers/setor permanece bloqueado até esta tranche ficar verde.
+
+## FQ5.5 shadow ready — 2026-09-30
+
+Implementação shadow concluída localmente:
+- `app/market/fundamental_history.py` — histórico DFP PIT sem alterar `fundamentals.py`;
+- `app/market/analytics/fundamental_trends.py` — YoY + margens, sem forecast/CAGR/fair value;
+- `quant.tendencias_fundamentais` 1.0.0 registrada com `exposed_to_llm=False`.
+
+Auditoria de registry contra o HEAD verde anterior: 33 -> 34; única adição = `quant.tendencias_fundamentais`; **0 mudanças** de semver/exposição/source SHA nas 33 tools existentes.
+
+Validação local: 5 testes focados iniciais verdes; 29 testes puros relevantes verdes. Testes PostgreSQL não são executáveis neste runtime por ausência de `DATABASE_URL`/servidor; o gate CI PostgreSQL 18 é obrigatório antes de promoção.
