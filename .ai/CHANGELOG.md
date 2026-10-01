@@ -437,3 +437,9 @@
 - run #71 verde: 108 gate; 866 passed, 52 skipped, 19 warnings;
 - 34 tools inalteradas;
 - sem tool pública e sem ingestão de preços/fundamentos vendor-derived.
+
+## 2026-10-01 — Design coverage dry-run Economatica
+- definido dry-run somente leitura contra instruments/issuers;
+- cobertura de decisão será company-level;
+- formalizada separação entre prova de CI/dev e coverage real;
+- nenhuma alteração de código nesta etapa documental.

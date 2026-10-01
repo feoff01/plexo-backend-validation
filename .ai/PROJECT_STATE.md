@@ -569,3 +569,7 @@ A integração auxiliar Economatica está GREEN em shadow. Parser validado contr
 Run #71 `36887239117`: 108 gate; 866 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes; 34 tools sem drift.
 
 Nenhuma tool pública foi criada. FQ5.6B continua bloqueada até coverage real/dry-run e decisão explícita de source policy.
+
+## FQ5.6 — coverage dry-run aberto — 2026-10-01
+
+Próxima tranche: medir Economatica × catálogo Plexo sem escrita. O relatório será company-level por issuer e distinguirá ticker ausente, ticker sem issuer e issuer fora do universo. Resultados do seed CI não serão confundidos com produção.

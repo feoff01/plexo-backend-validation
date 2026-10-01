@@ -623,3 +623,8 @@ Código shadow implementado conforme `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md
 Checkpoint: `.ai/checkpoints/2026-10-01_FQ5_6_ECONOMATICA_AUX_GREEN.md`.
 
 Source auxiliar está implementado e testado, mas nenhuma tool pública usa Economatica automaticamente. Próximo passo: coverage dry-run por ticker exato contra o universo real do Plexo. FQ5.6B permanece bloqueada até esse gate.
+
+## Coverage dry-run Economatica
+
+Design: .ai/FQ5_6_ECONOMATICA_COVERAGE_DRY_RUN_DESIGN.md.
+Implementar read-only e validar no CI; FQ5.6B só pode ser desbloqueada após execução no catálogo real ou export equivalente, não pelo seed reduzido do CI.

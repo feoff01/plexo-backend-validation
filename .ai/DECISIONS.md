@@ -606,3 +606,11 @@ Documento: `.ai/ECONOMATICA_DATA_AUDIT_2026-10-01.md`.
 **Decisão:** implementar em shadow uma fonte `economatica` separada, somente para setor/subsetor corrente, com match por ticker exato. Não usar o ano do workbook como vintage e não criar fallback automático contra B3.
 
 Documento: `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md`.
+
+## 2026-10-01 — coverage Economatica deve ser medida company-level e somente leitura
+
+**Decisão:** o gate de cobertura da fonte auxiliar Economatica será um dry-run sem escrita. Ticker exato é a identidade de entrada, mas o denominador para peers é issuer com ao menos uma ação is_in_universe=true.
+
+CI/dev prova somente o mecanismo; nenhum percentual obtido no seed descartável pode ser apresentado como cobertura de produção.
+
+Documento: .ai/FQ5_6_ECONOMATICA_COVERAGE_DRY_RUN_DESIGN.md.

@@ -451,3 +451,14 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] medir matched/unmatched por ticker;
 - [ ] decidir fonte e nível da FQ5.6B;
 - [ ] só depois abrir `quant.comparaveis_setor`.
+
+## FQ5.6 — coverage dry-run Economatica
+- [x] desenhar relatório ticker-level + issuer-level;
+- [x] separar CI/dev de coverage real;
+- [ ] implementar módulo read-only;
+- [ ] implementar CLI read-only;
+- [ ] validar em PostgreSQL 18 descartável;
+- [ ] provar 34 tools sem drift;
+- [ ] executar contra catálogo real ou export equivalente;
+- [ ] registrar coverage observada;
+- [ ] somente depois decidir FQ5.6B.
