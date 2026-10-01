@@ -389,3 +389,15 @@
 - adicionados testes puros e PostgreSQL da ingestão;
 - workflow explícito passa a incluir `tests/test_fq56_sector_ingest_db.py`;
 - nenhuma migration, tool, semver, exposição, Quant Core ou schema alterado.
+
+
+## 2026-09-30 — FQ5.6A2 shadow GREEN
+
+- commit shadow `36ffa05f9cbacd51c04b7887f74be7036c972489`;
+- run #63 `36801883060` success;
+- gate explícito com ingestão setorial: **103 passed**;
+- suíte completa: **861 passed, 52 skipped, 19 warnings, 0 failed**;
+- migrations PostgreSQL 18, validador e invariantes admin/service verdes;
+- `prompts check` e `tools sync --check` verdes;
+- nenhuma tool adicionada/alterada; catálogo permaneceu inalterado;
+- parser físico e coverage real permanecem bloqueados até bytes oficiais reais.
