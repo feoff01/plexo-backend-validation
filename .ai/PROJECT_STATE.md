@@ -573,3 +573,7 @@ Nenhuma tool pública foi criada. FQ5.6B continua bloqueada até coverage real/d
 ## FQ5.6 — coverage dry-run aberto — 2026-10-01
 
 Próxima tranche: medir Economatica × catálogo Plexo sem escrita. O relatório será company-level por issuer e distinguirá ticker ausente, ticker sem issuer e issuer fora do universo. Resultados do seed CI não serão confundidos com produção.
+
+## FQ5.6 coverage dry-run — shadow implementado — 2026-10-01
+
+Implementado módulo read-only de coverage Economatica × catálogo Plexo e CLI operacional. O parser real do arquivo 2025 continua produzindo 478 ações B3 ativas, com setor/subsetor preenchidos. O CLI força transação read-only e não abre ingestion batch. Coverage de produção ainda não foi medida.

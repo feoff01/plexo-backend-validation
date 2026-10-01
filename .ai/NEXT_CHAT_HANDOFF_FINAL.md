@@ -628,3 +628,7 @@ Source auxiliar está implementado e testado, mas nenhuma tool pública usa Econ
 
 Design: .ai/FQ5_6_ECONOMATICA_COVERAGE_DRY_RUN_DESIGN.md.
 Implementar read-only e validar no CI; FQ5.6B só pode ser desbloqueada após execução no catálogo real ou export equivalente, não pelo seed reduzido do CI.
+
+## Coverage dry-run Economatica — shadow candidate
+
+Módulo e CLI read-only implementados; aguardar CI. Importante: resultado do CI/dev não é coverage de produção. Próximo gate continua sendo execução no catálogo real ou export equivalente.

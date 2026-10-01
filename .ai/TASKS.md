@@ -462,3 +462,15 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] executar contra catálogo real ou export equivalente;
 - [ ] registrar coverage observada;
 - [ ] somente depois decidir FQ5.6B.
+
+### FQ5.6 coverage dry-run — shadow
+- [x] implementar módulo read-only;
+- [x] implementar CLI com transação read-only;
+- [x] separar ticker ausente, ticker sem issuer e issuer fora do universo;
+- [x] medir coverage company-level por issuer;
+- [x] adicionar E2E PostgreSQL ao gate;
+- [ ] CI PostgreSQL 18 GREEN;
+- [ ] provar 34 tools sem drift;
+- [ ] executar sobre catálogo real/export equivalente;
+- [ ] registrar coverage observada;
+- [ ] decidir FQ5.6B.

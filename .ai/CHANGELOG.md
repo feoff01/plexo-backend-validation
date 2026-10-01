@@ -443,3 +443,10 @@
 - cobertura de decisão será company-level;
 - formalizada separação entre prova de CI/dev e coverage real;
 - nenhuma alteração de código nesta etapa documental.
+
+## 2026-10-01 — Coverage dry-run Economatica shadow
+- novo app/market/economatica_coverage.py, somente SELECT;
+- novo tools/economatica_sector_coverage.py com transação read-only;
+- relatório ticker-level + issuer-level;
+- novo E2E DB no gate;
+- nenhuma tool pública, migration ou ingestão nova nesta tranche.
