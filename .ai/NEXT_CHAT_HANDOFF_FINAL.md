@@ -494,3 +494,23 @@ Isolamento: 33 tools antes/depois; somente dependência e macro mudaram.
 Gate de referência: código `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` success; 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; validador 0/0; PostgreSQL 18, invariantes, prompts e tools sync verdes.
 
 Próxima frente possível, ainda não iniciada: Fundamentals + Valuation. Aplicar primeiro `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` e `.ai/WORKING_PROTOCOL.md`.
+
+
+---
+
+# Atualização canônica — FQ5.5 tendências fundamentais GREEN — 2026-09-30
+
+FQ5.5 está encerrado.
+
+- `quant.tendencias_fundamentais` **1.0.1** pública;
+- DFP anual point-in-time por `availability_date <= cutoff`;
+- YoY/margens determinísticos e compactos;
+- EBITDA reportado preferido ao derivado;
+- sem ITR/trimestre, CAGR, forecast ou fair value na v1;
+- catálogo total: 34 tools; as 33 pré-existentes preservaram semver/exposição/fingerprint.
+
+Promoção: commit `a8eb2bfeee7c77361fbefffe4d689b4328c70122`; run #57 `36796184892` success; 93 gate; **838 passed, 52 skipped, 19 warnings, 0 failed**; PostgreSQL 18, invariantes, prompts e tools sync verdes.
+
+Checkpoint: `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.
+
+Próxima frente: FQ5.6 peers/setor. Antes de código, auditar ingestão/cobertura de `market.sector_classification`, reconhecer que ela possui `reference_date` mas não `availability_date`, deduplicar múltiplas classes por emissor e provar reuso dos engines/loaders existentes.

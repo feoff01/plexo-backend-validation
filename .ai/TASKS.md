@@ -289,3 +289,21 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] CI pós-promoção completamente verde;
 - [ ] checkpoint final + handoff;
 - [ ] somente então abrir FQ5.6 peers/setor.
+
+
+### FQ5.5 fechamento
+- [x] publicar promoção no branch autorizado (`a8eb2bfeee7c77361fbefffe4d689b4328c70122`);
+- [x] CI pós-promoção run #57 completamente verde;
+- [x] gate explícito: 93 passed;
+- [x] suíte completa: 838 passed, 52 skipped, 19 warnings, 0 failed;
+- [x] prompts check e tools sync --check verdes;
+- [x] checkpoint final + handoff;
+- [x] FQ5.5 encerrado.
+
+### FQ5.6 peers/setor — próximo gate
+- [ ] aplicar reuse-before-build antes de código;
+- [ ] auditar schema + ingestão/cobertura de `market.sector_classification`;
+- [ ] documentar limitação de `reference_date` sem `availability_date`;
+- [ ] desenhar universo de peers company-level com deduplicação de classes;
+- [ ] mapear reuso de fundamentos/tendências/valuation sem duplicar matemática;
+- [ ] somente depois decidir se há implementação/promocão segura.

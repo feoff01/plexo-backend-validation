@@ -328,3 +328,16 @@
 - warnings de histórico curto, base não positiva, receita não positiva e métrica por classe ganharam tradução client-facing;
 - catálogo F5/promotion readiness atualizados;
 - nenhuma das 33 tools anteriores alterou source fingerprint.
+
+
+## 2026-09-30 — FQ5.5 tendências fundamentais PIT — GREEN
+
+- `quant.tendencias_fundamentais` promovida para **1.0.1 pública**;
+- planner diferencia snapshot atual de fundamentos versus evolução histórica;
+- blocos compactos adicionados sem recalcular métricas no LLM;
+- DFP anual PIT preserva vintages/restatements por cutoff;
+- ITR, CAGR, forecast e fair value permanecem explicitamente fora da v1;
+- as 33 tools existentes antes da tranche mantiveram semver/exposição/source fingerprint;
+- commit de promoção `a8eb2bfeee7c77361fbefffe4d689b4328c70122`;
+- run #57 `36796184892`: 93 gate; **838 passed, 52 skipped, 19 warnings, 0 failed**; PostgreSQL 18, invariantes, validador, prompts e tools sync verdes;
+- criado checkpoint `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.

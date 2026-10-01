@@ -451,3 +451,18 @@ Promoção candidata local:
 - registry: 34 total, 33 specs anteriores sem qualquer drift.
 
 A tranche ainda não está encerrada até CI pós-promoção verde.
+
+
+## FQ5.5 encerrado — tendências fundamentais PIT — 2026-09-30
+
+`quant.tendencias_fundamentais` **1.0.1** está pública e FQ5.5 está encerrado.
+
+Contrato: DFP anual point-in-time por `availability_date <= cutoff`, histórico multi-período, YoY apenas com base anterior positiva, margens somente com receita positiva do mesmo período e EBITDA reportado preferido ao derivado. A v1 não inclui ITR/trimestre, CAGR, forecast ou fair value.
+
+O design evitou alterar `app/market/fundamentals.py`; as 33 tools pré-existentes mantiveram semver/exposição/source fingerprint e o catálogo passou a 34 apenas pela nova tool.
+
+Promoção: commit `a8eb2bfeee7c77361fbefffe4d689b4328c70122`; run #57 `36796184892` success; 93 no gate explícito; **838 passed, 52 skipped, 19 warnings, 0 failed**; PostgreSQL 18, validador, invariantes, prompts e tools sync verdes.
+
+Checkpoint: `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.
+
+Próxima frente: FQ5.6 peers/setor somente após design reuse-before-build e verificação de ingestão/cobertura/temporalidade de `market.sector_classification`.

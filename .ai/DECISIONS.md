@@ -534,3 +534,20 @@ Prova: commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`; run #54 `36793672760` 
 **Decisão:** `quant.tendencias_fundamentais` será promovida como 1.0.1, não como 1.0.0.
 
 **Motivo:** alterar `exposed_to_llm` modifica o módulo da tool e, portanto, seu source fingerprint. O patch bump evita reutilizar a mesma semver para dois fontes diferentes. A 1.0.0 foi somente shadow de validação; a 1.0.1 é a primeira versão pública proposta.
+
+
+## 2026-09-30 — FQ5.5 canônico: tendência anual PIT, não forecast
+
+**Decisão implementada:** `quant.tendencias_fundamentais` 1.0.1 é a interface pública canônica para evolução histórica de fundamentos da companhia.
+
+- usa somente DFP anual na v1;
+- seleciona o vintage conhecido no cutoff por `availability_date`;
+- crescimento percentual só é calculado com base anterior positiva;
+- margens exigem receita positiva do mesmo `reference_date`;
+- EBITDA reportado tem precedência sobre derivado;
+- não expõe ITR/trimestre, CAGR, forecast, fair value ou `shares_outstanding` company-level;
+- `dados.fundamentos_empresa` continua sendo snapshot atual, não histórico.
+
+**Motivo:** evitar interpretação contábil silenciosa de fluxos trimestrais acumulados e manter separação entre histórico observado e projeção/valuation.
+
+Prova: commit `a8eb2bfeee7c77361fbefffe4d689b4328c70122`; run #57 `36796184892` success — 93 gate; 838 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, invariantes, prompts e tools sync verdes.

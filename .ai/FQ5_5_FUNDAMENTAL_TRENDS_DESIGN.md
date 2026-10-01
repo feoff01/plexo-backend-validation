@@ -1,7 +1,7 @@
 # FQ5.5 — Tendências Fundamentais PIT
 
 Data: 2026-09-30  
-Estado: **design aprovado para implementação pela autorização do usuário neste chat**
+Estado: **implementado e promovido; referência canônica do contrato FQ5.5**
 
 Pré-requisitos canônicos:
 - `.ai/WORKING_PROTOCOL.md`
