@@ -583,3 +583,11 @@ Estado:
 - nenhuma tool de peers foi aberta.
 
 Próximo gate imediato: PostgreSQL 18 para a ingestão shadow. Depois, obter bytes oficiais reais para parser + coverage real antes de FQ5.6B.
+
+
+## FQ5.6A2 GREEN — fechamento
+- shadow: `36ffa05f9cbacd51c04b7887f74be7036c972489`;
+- CI #63 / `36801883060`: 103 gate; 861 passed, 52 skipped, 19 warnings, 0 failed;
+- checkpoint: `.ai/checkpoints/2026-09-30_FQ5_6A2_SECTOR_INGEST_SHADOW_GREEN.md`;
+- parser físico e coverage real continuam pendentes;
+- FQ5.6B peers continua bloqueado até o coverage gate real.
