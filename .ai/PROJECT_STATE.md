@@ -525,3 +525,19 @@ Implementação shadow criada em `app/market/sector_ingest.py`:
 - coverage PIT por nível explícito, sem limiar inventado.
 
 Nenhuma migration, tool, engine Quant ou contrato público foi alterado. Próximo gate: CI PostgreSQL 18 do shadow. Parser e coverage real continuam dependentes de bytes oficiais da B3.
+
+
+## FQ5.6A2 — shadow GREEN — 2026-09-30
+
+A fundação semântica de ingestão setorial está validada em PostgreSQL 18.
+
+Prova:
+- código: `36ffa05f9cbacd51c04b7887f74be7036c972489`;
+- run #63 / `36801883060`: success;
+- gate explícito: 103 passed;
+- suíte: 861 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync verdes e catálogo inalterado.
+
+Checkpoint: `.ai/checkpoints/2026-09-30_FQ5_6A2_SECTOR_INGEST_SHADOW_GREEN.md`.
+
+A camada aceita registros semânticos validados e não depende do layout UP2DATA. O parser físico continua bloqueado até bytes oficiais reais; portanto ainda não há coverage real e FQ5.6B peers permanece bloqueado.
