@@ -631,3 +631,12 @@ O bridge company-level foi encerrado no commit `4d7f17f9478f7e958e86cf8f15fac3b7
 O projetor agora consegue criar/reutilizar issuers para ações correntes por raiz B3 e a ingestão setorial oficial persiste por `issuer_id` sem exigir CNPJ artificial.
 
 Próximo gate estrutural: o acervo ainda não projeta `is_in_universe`. Design canônico: `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`. Recomendação: carteira vigente IBrA B3 -> `market.index_weights` -> projeção auditável do universo.
+
+
+## FQ5.6 — fonte IBrA atual materializada — 2026-10-02
+
+Três arquivos oficiais B3 de índices foram auditados. O CSV diário IBrA de 02/10/2026 é a fonte canônica do universo atual: 148 componentes e pesos fechando em 100%. Os outros dois arquivos confirmam exatamente os mesmos 148 membros.
+
+Cross-check com classificação B3: 146/148 tickers e 142/144 company codes têm setor/subsetor; gaps `RIAA3` e `SAUD3` permanecem explícitos.
+
+Próxima implementação: migration 0064 + parser/ingestão IBrA + projeção atual de `is_in_universe`. Sem histórico inventado.
