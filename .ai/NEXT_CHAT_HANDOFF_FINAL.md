@@ -691,3 +691,8 @@ Ler `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`. Universo IBrA está GREEN; `quan
 ## Benchmark peers — baseline candidate
 
 CI agora mede `quant.comparaveis_setor` em 2/8/20 peers antes de qualquer otimização. Ler `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`. Aguardar resultados antes de alterar a preparação.
+
+
+## Comparáveis — N+1 confirmado
+
+Baseline run #145: 38/98/218 queries em 2/8/20 peers, output ~4 KB. Próxima etapa obrigatória: loader batch isolado + equivalência numérica + benchmark pós-otimização. Não promover `quant.comparaveis_setor` antes disso.
