@@ -614,3 +614,13 @@ Documento: `.ai/FQ5_6_ECONOMATICA_AUX_SOURCE_DESIGN.md`.
 CI/dev prova somente o mecanismo; nenhum percentual obtido no seed descartável pode ser apresentado como cobertura de produção.
 
 Documento: .ai/FQ5_6_ECONOMATICA_COVERAGE_DRY_RUN_DESIGN.md.
+
+## 2026-10-01 — fonte oficial B3 por company code e FQ5.6B shadow
+
+**Decisão:** o download oficial B3 observado permite resolver o campo `CÓDIGO` de quatro caracteres para um único issuer somente com unicidade estrita; depois o pipeline volta ao contrato canônico CNPJ -> issuer. Não há fuzzy match nem inferência de segmento.
+
+**Nível disponível:** o XLSX fornece `setor` e `subsetor`. FQ5.6B pode iniciar em **shadow** usando subsetor/setor; `segmento` não é preenchido.
+
+**Promoção:** continua bloqueada até coverage real do catálogo Plexo ou export equivalente.
+
+Documento: `.ai/FQ5_6_B3_OFFICIAL_DOWNLOAD_CONTRACT.md`.
