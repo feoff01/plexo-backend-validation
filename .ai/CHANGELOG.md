@@ -521,3 +521,10 @@
 - migration 0064, index_weights e projeção IBrA validados em PostgreSQL 18;
 - 35 tools inalteradas;
 - coverage setorial externa do IBrA: 146/148 tickers.
+
+
+## 2026-10-02 — Design do benchmark de comparáveis
+- definido benchmark 2/8/20 peers;
+- query count, latência, resolved bytes e output bytes serão medidos;
+- proibida otimização prematura ou cópia de matemática;
+- nenhuma alteração de código nesta etapa documental.
