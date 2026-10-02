@@ -617,3 +617,8 @@ Registry: 35 tools; única adição é quant.comparaveis_setor shadow. As 34 ant
 Run #92 falhou somente por hash inválido no fixture e foi corrigido sem mudança de domínio.
 
 Promoção pública segue bloqueada por coverage real e performance.
+
+
+## FQ5.6 — identidade issuer é o gate atual — 2026-10-02
+
+Fonte B3 oficial e `quant.comparaveis_setor` shadow já estão GREEN. O bloqueio estrutural atual foi localizado: `tools/projetar_acervo.py` projeta instruments mas não issuers/issuer_id. Design canônico: `.ai/FQ5_6_ISSUER_IDENTITY_BRIDGE_DESIGN.md`.
