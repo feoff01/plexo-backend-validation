@@ -583,3 +583,11 @@ Implementado módulo read-only de coverage Economatica × catálogo Plexo e CLI 
 Dry-run read-only concluído e validado. Commit af58906642665056e3b244fe21a03629d4f7339a; run #75 36943721475 success; gate 110 passed; suíte 868 passed, 52 skipped, 19 warnings, 0 failed; 34 tools inalteradas.
 
 O export Economatica 2025 tem 478 ações B3 ativas, todas com setor/subsetor. Coverage real contra o catálogo de produção ainda não foi medida porque o CI usa seed reduzido e esta sessão não possui acesso ao banco Aiven. FQ5.6B permanece bloqueada.
+
+## FQ5.6A — fonte oficial B3 GREEN — 2026-10-01
+
+O arquivo oficial B3 foi materializado e integrado em shadow. Parser real: 373 registros, 0 duplicatas/conflitos. Adapter company code -> único issuer/CNPJ reutiliza `ingest_sector_records`.
+
+Run #81 `36949418008`: 116 gate; 874 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18/invariantes/prompts/tools sync verdes; 34 tools inalteradas.
+
+FQ5.6B está liberada apenas para **shadow** nos níveis subsetor/setor. Promoção pública segue dependente de coverage real.
