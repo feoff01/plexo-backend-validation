@@ -669,3 +669,8 @@ A classificação oficial B3 está GREEN e `quant.comparaveis_setor` continua sh
 ## FQ5.6 — IBrA atual materializado
 
 Ler `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`. O arquivo canônico de universo atual é `IBRADia_02-10-26.csv` (148 componentes, 100% de peso). Não inferir histórico. Próxima etapa: migration 0064 + parser/ingestão `index_weights` + projeção `is_in_universe`.
+
+
+## IBrA universe — shadow candidate
+
+Pipeline implementado conforme `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`: migration 0064, parser B3, `index_weights` e projeção `is_in_universe`. Aguardar CI PostgreSQL 18 antes de considerar GREEN. `quant.comparaveis_setor` continua oculta.
