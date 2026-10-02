@@ -535,3 +535,11 @@
 - benchmark dedicado no CI para 2/8/20 peers;
 - nenhuma lógica de `quant.comparaveis_setor` foi alterada ainda;
 - medição precede qualquer otimização.
+
+
+## 2026-10-02 — Baseline de performance de comparáveis
+- run #145 mediu 2/8/20 peers;
+- query count = 38/98/218 (~18 + 10×N);
+- output client-facing ficou ~4 KB e não escala com a tabela de peers;
+- N+1 classificado como dívida material antes da promoção;
+- nenhuma matemática alterada nesta medição.
