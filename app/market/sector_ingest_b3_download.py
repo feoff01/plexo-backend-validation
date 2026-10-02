@@ -16,7 +16,11 @@ from psycopg import AsyncConnection
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.market.b3_sector_source import B3SectorDownloadRecord
-from app.market.sector_ingest import (\n    SectorIssuerIngestReport,\n    SectorIssuerSourceRecord,\n    ingest_sector_issuer_records,\n)
+from app.market.sector_ingest import (
+    SectorIssuerIngestReport,
+    SectorIssuerSourceRecord,
+    ingest_sector_issuer_records,
+)
 
 _CODE = re.compile(r"^[A-Z0-9]{4}$")
 
