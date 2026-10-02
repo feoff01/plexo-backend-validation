@@ -457,3 +457,12 @@
 - dry-run read-only pronto para catálogo real;
 - 34 tools permanecem inalteradas;
 - coverage de produção continua explicitamente pendente; seed CI não é proxy de produção.
+
+## 2026-10-01 — FQ5.6A fonte oficial B3 GREEN
+- parser do XLSX oficial B3 adicionado;
+- adapter estrito de company code para issuer/CNPJ adicionado;
+- persistência continua em `ingest_sector_records`;
+- arquivo real validado em 373 registros;
+- run #81 verde: 116 gate; 874 passed, 52 skipped, 19 warnings;
+- 34 tools inalteradas;
+- FQ5.6B liberada apenas para shadow subsetor/setor.
