@@ -645,3 +645,14 @@ Próxima implementação: migration 0064 + parser/ingestão IBrA + projeção at
 ## FQ5.6 — IBrA universe shadow candidate — 2026-10-02
 
 Implementação candidata publicada: migration 0064 registra `ibra`; `app/market/b3_index_source.py` parseia o CSV diário B3; `app/market/index_portfolios.py` ingere `market.index_weights` somente com matching exato completo e projeta `is_in_universe` apenas para ações. O arquivo real foi validado localmente em 148 componentes, 100,000% de peso, 107.192.487.383 de quantidade teórica e referência 2026-10-02. Nenhuma tool pública foi alterada. Aguardar CI PostgreSQL 18.
+
+
+## FQ5.6 — IBrA universe GREEN — 2026-10-02
+
+O universo operacional atual de ações está implementado sobre a carteira oficial IBrA de 02/10/2026. Run #131 `37067155192` success: 124 gate; **882 passed, 52 skipped, 19 warnings, 0 failed**; prompts/tools sync verdes; 35 tools inalteradas.
+
+A fonte atual tem 148 componentes. Cross-check setorial B3: 146/148 tickers classificados; gaps RIAA3/SAUD3. O snapshot não cria histórico retroativo.
+
+Checkpoint: `.ai/checkpoints/2026-10-02_FQ5_6_IBRA_UNIVERSE_GREEN.md`.
+
+Próximo gate: benchmark performance/payload de `quant.comparaveis_setor`.

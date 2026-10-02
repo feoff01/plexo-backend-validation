@@ -592,3 +592,18 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] confirmar 35 tools sem drift;
 - [ ] checkpoint universe GREEN;
 - [ ] benchmark de `quant.comparaveis_setor`;
+
+
+### FQ5.6 — IBrA universe fechamento
+- [x] migration 0064;
+- [x] parser real: 148 componentes / 100,000%;
+- [x] ingestão append-only sem snapshot parcial;
+- [x] projeção atual de `is_in_universe`;
+- [x] run #131 PostgreSQL 18 GREEN;
+- [x] gate: 124 passed;
+- [x] full suite: 882 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts/tools sync verdes;
+- [x] 35 tools sem drift;
+- [x] registrar checkpoint GREEN;
+- [ ] benchmark performance/payload de `quant.comparaveis_setor`;
+- [ ] decidir promoção pública após benchmark.

@@ -674,3 +674,10 @@ Ler `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`. O arquivo canônico de universo
 ## IBrA universe — shadow candidate
 
 Pipeline implementado conforme `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`: migration 0064, parser B3, `index_weights` e projeção `is_in_universe`. Aguardar CI PostgreSQL 18 antes de considerar GREEN. `quant.comparaveis_setor` continua oculta.
+
+
+## IBrA universe — GREEN
+
+Checkpoint: `.ai/checkpoints/2026-10-02_FQ5_6_IBRA_UNIVERSE_GREEN.md`.
+
+Run #131 está totalmente verde: 124 gate; 882 passed, 52 skipped, 19 warnings; prompts/tools sync verdes; 35 tools inalteradas. O universo atual é derivado do IBrA 02/10/2026; não inferir histórico. Próximo passo: benchmark performance/payload de `quant.comparaveis_setor`, ainda shadow.

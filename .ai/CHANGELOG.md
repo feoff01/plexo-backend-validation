@@ -512,3 +512,12 @@
 - fail-closed se qualquer ticker do snapshot não resolver no catálogo;
 - adicionada projeção auditável do universo operacional atual apenas para ações;
 - histórico de membership continua em `index_weights`; nenhuma tool pública mudou.
+
+
+## 2026-10-02 — IBrA universe GREEN
+- run #130 detectou somente incompatibilidade de tipo no audit.object_id (texto vs UUID);
+- corrigido audit trail sem mudança da regra de domínio;
+- run #131 GREEN: 124 gate; 882 passed, 52 skipped, 19 warnings;
+- migration 0064, index_weights e projeção IBrA validados em PostgreSQL 18;
+- 35 tools inalteradas;
+- coverage setorial externa do IBrA: 146/148 tickers.
