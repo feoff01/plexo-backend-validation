@@ -82,6 +82,32 @@ def eh_mercado_a_vista(market_type: object, bdi_code: object) -> bool:
     return _codigo(market_type, 3) == MERCADO_A_VISTA and _codigo(bdi_code, 2) in BDI_A_VISTA
 
 
+def acoes_correntes_por_raiz(
+    registros: list[tuple[str, str, object]],
+) -> tuple[int | None, dict[str, list[str]]]:
+    """Agrupa somente ações observadas no ano mais recente por raiz B3.
+
+    ``registros`` contém ``(ticker, kind, ultima_data)``. A regra evita ligar
+    automaticamente tickers históricos/delistados a uma companhia atual só porque
+    reutilizam a mesma raiz de quatro caracteres.
+    """
+    anos = [getattr(data, "year", None) for _ticker, kind, data in registros if kind == "acao"]
+    anos = [ano for ano in anos if isinstance(ano, int)]
+    if not anos:
+        return None, {}
+    ano_corrente = max(anos)
+    por_raiz: dict[str, list[str]] = {}
+    for ticker, kind, data in registros:
+        if kind != "acao" or getattr(data, "year", None) != ano_corrente:
+            continue
+        raiz = raiz_b3_do_ticker(ticker)
+        if raiz is not None:
+            por_raiz.setdefault(raiz, []).append(str(ticker).strip().upper())
+    for raiz in por_raiz:
+        por_raiz[raiz] = sorted(set(por_raiz[raiz]))
+    return ano_corrente, dict(sorted(por_raiz.items()))
+
+
 def ticker_negociavel(ticker: object) -> bool:
     """Código de negociação válido da B3 (ver `_TICKER`). Fora do padrão, não é papel.
 
