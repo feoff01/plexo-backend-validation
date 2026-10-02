@@ -82,6 +82,13 @@ def eh_mercado_a_vista(market_type: object, bdi_code: object) -> bool:
     return _codigo(market_type, 3) == MERCADO_A_VISTA and _codigo(bdi_code, 2) in BDI_A_VISTA
 
 
+def raiz_b3_do_ticker(ticker: object) -> str | None:
+    """Raiz oficial B3 de quatro caracteres para um ticker negociável."""
+    if not ticker_negociavel(ticker):
+        return None
+    return str(ticker).strip().upper()[:4]
+
+
 def acoes_correntes_por_raiz(
     registros: list[tuple[str, str, object]],
 ) -> tuple[int | None, dict[str, list[str]]]:
