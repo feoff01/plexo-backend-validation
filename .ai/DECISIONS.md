@@ -642,3 +642,8 @@ quant.comparaveis_setor nasce 1.0.0 com exposed_to_llm=false. O XLSX oficial B3 
 A tool compõe peer_issuers, quant.valor_mercado, quant.tendencias_fundamentais e statistics.describe. Não replica fórmulas. O universo é company-level por issuer, exemplos são alfabéticos e não há ranking/recomendação.
 
 Promoção continua bloqueada por coverage real B3 x catálogo Plexo e benchmark de performance.
+
+
+## 2026-10-02 — issuer company-level é pré-requisito do catálogo B3
+
+O projetor COTAHIST deve criar/reutilizar issuer por raiz B3 para ações e preencher `issuer_id` sem inventar CNPJ. A ingestão setorial oficial deve persistir por `issuer_id` após resolução; CNPJ é uma rota de identidade, não requisito universal.
