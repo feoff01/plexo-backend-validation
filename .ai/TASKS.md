@@ -607,3 +607,13 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [x] registrar checkpoint GREEN;
 - [ ] benchmark performance/payload de `quant.comparaveis_setor`;
 - [ ] decidir promoção pública após benchmark.
+
+
+## FQ5.6 — benchmark peers
+- [x] desenhar benchmark antes de otimizar;
+- [ ] medir 2/8/20 peers;
+- [ ] registrar query count, latência e bytes de resolved/output;
+- [ ] confirmar que output não cresce com a tabela completa;
+- [ ] se N+1 material, implementar loader batch isolado;
+- [ ] benchmark pós-otimização;
+- [ ] somente depois preparar promoção pública.
