@@ -122,7 +122,7 @@ async def resolve_b3_sector_records(
     conn: AsyncConnection,
     records: Iterable[B3SectorDownloadRecord],
 ) -> tuple[list[SectorIssuerSourceRecord], B3SectorCodeResolutionReport]:
-    """Resolve company code oficial -> único issuer/CNPJ, sem escrita."""
+    """Resolve company code oficial -> único issuer, sem escrita."""
     by_code, received = _coalesce_records(records)
     matches = await _catalog_matches(conn, sorted(by_code))
 
@@ -181,7 +181,7 @@ async def ingest_b3_sector_download_records(
     file_hash: str,
     storage_key: str | None = None,
 ) -> B3SectorDownloadIngestReport:
-    """Resolve o download B3 e delega persistência à ingestão canônica CNPJ-based."""
+    """Resolve o download B3 e delega persistência à ingestão canônica por issuer."""
     resolved, resolution = await resolve_b3_sector_records(conn, records)
     if resolution.ambiguous_codes:
         raise B3SectorCodeAmbiguity(
