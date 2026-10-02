@@ -670,3 +670,8 @@ Documento: `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`.
 **Decisão:** `quant.comparaveis_setor` só será otimizada após benchmark reproduzível de queries, latência e payload. Se houver N+1 material, a correção será um loader batch novo que reutiliza engines de valuation/tendências; não serão copiadas fórmulas nem alteradas dependencies de tools públicas sem necessidade.
 
 Documento: `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`.
+
+
+## 2026-10-02 — N+1 em comparáveis é material e deve ser removido antes da promoção
+
+Baseline run #145: 38/98/218 queries para 2/8/20 peers, exatamente ~18 + 10×N. Output permanece ~4 KB, portanto o problema é preparação, não payload client-facing nem cálculo. Implementar loader batch isolado que reutiliza engines canônicos; não copiar fórmulas.
