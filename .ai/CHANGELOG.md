@@ -503,3 +503,12 @@
 - cross-check setorial oficial: 146/148 tickers, gaps RIAA3/SAUD3;
 - arquivos tratados como snapshots atuais, sem inferência histórica;
 - código ainda não alterado nesta etapa documental.
+
+
+## 2026-10-02 — IBrA universe shadow candidate
+- adicionada migration 0064 com `Índice Brasil Amplo B3`;
+- adicionado parser determinístico do CSV diário oficial B3;
+- adicionada ingestão append-only em `market.index_weights`;
+- fail-closed se qualquer ticker do snapshot não resolver no catálogo;
+- adicionada projeção auditável do universo operacional atual apenas para ações;
+- histórico de membership continua em `index_weights`; nenhuma tool pública mudou.
