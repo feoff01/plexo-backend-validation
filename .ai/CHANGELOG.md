@@ -494,3 +494,12 @@
 - gates intermediários capturaram erros de publicação/helper ausente e foram corrigidos sem mudança de domínio;
 - run #113 GREEN: 120 gate; 878 passed, 52 skipped, 19 warnings, 0 failed; 35 tools inalteradas;
 - criada `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`; nenhum `is_in_universe` foi marcado artificialmente.
+
+
+## 2026-10-02 — Auditoria dos arquivos B3 de índices
+- auditados 3 arquivos oficiais fornecidos pelo usuário;
+- IBrA diário 02/10/2026: 148 componentes, peso total 100%;
+- `AcoesIndices` e XLSX multiíndice confirmam os mesmos 148 membros;
+- cross-check setorial oficial: 146/148 tickers, gaps RIAA3/SAUD3;
+- arquivos tratados como snapshots atuais, sem inferência histórica;
+- código ainda não alterado nesta etapa documental.
