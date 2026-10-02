@@ -647,3 +647,10 @@ Promoção continua bloqueada por coverage real B3 x catálogo Plexo e benchmark
 ## 2026-10-02 — issuer company-level é pré-requisito do catálogo B3
 
 O projetor COTAHIST deve criar/reutilizar issuer por raiz B3 para ações e preencher `issuer_id` sem inventar CNPJ. A ingestão setorial oficial deve persistir por `issuer_id` após resolução; CNPJ é uma rota de identidade, não requisito universal.
+
+
+## 2026-10-02 — universo de ações deve ser objetivo e auditável
+
+**Decisão:** para a frente Analista/ações brasileiras, `is_in_universe` não será preenchido manualmente nem inferido da classificação setorial. O baseline recomendado é a carteira vigente do **IBrA B3**, ingerida em `market.index_weights`, porque o schema F22 já define essa tabela como fonte objetiva do universo.
+
+A implementação permanece bloqueada até materializar o arquivo oficial B3 da carteira vigente e congelar o layout real. Documento: `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`.
