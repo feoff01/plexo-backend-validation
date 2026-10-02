@@ -652,3 +652,8 @@ Estado:
 - 34 tools sem drift.
 
 Próxima etapa permitida: FQ5.6B em **shadow** com default `subsetor`. Promoção pública continua bloqueada até coverage real do catálogo Plexo.
+
+
+## Gate atual FQ5.6 — issuer identity bridge
+
+Ler `.ai/FQ5_6_ISSUER_IDENTITY_BRIDGE_DESIGN.md`. Fonte oficial B3 e peers shadow já estão GREEN; antes de promoção, preencher issuer_id no catálogo projetado, rodar coverage real e benchmark de peers.
