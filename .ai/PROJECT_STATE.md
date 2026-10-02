@@ -666,3 +666,8 @@ IBrA universe está GREEN. O próximo e último gate técnico antes da preparaç
 ## FQ5.6 — benchmark baseline instrumentado — 2026-10-02
 
 Adicionado benchmark PostgreSQL 18 de `quant.comparaveis_setor` para 2/8/20 peers, medindo query count, latência de preparo/cálculo, resolved bytes e output bytes. Ainda não houve otimização; a intenção é observar o custo real primeiro.
+
+
+## FQ5.6 — benchmark baseline confirmou N+1 — 2026-10-02
+
+Run #145 mediu 38/98/218 queries para 2/8/20 peers, com output estável em ~4 KB. O custo cresce como 18 + 10×N; o cálculo puro é barato. Decisão: criar batch loader isolado antes de promoção, reutilizando engines existentes e preservando as outras tools.
