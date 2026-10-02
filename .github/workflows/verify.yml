@@ -101,6 +101,7 @@ jobs:
           tests/test_fq56_economatica_coverage_db.py
           tests/test_fq56_b3_sector_source.py
           tests/test_fq56_b3_sector_ingest_db.py
+          tests/test_fq56_peer_comparison_db.py
           tests/test_fq56_sector_ingest_db.py
 
       - name: suíte Python completa
