@@ -518,3 +518,18 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] benchmark de performance/payload;
 - [ ] planner/blocos/golden somente após autorização de promoção;
 - [ ] promover apenas após coverage + performance + gates.
+
+
+## FQ5.6B — peers shadow
+- [x] design reuse-before-build;
+- [x] quant.comparaveis_setor 1.0.0 oculta;
+- [x] subsetor default / setor opt-in / sem segmento;
+- [x] reutilizar valuation, tendências e statistics;
+- [x] multi-classe deduplicada por issuer e target excluído;
+- [x] E2E contra tools canônicas;
+- [x] run #93: 118 gate; 876/52/19/0;
+- [x] prompts/tools sync verdes;
+- [ ] coverage real B3 x catálogo Plexo;
+- [ ] benchmark de performance/payload;
+- [ ] planner/blocos/golden somente após autorização de promoção;
+- [ ] promover apenas após coverage + performance + gates.
