@@ -528,3 +528,10 @@
 - query count, latência, resolved bytes e output bytes serão medidos;
 - proibida otimização prematura ou cópia de matemática;
 - nenhuma alteração de código nesta etapa documental.
+
+
+## 2026-10-02 — Instrumentação do benchmark de peers
+- adicionado `tests/test_fq56_peer_performance_db.py`;
+- benchmark dedicado no CI para 2/8/20 peers;
+- nenhuma lógica de `quant.comparaveis_setor` foi alterada ainda;
+- medição precede qualquer otimização.
