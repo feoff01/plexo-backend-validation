@@ -627,3 +627,15 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] executar baseline no PostgreSQL 18;
 - [ ] decidir se N+1 é material;
 - [ ] otimizar somente se necessário.
+
+
+### FQ5.6 — benchmark baseline observado
+- [x] run #145 baseline GREEN;
+- [x] 2 peers: 38 queries / ~4,0 KB output;
+- [x] 8 peers: 98 queries / ~4,2 KB output;
+- [x] 20 peers: 218 queries / ~4,2 KB output;
+- [x] classificar N+1 como material;
+- [ ] implementar loader batch isolado;
+- [ ] provar equivalência contra tools canônicas;
+- [ ] benchmark pós-otimização;
+- [ ] promover somente se performance + equivalência + gates verdes.
