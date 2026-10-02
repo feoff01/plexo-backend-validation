@@ -484,3 +484,13 @@
 - decidido não criar CNPJ artificial nem catálogo paralelo;
 - projetor será estendido para issuer por raiz B3 e ingestão setorial compartilhará core por issuer_id;
 - nenhuma alteração de código nesta etapa documental.
+
+
+## 2026-10-02 — Issuer identity bridge GREEN + universo desenhado
+- projetor COTAHIST passa a criar/reutilizar issuer company-level para ações correntes e preencher `issuer_id` sem sintetizar CNPJ;
+- seleção de raízes restringida ao ano mais recente observado para evitar ligação automática de tickers históricos/delistados;
+- persistência setorial refatorada para core por issuer_id, preservando a rota CNPJ;
+- download B3 oficial agora pode persistir setor/subsetor mesmo com issuer sem CNPJ;
+- gates intermediários capturaram erros de publicação/helper ausente e foram corrigidos sem mudança de domínio;
+- run #113 GREEN: 120 gate; 878 passed, 52 skipped, 19 warnings, 0 failed; 35 tools inalteradas;
+- criada `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`; nenhum `is_in_universe` foi marcado artificialmente.
