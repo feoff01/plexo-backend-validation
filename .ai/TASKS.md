@@ -488,3 +488,18 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] registrar matched/unmatched e coverage company-level observada;
 - [ ] decidir source + nível da FQ5.6B;
 - [ ] somente então abrir quant.comparaveis_setor.
+
+### FQ5.6A B3 oficial — fechamento GREEN
+- [x] arquivo oficial auditado e hash registrado;
+- [x] parser XLSX real;
+- [x] adapter company code -> único issuer -> CNPJ;
+- [x] reutilizar ingestão canônica sem duplicar persistência;
+- [x] PostgreSQL 18 run #81;
+- [x] gate 116 passed;
+- [x] full suite 874/52/19/0;
+- [x] prompts/tools sync verdes;
+- [x] 34 tools sem drift;
+- [x] checkpoint GREEN;
+- [ ] medir coverage real do catálogo Plexo/export equivalente;
+- [ ] implementar FQ5.6B somente em shadow, default subsetor;
+- [ ] não promover FQ5.6B antes do coverage real.
