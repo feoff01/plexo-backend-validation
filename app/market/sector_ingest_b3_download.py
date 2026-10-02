@@ -16,7 +16,7 @@ from psycopg import AsyncConnection
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.market.b3_sector_source import B3SectorDownloadRecord
-from app.market.sector_ingest import SectorIngestReport, SectorSourceRecord, ingest_sector_records
+from app.market.sector_ingest import (\n    SectorIssuerIngestReport,\n    SectorIssuerSourceRecord,\n    ingest_sector_issuer_records,\n)
 
 _CODE = re.compile(r"^[A-Z0-9]{4}$")
 
@@ -41,7 +41,7 @@ class B3SectorDownloadIngestReport(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     resolution: B3SectorCodeResolutionReport
-    ingest: SectorIngestReport
+    ingest: SectorIssuerIngestReport
 
 
 @dataclass(frozen=True)
@@ -117,12 +117,12 @@ async def _catalog_matches(
 async def resolve_b3_sector_records(
     conn: AsyncConnection,
     records: Iterable[B3SectorDownloadRecord],
-) -> tuple[list[SectorSourceRecord], B3SectorCodeResolutionReport]:
+) -> tuple[list[SectorIssuerSourceRecord], B3SectorCodeResolutionReport]:
     """Resolve company code oficial -> único issuer/CNPJ, sem escrita."""
     by_code, received = _coalesce_records(records)
     matches = await _catalog_matches(conn, sorted(by_code))
 
-    resolved: list[SectorSourceRecord] = []
+    resolved: list[SectorIssuerSourceRecord] = []
     unresolved: list[str] = []
     ambiguous: list[str] = []
     without_cnpj: list[str] = []
@@ -139,11 +139,10 @@ async def resolve_b3_sector_records(
         issuer = issuer_matches[0]
         if issuer.cnpj is None:
             without_cnpj.append(code)
-            continue
         source = by_code[code]
         resolved.append(
-            SectorSourceRecord(
-                issuer_cnpj=issuer.cnpj,
+            SectorIssuerSourceRecord(
+                issuer_id=issuer.issuer_id,
                 economic_sector=source.economic_sector,
                 subsector=source.subsector,
                 segment=None,
@@ -187,7 +186,7 @@ async def ingest_b3_sector_download_records(
     if not resolved:
         raise ValueError("snapshot_b3_sem_codigo_resolvido")
 
-    ingest_report = await ingest_sector_records(
+    ingest_report = await ingest_sector_issuer_records(
         conn,
         resolved,
         reference_date=reference_date,
