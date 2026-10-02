@@ -656,3 +656,8 @@ A fonte atual tem 148 componentes. Cross-check setorial B3: 146/148 tickers clas
 Checkpoint: `.ai/checkpoints/2026-10-02_FQ5_6_IBRA_UNIVERSE_GREEN.md`.
 
 Próximo gate: benchmark performance/payload de `quant.comparaveis_setor`.
+
+
+## FQ5.6 — benchmark de peers aberto — 2026-10-02
+
+IBrA universe está GREEN. O próximo e último gate técnico antes da preparação de promoção é medir performance/payload de `quant.comparaveis_setor` shadow. Design: `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`.
