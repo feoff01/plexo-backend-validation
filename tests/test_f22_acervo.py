@@ -186,3 +186,24 @@ async def test_cobertura_mercado_nao_cresce_com_o_universo(db):
     assert len(linhas) <= 12, f"cobertura voltou a listar papel a papel ({len(linhas)} linhas)"
     assert len(texto) < 1200, f"cobertura com {len(texto)} caracteres — teto de prompt estourado"
     assert "resolver_instrumento" in texto, "o agente precisa saber como checar um papel específico"
+
+
+def test_raiz_b3_do_ticker_usa_os_quatro_caracteres_do_contrato():
+    assert acervo.raiz_b3_do_ticker("PETR4") == "PETR"
+    assert acervo.raiz_b3_do_ticker("B3SA3") == "B3SA"
+    assert acervo.raiz_b3_do_ticker("G2DI33") == "G2DI"
+    assert acervo.raiz_b3_do_ticker("MRSA3B") == "MRSA"
+    assert acervo.raiz_b3_do_ticker("PETR") is None
+
+
+def test_acoes_correntes_por_raiz_exclui_ticker_historico():
+    from datetime import date
+
+    ano, por_raiz = acervo.acoes_correntes_por_raiz([
+        ("PETR3", "acao", date(2026, 9, 30)),
+        ("PETR4", "acao", date(2026, 9, 30)),
+        ("BIDI11", "acao", date(2021, 12, 31)),
+        ("BOVA11", "etf", date(2026, 9, 30)),
+    ])
+    assert ano == 2026
+    assert por_raiz == {"PETR": ["PETR3", "PETR4"]}
