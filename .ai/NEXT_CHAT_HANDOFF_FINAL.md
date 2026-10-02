@@ -638,3 +638,17 @@ Módulo e CLI read-only implementados; aguardar CI. Importante: resultado do CI/
 Checkpoint: .ai/checkpoints/2026-10-01_FQ5_6_ECONOMATICA_COVERAGE_GREEN.md.
 
 Run #75 está verde (110 gate; 868 passed, 52 skipped, 19 warnings; tools/prompts verdes). O próximo passo NÃO é criar peers: executar o dry-run no catálogo real ou usar export não sensível de market.instruments/issuers. O seed CI é deliberadamente reduzido e não fornece coverage de produção.
+
+## FQ5.6A oficial B3 — GREEN
+
+Ler `.ai/FQ5_6_B3_OFFICIAL_DOWNLOAD_CONTRACT.md` e `.ai/checkpoints/2026-10-01_FQ5_6_B3_OFFICIAL_SOURCE_GREEN.md`.
+
+Estado:
+- parser/adapter B3 oficial GREEN;
+- 373 company codes;
+- setor/subsetor disponíveis;
+- segmento ausente;
+- run #81 totalmente verde;
+- 34 tools sem drift.
+
+Próxima etapa permitida: FQ5.6B em **shadow** com default `subsetor`. Promoção pública continua bloqueada até coverage real do catálogo Plexo.
