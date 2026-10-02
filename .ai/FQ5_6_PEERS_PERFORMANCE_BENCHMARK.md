@@ -105,3 +105,23 @@ Antes de promoção pública:
 6. planner/bloco/golden;
 7. CI PostgreSQL 18 + suíte completa + prompts/tools sync;
 8. checkpoint em `.ai/`.
+
+
+## Baseline observado — run #145
+
+Run: #145 / `37068258563`.
+
+| peers | queries preparo | preparo ms | cálculo ms | resolved bytes | output bytes |
+|---:|---:|---:|---:|---:|---:|
+| 2 | 38 | 118,585 | 1,810 | 20.493 | 4.009 |
+| 8 | 98 | 261,056 | 3,384 | 57.477 | 4.171 |
+| 20 | 218 | 348,989 | 6,569 | 131.446 | 4.163 |
+
+Conclusões:
+- query count observado = **18 + 10 × N peers**;
+- há N+1 material na preparação;
+- o output client-facing já é compacto e praticamente constante (~4 KB);
+- o resolved payload interno cresce linearmente e chegou a ~131 KB com 20 peers;
+- o cálculo puro não é o gargalo.
+
+**Decisão:** implementar batch loader isolado antes da promoção. O gap é carregamento/orquestração, não matemática. O batch deve reutilizar os engines de valuation e tendências e preservar equivalência numérica contra as tools canônicas.
