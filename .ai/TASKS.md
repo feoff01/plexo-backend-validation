@@ -578,3 +578,17 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] registrar universe/coverage GREEN;
 - [ ] benchmark performance/payload de `quant.comparaveis_setor`;
 - [ ] promoção somente após gates verdes.
+
+
+### FQ5.6 — IBrA universe shadow candidate
+- [x] migration 0064 `ibra`;
+- [x] parser CSV diário B3 fail-closed;
+- [x] arquivo real validado: 148 / 100,000% / 2026-10-02;
+- [x] ingestão append-only `index_weights` com matching completo;
+- [x] snapshot incompleto falha antes de inserir;
+- [x] projeção `is_in_universe` somente para ações e idempotente;
+- [x] testes puros + DB no gate explícito;
+- [ ] CI PostgreSQL 18 GREEN;
+- [ ] confirmar 35 tools sem drift;
+- [ ] checkpoint universe GREEN;
+- [ ] benchmark de `quant.comparaveis_setor`;
