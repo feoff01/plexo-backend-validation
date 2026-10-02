@@ -664,3 +664,8 @@ Ler `.ai/FQ5_6_ISSUER_IDENTITY_BRIDGE_DESIGN.md`. Fonte oficial B3 e peers shado
 A classificação oficial B3 está GREEN e `quant.comparaveis_setor` continua shadow. O issuer identity bridge também está GREEN no run #113 (120 gate; 878/52/19/0; 35 tools inalteradas).
 
 **Próximo gate obrigatório:** ler `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`. O catálogo ainda deixa `is_in_universe=false`; não usar classificação setorial nem lista manual como proxy. A regra recomendada para ações é ingerir a carteira vigente do IBrA B3 em `market.index_weights` e derivar o universo de forma auditável. Depois: coverage real + benchmark de peers -> somente então promoção.
+
+
+## FQ5.6 — IBrA atual materializado
+
+Ler `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`. O arquivo canônico de universo atual é `IBRADia_02-10-26.csv` (148 componentes, 100% de peso). Não inferir histórico. Próxima etapa: migration 0064 + parser/ingestão `index_weights` + projeção `is_in_universe`.
