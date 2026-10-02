@@ -663,3 +663,10 @@ A implementação permanece bloqueada até materializar o arquivo oficial B3 da 
 A projeção de `is_in_universe` será derivada de `market.index_weights` do último snapshot IBrA `succeeded`. A ausência de histórico nos arquivos atuais é limitação explícita; não retrodata membership.
 
 Documento: `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`.
+
+
+## 2026-10-02 — medir comparáveis antes de otimizar
+
+**Decisão:** `quant.comparaveis_setor` só será otimizada após benchmark reproduzível de queries, latência e payload. Se houver N+1 material, a correção será um loader batch novo que reutiliza engines de valuation/tendências; não serão copiadas fórmulas nem alteradas dependencies de tools públicas sem necessidade.
+
+Documento: `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`.
