@@ -654,3 +654,12 @@ O projetor COTAHIST deve criar/reutilizar issuer por raiz B3 para ações e pree
 **Decisão:** para a frente Analista/ações brasileiras, `is_in_universe` não será preenchido manualmente nem inferido da classificação setorial. O baseline recomendado é a carteira vigente do **IBrA B3**, ingerida em `market.index_weights`, porque o schema F22 já define essa tabela como fonte objetiva do universo.
 
 A implementação permanece bloqueada até materializar o arquivo oficial B3 da carteira vigente e congelar o layout real. Documento: `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`.
+
+
+## 2026-10-02 — IBrA diário B3 define o universo atual de ações
+
+**Decisão:** usar `IBRADia_02-10-26.csv` como snapshot canônico do universo atual porque possui data diária explícita, ticker, quantidade teórica e peso total de 100%. `AcoesIndices_2026-10-02.csv` e o XLSX multiíndice são validação cruzada, não fonte histórica.
+
+A projeção de `is_in_universe` será derivada de `market.index_weights` do último snapshot IBrA `succeeded`. A ausência de histórico nos arquivos atuais é limitação explícita; não retrodata membership.
+
+Documento: `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`.
