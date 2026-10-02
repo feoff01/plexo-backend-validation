@@ -175,7 +175,7 @@ async def test_peer_comparison_shadow_reuses_canonical_metrics_and_dedupes_compa
             prior_income=6_000_000_000.0,
         )
 
-        batch = await _sector_batch(conn, "p")
+        batch = await _sector_batch(conn, "a")
         for iid in (ids["FQ5ON"], ids["FQ5PN"], pa3, pa4, pb3):
             await _sector(conn, iid, batch, subsector="Petroleo")
         await _sector(conn, ps3, batch, subsector="Distribuicao")
