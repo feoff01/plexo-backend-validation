@@ -38,7 +38,7 @@ class CountingConnection:
 
 async def _build_peers(conn, fq5_mundo, peer_count: int) -> None:
     source_id = fq5_mundo["ids"]["FQ5ON"]
-    batch = await _sector_batch(conn, "p")
+    batch = await _sector_batch(conn, "e")
     for iid in (fq5_mundo["ids"]["FQ5ON"], fq5_mundo["ids"]["FQ5PN"]):
         await _sector(conn, iid, batch, subsector="Benchmark Peers")
 
