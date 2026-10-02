@@ -533,3 +533,15 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] benchmark de performance/payload;
 - [ ] planner/blocos/golden somente após autorização de promoção;
 - [ ] promover apenas após coverage + performance + gates.
+
+
+## FQ5.6 — ponte issuer do catálogo
+- [x] identificar que `projetar_acervo` cria instruments sem issuers;
+- [x] desenhar ponte por raiz B3 com fail-closed;
+- [ ] implementar issuer linking no projetor;
+- [ ] refatorar ingestão setorial para core por issuer_id;
+- [ ] validar B3 setorial com issuer sem CNPJ;
+- [ ] PostgreSQL 18 + registry drift;
+- [ ] coverage real;
+- [ ] benchmark peers;
+- [ ] promoção somente após ambos verdes.
