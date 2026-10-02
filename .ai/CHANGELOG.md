@@ -466,3 +466,14 @@
 - run #81 verde: 116 gate; 874 passed, 52 skipped, 19 warnings;
 - 34 tools inalteradas;
 - FQ5.6B liberada apenas para shadow subsetor/setor.
+
+
+## 2026-10-01 — FQ5.6B peers shadow GREEN
+
+- adicionada quant.comparaveis_setor 1.0.0 com exposed_to_llm=false;
+- subsetor default; setor explícito; segmento fora;
+- métricas vêm de quant.valor_mercado e quant.tendencias_fundamentais; estatística usa statistics.describe;
+- distribuição usa todos os peers válidos; exemplos são compactos/alfabéticos;
+- run #92 detectou somente hash inválido em fixture;
+- run #93 GREEN: 118 gate; 876 passed, 52 skipped, 19 warnings, 0 failed;
+- registry 34 -> 35 apenas pela nova tool shadow.
