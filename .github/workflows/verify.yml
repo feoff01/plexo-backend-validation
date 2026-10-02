@@ -106,6 +106,9 @@ jobs:
           tests/test_fq56_peer_comparison_db.py
           tests/test_fq56_sector_ingest_db.py
 
+      - name: benchmark FQ5.6 peers
+        run: python -m pytest -q -s tests/test_fq56_peer_performance_db.py
+
       - name: suíte Python completa
         run: python -m pytest -q
 
