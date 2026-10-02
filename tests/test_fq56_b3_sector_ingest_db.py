@@ -41,7 +41,7 @@ async def test_b3_company_code_resolves_one_issuer_and_reuses_canonical_ingest(d
         resolved, resolution = await resolve_b3_sector_records(conn, [record])
         assert resolution.resolved_codes == 1
         assert resolution.unresolved_codes == []
-        assert resolved[0].issuer_cnpj == '33333333000101'
+        assert resolved[0].issuer_id == issuer
         assert resolved[0].segment is None
 
         report = await ingest_b3_sector_download_records(
@@ -69,7 +69,7 @@ async def test_b3_company_code_resolves_one_issuer_and_reuses_canonical_ingest(d
 
 
 @pytest.mark.asyncio
-async def test_b3_company_code_reports_unmatched_and_missing_cnpj(db):
+async def test_b3_company_code_reports_unmatched_and_allows_missing_cnpj(db):
     async with db.service_session() as conn:
         issuer = await _issuer(conn, 'Sem CNPJ', None)
         await _action(conn, issuer, 'NOCJ3')
@@ -78,11 +78,18 @@ async def test_b3_company_code_reports_unmatched_and_missing_cnpj(db):
             B3SectorDownloadRecord('MISS', 'Saúde', 'Serviços'),
         ]
         resolved, report = await resolve_b3_sector_records(conn, records)
-        assert resolved == []
+        assert len(resolved) == 1
+        assert resolved[0].issuer_id == issuer
+        assert report.resolved_codes == 1
         assert report.unresolved_codes == ['MISS']
         assert report.codes_without_cnpj == ['NOCJ']
         assert 'codigo_b3_sem_issuer' in report.warnings
         assert 'codigo_b3_issuer_sem_cnpj' in report.warnings
+
+        ingested = await ingest_b3_sector_download_records(
+            conn, records[:1], reference_date=date.today(), file_hash='e' * 64
+        )
+        assert ingested.ingest.rows_inserted == 1
 
 
 @pytest.mark.asyncio
