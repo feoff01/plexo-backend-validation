@@ -640,3 +640,8 @@ Três arquivos oficiais B3 de índices foram auditados. O CSV diário IBrA de 02
 Cross-check com classificação B3: 146/148 tickers e 142/144 company codes têm setor/subsetor; gaps `RIAA3` e `SAUD3` permanecem explícitos.
 
 Próxima implementação: migration 0064 + parser/ingestão IBrA + projeção atual de `is_in_universe`. Sem histórico inventado.
+
+
+## FQ5.6 — IBrA universe shadow candidate — 2026-10-02
+
+Implementação candidata publicada: migration 0064 registra `ibra`; `app/market/b3_index_source.py` parseia o CSV diário B3; `app/market/index_portfolios.py` ingere `market.index_weights` somente com matching exato completo e projeta `is_in_universe` apenas para ações. O arquivo real foi validado localmente em 148 componentes, 100,000% de peso, 107.192.487.383 de quantidade teórica e referência 2026-10-02. Nenhuma tool pública foi alterada. Aguardar CI PostgreSQL 18.
