@@ -145,6 +145,63 @@ def fechar_lote(conn, batch_id: str, *, status: str, rows: int | None, erro: str
         (status, rows, erro, batch_id))
 
 
+# --------------------------------------------------------------------------- identidade company-level
+def _vincular_emissores_acoes(conn, catalogo: dict[str, dict]) -> tuple[int, int, int]:
+    """Cria/reutiliza issuer para ações correntes do último ano observado.
+
+    A raiz B3 é usada somente para o catálogo corrente. Tickers históricos/delistados
+    não são ligados automaticamente, evitando colar companhias distintas por eventual
+    reutilização de raiz. CNPJ nunca é inventado.
+    """
+    _ano_corrente, por_raiz = acervo.acoes_correntes_por_raiz(
+        [(ticker, reg["kind"], reg["ultimo"]) for ticker, reg in catalogo.items()]
+    )
+    if not por_raiz:
+        return 0, 0, 0
+
+    tickers_correntes = sorted(t for tickers in por_raiz.values() for t in tickers)
+    existentes: dict[str, set[str]] = {root: set() for root in por_raiz}
+    for ticker, issuer_id in conn.execute(
+        """select upper(ticker), issuer_id::text
+             from market.instruments
+            where kind='acao' and ticker = any(%s::text[]) and issuer_id is not null""",
+        (tickers_correntes,),
+    ).fetchall():
+        root = acervo.raiz_b3_do_ticker(ticker)
+        if root is not None:
+            existentes.setdefault(root, set()).add(issuer_id)
+
+    conflitos = {root: ids for root, ids in existentes.items() if len(ids) > 1}
+    if conflitos:
+        detalhe = ", ".join(f"{root}={sorted(ids)}" for root, ids in sorted(conflitos.items()))
+        raise RuntimeError(f"raiz_b3_com_multiplos_issuers:{detalhe}")
+
+    criados = reutilizados = ligados = 0
+    for root, tickers in sorted(por_raiz.items()):
+        ids = existentes.get(root) or set()
+        if ids:
+            issuer_id = next(iter(ids))
+            reutilizados += 1
+        else:
+            mais_recente = max(tickers, key=lambda t: catalogo[t]["ultimo"])
+            issuer_name = catalogo[mais_recente]["issuer_name"] or root
+            issuer_id = conn.execute(
+                "insert into market.issuers (name, kind) values (%s, 'empresa') returning id::text",
+                (issuer_name,),
+            ).fetchone()[0]
+            criados += 1
+
+        ligados += conn.execute(
+            """update market.instruments
+                  set issuer_id = %s
+                where kind='acao' and ticker = any(%s::text[]) and issuer_id is null""",
+            (issuer_id, tickers),
+        ).rowcount
+
+    conn.commit()
+    return criados, reutilizados, ligados
+
+
 # --------------------------------------------------------------------------- instrumentos
 def cmd_instrumentos(conn, args) -> None:
     """Catálogo de papéis a partir dos COTAHIST: ticker, nome, ISIN, kind e classe."""
@@ -179,6 +236,7 @@ def cmd_instrumentos(conn, args) -> None:
         catalogo[tk] = {
             "kind": kind,
             "nome": acervo.nome_do_instrumento(linha["issuer_name"], linha["specification"]) or tk,
+            "issuer_name": acervo.nome_do_instrumento(linha["issuer_name"], "") or tk[:4],
             "classe": acervo.classe_de_ativo(kind),
             "isin": (str(isin).strip()[:12] if isin and str(isin).strip() else None),
             "primeiro": primeiro[tk],
@@ -258,6 +316,12 @@ def cmd_instrumentos(conn, args) -> None:
             (FONTE, [c for c, _ in antigos], [a for _, a in antigos])).rowcount
     conn.commit()
     print(f"aliases de ticker antigo: {aliases:,}")
+
+    criados, reutilizados, ligados = _vincular_emissores_acoes(conn, catalogo)
+    print(
+        f"issuers de ações: {criados:,} criados · {reutilizados:,} reutilizados · "
+        f"{ligados:,} instrumentos ligados"
+    )
 
 
 # --------------------------------------------------------------------------- preços
