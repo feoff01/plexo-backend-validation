@@ -63,6 +63,37 @@ class SectorSourceRecord(BaseModel):
         return (self.economic_sector, self.subsector, self.segment, self.listing_segment)
 
 
+class SectorIssuerSourceRecord(BaseModel):
+    """Classificação já resolvida para um issuer company-level."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    issuer_id: str = Field(min_length=1)
+    economic_sector: str | None = None
+    subsector: str | None = None
+    segment: str | None = None
+    listing_segment: str | None = None
+
+    @field_validator("issuer_id")
+    @classmethod
+    def _trim_issuer(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("issuer_id vazio")
+        return value
+
+    @field_validator("economic_sector", "subsector", "segment", "listing_segment")
+    @classmethod
+    def _trim_optional(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        value = value.strip()
+        return value or None
+
+    def classification_key(self) -> tuple[str | None, str | None, str | None, str | None]:
+        return (self.economic_sector, self.subsector, self.segment, self.listing_segment)
+
+
 class SectorIngestReport(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -75,6 +106,24 @@ class SectorIngestReport(BaseModel):
     unique_cnpjs: int = 0
     matched_issuers: int = 0
     unmatched_cnpjs: list[str] = Field(default_factory=list)
+    issuers_without_equity: list[str] = Field(default_factory=list)
+    classes_targeted: int = 0
+    rows_inserted: int = 0
+    rows_already_equal: int = 0
+    warnings: list[str] = Field(default_factory=list)
+
+
+class SectorIssuerIngestReport(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    batch_id: str | None = None
+    reused_existing_batch: bool = False
+    reference_date: date
+    source_code: str = SOURCE_B3
+    dataset: str = DATASET
+    records_received: int = 0
+    unique_issuers: int = 0
+    matched_issuers: int = 0
     issuers_without_equity: list[str] = Field(default_factory=list)
     classes_targeted: int = 0
     rows_inserted: int = 0
@@ -161,6 +210,174 @@ async def _existing_snapshot(
     }
 
 
+def _coalesce_issuer_records(
+    records: Iterable[SectorIssuerSourceRecord],
+) -> tuple[list[SectorIssuerSourceRecord], int]:
+    materialized = list(records)
+    by_issuer: dict[str, SectorIssuerSourceRecord] = {}
+    for record in materialized:
+        previous = by_issuer.get(record.issuer_id)
+        if previous is None:
+            by_issuer[record.issuer_id] = record
+            continue
+        if previous.classification_key() != record.classification_key():
+            raise SectorIngestConflict(f"fonte_setorial_divergente_mesmo_issuer:{record.issuer_id}")
+    return [by_issuer[key] for key in sorted(by_issuer)], len(materialized)
+
+
+async def _persist_desired(
+    conn: AsyncConnection,
+    desired: list[tuple[str, object]],
+    *,
+    batch_id: str,
+    source_code: str,
+    reference_date: date,
+    conflict_details: dict[str, object],
+) -> tuple[int, int]:
+    instrument_ids = [instrument_id for instrument_id, _ in desired]
+    existing = await _existing_snapshot(
+        conn, instrument_ids, source_code=source_code, reference_date=reference_date
+    )
+
+    already_equal = 0
+    pending: list[tuple[str, object]] = []
+    conflicts: list[str] = []
+    for instrument_id, record in desired:
+        current = existing.get(instrument_id)
+        key = record.classification_key()
+        if current is None:
+            pending.append((instrument_id, record))
+        elif current == key:
+            already_equal += 1
+        else:
+            conflicts.append(instrument_id)
+
+    if conflicts:
+        await ingest.fechar_lote(
+            conn, batch_id, status="failed", rows=0,
+            error="classificacao_setorial_conflitante_mesma_chave",
+            reference_date=reference_date,
+            details={**conflict_details, "conflicting_instrument_ids": sorted(conflicts)},
+        )
+        raise SectorIngestConflict(
+            "classificacao_setorial_conflitante_mesma_chave:" + ",".join(sorted(conflicts))
+        )
+
+    inserted = 0
+    if pending:
+        instrument_ids_p, economic_sectors, subsectors, segments, listing_segments = zip(
+            *[(iid, r.economic_sector, r.subsector, r.segment, r.listing_segment) for iid, r in pending]
+        )
+        cur = await conn.execute(
+            """insert into market.sector_classification
+                   (instrument_id, source_code, reference_date, economic_sector, subsector,
+                    segment, listing_segment, ingestion_batch_id)
+               select i, %s, %s, es, ss, sg, ls, %s
+                 from unnest(%s::uuid[], %s::text[], %s::text[], %s::text[], %s::text[])
+                      as t(i, es, ss, sg, ls)
+               on conflict (instrument_id, source_code, reference_date) do nothing""",
+            (source_code, reference_date, batch_id, list(instrument_ids_p), list(economic_sectors),
+             list(subsectors), list(segments), list(listing_segments)),
+        )
+        inserted = cur.rowcount
+
+    if inserted != len(pending):
+        after = await _existing_snapshot(
+            conn, [iid for iid, _ in pending], source_code=source_code, reference_date=reference_date
+        )
+        race_conflicts = [
+            iid for iid, record in pending if after.get(iid) != record.classification_key()
+        ]
+        if race_conflicts:
+            await ingest.fechar_lote(
+                conn, batch_id, status="partial", rows=inserted,
+                error="corrida_concorrente_classificacao_setorial",
+                reference_date=reference_date,
+                details={"conflicting_instrument_ids": sorted(race_conflicts)},
+            )
+            raise SectorIngestConflict(
+                "corrida_concorrente_classificacao_setorial:" + ",".join(sorted(race_conflicts))
+            )
+        already_equal += len(pending) - inserted
+    return inserted, already_equal
+
+
+async def ingest_sector_issuer_records(
+    conn: AsyncConnection,
+    records: Iterable[SectorIssuerSourceRecord],
+    *,
+    reference_date: date,
+    file_hash: str,
+    storage_key: str | None = None,
+    source_code: str = SOURCE_B3,
+    dataset: str = DATASET,
+) -> SectorIssuerIngestReport:
+    """Persiste classificação já resolvida por issuer, sem exigir CNPJ."""
+    unique_records, records_received = _coalesce_issuer_records(records)
+    if not unique_records:
+        raise ValueError("snapshot_setorial_issuer_vazio")
+    if reference_date > date.today():
+        raise ValueError("reference_date_setorial_no_futuro")
+    if not _HASH_HEX.fullmatch(file_hash):
+        raise ValueError("file_hash_setorial_invalido")
+    if source_code != SOURCE_B3:
+        raise ValueError("FQ5.6 v1 aceita somente source_code=b3")
+    if dataset != DATASET:
+        raise ValueError(f"dataset setorial v1 deve ser {DATASET}")
+
+    batch_id = await ingest.abrir_lote(
+        conn, source_code=source_code, dataset=dataset, file_hash=file_hash, reference_date=reference_date
+    )
+    if batch_id is None:
+        existing_batch = await ingest.lote_existente(
+            conn, source_code=source_code, dataset=dataset, file_hash=file_hash
+        )
+        return SectorIssuerIngestReport(
+            batch_id=existing_batch, reused_existing_batch=True, reference_date=reference_date,
+            source_code=source_code, dataset=dataset, records_received=records_received,
+            unique_issuers=len(unique_records), matched_issuers=0,
+            warnings=["arquivo_setorial_ja_ingerido"],
+        )
+    if storage_key:
+        await conn.execute(
+            "update market.ingestion_batches set storage_key = %s where id = %s and status = 'running'",
+            (storage_key, batch_id),
+        )
+
+    issuer_ids = [r.issuer_id for r in unique_records]
+    equities = await _equities_by_issuer(conn, issuer_ids)
+    without_equity: list[str] = []
+    desired: list[tuple[str, SectorIssuerSourceRecord]] = []
+    for record in unique_records:
+        ids = equities.get(record.issuer_id, [])
+        if not ids:
+            without_equity.append(record.issuer_id)
+            continue
+        desired.extend((iid, record) for iid in ids)
+
+    inserted, already_equal = await _persist_desired(
+        conn, desired, batch_id=batch_id, source_code=source_code, reference_date=reference_date,
+        conflict_details={"records_received": records_received, "unique_issuers": len(unique_records)},
+    )
+    warnings = ["issuer_setorial_sem_acao"] if without_equity else []
+    await ingest.fechar_lote(
+        conn, batch_id, status="succeeded", rows=inserted, reference_date=reference_date,
+        details={
+            "records_received": records_received, "unique_issuers": len(unique_records),
+            "matched_issuers": len(unique_records) - len(without_equity),
+            "issuers_without_equity": sorted(without_equity), "classes_targeted": len(desired),
+            "rows_already_equal": already_equal, "warnings": warnings,
+        },
+    )
+    return SectorIssuerIngestReport(
+        batch_id=batch_id, reference_date=reference_date, source_code=source_code, dataset=dataset,
+        records_received=records_received, unique_issuers=len(unique_records),
+        matched_issuers=len(unique_records) - len(without_equity),
+        issuers_without_equity=sorted(without_equity), classes_targeted=len(desired),
+        rows_inserted=inserted, rows_already_equal=already_equal, warnings=warnings,
+    )
+
+
 async def ingest_sector_records(
     conn: AsyncConnection,
     records: Iterable[SectorSourceRecord],
@@ -230,107 +447,17 @@ async def ingest_sector_records(
         matched_issuers += 1
         desired.extend((instrument_id, by_cnpj[cnpj]) for instrument_id in ids)
 
-    instrument_ids = [instrument_id for instrument_id, _ in desired]
-    existing = await _existing_snapshot(
+    inserted, already_equal = await _persist_desired(
         conn,
-        instrument_ids,
+        desired,
+        batch_id=batch_id,
         source_code=source_code,
         reference_date=reference_date,
+        conflict_details={
+            "records_received": records_received,
+            "unique_cnpjs": len(unique_records),
+        },
     )
-
-    already_equal = 0
-    pending: list[tuple[str, SectorSourceRecord]] = []
-    conflicts: list[str] = []
-    for instrument_id, record in desired:
-        current = existing.get(instrument_id)
-        if current is None:
-            pending.append((instrument_id, record))
-        elif current == record.classification_key():
-            already_equal += 1
-        else:
-            conflicts.append(instrument_id)
-
-    if conflicts:
-        await ingest.fechar_lote(
-            conn,
-            batch_id,
-            status="failed",
-            rows=0,
-            error="classificacao_setorial_conflitante_mesma_chave",
-            reference_date=reference_date,
-            details={
-                "conflicting_instrument_ids": sorted(conflicts),
-                "records_received": records_received,
-                "unique_cnpjs": len(unique_records),
-            },
-        )
-        raise SectorIngestConflict(
-            "classificacao_setorial_conflitante_mesma_chave:"
-            + ",".join(sorted(conflicts))
-        )
-
-    inserted = 0
-    if pending:
-        instrument_ids_p, economic_sectors, subsectors, segments, listing_segments = zip(
-            *[
-                (
-                    instrument_id,
-                    record.economic_sector,
-                    record.subsector,
-                    record.segment,
-                    record.listing_segment,
-                )
-                for instrument_id, record in pending
-            ]
-        )
-        cur = await conn.execute(
-            """insert into market.sector_classification
-                   (instrument_id, source_code, reference_date, economic_sector, subsector,
-                    segment, listing_segment, ingestion_batch_id)
-               select i, %s, %s, es, ss, sg, ls, %s
-                 from unnest(%s::uuid[], %s::text[], %s::text[], %s::text[], %s::text[])
-                      as t(i, es, ss, sg, ls)
-               on conflict (instrument_id, source_code, reference_date) do nothing""",
-            (
-                source_code,
-                reference_date,
-                batch_id,
-                list(instrument_ids_p),
-                list(economic_sectors),
-                list(subsectors),
-                list(segments),
-                list(listing_segments),
-            ),
-        )
-        inserted = cur.rowcount
-
-    if inserted != len(pending):
-        after = await _existing_snapshot(
-            conn,
-            [instrument_id for instrument_id, _ in pending],
-            source_code=source_code,
-            reference_date=reference_date,
-        )
-        race_conflicts = [
-            instrument_id
-            for instrument_id, record in pending
-            if after.get(instrument_id) != record.classification_key()
-        ]
-        if race_conflicts:
-            await ingest.fechar_lote(
-                conn,
-                batch_id,
-                status="partial",
-                rows=inserted,
-                error="corrida_concorrente_classificacao_setorial",
-                reference_date=reference_date,
-                details={"conflicting_instrument_ids": sorted(race_conflicts)},
-            )
-            raise SectorIngestConflict(
-                "corrida_concorrente_classificacao_setorial:"
-                + ",".join(sorted(race_conflicts))
-            )
-        already_equal += len(pending) - inserted
 
     warnings: list[str] = []
     if unmatched:
