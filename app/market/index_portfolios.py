@@ -365,7 +365,7 @@ async def project_current_equity_universe(
         actor_kind="job",
         action="market.universe.projected",
         object_kind="index_portfolio",
-        object_id=f"{index_code}:{reference_date.isoformat()}",
+        object_id=None,
         details={
             "index_code": index_code,
             "reference_date": reference_date.isoformat(),
