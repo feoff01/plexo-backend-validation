@@ -617,3 +617,13 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] se N+1 material, implementar loader batch isolado;
 - [ ] benchmark pós-otimização;
 - [ ] somente depois preparar promoção pública.
+
+
+### FQ5.6 — benchmark baseline candidate
+- [x] instrumentar cenários 2/8/20 peers;
+- [x] contar somente queries do preparo;
+- [x] medir resolved/output bytes e tempos;
+- [x] adicionar benchmark dedicado ao CI;
+- [ ] executar baseline no PostgreSQL 18;
+- [ ] decidir se N+1 é material;
+- [ ] otimizar somente se necessário.
