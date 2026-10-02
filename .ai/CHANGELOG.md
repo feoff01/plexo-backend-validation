@@ -477,3 +477,10 @@
 - run #92 detectou somente hash inválido em fixture;
 - run #93 GREEN: 118 gate; 876 passed, 52 skipped, 19 warnings, 0 failed;
 - registry 34 -> 35 apenas pela nova tool shadow.
+
+
+## 2026-10-02 — Design ponte de identidade issuer B3
+- identificado gap entre catálogo de instrumentos e identidade company-level;
+- decidido não criar CNPJ artificial nem catálogo paralelo;
+- projetor será estendido para issuer por raiz B3 e ingestão setorial compartilhará core por issuer_id;
+- nenhuma alteração de código nesta etapa documental.
