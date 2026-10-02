@@ -591,3 +591,16 @@ O arquivo oficial B3 foi materializado e integrado em shadow. Parser real: 373 r
 Run #81 `36949418008`: 116 gate; 874 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18/invariantes/prompts/tools sync verdes; 34 tools inalteradas.
 
 FQ5.6B está liberada apenas para **shadow** nos níveis subsetor/setor. Promoção pública segue dependente de coverage real.
+
+
+## FQ5.6B — peers shadow GREEN — 2026-10-01
+
+quant.comparaveis_setor 1.0.0 está registrada e oculta do LLM. Subsetor é default; setor é opt-in.
+
+Run #93 (36950608900): 118 gate; 876 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, invariantes, prompts e tools sync verdes.
+
+Registry: 35 tools; única adição é quant.comparaveis_setor shadow. As 34 anteriores não tiveram semver/exposição alterados.
+
+Run #92 falhou somente por hash inválido no fixture e foi corrigido sem mudança de domínio.
+
+Promoção pública segue bloqueada por coverage real e performance.
