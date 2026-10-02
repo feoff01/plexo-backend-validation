@@ -661,3 +661,8 @@ Próximo gate: benchmark performance/payload de `quant.comparaveis_setor`.
 ## FQ5.6 — benchmark de peers aberto — 2026-10-02
 
 IBrA universe está GREEN. O próximo e último gate técnico antes da preparação de promoção é medir performance/payload de `quant.comparaveis_setor` shadow. Design: `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`.
+
+
+## FQ5.6 — benchmark baseline instrumentado — 2026-10-02
+
+Adicionado benchmark PostgreSQL 18 de `quant.comparaveis_setor` para 2/8/20 peers, medindo query count, latência de preparo/cálculo, resolved bytes e output bytes. Ainda não houve otimização; a intenção é observar o custo real primeiro.
