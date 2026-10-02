@@ -632,3 +632,9 @@ Implementar read-only e validar no CI; FQ5.6B só pode ser desbloqueada após ex
 ## Coverage dry-run Economatica — shadow candidate
 
 Módulo e CLI read-only implementados; aguardar CI. Importante: resultado do CI/dev não é coverage de produção. Próximo gate continua sendo execução no catálogo real ou export equivalente.
+
+## Coverage Economatica — infraestrutura GREEN
+
+Checkpoint: .ai/checkpoints/2026-10-01_FQ5_6_ECONOMATICA_COVERAGE_GREEN.md.
+
+Run #75 está verde (110 gate; 868 passed, 52 skipped, 19 warnings; tools/prompts verdes). O próximo passo NÃO é criar peers: executar o dry-run no catálogo real ou usar export não sensível de market.instruments/issuers. O seed CI é deliberadamente reduzido e não fornece coverage de produção.

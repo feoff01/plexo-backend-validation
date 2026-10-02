@@ -474,3 +474,17 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] executar sobre catálogo real/export equivalente;
 - [ ] registrar coverage observada;
 - [ ] decidir FQ5.6B.
+
+### FQ5.6 coverage dry-run — fechamento de infraestrutura
+- [x] módulo read-only;
+- [x] CLI com transação read-only;
+- [x] E2E PostgreSQL;
+- [x] gate #75: 110 passed;
+- [x] full suite: 868 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts/tools sync verdes;
+- [x] 34 tools sem drift;
+- [x] registrar checkpoint GREEN;
+- [ ] executar coverage contra catálogo real ou export equivalente;
+- [ ] registrar matched/unmatched e coverage company-level observada;
+- [ ] decidir source + nível da FQ5.6B;
+- [ ] somente então abrir quant.comparaveis_setor.

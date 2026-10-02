@@ -577,3 +577,9 @@ Próxima tranche: medir Economatica × catálogo Plexo sem escrita. O relatório
 ## FQ5.6 coverage dry-run — shadow implementado — 2026-10-01
 
 Implementado módulo read-only de coverage Economatica × catálogo Plexo e CLI operacional. O parser real do arquivo 2025 continua produzindo 478 ações B3 ativas, com setor/subsetor preenchidos. O CLI força transação read-only e não abre ingestion batch. Coverage de produção ainda não foi medida.
+
+## FQ5.6 coverage dry-run — infraestrutura GREEN — 2026-10-01
+
+Dry-run read-only concluído e validado. Commit af58906642665056e3b244fe21a03629d4f7339a; run #75 36943721475 success; gate 110 passed; suíte 868 passed, 52 skipped, 19 warnings, 0 failed; 34 tools inalteradas.
+
+O export Economatica 2025 tem 478 ações B3 ativas, todas com setor/subsetor. Coverage real contra o catálogo de produção ainda não foi medida porque o CI usa seed reduzido e esta sessão não possui acesso ao banco Aiven. FQ5.6B permanece bloqueada.

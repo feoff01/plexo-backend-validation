@@ -96,3 +96,8 @@ Antes de FQ5.6B:
 5. decisão explícita de source + nível (subsetor ou setor; segmento exige B3).
 
 Sem item 3, FQ5.6B permanece bloqueada por coverage real desconhecida.
+## 9. Implementação / gate — 2026-10-01
+
+Implementação concluída em shadow/read-only. Após correção de um typo de teste, commit af58906642665056e3b244fe21a03629d4f7339a passou no run #75 36943721475: 110 gate; 868 passed, 52 skipped, 19 warnings, 0 failed; 34 tools inalteradas.
+
+Estado: infraestrutura GREEN. Coverage real continua pendente porque o banco descartável não representa o universo de produção. FQ5.6B segue bloqueada até execução real/export equivalente.

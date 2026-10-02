@@ -450,3 +450,10 @@
 - relatório ticker-level + issuer-level;
 - novo E2E DB no gate;
 - nenhuma tool pública, migration ou ingestão nova nesta tranche.
+
+## 2026-10-01 — Coverage dry-run Economatica GREEN
+- corrigido typo de teste revelado pelo primeiro CI; nenhuma lógica de domínio mudou;
+- run #75 verde: 110 gate; 868 passed, 52 skipped, 19 warnings;
+- dry-run read-only pronto para catálogo real;
+- 34 tools permanecem inalteradas;
+- coverage de produção continua explicitamente pendente; seed CI não é proxy de produção.
