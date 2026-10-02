@@ -633,3 +633,12 @@ quant.comparaveis_setor nasce 1.0.0 com exposed_to_llm=false. O XLSX oficial B3 
 A tool compõe peer_issuers, quant.valor_mercado, quant.tendencias_fundamentais e statistics.describe. Não replica fórmulas. O universo é company-level por issuer, exemplos são alfabéticos e não há ranking/recomendação.
 
 Promoção continua bloqueada por coverage real B3 x catálogo Plexo e benchmark de performance.
+
+
+## 2026-10-01 — FQ5.6B peers em shadow com subsetor como default
+
+quant.comparaveis_setor nasce 1.0.0 com exposed_to_llm=false. O XLSX oficial B3 atual materializa setor/subsetor, não segmento; por isso subsetor é default e setor é opt-in.
+
+A tool compõe peer_issuers, quant.valor_mercado, quant.tendencias_fundamentais e statistics.describe. Não replica fórmulas. O universo é company-level por issuer, exemplos são alfabéticos e não há ranking/recomendação.
+
+Promoção continua bloqueada por coverage real B3 x catálogo Plexo e benchmark de performance.
