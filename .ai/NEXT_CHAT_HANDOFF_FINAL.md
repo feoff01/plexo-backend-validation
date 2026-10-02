@@ -686,3 +686,8 @@ Run #131 está totalmente verde: 124 gate; 882 passed, 52 skipped, 19 warnings; 
 ## Gate atual — performance de comparáveis
 
 Ler `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`. Universo IBrA está GREEN; `quant.comparaveis_setor` continua shadow. Medir baseline 2/8/20 peers e só criar batch loader se o N+1 for material.
+
+
+## Benchmark peers — baseline candidate
+
+CI agora mede `quant.comparaveis_setor` em 2/8/20 peers antes de qualquer otimização. Ler `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`. Aguardar resultados antes de alterar a preparação.
