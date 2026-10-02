@@ -622,3 +622,12 @@ Promoção pública segue bloqueada por coverage real e performance.
 ## FQ5.6 — identidade issuer é o gate atual — 2026-10-02
 
 Fonte B3 oficial e `quant.comparaveis_setor` shadow já estão GREEN. O bloqueio estrutural atual foi localizado: `tools/projetar_acervo.py` projeta instruments mas não issuers/issuer_id. Design canônico: `.ai/FQ5_6_ISSUER_IDENTITY_BRIDGE_DESIGN.md`.
+
+
+## FQ5.6 — issuer bridge GREEN / universo ainda pendente — 2026-10-02
+
+O bridge company-level foi encerrado no commit `4d7f17f9478f7e958e86cf8f15fac3b7f46033a8`, run #113 `37062697600`: 120 gate; 878 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes; 35 tools inalteradas.
+
+O projetor agora consegue criar/reutilizar issuers para ações correntes por raiz B3 e a ingestão setorial oficial persiste por `issuer_id` sem exigir CNPJ artificial.
+
+Próximo gate estrutural: o acervo ainda não projeta `is_in_universe`. Design canônico: `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`. Recomendação: carteira vigente IBrA B3 -> `market.index_weights` -> projeção auditável do universo.
