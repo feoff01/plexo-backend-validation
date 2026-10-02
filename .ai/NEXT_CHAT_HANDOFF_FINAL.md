@@ -681,3 +681,8 @@ Pipeline implementado conforme `.ai/FQ5_6_B3_IBRA_CURRENT_SOURCE_AUDIT.md`: migr
 Checkpoint: `.ai/checkpoints/2026-10-02_FQ5_6_IBRA_UNIVERSE_GREEN.md`.
 
 Run #131 está totalmente verde: 124 gate; 882 passed, 52 skipped, 19 warnings; prompts/tools sync verdes; 35 tools inalteradas. O universo atual é derivado do IBrA 02/10/2026; não inferir histórico. Próximo passo: benchmark performance/payload de `quant.comparaveis_setor`, ainda shadow.
+
+
+## Gate atual — performance de comparáveis
+
+Ler `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`. Universo IBrA está GREEN; `quant.comparaveis_setor` continua shadow. Medir baseline 2/8/20 peers e só criar batch loader se o N+1 for material.
