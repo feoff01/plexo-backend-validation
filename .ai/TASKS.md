@@ -545,3 +545,20 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] coverage real;
 - [ ] benchmark peers;
 - [ ] promoção somente após ambos verdes.
+
+
+### FQ5.6 — issuer bridge / universo
+- [x] issuer bridge GREEN — run #113;
+- [x] gate explícito 120 passed;
+- [x] full suite 878 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts/tools sync verdes; 35 tools inalteradas;
+- [x] registrar checkpoint do issuer bridge;
+- [x] auditar que `is_in_universe` ainda não é projetado pelo acervo;
+- [x] desenhar política objetiva com IBrA -> `market.index_weights`;
+- [ ] materializar arquivo oficial B3 da carteira definitiva vigente com IBrA;
+- [ ] congelar parser/fixture real;
+- [ ] se necessário criar migration 0064 apenas para index_definition `ibra`;
+- [ ] ingerir index_weights e projetar `is_in_universe`;
+- [ ] medir coverage B3 setor/subsetor no universo real;
+- [ ] benchmark performance/payload de `quant.comparaveis_setor`;
+- [ ] promoção somente após todos os gates verdes.
