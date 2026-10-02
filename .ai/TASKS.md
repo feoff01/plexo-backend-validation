@@ -562,3 +562,19 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] medir coverage B3 setor/subsetor no universo real;
 - [ ] benchmark performance/payload de `quant.comparaveis_setor`;
 - [ ] promoção somente após todos os gates verdes.
+
+
+## FQ5.6 — IBrA atual / universe projection
+- [x] auditar os 3 arquivos B3 recebidos;
+- [x] confirmar 148 componentes IBrA nos 3 contratos;
+- [x] confirmar peso diário total = 100%;
+- [x] medir cross-check setorial: 146/148 tickers e 142/144 company codes classificados;
+- [x] registrar gaps RIAA3/SAUD3 sem imputação;
+- [ ] migration 0064 registrar `ibra`;
+- [ ] parser fail-closed do CSV diário;
+- [ ] ingestão append-only `market.index_weights`;
+- [ ] projeção explícita `is_in_universe` somente para ações;
+- [ ] CI PostgreSQL 18 + registry sem drift;
+- [ ] registrar universe/coverage GREEN;
+- [ ] benchmark performance/payload de `quant.comparaveis_setor`;
+- [ ] promoção somente após gates verdes.
