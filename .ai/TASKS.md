@@ -639,3 +639,17 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] provar equivalência contra tools canônicas;
 - [ ] benchmark pós-otimização;
 - [ ] promover somente se performance + equivalência + gates verdes.
+
+
+### FQ5.6 — batch loader de peers
+- [x] desenhar batch loader sob reuse-before-build;
+- [x] implementar carga batch de identidade/classes/fundamentos/preços;
+- [x] reutilizar loaders canônicos para latest DFP e histórico;
+- [x] integrar somente em `quant.comparaveis_setor` shadow;
+- [x] adicionar teste de equivalência resolved + output;
+- [x] adicionar equivalência ao gate explícito;
+- [ ] CI PostgreSQL 18 GREEN;
+- [ ] benchmark pós-otimização 2/8/20;
+- [ ] registrar query count observado e criar regression gate;
+- [ ] confirmar 34 tools anteriores sem drift;
+- [ ] somente depois preparar promoção pública.
