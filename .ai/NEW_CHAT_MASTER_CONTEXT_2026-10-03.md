@@ -480,3 +480,11 @@ O commit que contém estes documentos pode ser posterior a essa base por ser doc
 O payload físico ANBIMA foi materializado: `CurvaZero_.csv`, 2.899 bytes, SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`, referência 02/10/2026. Fixture e parser físico fail-closed estão versionados. Cobertura observada: 65 vértices IPCA, 19 PRE e 19 inflação implícita. A consulta pública informa janela dos últimos cinco dias úteis; não assumir histórico ilimitado.
 
 `dados.curva_juros` 1.0.0 foi desenhada e implementada em shadow, compondo exclusivamente `load_yield_curve()`. Não interpola/extrapola e não faz forecast/choque/slope. Próximo gate: PostgreSQL 18 + suíte + prompts/tools sync; só depois decidir promoção pública.
+
+
+## 21. FQ5.7 client-facing GREEN
+`dados.curva_juros` 1.0.1 está pública/GREEN sobre `market.yield_curve`. O source gate físico ANBIMA foi fechado com `CurvaZero_.csv` (02/10/2026; 2.899 bytes; SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`), parser fail-closed e bridge para a ingestão semântica canônica. Coverage da fixture: 65 IPCA / 19 PRE / 19 inflação implícita.
+
+Run #249 / `37146548276`: 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. Catálogo: 36 total / 33 públicas / 3 ocultas.
+
+A v1 pública não interpola, extrapola, compara datas, calcula slope/curvature, duration/DV01, choque, forecast ou fair value. Não existe próxima FQ numerada já congelada; usar capability audit + reuse-before-build para selecionar a próxima frente ainda dentro de Company & Market Analytics.
