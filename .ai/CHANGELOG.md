@@ -712,3 +712,10 @@
 - planner usa a mesma `quant.risco_retorno`;
 - rolling vol/Sharpe/Sortino/Calmar/VaR/ES permanecem fora;
 - aguardando CI PostgreSQL antes de GREEN.
+
+### Correção de compatibilidade no gate #295
+- run #295 detectou 1 falha em golden de replay legacy por mudança de título no mapper compartilhado;
+- restaurado título histórico do bloco;
+- downside deviation e duração/recovery permanecem aditivos somente quando presentes no payload;
+- nenhuma matemática mudou;
+- novo CI obrigatório antes de GREEN.
