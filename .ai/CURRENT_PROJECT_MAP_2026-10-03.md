@@ -157,3 +157,14 @@ O commit que contém estes documentos pode ser posterior a essa base por ser doc
 - `dados.curva_juros` 1.0.0: shadow / não exposta;
 - sem interpolation/extrapolation/slope/forecast/choque;
 - próximo gate: PostgreSQL 18 + suíte completa + prompts/tools sync antes de promoção.
+
+
+## FQ5.7 — estado final
+- `dados.curva_juros` 1.0.1: pública/GREEN;
+- fonte: ANBIMA first-party física;
+- parser/fixture/hash/bridge/strict PIT: GREEN;
+- coverage física 02/10/2026: 65 IPCA / 19 PRE / 19 inflação implícita;
+- sem interpolation/extrapolation/delta/slope/DV01/choque/forecast;
+- run #249: 145 directed; full 906/52/19/0; prompts/tools sync GREEN;
+- catálogo: 36 total / 33 expostas / 3 ocultas;
+- próxima tranche ainda não numerada: capability audit de Company & Market Analytics + reuse-before-build.
