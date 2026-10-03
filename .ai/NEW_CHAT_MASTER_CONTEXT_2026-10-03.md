@@ -509,3 +509,11 @@ Target eventual: `quant.risco_retorno` 1.2.0. O contrato exige janela móvel exp
 
 Próximo passo: shadow interno não registrado + equivalência 1.1.0. PostgreSQL/cutover/promoção ficam para tranches posteriores.
 
+## Atualização — rolling volatility shadow GREEN
+
+O candidato rolling interno está implementado sem alterar a superfície pública. Commit funcional `bef38e7d2bc44e69bfc931f4d12ee9d7df3a00bd`; run #311 GREEN com 175 directed, 925 passed / 52 skipped / 19 warnings / 0 failed, prompts/tools sync GREEN.
+
+`quant.risco_retorno` permanece 1.1.0 pública. O shadow exige janela explícita, reutiliza `quant_risk.rolling_volatility()`, preserva integralmente o payload-base e compacta a série exibida por mês + cap 60.
+
+Próximo gate: integração PostgreSQL específica do shadow + semantics/payload/provenance/readiness. Cutover 1.2.0 continua bloqueado.
+
