@@ -204,3 +204,13 @@ Rolling volatility permanece somente no Quant Core; para expô-la será obrigat�
 - próximo gate = shadow interno + equivalência 1.1.0;
 - Brent/fair value continuam bloqueados por seus respectivos source/governance gates.
 
+## Atualização — rolling volatility shadow GREEN
+- shadow interno implementado em `_risco_retorno_rolling_shadow.py`;
+- sem tool nova, sem semver público novo e sem policy/planner/bloco;
+- `quant.risco_retorno` segue 1.1.0 pública;
+- run #311 / `37161330785` GREEN;
+- full suite: 925 passed / 52 skipped / 19 warnings / 0 failed;
+- rolling reutiliza Quant Core e exige janela explícita;
+- próximo gate = PostgreSQL específico do shadow + adjusted/raw + payload/provenance/readiness;
+- target 1.2.0 ainda não promovido.
+
