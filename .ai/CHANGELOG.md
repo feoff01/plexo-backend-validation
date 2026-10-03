@@ -659,3 +659,11 @@
 - fixture oficial ingere 103 linhas canônicas (65 IPCA + 19 PRE + 19 implícita);
 - gate dirigido ampliado para parser/bridge/tool shadow;
 - run #234 GREEN: 142 directed; full 903/52/19/0; prompts/tools sync GREEN.
+
+
+## 2026-10-03 — FQ5.7 promotion candidate
+- `dados.curva_juros` candidata 1.0.1 pública;
+- adicionado mapper client-facing determinístico;
+- planner distingue ETTJ ANBIMA de série Selic/IPCA e veta matemática não suportada;
+- catálogo do Analista/readiness/payload gate atualizados;
+- promoção ainda não considerada encerrada antes do CI.
