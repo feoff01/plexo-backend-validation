@@ -784,3 +784,7 @@ A ponte de bytes oficiais ANBIMA até `market.yield_curve` está fechada e GREEN
 
 ## FQ5.7 dados.curva_juros 1.0.1 pública/GREEN — run #249
 A capability de leitura exata da ETTJ oficial está encerrada. `dados.curva_juros` 1.0.1 está pública; catálogo = 36 tools, 33 expostas e 3 ocultas/replay. Fonte física ANBIMA, parser fail-closed, bridge de ingestão e strict PIT estão GREEN. Run #249 (`37146548276`): 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. Não há FQ5.8 congelada; antes de nova feature, retomar capability audit/roadmap dentro de Company & Market Analytics.
+
+## Composição oficial de índice — shadow candidate — 2026-10-03
+Reauditoria pós-FQ5.7 selecionou a leitura PIT de `market.index_weights` como próxima lacuna real. `dados.composicao_indice` 1.0.0 foi implementada em shadow (`exposed_to_llm=False`) sobre loader read-only, sem migration ou matemática nova. Estado ainda candidato até CI PostgreSQL 18.
+
