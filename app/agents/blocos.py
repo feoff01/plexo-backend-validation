@@ -55,6 +55,8 @@ AVISOS_CLIENTE: dict[str, str] = {
     "instrumento_desconhecido": "Não encontrei esse ativo no que a plataforma cobre hoje.",
     "instrumento_ambiguo": "Mais de um ativo corresponde a esse nome.",
     "indice_desconhecido": "Não encontrei esse índice ou taxa na cobertura de mercado atual.",
+    "composicao_indice_indisponivel": "Não há snapshot oficial de composição disponível para a data pedida.",
+    "composicao_indice_truncada": "A tabela mostra apenas parte dos componentes do snapshot; o total da carteira foi preservado.",
     "sem_eventos_condicao": "Não encontrei períodos na direção pedida dentro da janela analisada.",
     "driver_constante": "O driver não variou no período usado, então não existe sensibilidade linear identificável.",
     "sem_graus_liberdade_inferencia": "Há pares suficientes para traçar a reta, mas não para estimar a incerteza dela.",
@@ -892,6 +894,91 @@ def _event_study_v2(out: dict, eid: str, max_pontos: int) -> list[dict]:
     return blocks
 
 
+
+def _composicao_indice(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    rows = out.get("componentes")
+    if not isinstance(rows, list) or not rows:
+        return []
+    raw_prov = out.get("provenance") or {}
+    raw_warnings = list(raw_prov.get("warnings") or [])
+    fixed = [
+        warning for warning in raw_warnings
+        if not str(warning).startswith("ticker_fora_da_carteira:")
+    ]
+    avisos = _avisos(fixed)
+    for warning in raw_warnings:
+        text_warning = str(warning)
+        if text_warning.startswith("ticker_fora_da_carteira:"):
+            ticker = text_warning.split(":", 1)[1]
+            avisos.append(
+                f"{ticker} não aparece no snapshot oficial de composição selecionado."
+            )
+
+    linhas = []
+    for row in rows[:max_pontos]:
+        if not isinstance(row, dict):
+            continue
+        peso = _num(row.get("peso_pct"))
+        if not row.get("ticker") or peso is None:
+            continue
+        linhas.append({
+            "ticker": row.get("ticker"),
+            "nome": row.get("nome"),
+            "peso_pct": peso,
+            "quantidade_teorica": row.get("quantidade_teorica"),
+        })
+    if not linhas:
+        return []
+    if len(rows) > len(linhas):
+        frase = "A apresentação foi reduzida para caber no bloco; os pesos não foram recalculados."
+        if frase not in avisos:
+            avisos.append(frase)
+
+    prov = {
+        "fonte": ",".join(raw_prov.get("source_codes") or ["market"]),
+        "as_of": raw_prov.get("reference_date") or out.get("data_carteira"),
+        "cutoff_date": raw_prov.get("cutoff_date"),
+        "n": out.get("n_componentes_total"),
+        "metodo": raw_prov.get("temporal_semantics") or "official_index_snapshot",
+        "premissas": {
+            "membership": "snapshot_oficial_persistido",
+            "peso": "peso_oficial_sem_recalculo",
+        },
+        "avisos": list(dict.fromkeys(avisos)),
+        "lacunas": sum(
+            str(w).startswith("ticker_fora_da_carteira:") for w in raw_warnings
+        ),
+    }
+    indice = str(out.get("indice") or "").upper()
+    data_carteira = out.get("data_carteira")
+    total = out.get("n_componentes_total")
+    peso_total = _num(out.get("peso_total_pct"))
+    detalhes = []
+    if total is not None:
+        detalhes.append(f"{total} componentes")
+    if peso_total is not None:
+        detalhes.append(f"peso total {peso_total:.3f}%")
+    subtitulo = " · ".join(
+        [str(data_carteira)] + detalhes if data_carteira else detalhes
+    ) or None
+    nota = (
+        "Carteira oficial do índice em snapshot persistido; pesos e quantidades são fatos da fonte. "
+        "Não há inferência de membership em datas sem snapshot, nem análise de carteira do cliente, "
+        "ranking de atratividade ou recomendação. " + NOTA_MERCADO
+    )
+    return [_bloco(
+        "tabela", eid, 1, f"Composição oficial · {indice}".strip(),
+        {"colunas": [
+            {"chave": "ticker", "rotulo": "Ticker"},
+            {"chave": "nome", "rotulo": "Empresa"},
+            {"chave": "peso_pct", "rotulo": "Peso (%)"},
+            {"chave": "quantidade_teorica", "rotulo": "Quantidade teórica"},
+        ], "linhas": linhas},
+        prov,
+        nota,
+        subtitulo=subtitulo,
+    )]
+
 def _curva_juros(out: dict, eid: str, max_pontos: int) -> list[dict]:
     pontos = out.get("pontos")
     if not isinstance(pontos, list) or not pontos:
@@ -1402,6 +1489,7 @@ MAPEADORES: dict[str, Callable[[dict, str, int], list[dict]]] = {
     "dados.serie_indice": _serie_indice,
     "dados.fundamentos_empresa": _fundamentos_empresa,
     "dados.curva_juros": _curva_juros,
+    "dados.composicao_indice": _composicao_indice,
     "quant.retorno_volatilidade": _retorno_vol,
     "quant.correlacao": _correlacao,
     "quant.risco_retorno": _retorno_vol,
