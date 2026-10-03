@@ -552,3 +552,15 @@
 - `quant.comparaveis_setor` passou a construir os mesmos resolved models a partir do batch;
 - teste E2E compara resolved/output batch contra preparadores canônicos;
 - nenhuma fórmula nova e nenhuma tool pública alterada nesta etapa.
+
+
+## 2026-10-03 — Batch de peers GREEN e promoção candidata FQ5.6
+- run #157: 125 gate; 886 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark caiu de 38/98/218 queries para 10/10/10 em 2/8/20 peers;
+- output client-facing permaneceu ~4 KB;
+- equivalência batch vs preparadores canônicos passou;
+- benchmark virou regression gate (<=12 queries; output <5 KB);
+- `quant.comparaveis_setor` promovida como candidata 1.0.1 pública;
+- planner limita uso a comparação descritiva; sem ranking, recomendação ou fair value;
+- bloco compacto alvo vs mediana dos pares adicionado;
+- aguardando CI pós-promoção.
