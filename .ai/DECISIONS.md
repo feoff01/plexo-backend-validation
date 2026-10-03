@@ -764,3 +764,15 @@ A v1 pública permanece deliberadamente limitada a vértices oficiais publicados
 **Semver:** 1.0.1 -> 1.1.0 por funcionalidade pública aditiva.
 
 Design: `.ai/RISK_ADVANCED_CONTRACT_DESIGN_2026-10-03.md`.
+
+## 2026-10-03 — quant.risco_retorno 1.1.0 pública/GREEN
+
+**Decisão:** encerrar a evolução compacta de risco em 1.1.0 após CI completo GREEN.
+
+**Contrato:** downside deviation anualizada contra target periódico zero explicitado; duração/recovery do pior drawdown em intervalos observados; métricas históricas existentes preservadas.
+
+**Compatibilidade:** o gate #295 revelou mudança cosmética indevida no bloco compartilhado com replay legacy. O título histórico foi restaurado e o run #296 fechou verde.
+
+**Prova:** run #296 / `37154531785`: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18.6, prompts e tools sync verdes.
+
+**Consequência:** não criar tool paralela de downside/drawdown. Rolling volatility continua separada até existir contrato explícito de janela e compactação.
