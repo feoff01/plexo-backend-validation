@@ -98,3 +98,17 @@ Após promoção:
 - prompts check;
 - tools sync --check;
 - checkpoint final em .ai/.
+
+
+## Resultado final — 2026-10-03
+
+Promoção executada e validada no run #170 `37133499914`.
+
+- `quant.comparaveis_setor` 1.0.1 pública;
+- gate 128 passed;
+- benchmark 10/10/10 queries;
+- full suite 889 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync verdes;
+- checkpoint final: `.ai/checkpoints/2026-10-03_FQ5_6_PEERS_PROMOTION_GREEN.md`.
+
+FQ5.6 encerrada.
