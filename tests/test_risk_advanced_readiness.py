@@ -36,9 +36,9 @@ def _evidencia():
     }
 
 
-def test_risco_retorno_1_1_publico_sem_tool_paralela():
+def test_risco_retorno_1_2_publico_sem_tool_paralela():
     spec = spec_de("quant.risco_retorno")
-    assert spec.semver == "1.1.0"
+    assert spec.semver == "1.2.0"
     assert spec.exposed_to_llm is True
     visible = {
         s.code
