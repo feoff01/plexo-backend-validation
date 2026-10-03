@@ -742,3 +742,41 @@ Próxima frente deve começar por nova auditoria reuse-before-build; não abrir 
 - [ ] congelar parser físico contra bytes reais;
 - [ ] medir histórico efetivamente disponível;
 - [ ] somente depois decidir capability pública.
+
+
+## TAREFAS CANÔNICAS ATUAIS — 2026-10-03
+
+> Esta é a fila atual. Itens históricos antigos não devem ser reabertos automaticamente.
+
+### Encerrado
+- [x] FQ0.5–FQ4;
+- [x] consolidação factor/dependence;
+- [x] FQ5.1–FQ5.4;
+- [x] FQ5.5 `quant.tendencias_fundamentais` 1.0.1 pública;
+- [x] FQ5.6 issuer bridge / B3 / IBrA / batch loader;
+- [x] FQ5.6 `quant.comparaveis_setor` 1.0.1 pública;
+- [x] FQ5.7 foundation de yield curve GREEN;
+- [x] run #202: 135 gate; 896/52/19/0; prompts/tools sync verdes.
+
+### Próxima fila funcional
+- [ ] materializar payload físico oficial ANBIMA (CSV/XML/XLS ou JSON real da API);
+- [ ] congelar parser/fixture sem segredos;
+- [ ] medir cobertura histórica real;
+- [ ] criar design da primeira intenção client-facing de curva;
+- [ ] só depois decidir tool pública/semver/planner/bloco;
+- [ ] avaliar ponto de curva como fator compartilhado somente se pergunta real exigir sensibilidade/dependência.
+
+### Transversais ainda abertos
+- [ ] source priority/conflicts para múltiplas fontes de preço;
+- [ ] storage histórico Parquet/Postgres/híbrido;
+- [ ] vintage/availability de corporate actions/FX/macro revisável;
+- [ ] artifacts genéricos para outputs longos;
+- [ ] histórico B3 de setor/membership quando necessário;
+- [ ] fonte auditada de commodity/Brent;
+- [ ] fair value/reverse DCF somente com premissas governadas;
+- [ ] destino final de integração/deploy.
+
+### Fora do escopo
+- Portfolio Analytics;
+- suitability;
+- análise da carteira/vida financeira do cliente.
