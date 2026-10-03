@@ -105,6 +105,7 @@ jobs:
           tests/test_fq56_b3_index_universe_db.py
           tests/test_fq56_peer_comparison_db.py
           tests/test_fq56_peer_batch_equivalence_db.py
+          tests/test_fq56_promotion_readiness.py
           tests/test_fq56_sector_ingest_db.py
 
       - name: benchmark FQ5.6 peers
