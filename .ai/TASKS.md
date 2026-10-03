@@ -913,3 +913,15 @@ Transversais ainda abertas:
 - [ ] atualizar bloco/planner sem criar tool paralela;
 - [ ] rodar gate PostgreSQL 18 + suíte + prompts/tools sync;
 - [ ] checkpoint GREEN antes de abrir rolling volatility ou qualquer outra capacidade.
+
+## Risco histórico compacto — candidato implementado
+- [x] implementar `quant.risco_retorno` 1.1.0 de forma aditiva;
+- [x] reutilizar downside deviation do Risk Core;
+- [x] target periódico zero explícito no output/metodologia;
+- [x] apresentar duração/recovery em intervalos observados;
+- [x] planner mantém uma única tool canônica;
+- [x] readiness test + directed CI adicionados;
+- [ ] PostgreSQL 18 GREEN;
+- [ ] full suite GREEN;
+- [ ] prompts/tools sync GREEN;
+- [ ] checkpoint final antes de abrir próxima tranche.
