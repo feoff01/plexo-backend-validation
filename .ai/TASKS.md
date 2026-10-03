@@ -653,3 +653,19 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] registrar query count observado e criar regression gate;
 - [ ] confirmar 34 tools anteriores sem drift;
 - [ ] somente depois preparar promoção pública.
+
+
+### FQ5.6 — performance / promoção
+- [x] batch loader GREEN — run #157;
+- [x] query count pós-batch: 10/10/10 para 2/8/20 peers;
+- [x] output público ~4 KB;
+- [x] equivalência resolved + output GREEN;
+- [x] regression gate <=12 queries e <5 KB output;
+- [x] preparar promoção 1.0.1 pública;
+- [x] adicionar regra de planner sem ranking/recomendação/fair value;
+- [x] adicionar bloco compacto de comparação;
+- [x] adicionar promotion readiness ao gate;
+- [ ] CI pós-promoção totalmente GREEN;
+- [ ] confirmar 35 tools e drift somente da tool promovida;
+- [ ] checkpoint final FQ5.6;
+- [ ] somente depois abrir próxima frente analítica.
