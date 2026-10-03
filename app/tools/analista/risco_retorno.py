@@ -119,6 +119,8 @@ class RiscoRetornoOutput(BaseModel):
     retorno_acumulado_pct: float | None
     retorno_anualizado_pct: float | None
     vol_anualizada_pct: float | None
+    downside_deviation_anualizada_pct: float | None
+    downside_target_periodic_pct: float = Field(default=0.0, allow_inf_nan=False)
     max_drawdown_pct: float | None
     drawdown: DrawdownDetail | None = None
     evidencia: Evidencia
@@ -190,18 +192,20 @@ def _nota_metodo(r: RiscoRetornoResolvido) -> str:
         else "Fechamentos brutos publicados; o cutoff limita a data da observação, mas não garante vintage histórico."
     )
     return (
-        f"{base} Retorno {r.metodo_retorno.value} entre observações consecutivas; anualização geométrica e "
-        f"volatilidade = desvio-padrão amostral × raiz({r.dias_uteis_ano}); drawdown sobre o pico corrente. "
-        + NOTA_RCVM
+        f"{base} Retorno {r.metodo_retorno.value} entre observações consecutivas; anualização geométrica; "
+        f"volatilidade = desvio-padrão amostral × raiz({r.dias_uteis_ano}); downside deviation anualizada "
+        f"usa target periódico 0% e raiz({r.dias_uteis_ano}); drawdown é medido contra o pico corrente, "
+        "com duração/recuperação em intervalos observados. " + NOTA_RCVM
     )
 
 
 @tool(
     code="quant.risco_retorno",
     family="quant",
-    semver="1.0.1",
+    semver="1.1.0",
     display_name="Risco e retorno histórico",
-    description=("Analisa retorno acumulado/anualizado, volatilidade anualizada e máximo drawdown de um ativo. "
+    description=("Analisa retorno acumulado/anualizado, volatilidade anualizada, downside deviation contra target "
+                 "periódico zero e máximo drawdown de um ativo, incluindo duração/recuperação do pior episódio. "
                  "Por padrão usa adjusted_close retrospectivo para evitar que corporate actions pareçam perdas/ganhos "
                  "mecânicos; raw_close pode ser pedido explicitamente. É análise histórica descritiva, não previsão."),
     preparar=preparar_risco_retorno,
@@ -236,19 +240,25 @@ def calcular_risco_retorno(r: RiscoRetornoResolvido) -> RiscoRetornoOutput:
     if serie is not None:
         avisos = _unique(avisos + serie.provenance.warnings)
 
-    acumulado = anualizado = vol = dd = None
+    acumulado = anualizado = vol = downside = dd = None
     drawdown: DrawdownDetail | None = None
     if suficiente and n >= 2:
         rets = [x.value for x in quant_returns.calculate_returns(pontos, r.metodo_retorno)]
         acumulado_raw = quant_returns.cumulative_price_return(pontos)
         anualizado_raw = quant_returns.annualized_price_return(pontos, periods_per_year=r.dias_uteis_ano)
         vol_raw = quant_risk.annualized_volatility(rets, periods_per_year=r.dias_uteis_ano)
+        downside_raw = quant_risk.annualized_downside_deviation(
+            rets,
+            target_return=0.0,
+            periods_per_year=r.dias_uteis_ano,
+        )
         dd_raw = quant_risk.maximum_drawdown(pontos)
         episodio = quant_risk.maximum_drawdown_episode(pontos)
 
         acumulado = acumulado_raw * 100 if acumulado_raw is not None else None
         anualizado = anualizado_raw * 100 if anualizado_raw is not None else None
         vol = vol_raw * 100 if vol_raw is not None else None
+        downside = downside_raw * 100 if downside_raw is not None else None
         dd = dd_raw * 100 if dd_raw is not None else None
         if episodio is not None:
             drawdown = DrawdownDetail(
@@ -283,6 +293,7 @@ def calcular_risco_retorno(r: RiscoRetornoResolvido) -> RiscoRetornoOutput:
             "retorno_acumulado_pct": acumulado,
             "retorno_anualizado_pct": anualizado,
             "vol_anualizada_pct": vol,
+            "downside_deviation_anualizada_pct": downside,
             "max_drawdown_pct": dd,
         },
         ingestion_batch_ids=prov.ingestion_batch_ids if prov is not None else [],
@@ -295,6 +306,8 @@ def calcular_risco_retorno(r: RiscoRetornoResolvido) -> RiscoRetornoOutput:
         retorno_acumulado_pct=acumulado,
         retorno_anualizado_pct=anualizado,
         vol_anualizada_pct=vol,
+        downside_deviation_anualizada_pct=downside,
+        downside_target_periodic_pct=0.0,
         max_drawdown_pct=dd,
         drawdown=drawdown,
         evidencia=ev,
