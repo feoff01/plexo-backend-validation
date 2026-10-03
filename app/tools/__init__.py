@@ -12,7 +12,7 @@ def carregar_tools() -> None:
         atencao, orcamento, patrimonio, planejamento, posicoes, produto, simulacao_objetivo,
     )
     from app.tools.educador import exemplo_didatico, glossario, juros_compostos  # noqa: F401
-    from app.tools.analista import (analise_condicional, cenario_sensibilidade, comparaveis_setor, correlacao, dependencia, dependencia_macro,  # noqa: F401
+    from app.tools.analista import (analise_condicional, cenario_sensibilidade, comparaveis_setor, correlacao, curva_juros, dependencia, dependencia_macro,  # noqa: F401
                                     event_study, event_study_v2, expectativas, fundamentos_empresa,
                                     historico_comparado, regimes, resolver_instrumento, retorno_volatilidade,
                                     risco_retorno, sensibilidade, serie_indice, serie_precos, tendencias_fundamentais,
