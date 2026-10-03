@@ -699,3 +699,8 @@ Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_6_PEERS_PROMOTION_GREEN.md`.
 Após FQ5.6 encerrada, nova auditoria reuse-before-build confirmou que `market.yield_curve` e source `anbima` já existem, mas não há consumer Python. A ANBIMA documenta ETTJ diária com vértices em d.u. e taxas prefixada/IPCA/inflação implícita. Design: `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`.
 
 Primeira tranche é somente fundação shadow (ingestão semântica + loader PIT), sem tool pública/OAuth/fórmula nova.
+
+
+## FQ5.7 — curva de juros foundation shadow candidate — 2026-10-03
+
+Implementada a fundação shadow sobre o schema existente `market.yield_curve`, sem migration e sem tool nova. `app/market/yield_curve_ingest.py` expande vértices ANBIMA para `ettj_pre`, `ettj_ipca` e `inflacao_implicita`; `app/market/yield_curves.py` resolve curvas PIT por `ingestion_batches.finished_at`. Taxas são normalizadas à precisão `numeric(12,6)` antes do gate append-only. Testes puros e PostgreSQL foram adicionados ao gate explícito. Aguardar CI PostgreSQL 18 antes de considerar GREEN.
