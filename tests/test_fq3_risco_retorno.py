@@ -142,6 +142,12 @@ def test_calculo_canonico_adjusted_e_compacto_com_drawdown_detalhado():
     assert out.periodo.n == 4
     assert out.retorno_acumulado_pct == pytest.approx(1.0)
     assert out.max_drawdown_pct == pytest.approx(-10.0)
+    assert out.downside_target_periodic_pct == 0.0
+    assert out.downside_deviation_anualizada_pct is not None
+    assert out.downside_deviation_anualizada_pct > 0.0
+    assert out.evidencia.metricas["downside_deviation_anualizada_pct"] == pytest.approx(
+        out.downside_deviation_anualizada_pct
+    )
     assert out.drawdown is not None
     assert out.drawdown.peak_date == date(2024, 1, 2)
     assert out.drawdown.trough_date == date(2024, 1, 3)
@@ -154,6 +160,14 @@ def test_calculo_canonico_adjusted_e_compacto_com_drawdown_detalhado():
     assert ADJUSTED_CLOSE_RETROSPECTIVE in out.evidencia.avisos
     assert CALENDAR_FALLBACK_FROM_PRICES in out.evidencia.avisos
     assert "pontos" not in out.model_dump(mode="json")
+
+
+def test_downside_deviation_zero_em_caminho_sem_retorno_negativo():
+    serie = _serie([100, 101, 102, 103])
+    out = risco_retorno.calcular_risco_retorno(_resolvido(serie))
+    assert out.downside_target_periodic_pct == 0.0
+    assert out.downside_deviation_anualizada_pct == pytest.approx(0.0)
+    assert out.evidencia.metricas["downside_deviation_anualizada_pct"] == pytest.approx(0.0)
 
 
 def test_raw_close_fica_rotulado_com_observation_date_cutoff():
@@ -179,6 +193,8 @@ def test_serie_insuficiente_nao_inventa_metricas():
     assert out.retorno_acumulado_pct is None
     assert out.retorno_anualizado_pct is None
     assert out.vol_anualizada_pct is None
+    assert out.downside_deviation_anualizada_pct is None
+    assert out.downside_target_periodic_pct == 0.0
     assert out.max_drawdown_pct is None
     assert out.drawdown is None
 
@@ -200,7 +216,7 @@ def test_instrumento_desconhecido_e_fora_da_cobertura_sao_diferentes():
 def test_tool_canonica_nasce_shadow_e_fingerprint_cobre_quant_core():
     carregar_tools()
     spec = spec_de("quant.risco_retorno")
-    assert spec.semver == "1.0.1"
+    assert spec.semver == "1.1.0"
     assert spec.exposed_to_llm is True
     names = {Path(path).name for path in spec.source_files}
     assert {
