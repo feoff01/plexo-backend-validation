@@ -719,3 +719,12 @@
 - downside deviation e duração/recovery permanecem aditivos somente quando presentes no payload;
 - nenhuma matemática mudou;
 - novo CI obrigatório antes de GREEN.
+
+## 2026-10-03 — quant.risco_retorno 1.1.0 GREEN
+- adicionada downside deviation anualizada contra target periódico zero explícito;
+- duração/recovery já existentes no drawdown passaram a aparecer no bloco em intervalos observados;
+- planner ampliado sem nova tool;
+- run #295 encontrou e o código corrigiu uma regressão cosmética de replay legacy;
+- run #296 / `37154531785` GREEN: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6, prompts/tools sync e benchmark peers verdes;
+- catálogo permanece 37 total / 34 expostas / 3 ocultas.
