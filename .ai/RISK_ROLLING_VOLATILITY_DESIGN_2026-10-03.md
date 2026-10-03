@@ -1,10 +1,10 @@
 # Company & Market Analytics — rolling volatility em quant.risco_retorno
 
 Data: 2026-10-03
-Estado: **design congelado para shadow interno; sem alteração pública**
+Estado: **PROMOVIDO / GREEN**
 Capability canônica: `quant.risco_retorno`
-Versão pública atual: **1.1.0**
-Versão-alvo eventual: **1.2.0**
+Versão pública atual: **1.2.0**
+Versão-alvo eventual: **1.2.0 — encerrada**
 
 ## 1. Intenção
 Permitir que a mesma capability responda perguntas históricas como:
@@ -146,3 +146,19 @@ Depois do shadow GREEN:
 ## 13. Próximo passo permitido
 Implementar **somente o shadow interno não registrado + testes de equivalência**.
 Não fazer cutover 1.2.0, policy pública ou promoção na mesma tranche.
+
+## 14. Resultado final / override
+
+As seções de shadow e próximo passo acima registram o fluxo histórico e estão supersedidas por este resultado.
+
+- policy congelada: `risco_janela_movel_observacoes=21`;
+- replay 1.1.0 preservado em módulo legacy + golden;
+- cutover canônico para 1.2.0 concluído;
+- planner/bloco/evals concluídos;
+- run #334 / `37162747600` GREEN;
+- directed 186;
+- full 929/53/19/0;
+- prompts/tools sync GREEN;
+- catálogo 37/34/3.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_RISK_ROLLING_1_2_GREEN.md`.
