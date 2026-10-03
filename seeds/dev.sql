@@ -293,10 +293,11 @@ SELECT 'ANALISE_PARAMS', 1, $j${
   "max_dias_defasagem": 5,
   "dias_uteis_ano": 252,
   "metodo_retorno": "log",
+  "risco_janela_movel_observacoes": 21,
   "max_pontos": 260,
   "benchmark_padrao": "BOVA11",
   "event_study": {"janela_estimacao_dias": 120, "pre_dias": 5, "pos_dias": 5, "metodo": "market_model"},
-  "_nota": "lido pelas tools dados.*/quant.* (app/tools/analista). janela_padrao_dias em dias corridos; benchmark_padrao precisa estar no universo com preços."
+  "_nota": "lido pelas tools dados.*/quant.* (app/tools/analista). janela_padrao_dias em dias corridos; risco_janela_movel_observacoes é número de observações de retorno; benchmark_padrao precisa estar no universo com preços."
 }$j$::jsonb, 'draft'
 WHERE NOT EXISTS (SELECT 1 FROM engine.policy_versions WHERE code = 'ANALISE_PARAMS' AND effective_to IS NULL);
 
