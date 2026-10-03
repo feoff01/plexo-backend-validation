@@ -749,3 +749,12 @@
 - run #311 / `37161330785` GREEN: 175 directed; 925 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
 - `quant.risco_retorno` continua 1.1.0 pública; nenhum planner/bloco/policy/semver público alterado.
 
+## 2026-10-03 — rolling volatility CI/readiness GREEN
+- adicionado golden/replay `tests/golden/quant_risco_retorno_1_1_0.json`;
+- adicionada readiness `tests/test_risk_rolling_readiness.py`;
+- adicionada integração PostgreSQL `tests/test_risk_rolling_shadow_db.py`;
+- workflow dirigido passou a executar os gates rolling explicitamente;
+- adjusted/raw semantics, provenance e payload <5 KB validados;
+- run #319 / `37162064025` GREEN: 188 directed; 931 passed, 52 skipped, 19 warnings, 0 failed;
+- `quant.risco_retorno` permanece 1.1.0 pública; nenhuma policy/planner/bloco/semver público foi alterado.
+
