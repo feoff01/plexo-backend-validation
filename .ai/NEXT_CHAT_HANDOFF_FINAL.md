@@ -696,3 +696,20 @@ CI agora mede `quant.comparaveis_setor` em 2/8/20 peers antes de qualquer otimiz
 ## Comparáveis — N+1 confirmado
 
 Baseline run #145: 38/98/218 queries em 2/8/20 peers, output ~4 KB. Próxima etapa obrigatória: loader batch isolado + equivalência numérica + benchmark pós-otimização. Não promover `quant.comparaveis_setor` antes disso.
+
+
+## FQ5.6 comparáveis por setor — GREEN / encerrada — 2026-10-03
+
+Ler `.ai/checkpoints/2026-10-03_FQ5_6_PEERS_PROMOTION_GREEN.md`.
+
+Estado canônico:
+- `quant.comparaveis_setor` 1.0.1 pública;
+- subsetor default, setor opt-in;
+- B3 oficial + universo atual IBrA;
+- coverage atual 146/148 tickers classificados;
+- batch loader removeu N+1: 10 queries constantes em 2/8/20 peers;
+- run #170: 128 gate; 889 passed, 52 skipped, 19 warnings, 0 failed;
+- planner/bloco/prompts/tools sync verdes;
+- sem ranking/recomendação/fair value.
+
+FQ5.6 está encerrada. A próxima frente deve começar por `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` + `reuse-before-build`, revisando o inventário atual antes de criar qualquer engine/tool.
