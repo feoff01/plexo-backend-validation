@@ -728,3 +728,13 @@ Após materializar o CSV oficial ANBIMA, `reuse-before-build` confirmou que `mar
 A v1 pública permanece deliberadamente limitada a vértices oficiais publicados de uma curva/data. Interpolação, extrapolação, comparação/delta entre datas, slope/curvature, duration/DV01, choque, forecast, fair value e recomendação exigem capability determinística própria e não são inferidos pelo LLM.
 
 **Validação:** run #249 / `37146548276` success; 145 directed; 906 passed, 52 skipped, 19 warnings; prompts/tools sync GREEN.
+
+## 2026-10-03 — Cobertura pública ANBIMA não deve ser extrapolada da retenção do servidor
+
+- o download first-party por POST foi reproduzido somente para auditar a fonte;
+- a janela exposta pela UI foi comprovada fisicamente de 25/09/2026 a 02/10/2026, com CSVs distintos;
+- uma resposta de 24/09/2026 não vira contrato suportado, pois está abaixo de `Dt_Ref_Ver=20260925`;
+- histórico ANBIMA além da janela oficialmente exposta exige API/acesso autorizado ou outro contrato oficial;
+- nenhum scraper/cliente HTTP ANBIMA entra no produto nesta tranche;
+- `dados.curva_juros` continua leitura exata de dados já ingeridos, sem interpolação/extrapolação.
+
