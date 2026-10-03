@@ -789,3 +789,17 @@ Design: `.ai/RISK_ADVANCED_CONTRACT_DESIGN_2026-10-03.md`.
 
 Design: `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`.
 
+## 2026-10-03 — quant.risco_retorno 1.2.0 e policy rolling
+
+**Decisão:** promover evolução histórica de volatilidade dentro da mesma `quant.risco_retorno`, sem tool paralela.
+
+**Policy governada:** `ANALISE_PARAMS.risco_janela_movel_observacoes=21`, em observações de retorno. Janela explícita do usuário prevalece; não há fallback numérico escondido nem conversão automática de dias corridos.
+
+**Replay:** a 1.1.0 fica congelada em `risco_retorno_legacy_1_1_0.py` + golden dedicado.
+
+**Compactação:** resumo usa série rolling completa; pontos exibidos usam último ponto mensal e cap estrutural 60. Payload final permanece <5 KB.
+
+**Promoção:** run #334 / `37162747600` GREEN, 186 directed e 929/53/19/0 na suíte completa. Catálogo permanece 37/34/3.
+
+Próxima seleção volta ao capability audit de Company & Market Analytics; Brent e fair value continuam bloqueados pelos gates de fonte/governança já documentados.
+
