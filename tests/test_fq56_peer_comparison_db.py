@@ -235,10 +235,10 @@ async def test_peer_comparison_shadow_reuses_canonical_metrics_and_dedupes_compa
     assert broad_out.peer_count_total == 3
 
 
-def test_peer_comparison_registered_shadow_without_changing_existing_public_contracts():
+def test_peer_comparison_promoted_without_changing_existing_public_contracts():
     spec = spec_de("quant.comparaveis_setor")
-    assert spec.semver == "1.0.0"
-    assert spec.exposed_to_llm is False
+    assert spec.semver == "1.0.1"
+    assert spec.exposed_to_llm is True
     assert spec.requires_market_data is True
     assert spec_de("quant.valor_mercado").semver == "1.0.0"
     assert spec_de("quant.tendencias_fundamentais").semver == "1.0.1"
