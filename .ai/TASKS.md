@@ -925,3 +925,17 @@ Transversais ainda abertas:
 - [ ] full suite GREEN;
 - [ ] prompts/tools sync GREEN;
 - [ ] checkpoint final antes de abrir próxima tranche.
+
+## Risco histórico compacto — GREEN
+- [x] `quant.risco_retorno` 1.1.0 pública;
+- [x] downside deviation anualizada reutilizando Risk Core;
+- [x] target periódico zero explícito;
+- [x] duração/recovery em intervalos observados;
+- [x] replay legacy preservado após correção do gate #295;
+- [x] run #296: 175 directed;
+- [x] full suite: 918 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] PostgreSQL 18.6/migrations/invariantes GREEN;
+- [x] peers 10/10/10 preservados;
+- [x] prompts check GREEN;
+- [x] tools sync --check GREEN;
+- [ ] reauditar próxima lacuna; rolling volatility só após design de janela/compactação.
