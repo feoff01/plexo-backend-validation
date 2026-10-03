@@ -632,3 +632,15 @@
 - `NEXT_CHAT_START_HERE.md`, `WORKING_PROTOCOL.md`, mapa e handoff final atualizados para a nova ordem de leitura;
 - referência documental validada antes desta consolidação: HEAD `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`, run #215 `37137581471` success;
 - nenhuma alteração de código, migration, semver, exposição, planner, engine ou tool.
+
+
+## 2026-10-03 — Revalidação final e preparação de snapshot para novo chat
+- revalidado estado consolidado no run #216 / `37139839922`;
+- gate dirigido: 135 passed;
+- benchmark peers: 10/10/10 queries para 2/8/20;
+- suíte completa: 896 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts e tools sync verdes;
+- alinhados handoff, mapa, master context, prompt e START HERE;
+- adicionada seção explícita dos arquivos B3/Economatica já recebidos e sua semântica temporal;
+- FQ5.6 permanece encerrada; FQ5.7 source gate ANBIMA permanece próxima tarefa;
+- nenhuma matemática, migration, tool, semver ou engine alterada nesta consolidação documental.
