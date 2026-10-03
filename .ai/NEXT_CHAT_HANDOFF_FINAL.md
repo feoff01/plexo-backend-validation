@@ -255,3 +255,35 @@ Próximo gate exato:
 
 Não promover 1.2.0 antes desse gate.
 
+## OVERRIDE — rolling volatility pronta para cutover 1.2.0
+
+O gate pós-shadow foi encerrado.
+
+Prova:
+- commit funcional: `3794088a0cd9e6a0b0e00ae1e8cb1ca634a3f38d`;
+- run #319 / `37162064025`: success;
+- directed: 188 passed;
+- full suite: 931 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN;
+- catálogo ainda 37 / 34 / 3.
+
+Fechado:
+- PostgreSQL específico do candidato;
+- adjusted/raw end-to-end;
+- payload <5 KB;
+- provenance/readiness;
+- golden/replay 1.1.0.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_RISK_ROLLING_CI_GATES_GREEN.md`.
+
+Próximo gate permitido:
+1. adicionar/aprovar `ANALISE_PARAMS.risco_janela_movel_observacoes`;
+2. cutover único `quant.risco_retorno` 1.2.0;
+3. mover evolução rolling do shadow para o contrato canônico;
+4. planner + bloco + evals;
+5. manter replay/golden 1.1.0;
+6. PostgreSQL 18 + suíte completa + prompts/tools sync;
+7. somente após GREEN encerrar 1.2.0.
+
+Não criar tool paralela; Brent/fair value continuam fora desta tranche.
+
