@@ -116,6 +116,9 @@ jobs:
           tests/test_index_composition.py
           tests/test_index_composition_db.py
           tests/test_index_composition_promotion_readiness.py
+          tests/test_fq3_risco_retorno.py
+          tests/test_fq3_cutover.py
+          tests/test_risk_advanced_readiness.py
 
       - name: benchmark FQ5.6 peers
         run: python -m pytest -q -s tests/test_fq56_peer_performance_db.py
