@@ -47,3 +47,17 @@ Não usar para:
 - prompts check;
 - tools sync --check;
 - checkpoint GREEN antes de encerrar a tranche.
+
+## Fechamento pós-promoção — GREEN
+Run #283 / `37153499452` validou o HEAD funcional `d431fa91d5e2e39eb6e2ad0db7be2cecab2c7ffa`.
+
+- 153 directed passed;
+- 914 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6/migrations/invariantes GREEN;
+- peers 10/10/10 preservados;
+- prompts check GREEN;
+- tools sync --check GREEN;
+- `dados.composicao_indice` 1.0.1 pública;
+- catálogo 37 total / 34 expostas / 3 ocultas.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_INDEX_COMPOSITION_PROMOTION_GREEN.md`.
