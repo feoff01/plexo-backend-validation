@@ -50,7 +50,7 @@ CUTOFF = date(2024, 1, 17)          # último pregão da fixture
 ANALISE_PARAMS = {
     # defasagem folgada: a fixture é de 2024 e o cutoff do turno é current_date — o teste de defasagem aperta a sua
     "janela_padrao_dias": 252, "min_observacoes": 5, "max_dias_defasagem": 3650, "dias_uteis_ano": 252,
-    "metodo_retorno": "log", "max_pontos": 260, "benchmark_padrao": "F5BOVA",
+    "metodo_retorno": "log", "risco_janela_movel_observacoes": 21, "max_pontos": 260, "benchmark_padrao": "F5BOVA",
     "event_study": {"janela_estimacao_dias": 6, "pre_dias": 1, "pos_dias": 1, "metodo": "market_model"},
 }
 # Catálogo do Analista. Cresce quando o AGENTE ganha uma tool — e a lista é exata de propósito:
