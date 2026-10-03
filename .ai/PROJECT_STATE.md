@@ -844,3 +844,25 @@ Fechado:
 
 `quant.risco_retorno` continua 1.1.0 pública e o catálogo segue 37/34/3. Próximo gate: policy governada + cutover único 1.2.0 + planner/bloco/evals.
 
+## 2026-10-03 — quant.risco_retorno 1.2.0 pública/GREEN
+
+`quant.risco_retorno` 1.2.0 está pública e encerrada no run #334 / `37162747600`, commit funcional `3786af082eba5e99e14908340bd3bc649872fbdb`.
+
+Fechado:
+- evolução opcional de volatilidade rolling na mesma tool canônica;
+- default governado `ANALISE_PARAMS.risco_janela_movel_observacoes=21`;
+- janela explícita do usuário prevalece;
+- nenhuma conversão automática de dias corridos em observações;
+- replay 1.1.0 congelado em módulo legacy + golden;
+- adjusted/raw semantics e provenance preservados;
+- payload representativo <5 KB;
+- planner, bloco e eval atualizados;
+- shadow promovido removido do caminho ativo;
+- PostgreSQL 18/migrations/invariantes GREEN;
+- directed 186 passed;
+- full suite 929 passed, 53 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN;
+- catálogo 37/34/3.
+
+Próximo passo: reabrir o capability audit restante de Company & Market Analytics. Brent continua bloqueado por source audit oficial; fair value/reverse DCF por premissas governadas; Portfolio Analytics segue fora do escopo.
+
