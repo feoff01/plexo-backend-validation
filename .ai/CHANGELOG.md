@@ -601,3 +601,11 @@
 - benchmark FQ5.6 permaneceu 10/10/10 queries;
 - prompts/tools sync verdes; 35 tools inalteradas;
 - fundação pronta para payload físico ANBIMA autorizado; nenhuma tool pública criada.
+
+
+## 2026-10-03 — Auditoria pública ANBIMA após FQ5.7 GREEN
+- página oficial de fechamento confirmou snapshot 02/10/2026;
+- cobertura observada: 65 vértices IPCA e 19 PRE/inflação implícita;
+- UI pública declara últimos cinco dias úteis e downloads XLS/CSV/TXT/XML;
+- nenhum payload ANBIMA foi encontrado nos anexos da conversa;
+- adapter físico permanece bloqueado sem bytes oficiais; scraper HTML foi explicitamente rejeitado.
