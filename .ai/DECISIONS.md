@@ -720,3 +720,11 @@ Documento: `.ai/FQ5_7_ANBIMA_PUBLIC_SOURCE_AUDIT_2026-10-03.md`.
 
 ## 2026-10-03 — FQ5.7: primeira capability é leitura exata, não matemática de curva
 Após materializar o CSV oficial ANBIMA, `reuse-before-build` confirmou que `market.yield_curve` + loader PIT já cobrem a base determinística. A primeira capability client-facing será `dados.curva_juros`, composição sobre o loader, inicialmente shadow. Não adicionar interpolação, slope, curvature, choque, DV01 ou forecast nesta tranche.
+
+
+## 2026-10-03 — dados.curva_juros 1.0.1 pública
+**Decisão:** promover a leitura exata da ETTJ oficial como capability pública do Analista após source gate físico, parser/fixture, bridge de ingestão, strict PIT, shadow e promotion readiness GREEN.
+
+A v1 pública permanece deliberadamente limitada a vértices oficiais publicados de uma curva/data. Interpolação, extrapolação, comparação/delta entre datas, slope/curvature, duration/DV01, choque, forecast, fair value e recomendação exigem capability determinística própria e não são inferidos pelo LLM.
+
+**Validação:** run #249 / `37146548276` success; 145 directed; 906 passed, 52 skipped, 19 warnings; prompts/tools sync GREEN.
