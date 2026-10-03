@@ -358,7 +358,7 @@ def _unique(values: list[str]) -> list[str]:
 @tool(
     code="quant.comparaveis_setor",
     family="quant",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Comparáveis por subsetor/setor",
     description=(
         "Compara valuation, crescimento e margens de uma empresa contra todos os peers B3 do mesmo "
@@ -379,7 +379,7 @@ def _unique(values: list[str]) -> list[str]:
         fundamental_trends.__file__,
     ),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def calcular_comparaveis_setor(r: ComparaveisSetorResolvida) -> ComparaveisSetorOutput:
     warnings = list(r.warnings)
