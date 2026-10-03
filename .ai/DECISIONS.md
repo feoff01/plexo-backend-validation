@@ -716,3 +716,7 @@ Documento: `.ai/FQ5_7_ANBIMA_PUBLIC_SOURCE_AUDIT_2026-10-03.md`.
 **Gate funcional atual:** FQ5.6 não deve ser reaberta sem regressão real. FQ5.7 permanece foundation shadow; nenhuma tool de curva deve ser criada antes de payload físico oficial + parser/fixture + coverage.
 
 **Validação:** run #216 / `37139839922`, 135 directed, 896 passed, 52 skipped, 19 warnings, 0 failed; peers 10/10/10 queries.
+
+
+## 2026-10-03 — FQ5.7: primeira capability é leitura exata, não matemática de curva
+Após materializar o CSV oficial ANBIMA, `reuse-before-build` confirmou que `market.yield_curve` + loader PIT já cobrem a base determinística. A primeira capability client-facing será `dados.curva_juros`, composição sobre o loader, inicialmente shadow. Não adicionar interpolação, slope, curvature, choque, DV01 ou forecast nesta tranche.
