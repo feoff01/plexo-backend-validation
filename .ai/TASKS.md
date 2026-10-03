@@ -847,3 +847,15 @@ Transversais ainda abertas:
 - [x] readiness + payload <5 KB;
 - [ ] CI PostgreSQL 18 pós-promoção;
 - [ ] checkpoint GREEN final e snapshot canônico.
+
+
+## FQ5.7 — encerramento público
+- [x] CI PostgreSQL 18 pós-promoção;
+- [x] 145 directed passed;
+- [x] full suite 906 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts check GREEN;
+- [x] tools sync --check GREEN;
+- [x] dados.curva_juros 1.0.1 pública;
+- [x] catálogo 36 total / 33 expostas / 3 ocultas;
+- [x] checkpoint GREEN final;
+- [ ] próxima tranche: selecionar no capability audit a próxima lacuna de Company & Market Analytics; não assumir FQ5.8 sem design.
