@@ -564,3 +564,14 @@
 - planner limita uso a comparação descritiva; sem ranking, recomendação ou fair value;
 - bloco compacto alvo vs mediana dos pares adicionado;
 - aguardando CI pós-promoção.
+
+
+## 2026-10-03 — FQ5.6 comparáveis promovida e encerrada
+- `quant.comparaveis_setor` 1.0.1 pública;
+- planner roteia comparação descritiva com pares;
+- bloco compacto alvo vs mediana dos pares;
+- regression gate de performance consolidado;
+- run #170 GREEN: 128 gate; 889 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark final 10/10/10 queries para 2/8/20 peers;
+- prompts/tools sync verdes;
+- sem ranking, recomendação ou fair value.
