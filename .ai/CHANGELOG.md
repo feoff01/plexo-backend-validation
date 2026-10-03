@@ -592,3 +592,12 @@
 - adicionado loader PIT sem interpolação/extrapolação;
 - adicionados testes de idempotência, conflito, latest/reference_date e look-ahead por `finished_at`;
 - nenhuma tool pública/semver/planner/prompt alterado.
+
+
+## 2026-10-03 — FQ5.7 curva de juros foundation GREEN
+- run #191 revelou um erro de expectativa do teste strict PIT: snapshot ingerido em 03/10 não pode aparecer num cutoff 02/10;
+- teste corrigido sem afrouxar a regra de domínio;
+- run #192 GREEN: 135 gate; 896 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark FQ5.6 permaneceu 10/10/10 queries;
+- prompts/tools sync verdes; 35 tools inalteradas;
+- fundação pronta para payload físico ANBIMA autorizado; nenhuma tool pública criada.
