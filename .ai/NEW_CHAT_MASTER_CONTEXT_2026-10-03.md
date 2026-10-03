@@ -4,8 +4,8 @@ Atualizado em: 2026-10-03
 Status: **canônico para novo chat**
 Repo autorizado: `feoff01/plexo-backend-validation`
 Branch: `bootstrap/plexo-project`
-HEAD documental validado antes desta consolidação: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
-CI do HEAD documental: run #215 / `37137581471` — **success**
+HEAD documental validado antes desta consolidação: `f568d1dd2a228216537a600debd7c83a569aeb27`
+CI do HEAD documental: run #216 / `37139839922` — **success**
 Código funcional de referência: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`
 CI funcional de referência: run #202 / `37135725129` — **success**
 
@@ -338,8 +338,8 @@ Nunca editar migrations históricas.
 
 ## 14. Gate atual
 
-HEAD documental validado: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
-Run #215 / `37137581471` — **success**
+HEAD documental validado: `f568d1dd2a228216537a600debd7c83a569aeb27`
+Run #216 / `37139839922` — **success**
 
 - PostgreSQL 18/migrations/invariantes verdes;
 - 135 directed passed;
@@ -414,3 +414,63 @@ Antes de código:
 - se não existir, parar no source gate;
 - se existir, congelar adapter físico + fixture e medir coverage histórica;
 - registrar tudo em `.ai/`.
+
+
+## Dados já recebidos do usuário e semântica permitida
+
+### B3 — classificação setorial
+Arquivo: `ClassifSetorial(20261002-005309).xlsx`.
+- 373 company codes;
+- 11 setores;
+- 39 subsetores;
+- fonte canônica para setor/subsetor corrente;
+- sem CNPJ e sem terceiro nível de segmento no arquivo usado;
+- snapshot atual/known-at-ingestion, não histórico retroativo.
+
+### B3 — universo/índices
+Arquivos:
+- `IBRADia_02-10-26.csv`;
+- `AcoesIndices_2026-10-02.csv`;
+- `052503e151e55ee20469d4d86a01d164.xlsx` (multiíndice).
+
+Uso:
+- IBrA 02/10/2026 = 148 componentes;
+- peso diário = 100%;
+- `market.index_weights` preserva snapshots;
+- `is_in_universe` é projeção operacional atual;
+- não inferir membership histórico a partir destes arquivos.
+
+Cross-check B3 setor × IBrA:
+- 146/148 tickers classificados;
+- 142/144 company codes;
+- gaps: `RIAA3` e `SAUD3`.
+
+### Economatica — auxiliar
+Arquivos:
+- `economatica com ativos cancelados.zip`;
+- `arquivos economaticas preços.zip`.
+
+Permitido: validação cruzada, cobertura auxiliar e investigação de cancelados.
+Proibido: tratar como B3/CVM, retrodatação setorial, substituir fundamentos CVM ou misturar preços sem source-priority policy.
+
+### ANBIMA
+O snapshot ainda não contém um payload físico oficial congelado de ETTJ (CSV/XML/XLS/JSON real). A fundação semântica está GREEN, mas o adapter físico permanece bloqueado até bytes oficiais.
+
+
+## Revalidação final pré-handoff
+
+Base documental revalidada: `f568d1dd2a228216537a600debd7c83a569aeb27`.
+CI: run #216 / `37139839922` — **success**.
+
+Provas:
+- PostgreSQL 18 + migrations até 0064: GREEN;
+- invariantes admin/service: GREEN;
+- gate dirigido: **135 passed**;
+- benchmark peers: **10/10/10 queries** para 2/8/20 peers;
+- output de peers: ~4 KB;
+- suíte completa: **896 passed, 52 skipped, 19 warnings, 0 failed**;
+- prompts check: GREEN;
+- tools sync --check: GREEN;
+- catálogo: 35 tools; 32 expostas; 3 ocultas/replay.
+
+O commit que contém estes documentos pode ser posterior a essa base por ser documental. No novo chat, confirmar HEAD + CI do snapshot anexado antes de qualquer código.
