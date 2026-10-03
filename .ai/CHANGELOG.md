@@ -758,3 +758,16 @@
 - run #319 / `37162064025` GREEN: 188 directed; 931 passed, 52 skipped, 19 warnings, 0 failed;
 - `quant.risco_retorno` permanece 1.1.0 pública; nenhuma policy/planner/bloco/semver público foi alterado.
 
+## 2026-10-03 — quant.risco_retorno 1.2.0 pública/GREEN
+- adicionado default governado `ANALISE_PARAMS.risco_janela_movel_observacoes=21`;
+- `quant.risco_retorno` bump 1.1.0 -> 1.2.0;
+- novos params públicos opcionais `incluir_evolucao_volatilidade` e `janela_volatilidade_observacoes`;
+- novo output opcional `evolucao_volatilidade`;
+- rolling reutiliza Quant Core; nenhuma matemática/fonte/schema/migration nova;
+- replay 1.1.0 congelado em `risco_retorno_legacy_1_1_0.py` + golden;
+- planner, bloco e eval temporal atualizados;
+- shadow interno removido após promoção;
+- workflow dirigido passou a testar o cutover público;
+- run #334 / `37162747600` GREEN: 186 directed; 929 passed, 53 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
+- catálogo permanece 37 total / 34 públicas / 3 ocultas-replay.
+
