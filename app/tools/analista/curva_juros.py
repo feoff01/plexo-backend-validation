@@ -1,4 +1,4 @@
-"""Tool shadow `dados.curva_juros` — leitura exata da ETTJ oficial ANBIMA.
+"""Tool pública `dados.curva_juros` — leitura exata da ETTJ oficial ANBIMA.
 
 Composição fina sobre `market.yield_curve`: não interpola, não extrapola, não calcula
 slope/curvature, não projeta juros e não aplica choque.
@@ -105,7 +105,7 @@ async def preparar_curva_juros(params: CurvaJurosParams, ctx: ToolContext) -> Cu
 @tool(
     code="dados.curva_juros",
     family="dados",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Curva de juros oficial",
     description=(
         "Lê vértices oficiais da ETTJ ANBIMA prefixada, IPCA ou inflação implícita em uma data "
@@ -115,7 +115,7 @@ async def preparar_curva_juros(params: CurvaJurosParams, ctx: ToolContext) -> Cu
     preparar=preparar_curva_juros,
     source_dependencies=(yield_curves.__file__,),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def montar_curva_juros(r: CurvaJurosResolvida) -> CurvaJurosOutput:
     all_points = r.resolved.points
