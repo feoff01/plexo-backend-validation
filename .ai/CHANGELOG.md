@@ -644,3 +644,11 @@
 - adicionada seção explícita dos arquivos B3/Economatica já recebidos e sua semântica temporal;
 - FQ5.6 permanece encerrada; FQ5.7 source gate ANBIMA permanece próxima tarefa;
 - nenhuma matemática, migration, tool, semver ou engine alterada nesta consolidação documental.
+
+
+## 2026-10-03 — FQ5.7 source gate GREEN + primeira capability shadow
+- materializado CSV físico oficial ANBIMA ETTJ (`CurvaZero_.csv`), 2.899 bytes, SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`;
+- congelados fixture e parser fail-closed;
+- coverage observada: 65 IPCA / 19 PRE / 19 inflação implícita em 02/10/2026;
+- criada `dados.curva_juros` 1.0.0 em shadow, sem interpolação/extrapolação/forecast;
+- promoção pública permanece condicionada aos gates PostgreSQL/suíte/sync.
