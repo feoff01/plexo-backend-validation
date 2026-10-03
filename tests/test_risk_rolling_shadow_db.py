@@ -66,6 +66,7 @@ async def rolling_db_world(db, escopos):
         )
 
     return {
+        "user_id": escopos.u1,
         "scope_id": escopos.s1,
         "ticker": ticker,
         "instrument_id": instrument_id,
@@ -76,7 +77,7 @@ async def rolling_db_world(db, escopos):
 
 
 async def _candidate(db, world, basis: PriceBasis):
-    async with db.app_session(user_id=None, scope_id=world["scope_id"]) as conn:
+    async with db.app_session(user_id=world["user_id"], scope_id=world["scope_id"]) as conn:
         ctx = ToolContext(
             conn=conn,
             scope_id=world["scope_id"],
