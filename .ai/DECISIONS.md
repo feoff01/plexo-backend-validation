@@ -696,3 +696,14 @@ Strict PIT usa `ingestion_batches.finished_at`, não apenas `reference_date`. A 
 **Decisão:** a página pública oficial ANBIMA de fechamento serve como evidência de cobertura atual, mas não será usada como contrato de produção enquanto os bytes do CSV/XML oficial não forem materializados. Não adotar endpoint/form action de terceiros, não hardcodar tabela HTML e não inferir histórico. O adapter físico continua bloqueado até fixture oficial real ou payload JSON autorizado.
 
 Documento: `.ai/FQ5_7_ANBIMA_PUBLIC_SOURCE_AUDIT_2026-10-03.md`.
+
+
+## 2026-10-03 — Handoff canônico pós-FQ5.6/FQ5.7
+
+**Decisão:** `.ai/NEXT_CHAT_HANDOFF_FINAL.md` e `.ai/CURRENT_PROJECT_MAP_2026-10-03.md` têm precedência sobre estados históricos antigos.
+
+**Estado:** `quant.comparaveis_setor` 1.0.1 está pública e FQ5.6 encerrada. FQ5.7 possui somente foundation GREEN; nenhuma tool de curva está pública.
+
+**ANBIMA:** não criar scraper HTML de produção nem adotar form action/endpoint descoberto por terceiros como contrato. O próximo gate exige bytes oficiais CSV/XML/XLS ou JSON real; depois congelar parser/fixture e medir cobertura.
+
+**Escopo:** permanecer em empresa/mercado; Portfolio Analytics e análise da carteira/cliente ficam fora desta frente.
