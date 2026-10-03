@@ -575,3 +575,11 @@
 - benchmark final 10/10/10 queries para 2/8/20 peers;
 - prompts/tools sync verdes;
 - sem ranking, recomendação ou fair value.
+
+
+## 2026-10-03 — Design FQ5.7 curva de juros
+- auditado schema existente `market.yield_curve`;
+- auditada fonte oficial ANBIMA Developers para curvas de juros;
+- definido mapeamento canônico `ettj_pre`, `ettj_ipca`, `inflacao_implicita`;
+- strict PIT usará lote/finished_at;
+- nenhuma alteração de código nesta etapa documental.
