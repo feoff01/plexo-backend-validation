@@ -827,3 +827,20 @@ Commit funcional `bef38e7d2bc44e69bfc931f4d12ee9d7df3a00bd`; run #311 / `3716133
 
 A 1.1.0 continua pública, catálogo 37/34/3 e sem cutover. O próximo gate é integração PostgreSQL específica do shadow + adjusted/raw semantics + payload/provenance/readiness. Só depois replay/policy/cutover 1.2.0.
 
+## 2026-10-03 — rolling volatility CI/readiness GREEN
+
+Commit funcional `3794088a0cd9e6a0b0e00ae1e8cb1ca634a3f38d`, run #319 / `37162064025` GREEN.
+
+Fechado:
+- integração PostgreSQL específica do shadow;
+- adjusted_close -> `retrospective_as_known_now` / `market.v_precos_ajustados`;
+- raw_close -> `observation_date_cutoff` / `market.prices`;
+- provenance/ingestion batch/policy metadata preservados;
+- payload candidato representativo <5 KB;
+- golden/replay explícito da `quant.risco_retorno` 1.1.0;
+- directed gate 188 passed;
+- full suite 931 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN.
+
+`quant.risco_retorno` continua 1.1.0 pública e o catálogo segue 37/34/3. Próximo gate: policy governada + cutover único 1.2.0 + planner/bloco/evals.
+
