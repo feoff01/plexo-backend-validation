@@ -728,3 +728,13 @@
 - run #296 / `37154531785` GREEN: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed;
 - PostgreSQL 18.6, prompts/tools sync e benchmark peers verdes;
 - catálogo permanece 37 total / 34 expostas / 3 ocultas.
+
+## 2026-10-03 — audit/design pós-risco 1.1
+- reauditoria pós-`quant.risco_retorno` 1.1.0 concluída;
+- rolling volatility selecionada como próxima lacuna executável por reuse-before-build;
+- criado `.ai/COMPANY_MARKET_DELTA_AUDIT_POST_RISK_2026-10-03.md`;
+- criado `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`;
+- criado checkpoint `.ai/checkpoints/2026-10-03_POST_RISK_ROLLING_DESIGN_FROZEN.md`;
+- target eventual definido como `quant.risco_retorno` 1.2.0, sem tool paralela;
+- nenhuma alteração de código, migration, schema, policy, planner, bloco, semver público ou catálogo nesta tranche.
+
