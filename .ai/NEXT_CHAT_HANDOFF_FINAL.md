@@ -179,3 +179,17 @@ Run #283 / `37153499452`: **success**.
 A capability lê snapshots oficiais persistidos de composição/peso, sem nearest, sem inferir histórico ausente, sem performance, recomendação ou análise da carteira do cliente.
 
 Próxima ação: reauditar lacunas restantes no estado atual; aplicar `reuse-before-build` e não assumir FQ nova automaticamente.
+
+## Atualização canônica — quant.risco_retorno 1.1.0 GREEN
+- `quant.risco_retorno` 1.1.0 pública;
+- adiciona downside deviation anualizada com target periódico zero explícito;
+- bloco mostra duração/recovery do pior drawdown em intervalos observados;
+- nenhuma nova tool, fonte, schema, loader ou matemática;
+- replay legacy preservado após correção de regressão cosmética detectada no run #295;
+- HEAD funcional validado `687966a22053136000f39542bb7f1feebcde71cf`;
+- run #296 / `37154531785`: **success**;
+- 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN; peers 10/10/10;
+- catálogo 37 total / 34 expostas / 3 ocultas.
+
+Próxima ação: reauditoria pós-risco. Rolling volatility não deve ser aberta sem design explícito de janela e compactação.
