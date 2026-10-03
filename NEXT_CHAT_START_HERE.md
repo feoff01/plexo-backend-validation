@@ -15,8 +15,8 @@ Snapshot canônico: 2026-10-03
 
 Repo autorizado: `feoff01/plexo-backend-validation`  
 Branch: `bootstrap/plexo-project`  
-HEAD documental validado: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`  
-Run #215 / `37137581471`: **success**  
+HEAD documental validado: `f568d1dd2a228216537a600debd7c83a569aeb27`  
+Run #216 / `37139839922`: **success**  
 Código funcional de referência: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`.
 
 Estado:
@@ -40,3 +40,9 @@ Regras:
 - tratar `.ai/` como memória persistente.
 
 Use `.ai/NEW_CHAT_PROMPT_2026-10-03.md` como prompt inicial no novo chat.
+
+
+## Revalidação pré-entrega
+Base revalidada: `f568d1dd2a228216537a600debd7c83a569aeb27`.
+Run #216 / `37139839922`: success; 135 directed; 896 passed, 52 skipped, 19 warnings; peers 10/10/10 queries.
+Ao abrir o novo chat, use o ZIP final anexado e confirme HEAD/CI antes de qualquer alteração.
