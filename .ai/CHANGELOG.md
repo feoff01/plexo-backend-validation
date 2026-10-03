@@ -652,3 +652,10 @@
 - coverage observada: 65 IPCA / 19 PRE / 19 inflação implícita em 02/10/2026;
 - criada `dados.curva_juros` 1.0.0 em shadow, sem interpolação/extrapolação/forecast;
 - promoção pública permanece condicionada aos gates PostgreSQL/suíte/sync.
+
+
+## 2026-10-03 — FQ5.7 physical ingest shadow GREEN
+- adicionada ponte `yield_curve_ingest_anbima_csv.py`, sem HTTP e sem duplicar persistência;
+- fixture oficial ingere 103 linhas canônicas (65 IPCA + 19 PRE + 19 implícita);
+- gate dirigido ampliado para parser/bridge/tool shadow;
+- run #234 GREEN: 142 directed; full 903/52/19/0; prompts/tools sync GREEN.
