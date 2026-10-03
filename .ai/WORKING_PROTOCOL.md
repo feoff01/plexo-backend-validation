@@ -68,3 +68,10 @@ Após a consolidação:
 6. fair value/reverse DCF apenas quando forecasts, WACC, ERP e crescimento estiverem governados e auditáveis.
 
 Portfolio Analytics, suitability e análise da carteira/cliente permanecem fora desta frente.
+
+
+## Snapshot atual do protocolo — 2026-10-03
+
+Depois de `.ai/NEXT_CHAT_HANDOFF_FINAL.md`, ler `.ai/CURRENT_PROJECT_MAP_2026-10-03.md` antes de implementar.
+
+O próximo gate funcional é a fonte física ANBIMA da FQ5.7. Não reabrir FQ5.6, não criar matemática de curva antes de materializar a fonte e não iniciar Portfolio Analytics nesta frente.
