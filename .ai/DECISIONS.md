@@ -707,3 +707,12 @@ Documento: `.ai/FQ5_7_ANBIMA_PUBLIC_SOURCE_AUDIT_2026-10-03.md`.
 **ANBIMA:** não criar scraper HTML de produção nem adotar form action/endpoint descoberto por terceiros como contrato. O próximo gate exige bytes oficiais CSV/XML/XLS ou JSON real; depois congelar parser/fixture e medir cobertura.
 
 **Escopo:** permanecer em empresa/mercado; Portfolio Analytics e análise da carteira/cliente ficam fora desta frente.
+
+
+## 2026-10-03 — Handoff mestre é a memória canônica de continuidade
+
+**Decisão:** para novo chat, usar `.ai/NEXT_CHAT_HANDOFF_FINAL.md`, `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md` e `.ai/CURRENT_PROJECT_MAP_2026-10-03.md` como visão atual. Seções antigas de PROJECT_STATE/TASKS/CHANGELOG são histórico e podem conter estados intermediários supersedidos.
+
+**Gate funcional atual:** FQ5.6 não deve ser reaberta sem regressão real. FQ5.7 permanece foundation shadow; nenhuma tool de curva deve ser criada antes de payload físico oficial + parser/fixture + coverage.
+
+**Validação:** run #216 / `37139839922`, 135 directed, 896 passed, 52 skipped, 19 warnings, 0 failed; peers 10/10/10 queries.
