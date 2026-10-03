@@ -667,3 +667,12 @@
 - planner distingue ETTJ ANBIMA de série Selic/IPCA e veta matemática não suportada;
 - catálogo do Analista/readiness/payload gate atualizados;
 - promoção ainda não considerada encerrada antes do CI.
+
+
+## 2026-10-03 — FQ5.7 dados.curva_juros 1.0.1 pública/GREEN
+- promoção pública concluída;
+- planner/bloco/readiness/payload gate GREEN;
+- run #249: 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN;
+- catálogo passa a 36 tools, 33 públicas e 3 ocultas/replay;
+- FQ5.7 encerrada para leitura exata de ETTJ oficial.
