@@ -1,0 +1,55 @@
+name: materializar ANBIMA ETTJ historico POST (temporario)
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  history:
+    name: baixar janela oficial por POST direto
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: reproduzir action de download do JavaScript oficial
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/anbima-history"
+          download="https://www.anbima.com.br/informacoes/est-termo/CZ-down.asp"
+          for d in 02/10/2026 01/10/2026 30/09/2026 29/09/2026 28/09/2026 25/09/2026 24/09/2026; do
+            key="$(echo "$d" | tr -d '/')"
+            out="$RUNNER_TEMP/anbima-history/ettj-$key.bin"
+            hdr="$RUNNER_TEMP/anbima-history/ettj-$key.headers"
+            code="$(curl --silent --show-error --location \
+              --proto '=https' --tlsv1.2 \
+              --write-out '%{http_code}' \
+              --dump-header "$hdr" \
+              --output "$out" \
+              --data-urlencode "escolha=2" \
+              --data-urlencode "Idioma=PT" \
+              --data-urlencode "saida=csv" \
+              --data-urlencode "Dt_Ref_Ver=20260925" \
+              --data-urlencode "Dt_Ref=$d" \
+              "$download")"
+            echo "DATE=$d HTTP=$code"
+            grep -iE '^content-type:|^content-disposition:' "$hdr" | tail -n 2 || true
+            wc -c "$out"
+            sha256sum "$out"
+            python - "$out" <<'PY'
+          from pathlib import Path
+          import sys
+          b=Path(sys.argv[1]).read_bytes()
+          print("PREFIX", repr(b[:90]))
+          PY
+          done
+
+      - name: publicar respostas oficiais
+        uses: actions/upload-artifact@v4
+        with:
+          name: anbima-ettj-official-history-direct-post
+          path: ${{ runner.temp }}/anbima-history/*
+          if-no-files-found: error
+          retention-days: 1
