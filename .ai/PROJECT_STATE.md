@@ -810,3 +810,12 @@ Próximo passo: reauditoria de Company & Market Analytics no estado pós-composi
 - catálogo: 37 total / 34 expostas / 3 ocultas.
 
 Próximo passo: reauditar lacunas restantes; não assumir automaticamente rolling volatility.
+
+## 2026-10-03 — pós-risco 1.1: rolling volatility selecionada para design
+
+`quant.risco_retorno` 1.1.0 permanece pública/GREEN no run #296. A reauditoria pós-risco classificou rolling volatility como gap de contrato/policy/compactação, pois a matemática já existe no Quant Core.
+
+Design congelado para evolução eventual 1.2.0, sem tool paralela. Nenhum código público foi alterado nesta tranche. O próximo gate é shadow interno não registrado + equivalência 1.1.0; PostgreSQL/cutover ficam para tranche posterior.
+
+Brent permanece bloqueado por source audit oficial. Fair value/reverse DCF permanece bloqueado por premissas governadas. Portfolio Analytics continua fora do escopo.
+
