@@ -151,3 +151,7 @@ O commit que contém estes documentos pode ser posterior a essa base por ser doc
 O source gate não está mais bloqueado. CSV oficial ANBIMA `CurvaZero_.csv` foi materializado via runner first-party e congelado com SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7` (2.899 bytes, referência 02/10/2026). Fixture + parser físico fail-closed existem.
 
 Primeira capability desenhada/implementada: `dados.curva_juros` 1.0.0, ainda shadow e fora do catálogo LLM. Próximo gate é CI PostgreSQL/suíte/sync; não promover antes de GREEN.
+
+
+## FQ5.7 — gate físico/shadow GREEN
+Run #234 / `37145970504` validou o caminho completo bytes oficiais -> parser -> ingestão semântica -> PostgreSQL: 142 directed; 903 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. `dados.curva_juros` permanece 1.0.0 shadow. Próximo gate: promoção controlada com bloco determinístico, planner restritivo e readiness; não incluir slope/delta histórico/DV01/choque/forecast.
