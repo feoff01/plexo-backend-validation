@@ -202,3 +202,10 @@ Catálogo Quant público atual:
 O alias `quant.event_study_v2` não está registrado. O replay histórico do Event Study permanece preservado.
 
 Antes de abrir fundamentos/valuation/fatores/renda fixa/derivativos/backtesting, fechar as decisões transversais ainda abertas: storage histórico, prioridade de fontes, availability/vintage real e mecanismo de outputs longos/artifacts. A ordem exata das próximas famílias ainda não foi congelada.
+
+
+## STATUS CANÔNICO — 2026-10-03
+
+O roadmap já avançou além de várias fases históricas deste documento. Estado atual: FQ4 encerrado; FQ5.5 e FQ5.6 públicas/GREEN; FQ5.7 yield-curve foundation GREEN sem tool pública.
+
+Use `.ai/CURRENT_PROJECT_MAP_2026-10-03.md` e `.ai/NEXT_CHAT_HANDOFF_FINAL.md` como fonte de verdade antes de interpretar tarefas antigas deste plano.
