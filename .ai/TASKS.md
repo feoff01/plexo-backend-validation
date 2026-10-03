@@ -877,3 +877,13 @@ Transversais ainda abertas:
 - começar por loader + `dados.composicao_indice` 1.0.0 shadow;
 - nenhuma promoção pública antes dos gates PostgreSQL/payload/provenance.
 
+## Composição de índice — shadow candidate
+- [x] reauditoria reuse-before-build;
+- [x] design congelado;
+- [x] loader PIT read-only;
+- [x] `dados.composicao_indice` 1.0.0 shadow;
+- [x] testes puros + PostgreSQL adicionados ao gate;
+- [ ] CI PostgreSQL 18 GREEN;
+- [ ] payload/provenance gate;
+- [ ] somente depois decidir promoção pública.
+
