@@ -488,3 +488,15 @@ O payload físico ANBIMA foi materializado: `CurvaZero_.csv`, 2.899 bytes, SHA-2
 Run #249 / `37146548276`: 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. Catálogo: 36 total / 33 públicas / 3 ocultas.
 
 A v1 pública não interpola, extrapola, compara datas, calcula slope/curvature, duration/DV01, choque, forecast ou fair value. Não existe próxima FQ numerada já congelada; usar capability audit + reuse-before-build para selecionar a próxima frente ainda dentro de Company & Market Analytics.
+
+## Atualização canônica pós-composição e risco 1.1
+Estado mais novo em 2026-10-03:
+- `dados.curva_juros` 1.0.1 pública/GREEN;
+- `dados.composicao_indice` 1.0.1 pública/GREEN;
+- `quant.risco_retorno` **1.1.0 pública/GREEN**;
+- catálogo: 37 tools / 34 expostas / 3 ocultas-replay;
+- run funcional mais novo: #296 / `37154531785`, HEAD `687966a22053136000f39542bb7f1feebcde71cf`;
+- gate: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18.6; prompts/tools sync GREEN;
+- peers continuam 10/10/10.
+
+A 1.1.0 reutiliza downside deviation do Risk Core e apenas expõe duration/recovery já existentes. Rolling volatility continua interna e requer design de janela/compactação antes de qualquer exposição.
