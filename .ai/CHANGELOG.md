@@ -692,3 +692,13 @@
 - nenhum schema, migration, matemática, planner ou bloco público alterado;
 - gate PostgreSQL 18 pendente.
 
+## 2026-10-03 — dados.composicao_indice 1.0.1 pública/GREEN
+- promovida `dados.composicao_indice` 1.0.1 para o catálogo LLM;
+- loader PIT read-only reutiliza `market.index_weights`;
+- planner diferencia composição/peso de performance de índice;
+- bloco determinístico apresenta tabela factual, sem recomendação;
+- ausência de snapshot não gera inferência/nearest;
+- run #283 / `37153499452` GREEN: 153 directed; 914 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6/migrations/invariantes, prompts e tools sync verdes;
+- peers 10/10/10 preservados;
+- catálogo: 37 tools, 34 públicas, 3 ocultas/replay.
