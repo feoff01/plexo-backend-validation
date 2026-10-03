@@ -226,3 +226,22 @@ Rolling volatility permanece somente no Quant Core; para expô-la será obrigat�
 - próximo gate = policy governada + cutover 1.2.0 + planner/bloco/evals;
 - Brent/fair value continuam bloqueados pelos gates já documentados.
 
+## Atualização final — risco rolling encerrado em 1.2.0
+- `quant.risco_retorno`: **1.2.0 pública/GREEN**;
+- rolling histórico opcional na mesma tool; nenhuma tool paralela;
+- policy: `ANALISE_PARAMS.risco_janela_movel_observacoes=21` (observações de retorno);
+- janela explícita do cliente prevalece;
+- replay 1.1.0 congelado em módulo legacy + golden;
+- adjusted/raw semantics preservadas;
+- compactação mensal + cap 60; payload <5 KB;
+- planner/bloco/evals atualizados;
+- commit funcional: `3786af082eba5e99e14908340bd3bc649872fbdb`;
+- run #334 / `37162747600`: GREEN;
+- 186 directed;
+- peers 10/10/10;
+- full suite 929 passed / 53 skipped / 19 warnings / 0 failed;
+- prompts/tools sync GREEN;
+- catálogo 37 / 34 públicas / 3 ocultas.
+
+Próximo gate: reauditar gaps restantes de Company & Market Analytics e escolher uma única tranche por reuse-before-build. Brent e fair value continuam bloqueados pelos gates já documentados.
+
