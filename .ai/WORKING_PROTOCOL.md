@@ -76,3 +76,14 @@ Portfolio Analytics, suitability e análise da carteira/cliente permanecem fora 
 Depois de `.ai/NEXT_CHAT_HANDOFF_FINAL.md`, ler `.ai/CURRENT_PROJECT_MAP_2026-10-03.md` antes de implementar.
 
 O próximo gate funcional é a fonte física ANBIMA da FQ5.7. Não reabrir FQ5.6, não criar matemática de curva antes de materializar a fonte e não iniciar Portfolio Analytics nesta frente.
+
+
+## Regra para handoffs autoconsistentes — 2026-10-03
+
+Como o SHA do commit que contém um documento não pode ser embutido nele sem circularidade, os documentos podem registrar a **base funcional/documental imediatamente anterior** e seu CI. O novo chat deve sempre:
+1. confirmar o HEAD atual do branch autorizado;
+2. confirmar o CI do snapshot anexado;
+3. comparar se commits posteriores à base são apenas documentação;
+4. só então implementar.
+
+O snapshot entregue ao usuário deve vir de um artifact de CI verde que já contenha os documentos de handoff.
