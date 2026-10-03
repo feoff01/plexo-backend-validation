@@ -744,3 +744,25 @@ Fonte de verdade: `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`.
 - Portfolio Analytics/cliente continua fora desta frente.
 
 Seções históricas deste arquivo registram evolução e podem conter estados já supersedidos. Não reabrir itens sem conferir checkpoints posteriores.
+
+
+## HANDOFF FINAL PARA NOVO CHAT — 2026-10-03
+
+Estado canônico funcional:
+- FQ0.5–FQ4 encerrados;
+- FQ5.1–FQ5.6 encerrados;
+- `quant.tendencias_fundamentais` 1.0.1 pública/GREEN;
+- `quant.comparaveis_setor` 1.0.1 pública/GREEN;
+- peers otimizados para 10/10/10 queries em 2/8/20;
+- FQ5.7 yield-curve foundation GREEN/shadow/sem tool pública;
+- próximo gate real = payload físico oficial ANBIMA -> parser/fixture -> coverage histórica -> design client-facing.
+
+Base revalidada pré-handoff: `f568d1dd2a228216537a600debd7c83a569aeb27`, run #216 `37139839922` success: 135 directed; 896 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes.
+
+Documentos mestres:
+- `.ai/NEXT_CHAT_HANDOFF_FINAL.md`;
+- `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`;
+- `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`;
+- `.ai/NEW_CHAT_PROMPT_2026-10-03.md`.
+
+Seções anteriores deste arquivo são histórico e podem conter estados intermediários supersedidos.
