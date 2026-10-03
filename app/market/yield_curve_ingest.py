@@ -6,6 +6,7 @@ as três séries oficiais para o schema canônico existente.
 from __future__ import annotations
 
 from datetime import date
+from decimal import Decimal, ROUND_HALF_UP
 import math
 import re
 from typing import Iterable
@@ -84,10 +85,14 @@ def _normalize_points(
     return reference_date, [by_vertex[key] for key in sorted(by_vertex)]
 
 
+def _rate_db(value: float) -> Decimal:
+    return Decimal(str(value)).quantize(Decimal("0.000001"), rounding=ROUND_HALF_UP)
+
+
 def _expanded_rows(
     points: list[AnbimaYieldCurvePoint],
-) -> list[tuple[str, date, int, float]]:
-    out: list[tuple[str, date, int, float]] = []
+) -> list[tuple[str, date, int, Decimal]]:
+    out: list[tuple[str, date, int, Decimal]] = []
     mapping = (
         (CURVE_PRE, "pre_rate_pct"),
         (CURVE_IPCA, "ipca_rate_pct"),
@@ -97,7 +102,7 @@ def _expanded_rows(
         for curve_name, attr in mapping:
             value = getattr(point, attr)
             if value is not None:
-                out.append((curve_name, point.reference_date, point.business_days, float(value)))
+                out.append((curve_name, point.reference_date, point.business_days, _rate_db(float(value))))
     return out
 
 
@@ -107,7 +112,7 @@ async def _existing_rows(
     reference_date: date,
     curves: list[str],
     vertices: list[int],
-) -> dict[tuple[str, int], float]:
+) -> dict[tuple[str, int], Decimal]:
     if not curves or not vertices:
         return {}
     cur = await conn.execute(
@@ -121,7 +126,9 @@ async def _existing_rows(
         (SOURCE_ANBIMA, reference_date, curves, vertices),
     )
     return {
-        (curve_name, int(business_days)): float(rate)
+        (curve_name, int(business_days)): Decimal(rate).quantize(
+            Decimal("0.000001"), rounding=ROUND_HALF_UP
+        )
         for curve_name, business_days, rate in await cur.fetchall()
     }
 
@@ -186,7 +193,7 @@ async def ingest_anbima_yield_curve(
         vertices=vertices,
     )
 
-    pending: list[tuple[str, date, int, float]] = []
+    pending: list[tuple[str, date, int, Decimal]] = []
     already_equal = 0
     conflicts: list[str] = []
     for curve_name, ref, business_days, rate in expanded:
