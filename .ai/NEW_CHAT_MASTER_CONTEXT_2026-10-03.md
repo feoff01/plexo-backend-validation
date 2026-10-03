@@ -517,3 +517,20 @@ O candidato rolling interno está implementado sem alterar a superfície públic
 
 Próximo gate: integração PostgreSQL específica do shadow + semantics/payload/provenance/readiness. Cutover 1.2.0 continua bloqueado.
 
+## Atualização — rolling volatility pronta para cutover
+
+O gate pós-shadow foi concluído no commit funcional `3794088a0cd9e6a0b0e00ae1e8cb1ca634a3f38d`, run #319 / `37162064025` GREEN.
+
+Provas:
+- PostgreSQL 18 com preparação canônica do candidato;
+- adjusted_close = `retrospective_as_known_now`;
+- raw_close = `observation_date_cutoff`;
+- provenance/policy metadata preservadas;
+- payload candidato representativo <5 KB;
+- golden/replay explícito da `quant.risco_retorno` 1.1.0;
+- 188 directed;
+- 931 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN.
+
+A superfície pública continua 1.1.0 e o catálogo 37/34/3. Próximo gate permitido: policy governada da janela + cutover único 1.2.0 + planner/bloco/evals.
+
