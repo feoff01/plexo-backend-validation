@@ -689,3 +689,10 @@ Contrato: comparação descritiva company-level; subsetor padrão, setor opt-in;
 **Decisão:** reutilizar `market.yield_curve` e source `anbima`; nenhuma tabela/migration nova. Curvas v1: `ettj_pre`, `ettj_ipca` e `inflacao_implicita`, todas em `% a.a./252 d.u.` e `day_count=du_252`.
 
 Strict PIT usa `ingestion_batches.finished_at`, não apenas `reference_date`. A tranche inicial não cria tool, interpolação, slope, DV01 ou cliente OAuth. Documento: `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`.
+
+
+## 2026-10-03 — FQ5.7 não usará scraping HTML como contrato físico
+
+**Decisão:** a página pública oficial ANBIMA de fechamento serve como evidência de cobertura atual, mas não será usada como contrato de produção enquanto os bytes do CSV/XML oficial não forem materializados. Não adotar endpoint/form action de terceiros, não hardcodar tabela HTML e não inferir histórico. O adapter físico continua bloqueado até fixture oficial real ou payload JSON autorizado.
+
+Documento: `.ai/FQ5_7_ANBIMA_PUBLIC_SOURCE_AUDIT_2026-10-03.md`.
