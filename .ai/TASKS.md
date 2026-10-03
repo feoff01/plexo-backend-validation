@@ -1002,3 +1002,23 @@ Transversais ainda abertas:
 - [ ] PostgreSQL 18 + full suite pós-cutover;
 - [ ] checkpoint final de promoção.
 
+## Rolling volatility — 1.2.0 pública/GREEN
+- [x] congelar policy `risco_janela_movel_observacoes=21`;
+- [x] preservar replay/golden 1.1.0 em módulo legacy;
+- [x] promover contrato canônico aditivo para `quant.risco_retorno` 1.2.0;
+- [x] janela explícita prevalece sobre policy;
+- [x] manter default sem rolling quando intenção temporal não é pedida;
+- [x] mover warnings rolling para evidência pública;
+- [x] compactação mensal + cap 60 sem recalcular métricas;
+- [x] planner para intenção temporal/rolling;
+- [x] bloco determinístico da evolução;
+- [x] eval de evolução temporal;
+- [x] adjusted/raw PostgreSQL end-to-end;
+- [x] payload <5 KB + provenance/readiness;
+- [x] directed gate #334: 186 passed;
+- [x] full suite: 929 passed / 53 skipped / 19 warnings / 0 failed;
+- [x] prompts check GREEN;
+- [x] tools sync --check GREEN;
+- [x] checkpoint final `.ai/checkpoints/2026-10-03_RISK_ROLLING_1_2_GREEN.md`;
+- [ ] reabrir capability audit restante; não assumir nova FQ automaticamente.
+
