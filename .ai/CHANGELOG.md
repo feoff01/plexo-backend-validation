@@ -685,3 +685,10 @@
 - removidos todos os workflows temporários usados na auditoria;
 - nenhum código de produto mudou após o head validado do run #249.
 
+## 2026-10-03 — composição de índice shadow candidate
+- reauditoria pós-FQ5.7 escolheu membership/peso de índice como próxima lacuna real;
+- criado loader PIT read-only sobre `market.index_weights`;
+- criada `dados.composicao_indice` 1.0.0 shadow, sem exposição ao LLM;
+- nenhum schema, migration, matemática, planner ou bloco público alterado;
+- gate PostgreSQL 18 pendente.
+
