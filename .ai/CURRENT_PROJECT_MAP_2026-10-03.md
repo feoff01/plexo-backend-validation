@@ -2,8 +2,8 @@
 
 Atualizado em: 2026-10-03
 Código funcional validado: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`
-HEAD documental validado: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
-CI do HEAD documental: run #215 / `37137581471` — success
+HEAD documental validado: `f568d1dd2a228216537a600debd7c83a569aeb27`
+CI do HEAD documental: run #216 / `37139839922` — success
 
 ## Projeto e arquitetura
 Plexo é um backend de copiloto financeiro: o LLM interpreta/roteia/explica; código determinístico carrega dados, resolve identidade, calcula, valida, versiona e registra provenance.
@@ -102,7 +102,7 @@ B3 canônica onde validada; CVM para fundamentals; Bacen/SGS/Focus existente; AN
 0061 acervo; 0062 unidades fundamentals; 0063 source Economatica; 0064 IBrA. Nunca editar migrations históricas.
 
 ## CI atual
-Run #215 / 37137581471, HEAD documental 60b234b4614b3bbbc6890597a9e4a2fb5503f58f (código funcional igual ao head c3d7cc95f6ef896a5463397b6a323a0325f3c9f0):
+Run #216 / 37139839922, HEAD documental f568d1dd2a228216537a600debd7c83a569aeb27 (código funcional igual ao head c3d7cc95f6ef896a5463397b6a323a0325f3c9f0):
 - 135 directed passed
 - peers benchmark 10/10/10 queries
 - 896 passed, 52 skipped, 19 warnings, 0 failed
@@ -129,3 +129,22 @@ Não criar tool por fonte; não chamar correlação de causalidade; não chamar 
 6. .ai/CHANGELOG.md
 7. .ai/WORKING_PROTOCOL.md
 8. checkpoints citados
+
+
+## Revalidação final pré-handoff
+
+Base documental revalidada: `f568d1dd2a228216537a600debd7c83a569aeb27`.
+CI: run #216 / `37139839922` — **success**.
+
+Provas:
+- PostgreSQL 18 + migrations até 0064: GREEN;
+- invariantes admin/service: GREEN;
+- gate dirigido: **135 passed**;
+- benchmark peers: **10/10/10 queries** para 2/8/20 peers;
+- output de peers: ~4 KB;
+- suíte completa: **896 passed, 52 skipped, 19 warnings, 0 failed**;
+- prompts check: GREEN;
+- tools sync --check: GREEN;
+- catálogo: 35 tools; 32 expostas; 3 ocultas/replay.
+
+O commit que contém estes documentos pode ser posterior a essa base por ser documental. No novo chat, confirmar HEAD + CI do snapshot anexado antes de qualquer código.
