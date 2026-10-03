@@ -783,3 +783,35 @@ Próxima frente deve começar por nova auditoria reuse-before-build; não abrir 
 - Portfolio Analytics;
 - suitability;
 - análise da carteira/vida financeira do cliente.
+
+
+## HANDOFF FINAL — fila canônica para o próximo chat — 2026-10-03
+
+Fechado:
+- [x] FQ5.6 comparáveis pública 1.0.1;
+- [x] fonte setorial B3;
+- [x] issuer bridge;
+- [x] universo IBrA atual;
+- [x] batch loader de peers;
+- [x] equivalência canônica;
+- [x] regression benchmark 10/10/10 queries;
+- [x] output peers <5 KB;
+- [x] FQ5.7 foundation de curva GREEN em shadow;
+- [x] handoff mestre + prompt de novo chat;
+- [x] revalidação run #216: 135 directed; 896/52/19/0; prompts/tools sync GREEN.
+
+Próxima fila real:
+- [ ] materializar payload físico oficial ANBIMA ETTJ;
+- [ ] congelar fixture + parser físico fail-closed;
+- [ ] medir coverage histórica real da curva;
+- [ ] aplicar reuse-before-build ao primeiro caso client-facing de curva;
+- [ ] desenhar em `.ai/` antes de qualquer tool pública;
+- [ ] somente depois implementar shadow/semver/planner/bloco.
+
+Transversais ainda abertas:
+- [ ] source priority/conflicts;
+- [ ] storage histórico Parquet/Postgres/híbrido;
+- [ ] vintages corporate actions/FX/macro;
+- [ ] artifacts genéricos para outputs longos;
+- [ ] histórico B3 se uma capability exigir;
+- [ ] integração/deploy final.
