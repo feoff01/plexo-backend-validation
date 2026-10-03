@@ -44,12 +44,12 @@ def _resolved():
     )
 
 
-def test_curva_juros_shadow_registry_contract():
+def test_curva_juros_public_registry_contract():
     carregar_tools()
     spec = spec_de("dados.curva_juros")
-    assert spec.semver == "1.0.0"
+    assert spec.semver == "1.0.1"
     assert spec.family == "dados"
-    assert spec.exposed_to_llm is False
+    assert spec.exposed_to_llm is True
     assert spec.requires_market_data is True
 
 
