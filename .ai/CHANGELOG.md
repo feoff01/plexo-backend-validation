@@ -583,3 +583,12 @@
 - definido mapeamento canônico `ettj_pre`, `ettj_ipca`, `inflacao_implicita`;
 - strict PIT usará lote/finished_at;
 - nenhuma alteração de código nesta etapa documental.
+
+
+## 2026-10-03 — FQ5.7 curva de juros foundation shadow candidate
+- adicionada ingestão semântica append-only ANBIMA ETTJ sobre `market.yield_curve` existente;
+- adicionadas curvas canônicas `ettj_pre`, `ettj_ipca`, `inflacao_implicita` sem schema novo;
+- adicionada normalização de taxa para 6 casas conforme coluna `rate_pct`;
+- adicionado loader PIT sem interpolação/extrapolação;
+- adicionados testes de idempotência, conflito, latest/reference_date e look-ahead por `finished_at`;
+- nenhuma tool pública/semver/planner/prompt alterado.
