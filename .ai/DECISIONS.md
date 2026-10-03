@@ -738,3 +738,17 @@ A v1 pública permanece deliberadamente limitada a vértices oficiais publicados
 - nenhum scraper/cliente HTTP ANBIMA entra no produto nesta tranche;
 - `dados.curva_juros` continua leitura exata de dados já ingeridos, sem interpolação/extrapolação.
 
+## 2026-10-03 — composição oficial de índice pública
+
+**Decisão:** promover `dados.composicao_indice` para 1.0.1 pública após shadow e gate pós-promoção GREEN.
+
+**Motivo:** a intenção é factual e distinta de série/performance de índice; o gap era somente loader/contrato sobre `market.index_weights`, já coberto por fonte e schema existentes.
+
+**Consequências:**
+- snapshot explícito é exato; não há nearest/fallback histórico silencioso;
+- strict PIT depende de lote `succeeded` com `finished_at <= cutoff`;
+- peso oficial não é ranking, recomendação ou avaliação de atratividade;
+- a tool não analisa carteira do cliente e não deve ser usada para overweight/underweight pessoal;
+- performance continua fora desta capability;
+- nenhuma matemática, migration ou tabela nova foi criada;
+- run #283 / `37153499452`: 153 directed; 914 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN.
