@@ -815,3 +815,16 @@ Transversais ainda abertas:
 - [ ] artifacts genéricos para outputs longos;
 - [ ] histórico B3 se uma capability exigir;
 - [ ] integração/deploy final.
+
+
+## FQ5.7 — source gate e primeira capability
+- [x] materializar payload físico oficial ANBIMA ETTJ;
+- [x] congelar SHA-256/fixture física;
+- [x] implementar parser fail-closed;
+- [x] medir cobertura observada do arquivo e janela pública declarada;
+- [x] aplicar reuse-before-build;
+- [x] desenhar `dados.curva_juros` 1.0.0;
+- [x] implementar tool em shadow (`exposed_to_llm=False`);
+- [ ] executar PostgreSQL 18 + testes FQ5.7;
+- [ ] executar suíte completa + prompts check + tools sync --check;
+- [ ] revisar payload/provenance e decidir promoção pública versionada.
