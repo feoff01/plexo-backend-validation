@@ -216,7 +216,7 @@ def test_instrumento_desconhecido_e_fora_da_cobertura_sao_diferentes():
 def test_tool_canonica_nasce_shadow_e_fingerprint_cobre_quant_core():
     carregar_tools()
     spec = spec_de("quant.risco_retorno")
-    assert spec.semver == "1.1.0"
+    assert spec.semver == "1.2.0"
     assert spec.exposed_to_llm is True
     names = {Path(path).name for path in spec.source_files}
     assert {
