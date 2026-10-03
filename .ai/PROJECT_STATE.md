@@ -798,3 +798,15 @@ Reauditoria pós-FQ5.7 selecionou a leitura PIT de `market.index_weights` como p
 - catálogo atual: 37 total / 34 expostas / 3 ocultas.
 
 Próximo passo: reauditoria de Company & Market Analytics no estado pós-composição e seleção por `reuse-before-build`.
+
+## Estado atual — quant.risco_retorno 1.1.0
+- `quant.risco_retorno` **1.1.0** pública/GREEN;
+- mantém retorno acumulado/anualizado, vol anualizada e max drawdown;
+- adiciona downside deviation anualizada com target periódico 0% explícito;
+- duração/recovery do pior episódio permanecem em intervalos observados;
+- não há rolling vol pública, Sharpe/Sortino/Calmar, VaR/ES, stress ou forecast;
+- HEAD funcional: `687966a22053136000f39542bb7f1feebcde71cf`;
+- run #296 / `37154531785`: 175 directed; 918/52/19/0; prompts/tools sync GREEN;
+- catálogo: 37 total / 34 expostas / 3 ocultas.
+
+Próximo passo: reauditar lacunas restantes; não assumir automaticamente rolling volatility.
