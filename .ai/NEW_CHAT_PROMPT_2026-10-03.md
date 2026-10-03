@@ -33,10 +33,13 @@ Confirme:
 - FQ5.7 foundation GREEN/shadow/sem tool pública;
 - 35 tools, 32 expostas, 3 ocultas;
 - migrations até 0064;
-- run #215: 135 directed, 896 passed, 52 skipped, 19 warnings, 0 failed, prompts/tools sync verdes.
+- run #216: 135 directed, 896 passed, 52 skipped, 19 warnings, 0 failed, prompts/tools sync verdes.
 
 Próximo gate: materializar payload físico oficial ANBIMA, congelar parser/fixture, medir cobertura histórica e só depois desenhar capability pública de curva.
 
 Não leia .env/segredos, não edite migrations históricas, não use banco remoto destrutivamente, não toque em outro repo, não crie scraper HTML/contrato não oficial, não recrie matemática existente, não trate snapshot atual como histórico e não use Economatica como B3/CVM.
 
 Faça best effort sem perguntar coisas que os arquivos já respondem. Corrija inconsistências reais e registre tudo em `.ai/`.
+
+
+Confirme também que o snapshot anexado contém a revalidação run #216 e que qualquer commit posterior à base `f568d1dd2a228216537a600debd7c83a569aeb27` é documental antes de começar. Se houver um CI mais novo no próprio snapshot, use o mais novo.
