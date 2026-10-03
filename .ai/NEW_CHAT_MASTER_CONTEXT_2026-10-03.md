@@ -474,3 +474,9 @@ Provas:
 - catálogo: 35 tools; 32 expostas; 3 ocultas/replay.
 
 O commit que contém estes documentos pode ser posterior a essa base por ser documental. No novo chat, confirmar HEAD + CI do snapshot anexado antes de qualquer código.
+
+
+## 20. FQ5.7 source gate GREEN e primeira capability shadow
+O payload físico ANBIMA foi materializado: `CurvaZero_.csv`, 2.899 bytes, SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`, referência 02/10/2026. Fixture e parser físico fail-closed estão versionados. Cobertura observada: 65 vértices IPCA, 19 PRE e 19 inflação implícita. A consulta pública informa janela dos últimos cinco dias úteis; não assumir histórico ilimitado.
+
+`dados.curva_juros` 1.0.0 foi desenhada e implementada em shadow, compondo exclusivamente `load_yield_curve()`. Não interpola/extrapola e não faz forecast/choque/slope. Próximo gate: PostgreSQL 18 + suíte + prompts/tools sync; só depois decidir promoção pública.
