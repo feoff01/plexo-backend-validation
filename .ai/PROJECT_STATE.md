@@ -671,3 +671,8 @@ Adicionado benchmark PostgreSQL 18 de `quant.comparaveis_setor` para 2/8/20 peer
 ## FQ5.6 — benchmark baseline confirmou N+1 — 2026-10-02
 
 Run #145 mediu 38/98/218 queries para 2/8/20 peers, com output estável em ~4 KB. O custo cresce como 18 + 10×N; o cálculo puro é barato. Decisão: criar batch loader isolado antes de promoção, reutilizando engines existentes e preservando as outras tools.
+
+
+## FQ5.6 — peer batch loader shadow candidate — 2026-10-03
+
+Após baseline #145 confirmar N+1 material, foi implementado `app/market/peer_company_metrics.py`. O batch carrega catálogo/classes, fallback de CNPJ, DFP PIT e preços em lote; depois reutiliza `FundamentalsLoader` e `FundamentalHistoryLoader` em memória. `quant.comparaveis_setor` continua 1.0.0 oculta. Foi adicionado E2E de equivalência resolved+output contra `quant.valor_mercado` e `quant.tendencias_fundamentais`. Aguardar CI antes de considerar GREEN.
