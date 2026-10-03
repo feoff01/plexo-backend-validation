@@ -2,7 +2,8 @@
 
 Atualizado em: 2026-10-03
 Código funcional validado: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`
-CI: run #202 / `37135725129` — success
+HEAD documental validado: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
+CI do HEAD documental: run #215 / `37137581471` — success
 
 ## Projeto e arquitetura
 Plexo é um backend de copiloto financeiro: o LLM interpreta/roteia/explica; código determinístico carrega dados, resolve identidade, calcula, valida, versiona e registra provenance.
@@ -101,7 +102,7 @@ B3 canônica onde validada; CVM para fundamentals; Bacen/SGS/Focus existente; AN
 0061 acervo; 0062 unidades fundamentals; 0063 source Economatica; 0064 IBrA. Nunca editar migrations históricas.
 
 ## CI atual
-Run #202 / 37135725129, head c3d7cc95f6ef896a5463397b6a323a0325f3c9f0:
+Run #215 / 37137581471, HEAD documental 60b234b4614b3bbbc6890597a9e4a2fb5503f58f (código funcional igual ao head c3d7cc95f6ef896a5463397b6a323a0325f3c9f0):
 - 135 directed passed
 - peers benchmark 10/10/10 queries
 - 896 passed, 52 skipped, 19 warnings, 0 failed

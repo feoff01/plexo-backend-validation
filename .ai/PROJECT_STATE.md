@@ -1,7 +1,16 @@
 # Plexo — Project State
 
-Atualizado em: 2026-09-25
-Commit-base desta revisão: `51d87b46dbacbd7d814e4df4920b366b1105e480`
+Atualizado canonicamente em: 2026-10-03
+
+> **IMPORTANTE:** este arquivo preserva o histórico incremental. As primeiras seções descrevem estados antigos e não devem ser interpretadas como estado atual.
+> Estado canônico:
+> - `.ai/NEXT_CHAT_HANDOFF_FINAL.md`
+> - `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`
+> - `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`
+>
+> Referência: HEAD documental `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`, run #215 `37137581471` success.
+>
+> O histórico abaixo permanece para auditabilidade.
 
 ## Objetivo geral
 

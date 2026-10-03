@@ -1,6 +1,9 @@
 # Plexo — Tasks
 
-Atualizado em: 2026-09-21
+Atualizado canonicamente em: 2026-10-03
+
+> **IMPORTANTE:** este arquivo é append-only e contém tarefas históricas superadas por checkpoints posteriores. Não reabra caixas antigas automaticamente.
+> A fila atual é a seção **TAREFAS CANÔNICAS ATUAIS — 2026-10-03** no final deste arquivo e o contexto mestre `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`.
 
 ## Estado da trilha Quant
 

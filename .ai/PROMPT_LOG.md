@@ -454,3 +454,7 @@ O handoff deve distinguir explicitamente FQ4 fechado no repo de validação de e
 - `quant.dependencia` 2.0.0 é a interface canônica para ativo/índice/FX; `quant.dependencia_macro` está oculta;
 - FQ5.7 curva de juros ainda não possui tool/route pública;
 - não adicionar prompt de curva antes do physical-source gate e de um design client-facing.
+
+
+## 2026-10-03 — Prompt de continuação consolidado
+Criado `.ai/NEW_CHAT_PROMPT_2026-10-03.md` e atualizado o handoff mestre para que o próximo chat confirme o estado atual antes de codar, preserve reuse-before-build e continue pelo source gate ANBIMA da FQ5.7.

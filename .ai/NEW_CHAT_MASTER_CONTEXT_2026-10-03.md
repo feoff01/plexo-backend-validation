@@ -1,0 +1,416 @@
+# Plexo Backend — Contexto Mestre para Continuação
+
+Atualizado em: 2026-10-03
+Status: **canônico para novo chat**
+Repo autorizado: `feoff01/plexo-backend-validation`
+Branch: `bootstrap/plexo-project`
+HEAD documental validado antes desta consolidação: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
+CI do HEAD documental: run #215 / `37137581471` — **success**
+Código funcional de referência: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`
+CI funcional de referência: run #202 / `37135725129` — **success**
+
+> Este documento explica o projeto, o que foi feito, por que foi feito, como foi validado, o que não deve ser reaberto e qual é o próximo gate real. Histórico detalhado continua em `DECISIONS.md`, `CHANGELOG.md` e checkpoints.
+
+## 1. O que é o Plexo
+
+Plexo é um backend de copiloto financeiro orientado a tools determinísticas.
+
+Fluxo canônico:
+
+```
+usuário
+  -> LLM interpreta a pergunta
+  -> LLM escolhe tool + parâmetros estruturados
+  -> registry/executor
+  -> preparar(): I/O, identidade, cutoff, quality, provenance
+  -> calcular(): matemática determinística/pura
+  -> output estruturado, versionado e auditável
+  -> LLM explica o resultado
+```
+
+Regra central:
+- LLM interpreta, roteia e explica;
+- código determinístico carrega dados e calcula;
+- o LLM não deve inventar números, choque, WACC, ERP, crescimento, causalidade ou previsão;
+- outputs para o LLM devem ser compactos;
+- provenance, cutoff, warnings, semver, replay e source fingerprint são parte do contrato.
+
+## 2. Escopo da frente atual
+
+A frente ativa é **Analista de Mercado / Company & Market Analytics**.
+
+Fora desta frente:
+- Portfolio Analytics;
+- suitability;
+- análise da carteira do cliente;
+- planejamento financeiro pessoal;
+- metas, aposentadoria e vida financeira do cliente.
+
+O usuário possui outra frente/processo para carteira/cliente. Não misturar.
+
+## 3. Protocolo permanente de desenvolvimento
+
+Toda decisão relevante deve ser persistida em `.ai/`. Não depender da memória do chat.
+
+Antes de qualquer feature:
+1. aplicar `reuse-before-build`;
+2. verificar se a matemática já existe no Quant Core;
+3. verificar se a tabela/fonte já existe;
+4. verificar se loader/adapter já existe;
+5. distinguir nova fonte de nova matemática;
+6. só criar tool nova quando houver intenção analítica realmente nova;
+7. registrar design em `.ai/` antes do código;
+8. implementar shadow;
+9. provar equivalência/replay;
+10. promover somente depois de CI PostgreSQL 18 completo.
+
+Nunca:
+- ler/publicar `.env` ou segredos;
+- editar migrations históricas;
+- usar banco remoto destrutivamente;
+- tocar em outro repositório;
+- usar Economatica como se fosse B3/CVM;
+- tratar snapshot atual como histórico;
+- reabrir FQ4 sem necessidade.
+
+## 4. Fundação técnica já construída
+
+### Versionamento / registry
+- `exposed_to_llm` separa execução/replay de exposição ao planner;
+- source fingerprint composto inclui `source_dependencies`;
+- semver + source SHA protegem mudanças materiais;
+- cache é content-addressed;
+- `tool_executions` preserva auditabilidade/replay.
+
+### Data Foundation
+- `app/market/series.py`: preços, índices/taxas, calendário, quality/provenance;
+- `raw_close` e `adjusted_close` são separados;
+- adjusted close é retrospectivo as-known-now enquanto corporate actions não tiverem vintage/availability completo;
+- `factor_resolution.py` + `factors.py`: ativo/índice/FX;
+- `fundamentals.py` + `fundamental_history.py`: DFP PIT por `availability_date`;
+- `sectors.py`: classificação setorial/peer universe;
+- `index_portfolios.py`: IBrA/index_weights/universe;
+- `peer_company_metrics.py`: batch loader de peers;
+- `yield_curve_ingest.py` + `yield_curves.py`: fundação de ETTJ ANBIMA.
+
+### Quant Core existente
+`app/market/analytics/` já contém:
+- returns;
+- statistics;
+- risk;
+- dependence;
+- conditional;
+- regression/HAC;
+- sensitivity;
+- regimes;
+- event_study;
+- valuation;
+- fundamental_trends;
+- scenario.
+
+Capacidades latentes que já existem e NÃO devem ser recriadas:
+- rolling volatility;
+- downside deviation;
+- drawdown duration/recovery;
+- rolling dependence;
+- up/down-market dependence.
+
+## 5. FQ0.5–FQ4 — encerrados
+
+Estado canônico:
+- `quant.risco_retorno` 1.0.1 pública;
+- `quant.dependencia` 2.0.0 pública;
+- `quant.analise_condicional` 1.0.1 pública;
+- `quant.sensibilidade` 1.0.1 pública;
+- `quant.regimes` 1.0.1 pública;
+- `quant.event_study` 2.0.0 pública.
+
+Legacy oculto/replay:
+- `quant.retorno_volatilidade` 1.0.4;
+- `quant.correlacao` 1.0.3;
+- `quant.dependencia_macro` 1.0.1.
+
+`quant.event_study_v2` **não está registrado**.
+
+## 6. Auditoria arquitetural e correção de duplicação
+
+Foi detectado que `quant.dependencia_macro` repetia a orquestração de `quant.dependencia`. A matemática já existia; o gap real era a fonte FX.
+
+Decisão resultante:
+- `FactorRef/ResolvedFactor` compartilha resolução de ativo/índice/FX;
+- transformação estatística continua pertencendo à análise;
+- não criar tools por fonte;
+- `quant.dependencia` foi promovida para 2.0.0;
+- macro ficou oculta para compatibilidade/replay;
+- `reuse-before-build` virou gate permanente.
+
+## 7. FQ5.1–FQ5.4 — empresa + valuation básico
+
+`dados.fundamentos_empresa` 1.0.0:
+- DFP PIT;
+- availability_date;
+- units/currency;
+- provenance.
+
+`quant.valor_mercado` 1.0.0:
+- market cap multi-classe;
+- net debt;
+- EV;
+- P/L;
+- EV/EBITDA;
+- P/VP;
+- FCF yield.
+
+Não é fair value.
+
+`quant.cenario_sensibilidade` 1.0.0:
+- reutiliza sensibilidade;
+- aplica choque explícito ao slope;
+- impacto incremental/preço mecânico;
+- não é forecast;
+- não inventa choque.
+
+## 8. FQ5.5 — tendências fundamentais
+
+`quant.tendencias_fundamentais` 1.0.1 pública/GREEN.
+
+- histórico anual DFP PIT;
+- YoY;
+- margens;
+- sem forecast;
+- sem fair value.
+
+## 9. FQ5.6 — setor/peers
+
+### Fonte setorial B3
+Arquivo oficial fornecido pelo usuário:
+- 373 company codes;
+- 11 setores;
+- 39 subsetores;
+- B3 = fonte canônica para setor/subsetor atual;
+- Economatica = validação auxiliar;
+- sem terceiro nível segmento no arquivo usado.
+
+### Economatica
+Auditoria dos arquivos do usuário:
+- 478 ações B3 ativas com setor/subsetor no export 2025;
+- útil para validação/cobertura;
+- metadata setorial não é vintage histórico confiável;
+- não retrodata;
+- não substitui B3/CVM;
+- preços/fundamentos vendor-derived não entram automaticamente no acervo canônico.
+
+### Issuer bridge
+O projetor COTAHIST criava instruments sem issuer company-level.
+Foi criada ponte determinística:
+- classes da mesma raiz B3 compartilham issuer;
+- não inventa CNPJ;
+- preserva issuer existente;
+- conflito falha fechado.
+
+### Universo IBrA
+Arquivos oficiais B3 fornecidos:
+- `IBRADia_02-10-26.csv`;
+- `AcoesIndices_2026-10-02.csv`;
+- XLSX multiíndice.
+
+Contrato:
+- IBrA 02/10/2026;
+- 148 componentes;
+- peso 100%;
+- membership atual, não histórico retroativo;
+- `market.index_weights` preserva snapshots;
+- `is_in_universe` é projeção operacional atual.
+
+Coverage:
+- 146/148 tickers classificados;
+- 142/144 company codes;
+- gaps: RIAA3, SAUD3.
+
+### Comparáveis
+`quant.comparaveis_setor` 1.0.1 pública/GREEN.
+
+- company-level;
+- subsetor default;
+- setor opt-in;
+- segmento não suportado;
+- sem ranking/recomendação/fair value;
+- alvo vs mediana/distribuição.
+
+### N+1 corrigido
+Baseline:
+- 2 peers = 38 queries;
+- 8 peers = 98;
+- 20 peers = 218.
+
+Após batch loader:
+- 2/8/20 = 10/10/10 queries;
+- output público ~4 KB;
+- regression gate <=12 queries e <5 KB;
+- equivalência resolved/output contra preparadores canônicos GREEN.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_6_PEERS_PROMOTION_GREEN.md`.
+
+## 10. Catálogo público atual do Analista
+
+Dados:
+- `dados.resolver_instrumento` 1.0.0
+- `dados.serie_precos` 1.0.2
+- `dados.historico_comparado` 1.1.1
+- `dados.serie_indice` 1.1.1
+- `dados.expectativas_mercado` 1.0.0
+- `dados.fundamentos_empresa` 1.0.0
+
+Quant:
+- `quant.risco_retorno` 1.0.1
+- `quant.dependencia` 2.0.0
+- `quant.analise_condicional` 1.0.1
+- `quant.sensibilidade` 1.0.1
+- `quant.regimes` 1.0.1
+- `quant.event_study` 2.0.0
+- `quant.valor_mercado` 1.0.0
+- `quant.cenario_sensibilidade` 1.0.0
+- `quant.tendencias_fundamentais` 1.0.1
+- `quant.comparaveis_setor` 1.0.1
+
+Repo: 35 tools; 32 expostas; 3 ocultas.
+
+## 11. FQ5.7 — curva de juros
+
+Estado: **foundation GREEN / shadow / sem tool pública**.
+
+Já existe:
+- source `anbima`;
+- dataset `anbima.yield_curve.ettj@1`;
+- ingestão semântica append-only;
+- `ettj_pre`;
+- `ettj_ipca`;
+- `inflacao_implicita`;
+- `business_days = vertice_du`;
+- `day_count = du_252`;
+- loader latest/reference_date;
+- strict PIT por lote succeeded + finished_at;
+- sem interpolação/extrapolação;
+- sem slope/DV01;
+- sem tool pública.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_7_YIELD_CURVE_FOUNDATION_GREEN.md`.
+
+### Bloqueio real atual
+Falta materializar payload físico oficial ANBIMA:
+- CSV/XML/XLS oficial;
+- ou JSON real autorizado da API, sem credenciais.
+
+Próxima sequência:
+1. obter/materializar payload;
+2. congelar parser/fixture;
+3. medir coverage histórica;
+4. aplicar reuse-before-build;
+5. desenhar primeira intenção client-facing;
+6. só então tool/semver/planner/bloco.
+
+Não criar scraper HTML ou contrato de terceiros.
+
+## 12. Temporalidade e fontes
+
+- raw close: observation-date cutoff;
+- adjusted close: retrospectivo as-known-now, não strict PIT;
+- fundamentals: availability_date <= cutoff;
+- FX: rate-date cutoff, vintage incompleto;
+- setor/IBrA: known-at-ingestion/current snapshot;
+- yield curve: reference_date + lote succeeded/finished_at <= cutoff.
+
+Fontes:
+- B3 canônica onde validada;
+- CVM para fundamentals;
+- Bacen/SGS/Focus onde existente;
+- ANBIMA para yield curve;
+- Economatica somente auxiliar.
+
+## 13. Migrations recentes
+
+- 0061 — acervo;
+- 0062 — units/currency fundamentals;
+- 0063 — source Economatica;
+- 0064 — IBrA.
+
+Nunca editar migrations históricas.
+
+## 14. Gate atual
+
+HEAD documental validado: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
+Run #215 / `37137581471` — **success**
+
+- PostgreSQL 18/migrations/invariantes verdes;
+- 135 directed passed;
+- peers 10/10/10 queries;
+- payload 4009 / 4171 / 4163 bytes;
+- 896 passed;
+- 52 skipped;
+- 19 warnings;
+- 0 failed;
+- prompts check verde;
+- tools sync --check verde.
+
+## 15. Pendências reais
+
+Imediata:
+- payload físico ANBIMA;
+- parser/fixture;
+- coverage histórica;
+- design da primeira pergunta client-facing de curva.
+
+Transversais:
+- source priority/conflicts;
+- storage histórico Parquet/Postgres/híbrido;
+- vintage corporate actions/FX/macro;
+- artifacts genéricos;
+- histórico B3 quando necessário;
+- deploy/integração final.
+
+Futuro:
+- Brent/commodities somente com fonte auditada;
+- fair value/reverse DCF somente com forecasts/WACC/ERP/growth governados;
+- ITR/trimestre somente com contrato contábil explícito.
+
+## 16. Erros a não repetir
+
+- não criar tool por fonte;
+- não duplicar matemática;
+- não confundir correlação com causalidade;
+- não chamar market cap/EV de fair value;
+- não chamar cenário mecânico de forecast;
+- não inventar choque/WACC/ERP/growth;
+- não tratar snapshot atual como histórico;
+- não chamar adjusted retrospective de PIT;
+- não aceitar IBrA parcial;
+- não reintroduzir N+1;
+- não reexpor legacy;
+- não registrar `quant.event_study_v2`;
+- não usar Economatica como B3/CVM;
+- não editar migrations antigas;
+- não ler/publicar segredos;
+- não tocar em outro repo.
+
+## 17. Ordem de leitura no próximo chat
+
+1. `.ai/NEXT_CHAT_HANDOFF_FINAL.md`
+2. `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`
+3. `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`
+4. `.ai/PROJECT_STATE.md`
+5. `.ai/DECISIONS.md`
+6. `.ai/TASKS.md`
+7. `.ai/CHANGELOG.md`
+8. `.ai/WORKING_PROTOCOL.md`
+9. checkpoints citados.
+
+## 18. Primeira tarefa do próximo chat
+
+Antes de código:
+- confirmar integridade;
+- confirmar FQ5.6 pública/GREEN;
+- confirmar FQ5.7 foundation GREEN/shadow;
+- procurar payload físico oficial ANBIMA nos anexos;
+- se não existir, parar no source gate;
+- se existir, congelar adapter físico + fixture e medir coverage histórica;
+- registrar tudo em `.ai/`.

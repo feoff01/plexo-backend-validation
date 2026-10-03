@@ -11,6 +11,7 @@ O desenvolvimento do Plexo não deve depender da memória de uma conversa. Toda 
 
 1. Antes de implementar uma etapa nova, ler:
    - `.ai/NEXT_CHAT_HANDOFF_FINAL.md`
+   - `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`
    - `.ai/PROJECT_STATE.md`
    - `.ai/DECISIONS.md`
    - `.ai/TASKS.md`

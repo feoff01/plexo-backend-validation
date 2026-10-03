@@ -622,3 +622,13 @@
 - FQ5.6 pública/encerrada; FQ5.7 foundation GREEN sem tool pública;
 - source gate ANBIMA físico é a pendência funcional imediata;
 - nenhuma alteração de código, migration, tool, semver, planner ou matemática nesta consolidação.
+
+
+## 2026-10-03 — Consolidação mestre para novo chat
+- criado `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md` com visão completa do projeto, arquitetura, decisões, fontes, FQ0.5–FQ5.7, erros a evitar e roadmap;
+- criado `.ai/NEW_CHAT_PROMPT_2026-10-03.md` como prompt pronto para continuação;
+- `PROJECT_STATE.md` e `TASKS.md` agora deixam explícito que blocos antigos são históricos e que o estado canônico está nos documentos atuais;
+- `NEXT_CHAT_HANDOFF.md` virou ponteiro de compatibilidade para o handoff final;
+- `NEXT_CHAT_START_HERE.md`, `WORKING_PROTOCOL.md`, mapa e handoff final atualizados para a nova ordem de leitura;
+- referência documental validada antes desta consolidação: HEAD `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`, run #215 `37137581471` success;
+- nenhuma alteração de código, migration, semver, exposição, planner, engine ou tool.
