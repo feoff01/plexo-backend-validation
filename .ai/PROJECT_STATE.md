@@ -692,3 +692,10 @@ Promoção candidata publicada: `quant.comparaveis_setor` 1.0.1 pública, planne
 Performance final: 10 queries constantes para 2/8/20 peers; output ~4 KB. Run #170 `37133499914`: 128 gate; 889 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, prompts e tools sync verdes.
 
 Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_6_PEERS_PROMOTION_GREEN.md`.
+
+
+## FQ5.7 aberta — fundação de curva de juros — 2026-10-03
+
+Após FQ5.6 encerrada, nova auditoria reuse-before-build confirmou que `market.yield_curve` e source `anbima` já existem, mas não há consumer Python. A ANBIMA documenta ETTJ diária com vértices em d.u. e taxas prefixada/IPCA/inflação implícita. Design: `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`.
+
+Primeira tranche é somente fundação shadow (ingestão semântica + loader PIT), sem tool pública/OAuth/fórmula nova.
