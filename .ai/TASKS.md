@@ -837,3 +837,13 @@ Transversais ainda abertas:
 - [x] run #234 GREEN: 142 directed; 903 passed / 52 skipped / 19 warnings;
 - [x] prompts/tools sync GREEN;
 - [ ] promoção pública controlada de `dados.curva_juros` com bloco/planner/readiness;
+
+
+## FQ5.7 — promoção de dados.curva_juros
+- [x] plano de promoção congelado;
+- [x] bump candidato 1.0.1 + exposed_to_llm;
+- [x] planner restritivo;
+- [x] bloco determinístico;
+- [x] readiness + payload <5 KB;
+- [ ] CI PostgreSQL 18 pós-promoção;
+- [ ] checkpoint GREEN final e snapshot canônico.
