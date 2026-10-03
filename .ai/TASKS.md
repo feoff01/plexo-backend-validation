@@ -887,3 +887,17 @@ Transversais ainda abertas:
 - [ ] payload/provenance gate;
 - [ ] somente depois decidir promoção pública.
 
+## Composição de índice — encerramento público
+- [x] shadow GREEN;
+- [x] promoção `dados.composicao_indice` 1.0.1 pública;
+- [x] planner restritivo;
+- [x] bloco determinístico factual;
+- [x] payload readiness < 5 KB;
+- [x] strict PIT / snapshot exato / sem nearest;
+- [x] run #283: 153 directed;
+- [x] full suite: 914 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts check GREEN;
+- [x] tools sync --check GREEN;
+- [x] catálogo: 37 total / 34 expostas / 3 ocultas;
+- [ ] reauditar lacunas restantes de Company & Market Analytics no estado atual;
+- [ ] selecionar a próxima tranche por `reuse-before-build`, sem assumir FQ nova.
