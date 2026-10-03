@@ -148,3 +148,12 @@ Provas:
 - catálogo: 35 tools; 32 expostas; 3 ocultas/replay.
 
 O commit que contém estes documentos pode ser posterior a essa base por ser documental. No novo chat, confirmar HEAD + CI do snapshot anexado antes de qualquer código.
+
+
+## FQ5.7 — atualização pós source gate
+- payload físico oficial ANBIMA: GREEN;
+- fixture/parser físico: GREEN;
+- snapshot 02/10/2026: 65 IPCA / 19 PRE / 19 inflação implícita;
+- `dados.curva_juros` 1.0.0: shadow / não exposta;
+- sem interpolation/extrapolation/slope/forecast/choque;
+- próximo gate: PostgreSQL 18 + suíte completa + prompts/tools sync antes de promoção.
