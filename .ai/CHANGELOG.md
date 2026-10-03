@@ -676,3 +676,12 @@
 - prompts/tools sync GREEN;
 - catálogo passa a 36 tools, 33 públicas e 3 ocultas/replay;
 - FQ5.7 encerrada para leitura exata de ETTJ oficial.
+
+## 2026-10-03 — FQ5.7 cobertura histórica física + cleanup
+- reproduzido o POST first-party oficial de download ANBIMA ETTJ;
+- seis datas dentro do limite público observado (25/09–02/10/2026) retornaram CSVs distintos e válidos;
+- parser aceitou 65 IPCA / 19 PRE / 19 inflação implícita em todas as seis datas;
+- retenção observada em 24/09 não foi promovida a contrato suportado;
+- removidos todos os workflows temporários usados na auditoria;
+- nenhum código de produto mudou após o head validado do run #249.
+
