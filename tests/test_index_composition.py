@@ -45,15 +45,15 @@ def _resolved():
     )
 
 
-def test_composicao_indice_shadow_registry_contract():
+def test_composicao_indice_public_registry_contract():
     carregar_tools()
     spec = spec_de("dados.composicao_indice")
-    assert spec.semver == "1.0.0"
+    assert spec.semver == "1.0.1"
     assert spec.family == "dados"
-    assert spec.exposed_to_llm is False
+    assert spec.exposed_to_llm is True
     assert spec.requires_market_data is True
     assert len(specs_registradas()) == 37
-    assert sum(s.exposed_to_llm for s in specs_registradas()) == 33
+    assert sum(s.exposed_to_llm for s in specs_registradas()) == 34
 
 
 def test_composicao_indice_compacta_por_limite_sem_inventar_membros():
@@ -78,3 +78,27 @@ def test_composicao_indice_filtra_tickers_exatos_e_avisa_ausentes():
     assert [m.ticker for m in out.componentes] == ["CCCC3"]
     assert out.truncado is False
     assert "ticker_fora_da_carteira:MISS3" in out.provenance.warnings
+
+
+def test_composicao_indice_payload_maximo_fica_abaixo_de_5kb():
+    base = _resolved()
+    members = [
+        IndexCompositionMember(
+            instrument_id=f"id-{i}",
+            ticker=f"T{i:03}3",
+            name="EMPRESA EXEMPLO COM NOME RAZOAVELMENTE LONGO SA",
+            weight_pct=4.0,
+            theoretical_qty=1234567890.1234,
+        )
+        for i in range(25)
+    ]
+    composition = base.model_copy(
+        update={
+            "members": members,
+            "total_weight_pct": 100.0,
+        }
+    )
+    out = montar_composicao_indice(
+        ComposicaoIndiceResolvida(composition=composition, limite=25)
+    )
+    assert len(out.model_dump_json().encode("utf-8")) < 5_000
