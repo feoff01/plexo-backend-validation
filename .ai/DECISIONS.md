@@ -776,3 +776,16 @@ Design: `.ai/RISK_ADVANCED_CONTRACT_DESIGN_2026-10-03.md`.
 **Prova:** run #296 / `37154531785`: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18.6, prompts e tools sync verdes.
 
 **Consequência:** não criar tool paralela de downside/drawdown. Rolling volatility continua separada até existir contrato explícito de janela e compactação.
+
+## 2026-10-03 — próxima tranche pós-risco: rolling volatility na tool canônica
+
+**Decisão:** após o GREEN de `quant.risco_retorno` 1.1.0, a próxima lacuna pronta é evolução histórica de volatilidade, evoluindo a mesma capability em vez de criar tool paralela.
+
+**Reuse-before-build:** `rolling_volatility()`, cálculo de retornos, preparação de série/cutoff, `amostrar_mensal()`, provenance e temporal semantics já existem. O gap é contrato/policy/compactação/apresentação.
+
+**Target eventual:** `quant.risco_retorno` 1.2.0, somente após shadow e gates. O default de janela móvel precisa ser governado; não haverá fallback numérico escondido.
+
+**Bloqueios mantidos:** Brent depende de source audit oficial; fair value/reverse DCF depende de premissas governadas; histórico B3/vintages/source-priority continuam transversais.
+
+Design: `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`.
+
