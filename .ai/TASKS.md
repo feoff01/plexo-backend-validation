@@ -983,3 +983,22 @@ Transversais ainda abertas:
 - [ ] cutover único 1.2.0 + planner/bloco/evals;
 - [ ] gate final + checkpoint de promoção.
 
+## Rolling volatility — CI/readiness GREEN
+- [x] integração PostgreSQL específica do shadow;
+- [x] adjusted/raw semantics end-to-end;
+- [x] provenance + ingestion batch + policy metadata;
+- [x] payload representativo <5 KB;
+- [x] golden/replay `quant.risco_retorno` 1.1.0;
+- [x] directed gate inclui shadow/readiness/DB;
+- [x] run #319: 188 directed;
+- [x] full suite: 931 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts check GREEN;
+- [x] tools sync --check GREEN;
+- [ ] governar/aprovar `ANALISE_PARAMS.risco_janela_movel_observacoes`;
+- [ ] cutover único `quant.risco_retorno` 1.2.0;
+- [ ] planner para intenção temporal rolling;
+- [ ] bloco determinístico da evolução;
+- [ ] evals/readiness finais;
+- [ ] PostgreSQL 18 + full suite pós-cutover;
+- [ ] checkpoint final de promoção.
+
