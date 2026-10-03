@@ -684,3 +684,17 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [x] FQ5.6 encerrada.
 
 Próxima frente deve começar por nova auditoria reuse-before-build; não abrir matemática/tool automaticamente.
+
+
+## FQ5.7 — Curva de juros ANBIMA
+- [x] aplicar reuse-before-build;
+- [x] confirmar schema/source já existentes;
+- [x] confirmar ausência de consumer Python atual;
+- [x] validar contrato oficial ANBIMA de curvas;
+- [x] desenhar mapeamento pre/IPCA/inflação implícita;
+- [ ] implementar ingestão semântica shadow;
+- [ ] implementar loader PIT shadow;
+- [ ] testes de idempotência/conflito/strict PIT;
+- [ ] CI PostgreSQL 18 + registry/prompts sem drift;
+- [ ] checkpoint GREEN da fundação;
+- [ ] somente depois materializar payload API real/autorizado e decidir capability pública.
