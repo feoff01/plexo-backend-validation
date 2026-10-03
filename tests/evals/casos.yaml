@@ -215,6 +215,12 @@ casos:
     turnos:
       - pergunta: "Como foi o retorno e a volatilidade da PETR4 nos últimos 12 meses?"
         espera: {tool: quant.risco_retorno, contem_algum: ["retorno passado", "não indica"], resposta_do_modelo: true, nao_contem: ["vai subir", "compre"]}
+  - id: ana_evolucao_volatilidade
+    agente: analista
+    turnos:
+      - pergunta: "Como a volatilidade da PETR4 evoluiu ao longo dos últimos 12 meses?"
+        espera: {tool: quant.risco_retorno, resposta_do_modelo: true, nao_contem: ["vai subir", "compre", "sinal de compra"]}
+
   - id: ana_correlacao
     agente: analista
     turnos:
