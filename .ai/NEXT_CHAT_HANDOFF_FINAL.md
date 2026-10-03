@@ -193,3 +193,31 @@ Próxima ação: reauditar lacunas restantes no estado atual; aplicar `reuse-bef
 - catálogo 37 total / 34 expostas / 3 ocultas.
 
 Próxima ação: reauditoria pós-risco. Rolling volatility não deve ser aberta sem design explícito de janela e compactação.
+
+## OVERRIDE PÓS-RISCO 1.1 — rolling volatility selecionada / design congelado
+
+A reauditoria exigida após o run #296 foi concluída.
+
+Documentos canônicos novos:
+- `.ai/COMPANY_MARKET_DELTA_AUDIT_POST_RISK_2026-10-03.md`;
+- `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`;
+- `.ai/checkpoints/2026-10-03_POST_RISK_ROLLING_DESIGN_FROZEN.md`.
+
+Estado:
+- `quant.risco_retorno` 1.1.0 continua pública/GREEN;
+- rolling volatility já existe no Quant Core;
+- gap é contrato/policy/compactação, não matemática/fonte/schema;
+- target eventual = 1.2.0;
+- nenhuma alteração pública foi feita nesta tranche.
+
+Próximo gate exato:
+1. implementar shadow interno não registrado;
+2. exigir janela rolling explícita no shadow;
+3. preservar semver/exposure/fingerprint/catalog da 1.1.0;
+4. provar equivalência integral das métricas 1.1.0;
+5. encerrar a tranche;
+6. somente depois PostgreSQL 18 + semantics/payload/provenance/readiness;
+7. somente depois replay 1.1.0 + policy governada + cutover 1.2.0 + planner/bloco/evals.
+
+Não abrir Brent, fair value ou Portfolio Analytics em paralelo.
+
