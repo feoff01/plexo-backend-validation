@@ -901,3 +901,15 @@ Transversais ainda abertas:
 - [x] catálogo: 37 total / 34 expostas / 3 ocultas;
 - [ ] reauditar lacunas restantes de Company & Market Analytics no estado atual;
 - [ ] selecionar a próxima tranche por `reuse-before-build`, sem assumir FQ nova.
+
+## Próxima tranche — risco histórico compacto
+- [x] provar reuse-before-build;
+- [x] confirmar downside deviation já existente no Quant Core;
+- [x] confirmar duração/recovery já existentes no payload de drawdown;
+- [x] congelar design `.ai/RISK_ADVANCED_CONTRACT_DESIGN_2026-10-03.md`;
+- [ ] implementar `quant.risco_retorno` 1.1.0 de forma aditiva;
+- [ ] preservar numericamente retorno/vol/max drawdown existentes;
+- [ ] adicionar downside deviation anualizada com target periódico zero explícito;
+- [ ] atualizar bloco/planner sem criar tool paralela;
+- [ ] rodar gate PostgreSQL 18 + suíte + prompts/tools sync;
+- [ ] checkpoint GREEN antes de abrir rolling volatility ou qualquer outra capacidade.
