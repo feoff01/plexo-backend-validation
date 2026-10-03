@@ -192,3 +192,15 @@ Próximo gate: reabrir o capability audit pós-composição e escolher a próxim
 - catálogo segue 37 / 34 públicas / 3 ocultas.
 
 Rolling volatility permanece somente no Quant Core; para expô-la será obrigatório definir janela, default/premissa e compactação de série antes de código.
+
+## Atualização pós-risco 1.1 — rolling volatility
+
+- `quant.risco_retorno` 1.1.0 segue pública/GREEN;
+- reauditoria pós-risco concluída;
+- rolling volatility selecionada como próximo gap de contrato/apresentação;
+- Quant Core já possui `rolling_volatility()`;
+- target eventual 1.2.0, sem nova tool;
+- design congelado em `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`;
+- próximo gate = shadow interno + equivalência 1.1.0;
+- Brent/fair value continuam bloqueados por seus respectivos source/governance gates.
+
