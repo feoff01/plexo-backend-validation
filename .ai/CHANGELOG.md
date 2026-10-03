@@ -609,3 +609,16 @@
 - UI pública declara últimos cinco dias úteis e downloads XLS/CSV/TXT/XML;
 - nenhum payload ANBIMA foi encontrado nos anexos da conversa;
 - adapter físico permanece bloqueado sem bytes oficiais; scraper HTML foi explicitamente rejeitado.
+
+
+## 2026-10-03 — Consolidação final de handoff pós-FQ5.7 foundation
+
+- criado `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`;
+- reescrito `.ai/NEXT_CHAT_HANDOFF_FINAL.md` como snapshot atual;
+- atualizado `NEXT_CHAT_START_HERE.md`;
+- adicionada fila canônica atual em PROJECT_STATE/TASKS;
+- estado funcional validado permanece `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0` / run #202 `37135725129`;
+- run #202: 135 gate; 896 passed, 52 skipped, 19 warnings, 0 failed; peers 10/10/10; prompts/tools sync verdes;
+- FQ5.6 pública/encerrada; FQ5.7 foundation GREEN sem tool pública;
+- source gate ANBIMA físico é a pendência funcional imediata;
+- nenhuma alteração de código, migration, tool, semver, planner ou matemática nesta consolidação.
