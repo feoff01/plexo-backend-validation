@@ -5,8 +5,8 @@ Repo autorizado: `feoff01/plexo-backend-validation`
 Branch: `bootstrap/plexo-project`
 Código funcional validado: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`
 CI funcional de referência: run #202 / `37135725129` — **success**
-HEAD documental validado: `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`
-CI do HEAD documental: run #215 / `37137581471` — **success**
+HEAD documental validado: `f568d1dd2a228216537a600debd7c83a569aeb27`
+CI do HEAD documental: run #216 / `37139839922` — **success**
 
 > Este arquivo substitui os handoffs antigos. A história detalhada permanece em CHANGELOG, DECISIONS e checkpoints.
 
@@ -126,3 +126,22 @@ Não ler/publicar .env/segredos; não editar migrations históricas; não usar b
 ## Prompt pronto para o novo chat
 
 Quero continuar o backend Plexo exatamente do snapshot anexado. Antes de alterar código, leia `.ai/NEXT_CHAT_HANDOFF_FINAL.md`, `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`, `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`, `.ai/PROJECT_STATE.md`, `.ai/DECISIONS.md`, `.ai/TASKS.md`, `.ai/CHANGELOG.md`, `.ai/WORKING_PROTOCOL.md` e checkpoints citados. Trate `.ai/` como memória persistente e atualize-a em cada etapa relevante. Preserve: LLM interpreta/roteia/explica; código determinístico carrega/calcula; semver, fingerprint, provenance, replay, outputs compactos e gates. Não leia .env/segredos, não altere migrations históricas, não use banco remoto destrutivamente e não toque em outro repo. Escopo: empresa/mercado; não abrir Portfolio Analytics/cliente. Estado: FQ0.5–FQ4 encerrados; quant.dependencia 2.0.0 pública; FQ5.5/FQ5.6 públicas/GREEN; FQ5.7 foundation GREEN sem tool pública. Primeiro confirme integridade e o gate de fonte física ANBIMA; não recrie matemática existente.
+
+
+## Revalidação final pré-handoff
+
+Base documental revalidada: `f568d1dd2a228216537a600debd7c83a569aeb27`.
+CI: run #216 / `37139839922` — **success**.
+
+Provas:
+- PostgreSQL 18 + migrations até 0064: GREEN;
+- invariantes admin/service: GREEN;
+- gate dirigido: **135 passed**;
+- benchmark peers: **10/10/10 queries** para 2/8/20 peers;
+- output de peers: ~4 KB;
+- suíte completa: **896 passed, 52 skipped, 19 warnings, 0 failed**;
+- prompts check: GREEN;
+- tools sync --check: GREEN;
+- catálogo: 35 tools; 32 expostas; 3 ocultas/replay.
+
+O commit que contém estes documentos pode ser posterior a essa base por ser documental. No novo chat, confirmar HEAD + CI do snapshot anexado antes de qualquer código.
