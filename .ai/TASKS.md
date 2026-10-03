@@ -870,3 +870,10 @@ Transversais ainda abertas:
 - [ ] reabrir capability audit de Company & Market Analytics no estado atual;
 - [ ] selecionar a próxima lacuna por reuse-before-build, sem assumir FQ5.8.
 
+## Próxima tranche pós-FQ5.7 — composição oficial de índice
+- reauditoria: `.ai/COMPANY_MARKET_CAPABILITY_REAUDIT_2026-10-03.md`;
+- design: `.ai/INDEX_COMPOSITION_DESIGN_2026-10-03.md`;
+- gap provado: loader/contrato de leitura sobre `market.index_weights`, não matemática nem fonte;
+- começar por loader + `dados.composicao_indice` 1.0.0 shadow;
+- nenhuma promoção pública antes dos gates PostgreSQL/payload/provenance.
+
