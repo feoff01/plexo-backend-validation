@@ -163,3 +163,19 @@ Run #234 / `37145970504` validou o caminho completo bytes oficiais -> parser -> 
 A capability pública lê apenas vértices oficiais exatos de ETTJ PRE/IPCA/inflação implícita. Não interpolar/extrapolar, não calcular delta histórico/slope/DV01/choque/forecast/fair value por composição do LLM.
 
 Não existe FQ5.8 canônica congelada. Próxima ação é reabrir o capability audit de Company & Market Analytics e escolher a próxima lacuna por reuse-before-build. Portfolio Analytics continua fora de escopo.
+
+## Atualização canônica — composição oficial de índice encerrada
+`dados.composicao_indice` 1.0.1 está pública/GREEN.
+
+HEAD funcional validado: `d431fa91d5e2e39eb6e2ad0db7be2cecab2c7ffa`.
+Run #283 / `37153499452`: **success**.
+- 153 directed passed;
+- 914 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6/migrations/invariantes GREEN;
+- peers 10/10/10 preservados;
+- prompts/tools sync GREEN;
+- catálogo 37 total / 34 expostas / 3 ocultas.
+
+A capability lê snapshots oficiais persistidos de composição/peso, sem nearest, sem inferir histórico ausente, sem performance, recomendação ou análise da carteira do cliente.
+
+Próxima ação: reauditar lacunas restantes no estado atual; aplicar `reuse-before-build` e não assumir FQ nova automaticamente.
