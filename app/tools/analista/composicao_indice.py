@@ -113,7 +113,7 @@ async def preparar_composicao_indice(
 @tool(
     code="dados.composicao_indice",
     family="dados",
-    semver="1.0.0",
+    semver="1.0.1",
     display_name="Composição oficial de índice",
     description=(
         "Lê membros e pesos de um snapshot oficial de carteira de índice já ingerido. "
@@ -122,7 +122,7 @@ async def preparar_composicao_indice(
     preparar=preparar_composicao_indice,
     source_dependencies=(index_compositions.__file__,),
     requires_market_data=True,
-    exposed_to_llm=False,
+    exposed_to_llm=True,
 )
 def montar_composicao_indice(r: ComposicaoIndiceResolvida) -> ComposicaoIndiceOutput:
     composition = r.composition
