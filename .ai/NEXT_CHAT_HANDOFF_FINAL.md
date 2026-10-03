@@ -155,3 +155,11 @@ Primeira capability desenhada/implementada: `dados.curva_juros` 1.0.0, ainda sha
 
 ## FQ5.7 — gate físico/shadow GREEN
 Run #234 / `37145970504` validou o caminho completo bytes oficiais -> parser -> ingestão semântica -> PostgreSQL: 142 directed; 903 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. `dados.curva_juros` permanece 1.0.0 shadow. Próximo gate: promoção controlada com bloco determinístico, planner restritivo e readiness; não incluir slope/delta histórico/DV01/choque/forecast.
+
+
+## FQ5.7 encerrada — dados.curva_juros pública
+`dados.curva_juros` 1.0.1 está pública/GREEN. Fonte oficial ANBIMA física, parser, ingestão e strict PIT estão fechados. Run #249 / `37146548276`: 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. Catálogo: 36 tools, 33 públicas, 3 ocultas/replay.
+
+A capability pública lê apenas vértices oficiais exatos de ETTJ PRE/IPCA/inflação implícita. Não interpolar/extrapolar, não calcular delta histórico/slope/DV01/choque/forecast/fair value por composição do LLM.
+
+Não existe FQ5.8 canônica congelada. Próxima ação é reabrir o capability audit de Company & Market Analytics e escolher a próxima lacuna por reuse-before-build. Portfolio Analytics continua fora de escopo.
