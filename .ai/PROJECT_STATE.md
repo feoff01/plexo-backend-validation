@@ -716,3 +716,22 @@ A fundação de curva ANBIMA está GREEN em shadow, sem tool pública. Commit va
 ## FQ5.7 — auditoria de fonte pública ANBIMA — 2026-10-03
 
 Após foundation GREEN, a página pública oficial de fechamento foi auditada. Snapshot 02/10/2026 observado com 65 vértices IPCA e 19 PRE/inflação implícita. A UI informa últimos cinco dias úteis e oferece XLS/CSV/TXT/XML. Nenhum arquivo ANBIMA/ETTJ existe entre os anexos atuais do usuário. Como os bytes do download não foram materializados nesta sessão, adapter físico permanece bloqueado; não haverá scraper HTML de produção.
+
+
+## SNAPSHOT CANÔNICO ATUAL — 2026-10-03
+
+Fonte de verdade: `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`.
+
+- código funcional validado: `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0`;
+- run #202 / `37135725129`: success;
+- gate explícito: 135 passed;
+- suíte: 896 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark peers: 10/10/10 queries para 2/8/20;
+- prompts/tools sync verdes;
+- 35 tools registradas; 32 expostas, 3 ocultas;
+- FQ5.6 comparáveis está pública/encerrada;
+- FQ5.7 yield-curve foundation está GREEN sem tool pública;
+- bloqueio atual = bytes oficiais ANBIMA para adapter físico;
+- Portfolio Analytics/cliente continua fora desta frente.
+
+Seções históricas deste arquivo registram evolução e podem conter estados já supersedidos. Não reabrir itens sem conferir checkpoints posteriores.
