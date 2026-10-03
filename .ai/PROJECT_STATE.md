@@ -819,3 +819,11 @@ Design congelado para evolução eventual 1.2.0, sem tool paralela. Nenhum códi
 
 Brent permanece bloqueado por source audit oficial. Fair value/reverse DCF permanece bloqueado por premissas governadas. Portfolio Analytics continua fora do escopo.
 
+## 2026-10-03 — rolling volatility shadow interno GREEN
+
+Implementado `app/tools/analista/_risco_retorno_rolling_shadow.py`, sem registro público. O candidato delega integralmente o cálculo-base à `quant.risco_retorno` 1.1.0 e compõe somente a evolução rolling reutilizando o Quant Core.
+
+Commit funcional `bef38e7d2bc44e69bfc931f4d12ee9d7df3a00bd`; run #311 / `37161330785` GREEN: 175 directed; peers 10/10/10; full suite 925 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN.
+
+A 1.1.0 continua pública, catálogo 37/34/3 e sem cutover. O próximo gate é integração PostgreSQL específica do shadow + adjusted/raw semantics + payload/provenance/readiness. Só depois replay/policy/cutover 1.2.0.
+
