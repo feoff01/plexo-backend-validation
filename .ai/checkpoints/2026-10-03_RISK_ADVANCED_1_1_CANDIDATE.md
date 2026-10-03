@@ -35,3 +35,15 @@ As métricas já públicas — retorno acumulado/anualizado, volatilidade anuali
 - tools sync --check.
 
 Não considerar GREEN antes do CI.
+
+## Gate intermediário #295 — correção de replay
+Run #295 / `37154280303`:
+- migrations/invariantes: GREEN;
+- directed gate: GREEN;
+- peers benchmark: GREEN;
+- full suite: **1 failed, 917 passed, 52 skipped, 19 warnings**;
+- única falha: golden de bloco legacy `quant.retorno_volatilidade`.
+
+Causa: mudança cosmética do título no mapper compartilhado afetou replay legacy mesmo sem campos novos.
+
+Correção: título histórico `Retorno e volatilidade` restaurado. Os itens novos continuam condicionados à presença dos campos 1.1.0; nenhuma matemática ou contrato numérico foi revertido.
