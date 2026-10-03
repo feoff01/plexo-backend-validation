@@ -718,3 +718,10 @@ FQ5.6 está encerrada. A próxima frente deve começar por `.ai/ANALISTA_CAPABIL
 ## FQ5.7 aberta — curva de juros
 
 Ler `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`. Reutilizar `market.yield_curve`; implementar apenas ingestão semântica + loader PIT em shadow. Não criar tool/slope/interpolação/sensibilidade específica antes do gate GREEN e de payload real autorizado da ANBIMA.
+
+
+## FQ5.7 curva de juros — fundação GREEN — 2026-10-03
+
+Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_7_YIELD_CURVE_FOUNDATION_GREEN.md`.
+
+Estado: ingestão semântica + loader PIT de `market.yield_curve` estão GREEN no run #192 (135 gate; 896 passed, 52 skipped, 19 warnings; prompts/tools sync verdes; 35 tools inalteradas). Não existe tool pública nem adapter HTTP/OAuth. Próximo passo obrigatório: materializar payload real ANBIMA/export oficial equivalente, medir cobertura histórica e só então decidir capability client-facing sob reuse-before-build.
