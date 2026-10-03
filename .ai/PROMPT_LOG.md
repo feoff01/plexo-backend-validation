@@ -445,3 +445,12 @@ Estado usado como fonte:
 - suíte completa 806 passed / 52 skipped / 19 warnings.
 
 O handoff deve distinguir explicitamente FQ4 fechado no repo de validação de eventual integração/deploy em produção, que não foi presumida.
+
+
+## 2026-10-03 — Estado atual do planner após FQ5.6
+
+- `quant.comparaveis_setor` 1.0.1 está disponível para comparação descritiva por subsetor/setor;
+- não usar comparáveis para ranking, recomendação, fair value ou escolha de “melhor ação”;
+- `quant.dependencia` 2.0.0 é a interface canônica para ativo/índice/FX; `quant.dependencia_macro` está oculta;
+- FQ5.7 curva de juros ainda não possui tool/route pública;
+- não adicionar prompt de curva antes do physical-source gate e de um design client-facing.
