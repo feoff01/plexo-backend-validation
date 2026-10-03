@@ -65,7 +65,7 @@ async def _build_peers(conn, fq5_mundo, peer_count: int) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("peer_count", [2, 8, 20])
-async def test_peer_performance_baseline(db, fq5_mundo, peer_count):
+async def test_peer_performance_batch_regression_gate(db, fq5_mundo, peer_count):
     async with db.service_session() as conn:
         await _build_peers(conn, fq5_mundo, peer_count)
 
@@ -92,6 +92,10 @@ async def test_peer_performance_baseline(db, fq5_mundo, peer_count):
         assert len(output.peer_examples) == min(5, peer_count)
         assert len(output.comparacoes) == 10
         assert output.evidencia.suficiente is True
+        # Baseline #145: 38/98/218 queries. Batch GREEN #157: 10/10/10.
+        # Mantemos 20% de folga para uma consulta constante futura sem permitir retorno ao N+1.
+        assert counted.execute_count <= 12
+        assert output_bytes < 5_000
 
         sample = {
             "peer_count": peer_count,
