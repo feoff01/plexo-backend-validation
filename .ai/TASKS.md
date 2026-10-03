@@ -669,3 +669,18 @@ Próximo trabalho desbloqueado, mas não iniciado: Fundamentals + Valuation sob 
 - [ ] confirmar 35 tools e drift somente da tool promovida;
 - [ ] checkpoint final FQ5.6;
 - [ ] somente depois abrir próxima frente analítica.
+
+
+### FQ5.6 — fechamento final
+- [x] CI pós-promoção run #170 totalmente GREEN;
+- [x] gate explícito 128 passed;
+- [x] benchmark regression 10/10/10 queries;
+- [x] full suite 889 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts check verde;
+- [x] tools sync --check verde;
+- [x] planner/bloco/promotion readiness verdes;
+- [x] checkpoint final criado;
+- [x] `quant.comparaveis_setor` 1.0.1 pública;
+- [x] FQ5.6 encerrada.
+
+Próxima frente deve começar por nova auditoria reuse-before-build; não abrir matemática/tool automaticamente.
