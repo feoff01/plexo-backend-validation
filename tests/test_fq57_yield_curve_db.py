@@ -66,7 +66,7 @@ async def test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertice
         curve = await load_yield_curve(
             conn,
             "ettj_pre",
-            cutoff=ref,
+            cutoff=date(2026, 10, 3),
             reference_date=ref,
             strict_pit=True,
         )
