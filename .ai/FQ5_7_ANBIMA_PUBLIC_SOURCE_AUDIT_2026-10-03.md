@@ -72,3 +72,9 @@ A página oficial continuava exibindo a curva de referência 02/10/2026 e opçõ
 Uma requisição direta ao domínio oficial para `CZ-down.asp` foi identificada como resposta `text/csv`, mas este ambiente não conseguiu materializar os bytes e não provou, por documentação oficial, o contrato completo de parâmetros/form do download público.
 
 A decisão permanece: não implementar adapter físico por suposição, scraper HTML ou contrato de terceiros. O próximo chat deve avançar somente com bytes oficiais CSV/XML/XLS ou payload JSON real autorizado.
+
+
+## Source gate encerrado — 2026-10-03
+O bloqueio `BLOCKED_AT_OFFICIAL_BYTES` foi removido. O endpoint first-party `CZ-down.asp` foi materializado via runner do repositório autorizado e retornou `CurvaZero_.csv`, `text/csv`, 2.899 bytes, SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`. A referência física é 02/10/2026.
+
+Coverage física observada: 65 vértices IPCA, 19 PRE e 19 inflação implícita. A superfície pública declara últimos cinco dias úteis; a API Developers aceita consulta por data, sujeita ao acesso autorizado. Fixture/parser foram congelados. Estado do source gate: GREEN.
