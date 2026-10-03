@@ -1,0 +1,41 @@
+name: auditar ANBIMA ETTJ historico (temporario)
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: inspecionar form oficial first-party
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: baixar HTML oficial e expor somente contrato do form
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="https://www.anbima.com.br/informacoes/est-termo/default.asp"
+          html="$RUNNER_TEMP/anbima-ettj-default.html"
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 --output "$html" "$url"
+          python - "$html" <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import sys
+          class P(HTMLParser):
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() in {"form","input","select","option","button"}:
+                      safe={k:v for k,v in attrs if k.lower() in {"action","method","name","value","type","id"}}
+                      print(tag.lower(), safe)
+          P().feed(Path(sys.argv[1]).read_text(encoding="latin-1"))
+          PY
+
+      - name: publicar HTML first-party para auditoria
+        uses: actions/upload-artifact@v4
+        with:
+          name: anbima-ettj-official-form-audit
+          path: ${{ runner.temp }}/anbima-ettj-default.html
+          if-no-files-found: error
+          retention-days: 1
