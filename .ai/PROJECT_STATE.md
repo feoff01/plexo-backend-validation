@@ -711,3 +711,8 @@ Implementada a fundação shadow sobre o schema existente `market.yield_curve`, 
 A fundação de curva ANBIMA está GREEN em shadow, sem tool pública. Commit validado `bbb0ae0be7c01ffbd693c441188bd7363ca3d0d5`; run #192 / `37135247818` success; gate 135 passed; suíte 896 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes; 35 tools inalteradas.
 
 `yield_curve_ingest.py` faz ingestão semântica append-only; `yield_curves.py` resolve latest/reference_date com strict PIT por `ingestion_batches.finished_at`. Não há interpolação, slope, DV01, cenário de curva ou adapter HTTP/OAuth. Próximo gate = payload real ANBIMA/export oficial equivalente + auditoria de cobertura histórica.
+
+
+## FQ5.7 — auditoria de fonte pública ANBIMA — 2026-10-03
+
+Após foundation GREEN, a página pública oficial de fechamento foi auditada. Snapshot 02/10/2026 observado com 65 vértices IPCA e 19 PRE/inflação implícita. A UI informa últimos cinco dias úteis e oferece XLS/CSV/TXT/XML. Nenhum arquivo ANBIMA/ETTJ existe entre os anexos atuais do usuário. Como os bytes do download não foram materializados nesta sessão, adapter físico permanece bloqueado; não haverá scraper HTML de produção.
