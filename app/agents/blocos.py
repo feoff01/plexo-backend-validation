@@ -660,12 +660,26 @@ def _retorno_vol(out: dict, eid: str, max_pontos: int) -> list[dict]:
     if not ev.get("suficiente"):
         return []
     itens = [(r, out.get(k)) for r, k in (("Retorno acumulado", "retorno_acumulado_pct"), ("Retorno anualizado", "retorno_anualizado_pct"),
-                                          ("Volatilidade anualizada", "vol_anualizada_pct"), ("Máximo drawdown", "max_drawdown_pct"))]
+                                          ("Volatilidade anualizada", "vol_anualizada_pct"),
+                                          ("Downside deviation anualizada (alvo periódico 0%)", "downside_deviation_anualizada_pct"),
+                                          ("Máximo drawdown", "max_drawdown_pct"))]
     itens = [{"rotulo": r, "valor": v, "formato": "pct"} for r, v in itens if _num(v) is not None]
+    drawdown = out.get("drawdown") or {}
+    duration = _num(drawdown.get("duration_intervals"))
+    recovery = _num(drawdown.get("recovery_intervals"))
+    if duration is not None:
+        itens.append({"rotulo": "Duração do pior drawdown", "valor": duration, "formato": "numero",
+                      "detalhe": "intervalos observados"})
+    if recovery is not None:
+        itens.append({"rotulo": "Recuperação após o fundo", "valor": recovery, "formato": "numero",
+                      "detalhe": "intervalos observados"})
     if not itens:
         return []
     per = out.get("periodo") or {}
-    return [_bloco("indicadores", eid, 1, f"Retorno e volatilidade · {out.get('ticker', '')}".strip(), {"itens": itens}, _prov_evidencia(ev), NOTA_MERCADO,
+    nota = NOTA_MERCADO
+    if duration is not None:
+        nota += " Duração e recuperação de drawdown são contadas em intervalos observados, não em dias corridos."
+    return [_bloco("indicadores", eid, 1, f"Risco e retorno histórico · {out.get('ticker', '')}".strip(), {"itens": itens}, _prov_evidencia(ev), nota,
                    subtitulo=f"{per.get('de')} a {per.get('ate')} · {per.get('n')} pregões" if per else None)]
 
 
