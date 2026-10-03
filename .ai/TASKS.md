@@ -713,3 +713,20 @@ Próxima frente deve começar por nova auditoria reuse-before-build; não abrir 
 - [ ] confirmar registry/prompts sem drift;
 - [ ] checkpoint GREEN da fundação;
 - [ ] somente depois materializar payload real ANBIMA/export oficial e decidir capability pública.
+
+
+### FQ5.7 — foundation fechamento GREEN
+- [x] ingestão semântica ANBIMA;
+- [x] loader PIT latest/reference_date;
+- [x] idempotência e conflito append-only;
+- [x] strict PIT por `finished_at`;
+- [x] gate PostgreSQL 18: 135 passed;
+- [x] suíte completa: 896 passed / 52 skipped / 19 warnings / 0 failed;
+- [x] prompts/tools sync verdes;
+- [x] confirmar 35 tools sem drift;
+- [x] checkpoint GREEN;
+- [ ] materializar payload real autorizado ANBIMA ou export oficial equivalente;
+- [ ] congelar adapter físico contra bytes reais;
+- [ ] medir cobertura histórica disponível;
+- [ ] aplicar reuse-before-build e decidir primeira capability pública;
+- [ ] não criar slope/interpolação/DV01/tool específica antes desse gate.
