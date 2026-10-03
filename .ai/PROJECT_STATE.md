@@ -788,3 +788,13 @@ A capability de leitura exata da ETTJ oficial está encerrada. `dados.curva_juro
 ## Composição oficial de índice — shadow candidate — 2026-10-03
 Reauditoria pós-FQ5.7 selecionou a leitura PIT de `market.index_weights` como próxima lacuna real. `dados.composicao_indice` 1.0.0 foi implementada em shadow (`exposed_to_llm=False`) sobre loader read-only, sem migration ou matemática nova. Estado ainda candidato até CI PostgreSQL 18.
 
+## Estado atual — composição oficial de índice encerrada
+- `dados.composicao_indice` 1.0.1 está pública/GREEN;
+- fonte/snapshot: B3/IBrA persistido em `market.index_weights`;
+- leitura strict PIT por lote succeeded/finished_at;
+- sem inferência de membership histórico, nearest, performance, recomendação ou análise de carteira do cliente;
+- HEAD funcional validado: `d431fa91d5e2e39eb6e2ad0db7be2cecab2c7ffa`;
+- run #283 / `37153499452`: 153 directed; 914/52/19/0; prompts/tools sync GREEN;
+- catálogo atual: 37 total / 34 expostas / 3 ocultas.
+
+Próximo passo: reauditoria de Company & Market Analytics no estado pós-composição e seleção por `reuse-before-build`.
