@@ -766,3 +766,9 @@ Documentos mestres:
 - `.ai/NEW_CHAT_PROMPT_2026-10-03.md`.
 
 Seções anteriores deste arquivo são histórico e podem conter estados intermediários supersedidos.
+
+
+## FQ5.7 source gate GREEN / first capability shadow — 2026-10-03
+O payload físico oficial ANBIMA foi materializado e congelado (`CurvaZero_.csv`, 2.899 bytes, SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`). Parser físico fail-closed criado. Cobertura do snapshot 02/10/2026: 65 vértices IPCA, 19 PRE e 19 inflação implícita. A superfície pública declara últimos cinco dias úteis; não assumir histórico ilimitado.
+
+`reuse-before-build` mostrou que não há matemática nova necessária. `dados.curva_juros` 1.0.0 foi implementada em shadow sobre `load_yield_curve()`, retornando somente vértices oficiais exatos e provenance. Próximo gate: PostgreSQL 18 + suíte + prompts/tools sync antes de qualquer promoção pública.
