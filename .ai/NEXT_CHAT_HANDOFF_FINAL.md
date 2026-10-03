@@ -287,3 +287,45 @@ Próximo gate permitido:
 
 Não criar tool paralela; Brent/fair value continuam fora desta tranche.
 
+## OVERRIDE FINAL — quant.risco_retorno 1.2.0 pública/GREEN
+
+Estado funcional mais novo:
+- commit funcional validado: `3786af082eba5e99e14908340bd3bc649872fbdb`;
+- run #334 / `37162747600`: success;
+- directed gate: 186 passed;
+- peers: 10/10/10 queries;
+- full suite: 929 passed, 53 skipped, 19 warnings, 0 failed;
+- prompts check GREEN;
+- tools sync --check GREEN;
+- catálogo: 37 total / 34 públicas / 3 ocultas-replay.
+
+`quant.risco_retorno` agora é **1.2.0 pública**.
+
+Contrato:
+- risco agregado continua default;
+- rolling só é calculado com `incluir_evolucao_volatilidade=true`;
+- `janela_volatilidade_observacoes` é em observações de retorno;
+- janela explícita do usuário prevalece;
+- sem janela explícita, policy governada `ANALISE_PARAMS.risco_janela_movel_observacoes=21`;
+- sem conversão automática de dias corridos;
+- adjusted = `retrospective_as_known_now`;
+- raw = `observation_date_cutoff`;
+- compactação mensal + cap 60; resumo usa série completa;
+- payload representativo <5 KB.
+
+Replay:
+- `app/tools/analista/risco_retorno_legacy_1_1_0.py`;
+- `tests/golden/quant_risco_retorno_1_1_0.json`.
+
+Checkpoint final:
+- `.ai/checkpoints/2026-10-03_RISK_ROLLING_1_2_GREEN.md`.
+
+Próximo gate exato:
+1. reabrir capability audit restante de Company & Market Analytics;
+2. descontar risco rolling agora encerrado;
+3. classificar gaps restantes;
+4. escolher uma única próxima tranche por reuse-before-build;
+5. congelar design antes de código.
+
+Não assumir nova FQ. Brent/commodities continua dependente de source audit oficial. Fair value/reverse DCF continua dependente de premissas governadas. Portfolio Analytics continua fora do escopo.
+
