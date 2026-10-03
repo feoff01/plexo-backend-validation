@@ -28,7 +28,7 @@ def test_curva_juros_publica_e_planner_restritivo():
     }
     assert "dados.curva_juros" in visible
     assert len(specs_registradas()) == 37
-    assert sum(s.exposed_to_llm for s in specs_registradas()) == 33
+    assert sum(s.exposed_to_llm for s in specs_registradas()) == 34
 
     text = PLANNER.read_text(encoding="utf-8")
     for token in (
