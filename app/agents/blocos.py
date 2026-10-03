@@ -1073,6 +1073,71 @@ def _valor_mercado(out: dict, eid: str, max_pontos: int) -> list[dict]:
     return blocks
 
 
+def _comparaveis_setor(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    ev = out.get("evidencia") or {}
+    if not ev.get("suficiente"):
+        return []
+    rows = out.get("comparacoes")
+    if not isinstance(rows, list) or not rows:
+        return []
+    labels = {
+        "market_cap_brl": "Valor de mercado",
+        "pe": "P/L",
+        "ev_ebitda": "EV/EBITDA",
+        "price_to_book": "P/VP",
+        "fcf_yield_pct": "FCF yield",
+        "revenue_yoy_pct": "Crescimento da receita",
+        "ebitda_yoy_pct": "Crescimento do EBITDA",
+        "net_income_yoy_pct": "Crescimento do lucro líquido",
+        "ebitda_margin_pct": "Margem EBITDA",
+        "net_margin_pct": "Margem líquida",
+    }
+    linhas = []
+    for row in rows[:max_pontos]:
+        if not isinstance(row, dict):
+            continue
+        target = _num(row.get("target_value"))
+        median = _num(row.get("median"))
+        if target is None and median is None:
+            continue
+        linhas.append({
+            "metrica": labels.get(str(row.get("metric")), row.get("metric")),
+            "alvo": target,
+            "mediana_pares": median,
+            "diferenca": row.get("delta_target_vs_median"),
+            "unidade": row.get("delta_unit") or row.get("unit"),
+            "n": row.get("n_valid"),
+        })
+    if not linhas:
+        return []
+    prov = _prov_evidencia(ev)
+    nota = (
+        "Comparação descritiva company-level contra pares B3 do mesmo subsetor/setor. "
+        "A mediana dos pares não é fair value, preço-alvo, ranking nem recomendação; missing não vira zero. "
+        "Valuation, crescimento e margens reutilizam as medições canônicas existentes. " + NOTA_MERCADO
+    )
+    classificacao = out.get("classificacao")
+    nivel = out.get("nivel")
+    peer_count = out.get("peer_count_total")
+    subtitulo = " · ".join(
+        str(x) for x in (nivel, classificacao, f"{peer_count} pares" if peer_count is not None else None) if x
+    )
+    return [_bloco(
+        "tabela", eid, 1, f"Comparáveis · {out.get('ticker', '')}".strip(),
+        {"colunas": [
+            {"chave": "metrica", "rotulo": "Métrica"},
+            {"chave": "alvo", "rotulo": "Empresa"},
+            {"chave": "mediana_pares", "rotulo": "Mediana dos pares"},
+            {"chave": "diferenca", "rotulo": "Diferença vs mediana"},
+            {"chave": "unidade", "rotulo": "Unidade"},
+            {"chave": "n", "rotulo": "Pares válidos"},
+        ], "linhas": linhas},
+        prov,
+        nota,
+        subtitulo=subtitulo or None,
+    )]
+
+
 def _cenario_sensibilidade(out: dict, eid: str, max_pontos: int) -> list[dict]:
     ev = out.get("evidencia") or {}
     if not ev.get("suficiente"):
@@ -1268,6 +1333,7 @@ MAPEADORES: dict[str, Callable[[dict, str, int], list[dict]]] = {
     "quant.dependencia_macro": _dependencia_macro,
     "quant.tendencias_fundamentais": _tendencias_fundamentais,
     "quant.valor_mercado": _valor_mercado,
+    "quant.comparaveis_setor": _comparaveis_setor,
     "quant.cenario_sensibilidade": _cenario_sensibilidade,
     "quant.analise_condicional": _analise_condicional,
     "quant.sensibilidade": _sensibilidade,
