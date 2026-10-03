@@ -682,3 +682,10 @@ Baseline run #145: 38/98/218 queries para 2/8/20 peers, exatamente ~18 + 10×N. 
 **Decisão:** promover `quant.comparaveis_setor` 1.0.1 como capability pública do Analista após fonte B3, universo IBrA, equivalência e performance GREEN.
 
 Contrato: comparação descritiva company-level; subsetor padrão, setor opt-in; sem ranking, recomendação, fair value ou escolha de "melhor ação". A mediana dos pares é referência descritiva, não preço-alvo.
+
+
+## 2026-10-03 — FQ5.7 curva de juros começa pela fundação existente
+
+**Decisão:** reutilizar `market.yield_curve` e source `anbima`; nenhuma tabela/migration nova. Curvas v1: `ettj_pre`, `ettj_ipca` e `inflacao_implicita`, todas em `% a.a./252 d.u.` e `day_count=du_252`.
+
+Strict PIT usa `ingestion_batches.finished_at`, não apenas `reference_date`. A tranche inicial não cria tool, interpolação, slope, DV01 ou cliente OAuth. Documento: `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`.
