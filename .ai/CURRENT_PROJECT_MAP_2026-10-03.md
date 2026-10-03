@@ -168,3 +168,15 @@ O commit que contém estes documentos pode ser posterior a essa base por ser doc
 - run #249: 145 directed; full 906/52/19/0; prompts/tools sync GREEN;
 - catálogo: 36 total / 33 expostas / 3 ocultas;
 - próxima tranche ainda não numerada: capability audit de Company & Market Analytics + reuse-before-build.
+
+## Atualização pós-composição oficial de índice
+- `dados.curva_juros` 1.0.1 pública/GREEN;
+- `dados.composicao_indice` 1.0.1 pública/GREEN;
+- catálogo: 37 tools / 34 expostas / 3 ocultas-replay;
+- composição reutiliza `market.index_weights` e strict PIT; nenhuma matemática/schema novo;
+- IBrA operacional atual permanece snapshot B3 de 02/10/2026, 148 componentes;
+- run #283 / `37153499452`: 153 directed; 914 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
+- benchmark peers permanece 10/10/10;
+- não usar composição para performance, ranking/recomendação ou carteira do cliente.
+
+Próximo gate: reabrir o capability audit pós-composição e escolher a próxima lacuna por `reuse-before-build`.
