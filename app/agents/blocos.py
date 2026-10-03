@@ -679,8 +679,46 @@ def _retorno_vol(out: dict, eid: str, max_pontos: int) -> list[dict]:
     nota = NOTA_MERCADO
     if duration is not None:
         nota += " Duração e recuperação de drawdown são contadas em intervalos observados, não em dias corridos."
-    return [_bloco("indicadores", eid, 1, f"Retorno e volatilidade · {out.get('ticker', '')}".strip(), {"itens": itens}, _prov_evidencia(ev), nota,
-                   subtitulo=f"{per.get('de')} a {per.get('ate')} · {per.get('n')} pregões" if per else None)]
+    prov = _prov_evidencia(ev)
+    blocos = [_bloco(
+        "indicadores",
+        eid,
+        1,
+        f"Retorno e volatilidade · {out.get('ticker', '')}".strip(),
+        {"itens": itens},
+        prov,
+        nota,
+        subtitulo=f"{per.get('de')} a {per.get('ate')} · {per.get('n')} pregões" if per else None,
+    )]
+
+    evolucao = out.get("evolucao_volatilidade")
+    if isinstance(evolucao, dict):
+        pontos = [
+            {"x": p.get("data"), "y": p.get("vol_anualizada_pct")}
+            for p in (evolucao.get("pontos") or [])
+            if _num(p.get("vol_anualizada_pct")) is not None
+        ]
+        pontos, reduziu = _amostrar(pontos, max_pontos)
+        if pontos:
+            prov_serie = {**prov, "avisos": list(prov["avisos"])}
+            if reduziu and "serie_amostrada" not in prov_serie["avisos"]:
+                prov_serie["avisos"].append("serie_amostrada")
+            janela = evolucao.get("janela_observacoes")
+            blocos.append(_bloco(
+                "serie",
+                eid,
+                2,
+                f"Evolução da volatilidade · {out.get('ticker', '')}".strip(),
+                {
+                    "series": [{"nome": "Volatilidade anualizada", "pontos": pontos}],
+                    "eixo_y": {"formato": "pct"},
+                    "empilhada": False,
+                },
+                prov_serie,
+                "Volatilidade móvel histórica e descritiva; não é previsão, sinal ou recomendação. " + NOTA_MERCADO,
+                subtitulo=f"janela móvel de {janela} observações de retorno",
+            ))
+    return blocos
 
 
 def _correlacao(out: dict, eid: str, max_pontos: int) -> list[dict]:
