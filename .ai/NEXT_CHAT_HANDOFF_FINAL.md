@@ -713,3 +713,8 @@ Estado canônico:
 - sem ranking/recomendação/fair value.
 
 FQ5.6 está encerrada. A próxima frente deve começar por `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` + `reuse-before-build`, revisando o inventário atual antes de criar qualquer engine/tool.
+
+
+## FQ5.7 aberta — curva de juros
+
+Ler `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`. Reutilizar `market.yield_curve`; implementar apenas ingestão semântica + loader PIT em shadow. Não criar tool/slope/interpolação/sensibilidade específica antes do gate GREEN e de payload real autorizado da ANBIMA.
