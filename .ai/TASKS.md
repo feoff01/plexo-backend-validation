@@ -859,3 +859,14 @@ Transversais ainda abertas:
 - [x] catálogo 36 total / 33 expostas / 3 ocultas;
 - [x] checkpoint GREEN final;
 - [ ] próxima tranche: selecionar no capability audit a próxima lacuna de Company & Market Analytics; não assumir FQ5.8 sem design.
+
+## Pós-FQ5.7 — estado canônico atualizado
+- [x] materializar CSV oficial ANBIMA;
+- [x] congelar fixture/parser;
+- [x] provar fisicamente a janela pública exposta em 25/09–02/10/2026;
+- [x] manter retenção anterior ao limite fora do contrato suportado;
+- [x] promover `dados.curva_juros` 1.0.1 após shadow GREEN;
+- [x] remover workflows temporários de auditoria/materialização;
+- [ ] reabrir capability audit de Company & Market Analytics no estado atual;
+- [ ] selecionar a próxima lacuna por reuse-before-build, sem assumir FQ5.8.
+
