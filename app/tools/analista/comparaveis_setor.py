@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.market import fundamental_history
 from app.market import fundamentals as market_fundamentals
+from app.market import peer_company_metrics
 from app.market import sectors
 from app.market import snapshots as market_snapshots
 from app.market.analytics import fundamental_trends
@@ -150,11 +151,15 @@ class ComparaveisSetorOutput(BaseModel):
     evidencia: comum.Evidencia
 
 
+TREND_METRICS: tuple[str, ...] = ("revenue", "ebitda", "net_income")
+
+
 async def _prepare_company(
     ticker: str,
     cutoff: date,
     ctx: ToolContext,
 ) -> tuple[valor_tool.ValorMercadoResolvido, trends_tool.TendenciasFundamentaisResolvida]:
+    """Caminho canônico unitário mantido apenas para fallback/equivalência."""
     valuation = await valor_tool.preparar_valor_mercado(
         valor_tool.ValorMercadoParams(ticker=ticker, data_referencia=cutoff),
         ctx,
@@ -165,9 +170,46 @@ async def _prepare_company(
             data_referencia=cutoff,
             scope="consolidated",
             periodos=2,
-            metricas=["revenue", "ebitda", "net_income"],
+            metricas=list(TREND_METRICS),
         ),
         ctx,
+    )
+    return valuation, trends
+
+
+def _resolved_from_batch(
+    company: peer_company_metrics.PeerCompanyBatchResolved,
+    cutoff: date,
+) -> tuple[valor_tool.ValorMercadoResolvido, trends_tool.TendenciasFundamentaisResolvida]:
+    identity = company.identity
+    valuation = valor_tool.ValorMercadoResolvido(
+        ticker=identity.ticker or company.representative_ticker,
+        name=identity.name,
+        instrument_id=identity.instrument_id,
+        company_cnpj=identity.company_cnpj,
+        in_universe=identity.is_in_universe,
+        cutoff_date=cutoff,
+        classes=[
+            valor_tool.EquityClassResolved(
+                instrument_id=item.instrument_id,
+                ticker=item.ticker,
+                name=item.name,
+                price=item.price,
+            )
+            for item in company.classes
+        ],
+        fundamentals=company.latest_fundamentals,
+    )
+    trends = trends_tool.TendenciasFundamentaisResolvida(
+        ticker=identity.ticker or company.representative_ticker,
+        name=identity.name,
+        instrument_id=identity.instrument_id,
+        company_cnpj=identity.company_cnpj,
+        in_universe=identity.is_in_universe,
+        cutoff_date=cutoff,
+        scope=market_fundamentals.FundamentalScope.CONSOLIDATED,
+        requested_metrics=TREND_METRICS,
+        history=company.history,
     )
     return valuation, trends
 
@@ -202,27 +244,57 @@ async def preparar_comparaveis_setor(
         strict_pit=True,
     )
     target_ticker = inst.get("ticker") or params.ticker
-    target_valuation, target_trends = await _prepare_company(target_ticker, cutoff, ctx)
 
     warnings: list[str] = list(universe.warnings)
     peers: list[PeerCompanyResolved] = []
+    peer_specs: list[tuple[sectors.PeerIssuer, list[str], str]] = []
     for peer in universe.peers:
         tickers = sorted(set(peer.tickers))
         if not tickers:
             warnings.append(PEER_MISSING_TICKER)
             continue
-        representative = tickers[0]
-        valuation, trends = await _prepare_company(representative, cutoff, ctx)
-        peers.append(
-            PeerCompanyResolved(
-                issuer_id=peer.issuer_id,
-                issuer_name=peer.issuer_name,
-                tickers=tickers,
-                representative_ticker=representative,
-                valuation=valuation,
-                trends=trends,
-            )
+        peer_specs.append((peer, tickers, tickers[0]))
+
+    if universe.target.issuer_id is None:
+        target_valuation, target_trends = await _prepare_company(target_ticker, cutoff, ctx)
+    else:
+        requests = [
+            peer_company_metrics.PeerCompanyRequest(
+                issuer_id=universe.target.issuer_id,
+                representative_ticker=target_ticker,
+            ),
+            *[
+                peer_company_metrics.PeerCompanyRequest(
+                    issuer_id=peer.issuer_id,
+                    representative_ticker=representative,
+                )
+                for peer, _tickers, representative in peer_specs
+            ],
+        ]
+        batch = await peer_company_metrics.load_peer_company_metrics(
+            ctx.conn,
+            requests,
+            cutoff=cutoff,
+            valuation_metrics=valor_tool.VALUATION_METRICS,
+            trend_metrics=TREND_METRICS,
+            trend_periods=2,
         )
+        target_batch = batch[universe.target.issuer_id]
+        target_valuation, target_trends = _resolved_from_batch(target_batch, cutoff)
+
+        for peer, tickers, representative in peer_specs:
+            company = batch[peer.issuer_id]
+            valuation, trends = _resolved_from_batch(company, cutoff)
+            peers.append(
+                PeerCompanyResolved(
+                    issuer_id=peer.issuer_id,
+                    issuer_name=peer.issuer_name,
+                    tickers=tickers,
+                    representative_ticker=representative,
+                    valuation=valuation,
+                    trends=trends,
+                )
+            )
 
     ctx.registrar_insumo(
         "market.sector_peers",
@@ -296,6 +368,7 @@ def _unique(values: list[str]) -> list[str]:
     source_dependencies=(
         comum.__file__,
         sectors.__file__,
+        peer_company_metrics.__file__,
         quant_statistics.__file__,
         valor_tool.__file__,
         trends_tool.__file__,
