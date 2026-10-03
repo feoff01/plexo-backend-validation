@@ -702,3 +702,13 @@
 - PostgreSQL 18.6/migrations/invariantes, prompts e tools sync verdes;
 - peers 10/10/10 preservados;
 - catálogo: 37 tools, 34 públicas, 3 ocultas/replay.
+
+## 2026-10-03 — quant.risco_retorno 1.1.0 candidate
+- reuse-before-build confirmou gap de contrato/apresentação;
+- downside deviation já existia no Risk Core;
+- duração/recovery já existiam no `DrawdownDetail`;
+- candidata 1.1.0 adiciona downside deviation anualizada contra target periódico zero explícito;
+- bloco passa a mostrar duração/recovery em intervalos observados;
+- planner usa a mesma `quant.risco_retorno`;
+- rolling vol/Sharpe/Sortino/Calmar/VaR/ES permanecem fora;
+- aguardando CI PostgreSQL antes de GREEN.
