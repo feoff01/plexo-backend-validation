@@ -63,3 +63,12 @@ Depois disso:
 - congelar parser físico contra bytes reais;
 - medir cobertura histórica efetiva;
 - decidir primeira capability pública sob reuse-before-build.
+
+
+## Verificação adicional no fechamento do handoff — 2026-10-03
+
+A página oficial continuava exibindo a curva de referência 02/10/2026 e opções XLS/CSV/TXT/XML. A documentação ANBIMA Developers continuava confirmando o endpoint autenticado e os campos ETTJ.
+
+Uma requisição direta ao domínio oficial para `CZ-down.asp` foi identificada como resposta `text/csv`, mas este ambiente não conseguiu materializar os bytes e não provou, por documentação oficial, o contrato completo de parâmetros/form do download público.
+
+A decisão permanece: não implementar adapter físico por suposição, scraper HTML ou contrato de terceiros. O próximo chat deve avançar somente com bytes oficiais CSV/XML/XLS ou payload JSON real autorizado.
