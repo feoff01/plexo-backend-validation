@@ -752,3 +752,15 @@ A v1 pública permanece deliberadamente limitada a vértices oficiais publicados
 - performance continua fora desta capability;
 - nenhuma matemática, migration ou tabela nova foi criada;
 - run #283 / `37153499452`: 153 directed; 914 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN.
+
+## 2026-10-03 — próxima tranche: evolução compacta de quant.risco_retorno
+
+**Decisão:** após encerrar composição de índice, selecionar risco histórico avançado como próxima lacuna pronta para execução, evoluindo a tool canônica em vez de criar uma nova.
+
+**Gap provado:** o Quant Core já contém downside deviation e detalhes de duração/recuperação do maximum drawdown. O gap é contrato/apresentação.
+
+**Escopo:** adicionar downside deviation anualizada contra target periódico zero explicitado e apresentar duração/recuperação já existentes. Rolling volatility fica adiada porque exige contrato de janela/compactação próprio.
+
+**Semver:** 1.0.1 -> 1.1.0 por funcionalidade pública aditiva.
+
+Design: `.ai/RISK_ADVANCED_CONTRACT_DESIGN_2026-10-03.md`.
