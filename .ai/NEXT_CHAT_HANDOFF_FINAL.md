@@ -221,3 +221,37 @@ Próximo gate exato:
 
 Não abrir Brent, fair value ou Portfolio Analytics em paralelo.
 
+## OVERRIDE — rolling volatility shadow GREEN
+
+O shadow interno desenhado na tranche anterior foi implementado e validado.
+
+Prova funcional:
+- commit: `bef38e7d2bc44e69bfc931f4d12ee9d7df3a00bd`;
+- run #311 / `37161330785`: success;
+- 175 directed;
+- peers 10/10/10;
+- full suite 925 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN;
+- catálogo 37 / 34 públicas / 3 ocultas.
+
+Implementação:
+- `app/tools/analista/_risco_retorno_rolling_shadow.py`;
+- sem `@tool`, sem alias, sem registry;
+- 1.1.0 pública intacta;
+- janela explícita;
+- rolling do Quant Core;
+- compactação mensal + cap 60;
+- métricas-base 1.1.0 preservadas integralmente.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_RISK_ROLLING_SHADOW_GREEN.md`.
+
+Próximo gate exato:
+1. integração PostgreSQL específica do shadow usando preparação canônica;
+2. adjusted/raw semantics end-to-end;
+3. payload representativo <5 KB;
+4. provenance/readiness;
+5. replay/golden 1.1.0;
+6. só então policy governada + cutover 1.2.0 + planner/bloco/evals.
+
+Não promover 1.2.0 antes desse gate.
+
