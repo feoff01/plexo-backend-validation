@@ -30,6 +30,7 @@ from app.tools.analista._comum import (
     Evidencia,
     Janela,
     avisos_de_qualidade,
+    amostrar_mensal,
     carregar_serie_resolvida,
     data_referencia,
     instrumento_por_termo,
@@ -66,6 +67,25 @@ class RiscoRetornoParams(BaseModel):
                      "retrospectivo com corporate actions conhecidas hoje; raw_close usa a cotação de fechamento "
                      "publicada e cutoff apenas pela data da observação."),
     )
+    incluir_evolucao_volatilidade: bool = Field(
+        default=False,
+        description=("Inclui evolução histórica da volatilidade anualizada em janela móvel. "
+                     "Use somente quando a pergunta pedir evolução ao longo do tempo."),
+    )
+    janela_volatilidade_observacoes: int | None = Field(
+        default=None,
+        ge=2,
+        description=("Janela móvel em observações de retorno, não dias corridos. Quando a evolução é pedida e "
+                     "a janela é omitida, usa ANALISE_PARAMS.risco_janela_movel_observacoes."),
+    )
+
+    @model_validator(mode="after")
+    def _coerencia_rolling(self) -> "RiscoRetornoParams":
+        if not self.incluir_evolucao_volatilidade and self.janela_volatilidade_observacoes is not None:
+            raise ValueError(
+                "janela_volatilidade_observacoes exige incluir_evolucao_volatilidade=true"
+            )
+        return self
 
 
 class DrawdownDetail(BaseModel):
@@ -93,6 +113,8 @@ class RiscoRetornoResolvido(BaseModel):
     dias_uteis_ano: int = Field(ge=1)
     min_observacoes: int = Field(ge=1)
     max_dias_defasagem: int = Field(ge=0)
+    incluir_evolucao_volatilidade: bool = False
+    janela_volatilidade_observacoes: int | None = Field(default=None, ge=2)
 
     @model_validator(mode="after")
     def _coerencia_da_serie(self) -> "RiscoRetornoResolvido":
@@ -107,7 +129,33 @@ class RiscoRetornoResolvido(BaseModel):
                 raise ValueError("temporal_semantics resolvida diverge da provenance da série")
             if self.instrument_id is not None and self.serie.instrument_id != self.instrument_id:
                 raise ValueError("instrument_id resolvido diverge da série")
+        if self.incluir_evolucao_volatilidade and self.janela_volatilidade_observacoes is None:
+            raise ValueError("evolução rolling resolvida exige janela_volatilidade_observacoes")
+        if not self.incluir_evolucao_volatilidade and self.janela_volatilidade_observacoes is not None:
+            raise ValueError("janela rolling resolvida exige incluir_evolucao_volatilidade=true")
         return self
+
+
+class PontoVolatilidadeRolling(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    data: date
+    vol_anualizada_pct: float = Field(ge=0, allow_inf_nan=False)
+
+
+class EvolucaoVolatilidade(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    janela_observacoes: int = Field(ge=2)
+    n_janelas_total: int = Field(ge=1)
+    primeira_data: date
+    ultima_data: date
+    vol_inicio_pct: float = Field(ge=0, allow_inf_nan=False)
+    vol_fim_pct: float = Field(ge=0, allow_inf_nan=False)
+    vol_min_pct: float = Field(ge=0, allow_inf_nan=False)
+    vol_min_data: date
+    vol_max_pct: float = Field(ge=0, allow_inf_nan=False)
+    vol_max_data: date
+    pontos: list[PontoVolatilidadeRolling]
+    amostrado: bool
 
 
 class RiscoRetornoOutput(BaseModel):
@@ -123,6 +171,7 @@ class RiscoRetornoOutput(BaseModel):
     downside_target_periodic_pct: float = Field(default=0.0, allow_inf_nan=False)
     max_drawdown_pct: float | None
     drawdown: DrawdownDetail | None = None
+    evolucao_volatilidade: EvolucaoVolatilidade | None = None
     evidencia: Evidencia
 
 
@@ -138,6 +187,13 @@ async def preparar_risco_retorno(params: RiscoRetornoParams, ctx: ToolContext) -
     inst = await instrumento_por_termo(ctx.conn, params.ticker, cutoff=cutoff)
     basis = params.price_basis
     semantics = temporal_semantics_for_basis(basis)
+    janela_rolling: int | None = None
+    if params.incluir_evolucao_volatilidade:
+        janela_rolling = (
+            params.janela_volatilidade_observacoes
+            if params.janela_volatilidade_observacoes is not None
+            else int(cfg["risco_janela_movel_observacoes"])
+        )
 
     serie: ResolvedMarketSeries | None = None
     in_universe = bool(inst is not None and inst["is_in_universe"])
@@ -164,6 +220,8 @@ async def preparar_risco_retorno(params: RiscoRetornoParams, ctx: ToolContext) -
         price_basis=basis.value,
         temporal_semantics=semantics.value,
         dataset=serie.provenance.dataset if serie is not None else None,
+        incluir_evolucao_volatilidade=params.incluir_evolucao_volatilidade,
+        janela_volatilidade_observacoes=janela_rolling,
     )
     return RiscoRetornoResolvido(
         ticker=params.ticker,
@@ -177,6 +235,8 @@ async def preparar_risco_retorno(params: RiscoRetornoParams, ctx: ToolContext) -
         dias_uteis_ano=int(cfg["dias_uteis_ano"]),
         min_observacoes=int(cfg["min_observacoes"]),
         max_dias_defasagem=int(cfg["max_dias_defasagem"]),
+        incluir_evolucao_volatilidade=params.incluir_evolucao_volatilidade,
+        janela_volatilidade_observacoes=janela_rolling,
     )
 
 
@@ -191,23 +251,91 @@ def _nota_metodo(r: RiscoRetornoResolvido) -> str:
         if r.price_basis == PriceBasis.ADJUSTED_CLOSE
         else "Fechamentos brutos publicados; o cutoff limita a data da observação, mas não garante vintage histórico."
     )
+    rolling = (
+        f" Evolução de volatilidade usa janela móvel de {r.janela_volatilidade_observacoes} observações de retorno; "
+        "o resumo usa a série rolling completa e os pontos exibidos podem ser compactados sem recalcular métricas."
+        if r.incluir_evolucao_volatilidade
+        else ""
+    )
     return (
         f"{base} Retorno {r.metodo_retorno.value} entre observações consecutivas; anualização geométrica; "
         f"volatilidade = desvio-padrão amostral × raiz({r.dias_uteis_ano}); downside deviation anualizada "
         f"usa target periódico 0% e raiz({r.dias_uteis_ano}); drawdown é medido contra o pico corrente, "
-        "com duração/recuperação em intervalos observados. " + NOTA_RCVM
+        f"com duração/recuperação em intervalos observados.{rolling} " + NOTA_RCVM
     )
+
+
+JANELA_VOLATILIDADE_INSUFICIENTE = "janela_volatilidade_insuficiente"
+SERIE_RISCO_AMOSTRADA = "serie_risco_amostrada"
+MAX_PONTOS_ROLLING = 60
+
+
+def _selecionar_equidistante(items: list, *, limite: int) -> list:
+    if limite < 2:
+        raise ValueError("limite deve ser >= 2")
+    if len(items) <= limite:
+        return list(items)
+    ultimo = len(items) - 1
+    return [items[(i * ultimo) // (limite - 1)] for i in range(limite)]
+
+
+def _evolucao_volatilidade(
+    r: RiscoRetornoResolvido,
+    pontos: list,
+    *,
+    suficiente: bool,
+) -> tuple[EvolucaoVolatilidade | None, list[str]]:
+    if not r.incluir_evolucao_volatilidade:
+        return None, []
+    janela = r.janela_volatilidade_observacoes
+    if janela is None:
+        raise ValueError("janela_volatilidade_observacoes ausente no resolvido")
+    if not suficiente or len(pontos) < 2:
+        return None, [JANELA_VOLATILIDADE_INSUFICIENTE]
+
+    retornos = quant_returns.calculate_returns(pontos, r.metodo_retorno)
+    rolling = quant_risk.rolling_volatility(
+        retornos,
+        window=janela,
+        periods_per_year=r.dias_uteis_ano,
+    )
+    if not rolling:
+        return None, [JANELA_VOLATILIDADE_INSUFICIENTE]
+
+    minimo = min(rolling, key=lambda item: item.value)
+    maximo = max(rolling, key=lambda item: item.value)
+    mensal = amostrar_mensal(rolling)
+    exibidos = _selecionar_equidistante(mensal, limite=MAX_PONTOS_ROLLING)
+    amostrado = len(exibidos) < len(rolling)
+    avisos = [SERIE_RISCO_AMOSTRADA] if amostrado else []
+    return EvolucaoVolatilidade(
+        janela_observacoes=janela,
+        n_janelas_total=len(rolling),
+        primeira_data=rolling[0].data,
+        ultima_data=rolling[-1].data,
+        vol_inicio_pct=rolling[0].value * 100,
+        vol_fim_pct=rolling[-1].value * 100,
+        vol_min_pct=minimo.value * 100,
+        vol_min_data=minimo.data,
+        vol_max_pct=maximo.value * 100,
+        vol_max_data=maximo.data,
+        pontos=[
+            PontoVolatilidadeRolling(data=item.data, vol_anualizada_pct=item.value * 100)
+            for item in exibidos
+        ],
+        amostrado=amostrado,
+    ), avisos
 
 
 @tool(
     code="quant.risco_retorno",
     family="quant",
-    semver="1.1.0",
+    semver="1.2.0",
     display_name="Risco e retorno histórico",
-    description=("Analisa retorno acumulado/anualizado, volatilidade anualizada, downside deviation contra target "
-                 "periódico zero e máximo drawdown de um ativo, incluindo duração/recuperação do pior episódio. "
-                 "Por padrão usa adjusted_close retrospectivo para evitar que corporate actions pareçam perdas/ganhos "
-                 "mecânicos; raw_close pode ser pedido explicitamente. É análise histórica descritiva, não previsão."),
+    description=("Analisa retorno acumulado/anualizado, volatilidade anualizada, downside deviation, máximo drawdown "
+                 "e, quando solicitado, a evolução histórica da volatilidade em janela móvel governada ou explícita. "
+                 "Por padrão usa adjusted_close retrospectivo; raw_close pode ser pedido explicitamente. "
+                 "A evolução rolling é histórica e descritiva, não forecast, sinal ou recomendação."),
     preparar=preparar_risco_retorno,
     source_dependencies=(
         comum_module.__file__,
@@ -272,6 +400,13 @@ def calcular_risco_retorno(r: RiscoRetornoResolvido) -> RiscoRetornoOutput:
                 recovered=episodio.recovered,
             )
 
+    evolucao_volatilidade, avisos_rolling = _evolucao_volatilidade(
+        r,
+        pontos,
+        suficiente=suficiente,
+    )
+    avisos = _unique(avisos + avisos_rolling)
+
     quality = serie.quality if serie is not None else None
     prov = serie.provenance if serie is not None else None
     fonte = ",".join(prov.source_codes) if prov is not None and prov.source_codes else "b3"
@@ -310,5 +445,6 @@ def calcular_risco_retorno(r: RiscoRetornoResolvido) -> RiscoRetornoOutput:
         downside_target_periodic_pct=0.0,
         max_drawdown_pct=dd,
         drawdown=drawdown,
+        evolucao_volatilidade=evolucao_volatilidade,
         evidencia=ev,
     )
