@@ -780,3 +780,7 @@ A ponte de bytes oficiais ANBIMA até `market.yield_curve` está fechada e GREEN
 
 ## FQ5.7 promotion candidate — aguardando CI
 `dados.curva_juros` foi preparada como 1.0.1 pública, com planner restritivo, bloco determinístico e readiness. Catálogo esperado: 36 tools / 33 públicas / 3 legacy ocultas. Payload da curva IPCA completa fica abaixo de 5 KB. Este estado é candidato até o CI pós-promoção ficar GREEN.
+
+
+## FQ5.7 dados.curva_juros 1.0.1 pública/GREEN — run #249
+A capability de leitura exata da ETTJ oficial está encerrada. `dados.curva_juros` 1.0.1 está pública; catálogo = 36 tools, 33 expostas e 3 ocultas/replay. Fonte física ANBIMA, parser fail-closed, bridge de ingestão e strict PIT estão GREEN. Run #249 (`37146548276`): 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN. Não há FQ5.8 congelada; antes de nova feature, retomar capability audit/roadmap dentro de Company & Market Analytics.
