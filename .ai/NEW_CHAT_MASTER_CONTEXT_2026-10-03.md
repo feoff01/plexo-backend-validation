@@ -534,3 +534,15 @@ Provas:
 
 A superfície pública continua 1.1.0 e o catálogo 37/34/3. Próximo gate permitido: policy governada da janela + cutover único 1.2.0 + planner/bloco/evals.
 
+## Atualização final — quant.risco_retorno 1.2.0
+
+`quant.risco_retorno` 1.2.0 está pública/GREEN no run #334 / `37162747600`, commit funcional `3786af082eba5e99e14908340bd3bc649872fbdb`.
+
+Novidade: evolução histórica opcional da volatilidade rolling dentro da mesma tool canônica. Default governado `ANALISE_PARAMS.risco_janela_movel_observacoes=21`; janela explícita do usuário prevalece e a unidade é observações de retorno. Não há fallback escondido nem conversão automática de dias corridos.
+
+Replay 1.1.0: módulo legacy + golden. Adjusted/raw semantics preservadas. Payload <5 KB. Planner/bloco/evals GREEN. Catálogo permanece 37/34/3.
+
+Gate #334: 186 directed; peers 10/10/10; 929 passed / 53 skipped / 19 warnings / 0 failed; prompts/tools sync GREEN.
+
+Próximo passo: capability audit restante de Company & Market Analytics. Não abrir Portfolio Analytics. Brent só após source audit oficial; fair value/reverse DCF só após governança explícita de premissas.
+
