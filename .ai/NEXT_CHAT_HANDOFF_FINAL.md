@@ -725,3 +725,8 @@ Ler `.ai/FQ5_7_YIELD_CURVE_DESIGN.md`. Reutilizar `market.yield_curve`; implemen
 Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_7_YIELD_CURVE_FOUNDATION_GREEN.md`.
 
 Estado: ingestão semântica + loader PIT de `market.yield_curve` estão GREEN no run #192 (135 gate; 896 passed, 52 skipped, 19 warnings; prompts/tools sync verdes; 35 tools inalteradas). Não existe tool pública nem adapter HTTP/OAuth. Próximo passo obrigatório: materializar payload real ANBIMA/export oficial equivalente, medir cobertura histórica e só então decidir capability client-facing sob reuse-before-build.
+
+
+## FQ5.7 — source gate atual
+
+Ler `.ai/FQ5_7_ANBIMA_PUBLIC_SOURCE_AUDIT_2026-10-03.md`. Foundation está GREEN no run #192. A página pública ANBIMA confirma cobertura atual, mas o adapter físico NÃO deve usar scraping HTML. Próximo desbloqueio exige CSV/XML/XLS oficial real ou payload JSON API autorizado/sanitizado. Até lá, nenhuma tool pública de curva deve ser criada.
