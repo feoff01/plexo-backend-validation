@@ -679,7 +679,7 @@ def _retorno_vol(out: dict, eid: str, max_pontos: int) -> list[dict]:
     nota = NOTA_MERCADO
     if duration is not None:
         nota += " Duração e recuperação de drawdown são contadas em intervalos observados, não em dias corridos."
-    return [_bloco("indicadores", eid, 1, f"Risco e retorno histórico · {out.get('ticker', '')}".strip(), {"itens": itens}, _prov_evidencia(ev), nota,
+    return [_bloco("indicadores", eid, 1, f"Retorno e volatilidade · {out.get('ticker', '')}".strip(), {"itens": itens}, _prov_evidencia(ev), nota,
                    subtitulo=f"{per.get('de')} a {per.get('ate')} · {per.get('n')} pregões" if per else None)]
 
 
