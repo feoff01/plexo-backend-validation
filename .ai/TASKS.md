@@ -828,3 +828,12 @@ Transversais ainda abertas:
 - [ ] executar PostgreSQL 18 + testes FQ5.7;
 - [ ] executar suíte completa + prompts check + tools sync --check;
 - [ ] revisar payload/provenance e decidir promoção pública versionada.
+
+
+## FQ5.7 — fechamento do gate físico/shadow
+- [x] bridge CSV oficial -> ingestão semântica canônica;
+- [x] 103 linhas canônicas verificadas no PostgreSQL (65/19/19);
+- [x] idempotência e hash mismatch fail-closed;
+- [x] run #234 GREEN: 142 directed; 903 passed / 52 skipped / 19 warnings;
+- [x] prompts/tools sync GREEN;
+- [ ] promoção pública controlada de `dados.curva_juros` com bloco/planner/readiness;
