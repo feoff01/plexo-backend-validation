@@ -458,3 +458,11 @@ O handoff deve distinguir explicitamente FQ4 fechado no repo de validação de e
 
 ## 2026-10-03 — Prompt de continuação consolidado
 Criado `.ai/NEW_CHAT_PROMPT_2026-10-03.md` e atualizado o handoff mestre para que o próximo chat confirme o estado atual antes de codar, preserve reuse-before-build e continue pelo source gate ANBIMA da FQ5.7.
+
+
+## 2026-10-03 — FQ5.7 curva oficial ANBIMA · candidata pública
+- planner passa a rotear `dados.curva_juros` somente quando presente no catálogo;
+- ETTJ prefixada/IPCA/inflação implícita têm roteamento explícito;
+- Selic/IPCA como série temporal continuam em `dados.serie_indice`;
+- proibidos nearest/interpolação, delta entre datas, slope/curvature, duration/DV01, choque, forecast, fair value e recomendação;
+- alteração aguarda CI pós-promoção antes de ser considerada GREEN.
