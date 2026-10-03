@@ -1,7 +1,7 @@
 # Decisão de policy — rolling volatility de quant.risco_retorno 1.2.0
 
 Data: 2026-10-03
-Estado: **congelada para implementação/cutover**
+Estado: **implementada / GREEN em CI**
 Policy: `ANALISE_PARAMS.risco_janela_movel_observacoes`
 
 ## Valor inicial governado
@@ -40,3 +40,7 @@ Com esta decisão congelada, o cutover 1.2.0 pode prosseguir:
 - planner/bloco/evals;
 - PostgreSQL 18 + payload/readiness + full suite;
 - promoção somente após GREEN.
+
+## Resultado
+
+Implementada na `quant.risco_retorno` 1.2.0 e validada no run #334 / `37162747600`.
