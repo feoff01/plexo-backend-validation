@@ -730,3 +730,15 @@ Próxima frente deve começar por nova auditoria reuse-before-build; não abrir 
 - [ ] medir cobertura histórica disponível;
 - [ ] aplicar reuse-before-build e decidir primeira capability pública;
 - [ ] não criar slope/interpolação/DV01/tool específica antes desse gate.
+
+
+### FQ5.7 — source gate após foundation GREEN
+- [x] revisar anexos existentes por payload ANBIMA/ETTJ;
+- [x] confirmar ausência de arquivo ANBIMA entre os anexos atuais;
+- [x] confirmar página pública oficial de fechamento e cobertura atual;
+- [x] registrar 65 vértices IPCA e 19 PRE/inflação implícita em 02/10/2026;
+- [x] rejeitar scraping HTML/form action de terceiros como contrato de produção;
+- [ ] obter CSV/XML/XLS oficial real ou payload JSON API sanitizado;
+- [ ] congelar parser físico contra bytes reais;
+- [ ] medir histórico efetivamente disponível;
+- [ ] somente depois decidir capability pública.
