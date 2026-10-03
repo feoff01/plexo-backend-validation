@@ -939,3 +939,31 @@ Transversais ainda abertas:
 - [x] prompts check GREEN;
 - [x] tools sync --check GREEN;
 - [ ] reauditar próxima lacuna; rolling volatility só após design de janela/compactação.
+
+## Pós-risco 1.1 — rolling volatility
+
+### Audit/design
+- [x] reauditar lacunas após `quant.risco_retorno` 1.1.0 GREEN;
+- [x] classificar gaps restantes;
+- [x] selecionar rolling volatility por reuse-before-build;
+- [x] congelar `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`;
+- [x] manter Brent/fair value bloqueados pelos gates já conhecidos.
+
+### Próxima tranche — shadow interno
+- [ ] implementar candidato rolling interno não registrado;
+- [ ] preservar `quant.risco_retorno` 1.1.0 pública/fingerprint/catalog;
+- [ ] exigir janela explícita no shadow;
+- [ ] reutilizar `quant_risk.rolling_volatility()`;
+- [ ] compactar deterministicamente sem recalcular métricas na amostra;
+- [ ] testes de equivalência integral das métricas 1.1.0;
+- [ ] encerrar antes do PostgreSQL/cutover.
+
+### Gate posterior
+- [ ] PostgreSQL 18 + adjusted/raw semantics;
+- [ ] payload <5 KB + provenance/readiness;
+- [ ] congelar replay/golden 1.1.0;
+- [ ] aprovar `ANALISE_PARAMS.risco_janela_movel_observacoes`;
+- [ ] cutover único 1.2.0 + planner/bloco/evals;
+- [ ] full suite + prompts/tools sync;
+- [ ] checkpoint GREEN.
+
