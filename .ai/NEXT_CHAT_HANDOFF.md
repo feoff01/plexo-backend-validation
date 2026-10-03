@@ -736,3 +736,12 @@ Outro chat deve conseguir, somente com o ZIP + prompt acima:
 - saber qual CI passou e qual falhou;
 - reproduzir o próximo passo sem inventar contexto;
 - continuar documentando em `.ai/`.
+
+
+## Estado atual
+
+Este arquivo é legado. Para qualquer continuação use exclusivamente:
+- `.ai/NEXT_CHAT_HANDOFF_FINAL.md`;
+- `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`.
+
+Não use estados históricos deste arquivo como fonte de verdade.
