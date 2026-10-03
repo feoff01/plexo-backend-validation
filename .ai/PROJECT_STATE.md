@@ -704,3 +704,10 @@ Primeira tranche é somente fundação shadow (ingestão semântica + loader PIT
 ## FQ5.7 — curva de juros foundation shadow candidate — 2026-10-03
 
 Implementada a fundação shadow sobre o schema existente `market.yield_curve`, sem migration e sem tool nova. `app/market/yield_curve_ingest.py` expande vértices ANBIMA para `ettj_pre`, `ettj_ipca` e `inflacao_implicita`; `app/market/yield_curves.py` resolve curvas PIT por `ingestion_batches.finished_at`. Taxas são normalizadas à precisão `numeric(12,6)` antes do gate append-only. Testes puros e PostgreSQL foram adicionados ao gate explícito. Aguardar CI PostgreSQL 18 antes de considerar GREEN.
+
+
+## FQ5.7 — curva de juros foundation GREEN — 2026-10-03
+
+A fundação de curva ANBIMA está GREEN em shadow, sem tool pública. Commit validado `bbb0ae0be7c01ffbd693c441188bd7363ca3d0d5`; run #192 / `37135247818` success; gate 135 passed; suíte 896 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes; 35 tools inalteradas.
+
+`yield_curve_ingest.py` faz ingestão semântica append-only; `yield_curves.py` resolve latest/reference_date com strict PIT por `ingestion_batches.finished_at`. Não há interpolação, slope, DV01, cenário de curva ou adapter HTTP/OAuth. Próximo gate = payload real ANBIMA/export oficial equivalente + auditoria de cobertura histórica.
