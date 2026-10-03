@@ -738,3 +738,14 @@
 - target eventual definido como `quant.risco_retorno` 1.2.0, sem tool paralela;
 - nenhuma alteração de código, migration, schema, policy, planner, bloco, semver público ou catálogo nesta tranche.
 
+## 2026-10-03 — rolling volatility shadow interno GREEN
+- criado `app/tools/analista/_risco_retorno_rolling_shadow.py`, sem registro público;
+- cálculo-base 1.1.0 permanece delegado à tool canônica;
+- rolling reutiliza `quant_risk.rolling_volatility()`;
+- janela obrigatoriamente explícita no shadow; nenhuma policy/default escondido;
+- compactação: último ponto mensal + cap estrutural de 60;
+- adicionados 7 testes de equivalência/semântica/compactação/registry;
+- commit funcional `bef38e7d2bc44e69bfc931f4d12ee9d7df3a00bd`;
+- run #311 / `37161330785` GREEN: 175 directed; 925 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
+- `quant.risco_retorno` continua 1.1.0 pública; nenhum planner/bloco/policy/semver público alterado.
+
