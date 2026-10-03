@@ -109,6 +109,9 @@ jobs:
           tests/test_fq56_sector_ingest_db.py
           tests/test_fq57_yield_curve.py
           tests/test_fq57_yield_curve_db.py
+          tests/test_fq57_anbima_source.py
+          tests/test_fq57_anbima_csv_ingest_db.py
+          tests/test_fq57_curva_juros_tool.py
 
       - name: benchmark FQ5.6 peers
         run: python -m pytest -q -s tests/test_fq56_peer_performance_db.py
