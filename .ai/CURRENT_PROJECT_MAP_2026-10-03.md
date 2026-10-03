@@ -180,3 +180,15 @@ O commit que contém estes documentos pode ser posterior a essa base por ser doc
 - não usar composição para performance, ranking/recomendação ou carteira do cliente.
 
 Próximo gate: reabrir o capability audit pós-composição e escolher a próxima lacuna por `reuse-before-build`.
+
+## Atualização pós-risco histórico compacto
+- `quant.risco_retorno` atual: **1.1.0 pública/GREEN**;
+- downside deviation anualizada usa Risk Core existente e target periódico 0% explícito;
+- duração/recovery do pior drawdown são intervalos observados, não dias corridos;
+- replay `quant.retorno_volatilidade` continua oculto e seu golden foi preservado;
+- run #296 / `37154531785`: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6/migrations/invariantes, prompts e tools sync GREEN;
+- peers seguem 10/10/10;
+- catálogo segue 37 / 34 públicas / 3 ocultas.
+
+Rolling volatility permanece somente no Quant Core; para expô-la será obrigatório definir janela, default/premissa e compactação de série antes de código.
