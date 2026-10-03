@@ -698,3 +698,18 @@ Próxima frente deve começar por nova auditoria reuse-before-build; não abrir 
 - [ ] CI PostgreSQL 18 + registry/prompts sem drift;
 - [ ] checkpoint GREEN da fundação;
 - [ ] somente depois materializar payload API real/autorizado e decidir capability pública.
+
+
+### FQ5.7 — foundation shadow candidate
+- [x] implementar `yield_curve_ingest.py` sem HTTP/OAuth;
+- [x] expandir PRE/IPCA/inflação implícita em linhas canônicas;
+- [x] normalizar taxa à precisão do schema antes de idempotência/conflito;
+- [x] implementar loader `yield_curves.py` com latest/reference_date;
+- [x] strict PIT por lote succeeded + finished_at;
+- [x] proibir interpolação/extrapolação/day-count implícito;
+- [x] adicionar testes puros + DB;
+- [x] incluir FQ5.7 no gate explícito;
+- [ ] CI PostgreSQL 18 GREEN;
+- [ ] confirmar registry/prompts sem drift;
+- [ ] checkpoint GREEN da fundação;
+- [ ] somente depois materializar payload real ANBIMA/export oficial e decidir capability pública.
