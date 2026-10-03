@@ -125,3 +125,20 @@ Conclusões:
 - o cálculo puro não é o gargalo.
 
 **Decisão:** implementar batch loader isolado antes da promoção. O gap é carregamento/orquestração, não matemática. O batch deve reutilizar os engines de valuation e tendências e preservar equivalência numérica contra as tools canônicas.
+
+
+## Pós-otimização final / regression gate — 2026-10-03
+
+Run #157 `37132733373` validou o batch:
+- 2 peers: 10 queries / 4009 bytes output;
+- 8 peers: 10 queries / 4171 bytes;
+- 20 peers: 10 queries / 4163 bytes;
+- equivalência resolved + output contra preparadores canônicos: GREEN;
+- suíte: 886 passed, 52 skipped, 19 warnings, 0 failed.
+
+Run pós-promoção #170 `37133499914` repetiu o resultado:
+- 10/10/10 queries;
+- regression gate <=12 queries e output <5000 bytes passou;
+- suíte completa 889 passed, 52 skipped, 19 warnings, 0 failed.
+
+Estado: performance GREEN e congelada como gate de regressão.
