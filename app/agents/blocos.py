@@ -99,6 +99,8 @@ AVISOS_CLIENTE: dict[str, str] = {
     "sensibilidade_indisponivel": "Não há sensibilidade estimável para aplicar ao cenário.",
     "fx_observation_date_cutoff_sem_vintage": "O câmbio respeita a data da observação, mas a fonte atual não prova o vintage histórico contra revisões ou backfills.",
     "par_cambio_desconhecido": "Não encontrei esse par de moedas na cobertura cambial atual.",
+    "curva_juros_indisponivel": "Não há curva oficial ANBIMA disponível para a data e o cutoff pedidos.",
+    "curva_juros_sem_vintage_pit": "A curva existe, mas o lote disponível não comprova que já estava conhecido no cutoff pedido.",
     # --- orçamento
     "saldo_reserva_desconhecido": "Não há saldo de reserva registrado.",
     "ha_divida_cara_ativa": "Existe dívida cara ativa, e ela vem antes de aportar.",
@@ -890,6 +892,79 @@ def _event_study_v2(out: dict, eid: str, max_pontos: int) -> list[dict]:
     return blocks
 
 
+def _curva_juros(out: dict, eid: str, max_pontos: int) -> list[dict]:
+    pontos = out.get("pontos")
+    if not isinstance(pontos, list) or not pontos:
+        return []
+    curva = str(out.get("curva") or "")
+    labels = {
+        "ettj_pre": "ETTJ prefixada",
+        "ettj_ipca": "ETTJ IPCA",
+        "inflacao_implicita": "Inflação implícita",
+    }
+    serie = [
+        {"x": p.get("vertice_du"), "y": p.get("taxa_pct_aa_252")}
+        for p in pontos
+        if isinstance(p, dict) and _num(p.get("vertice_du")) is not None
+        and _num(p.get("taxa_pct_aa_252")) is not None
+    ]
+    if not serie:
+        return []
+    raw_prov = out.get("provenance") or {}
+    raw_warnings = list(raw_prov.get("warnings") or [])
+    fixed = [w for w in raw_warnings if not str(w).startswith("vertice_ettj_indisponivel:")]
+    avisos = _avisos(fixed)
+    for warning in raw_warnings:
+        text_warning = str(warning)
+        if text_warning.startswith("vertice_ettj_indisponivel:"):
+            du = text_warning.split(":", 1)[1]
+            avisos.append(
+                f"O vértice exato de {du} d.u. não foi publicado nessa curva; nenhum valor aproximado foi usado."
+            )
+    prov = {
+        "fonte": ",".join(raw_prov.get("source_codes") or ["anbima"]),
+        "as_of": raw_prov.get("reference_date") or out.get("data_curva"),
+        "cutoff_date": raw_prov.get("cutoff_date"),
+        "n": out.get("n_vertices_retornados"),
+        "metodo": raw_prov.get("temporal_semantics") or "official_vertices_no_interpolation",
+        "premissas": {"day_count": "du_252", "interpolacao": False, "extrapolacao": False},
+        "avisos": list(dict.fromkeys(avisos)),
+        "lacunas": sum(str(w).startswith("vertice_ettj_indisponivel:") for w in raw_warnings),
+    }
+    nota = (
+        "Curva oficial ANBIMA de fechamento, em vértices publicados e % a.a./252 d.u.; "
+        "não há interpolação, extrapolação, previsão, choque, duration/DV01, fair value ou recomendação."
+    )
+    label = labels.get(curva, curva or "Curva de juros")
+    data_curva = out.get("data_curva")
+    if len(serie) <= 20:
+        return [_bloco(
+            "tabela", eid, 1, f"{label} oficial",
+            {"colunas": [
+                {"chave": "vertice_du", "rotulo": "Vértice (d.u.)"},
+                {"chave": "taxa_pct_aa_252", "rotulo": "Taxa (% a.a.)"},
+            ], "linhas": [
+                {"vertice_du": p["x"], "taxa_pct_aa_252": p["y"]} for p in serie
+            ]},
+            prov, nota, subtitulo=str(data_curva) if data_curva else None,
+        )]
+    sampled, reduziu = _amostrar(serie, max_pontos)
+    if reduziu:
+        frase = AVISOS_CLIENTE["serie_amostrada"]
+        if frase not in prov["avisos"]:
+            prov["avisos"].append(frase)
+    return [_bloco(
+        "serie", eid, 1, f"{label} oficial",
+        {
+            "series": [{"nome": label, "pontos": sampled}],
+            "eixo_x": {"formato": "inteiro", "unidade": "dias úteis"},
+            "eixo_y": {"formato": "pct", "unidade": out.get("unidade") or "% a.a./252 d.u."},
+            "empilhada": False,
+        },
+        prov, nota, subtitulo=str(data_curva) if data_curva else None,
+    )]
+
+
 # ------------------------------------------------------------------ FQ5 · fundamentos, valuation e cenários de mercado
 def _fundamentos_empresa(out: dict, eid: str, max_pontos: int) -> list[dict]:
     ev = out.get("evidencia") or {}
@@ -1326,6 +1401,7 @@ MAPEADORES: dict[str, Callable[[dict, str, int], list[dict]]] = {
     "dados.historico_comparado": _historico_comparado,
     "dados.serie_indice": _serie_indice,
     "dados.fundamentos_empresa": _fundamentos_empresa,
+    "dados.curva_juros": _curva_juros,
     "quant.retorno_volatilidade": _retorno_vol,
     "quant.correlacao": _correlacao,
     "quant.risco_retorno": _retorno_vol,
