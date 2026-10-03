@@ -676,3 +676,10 @@ Run #145 mediu 38/98/218 queries para 2/8/20 peers, com output estável em ~4 KB
 ## FQ5.6 — peer batch loader shadow candidate — 2026-10-03
 
 Após baseline #145 confirmar N+1 material, foi implementado `app/market/peer_company_metrics.py`. O batch carrega catálogo/classes, fallback de CNPJ, DFP PIT e preços em lote; depois reutiliza `FundamentalsLoader` e `FundamentalHistoryLoader` em memória. `quant.comparaveis_setor` continua 1.0.0 oculta. Foi adicionado E2E de equivalência resolved+output contra `quant.valor_mercado` e `quant.tendencias_fundamentais`. Aguardar CI antes de considerar GREEN.
+
+
+## FQ5.6 — performance GREEN / promoção candidata — 2026-10-03
+
+Batch loader validado no run #157 `37132733373`: gate explícito 125 passed; suíte completa 886 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes. Benchmark pós-otimização: 10/10/10 queries em 2/8/20 peers, contra 38/98/218 no baseline #145. Output público permaneceu ~4 KB e equivalência resolved/output contra as tools canônicas passou.
+
+Promoção candidata publicada: `quant.comparaveis_setor` 1.0.1 pública, planner com comparação descritiva e bloco compacto. Aguardar CI pós-promoção antes de considerar FQ5.6 encerrada.
