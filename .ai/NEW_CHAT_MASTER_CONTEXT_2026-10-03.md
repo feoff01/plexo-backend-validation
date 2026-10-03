@@ -500,3 +500,12 @@ Estado mais novo em 2026-10-03:
 - peers continuam 10/10/10.
 
 A 1.1.0 reutiliza downside deviation do Risk Core e apenas expõe duration/recovery já existentes. Rolling volatility continua interna e requer design de janela/compactação antes de qualquer exposição.
+
+## Atualização pós-risco 1.1 — próximo design congelado
+
+Após o run #296 GREEN, a reauditoria restante escolheu rolling volatility como próxima tranche por reuse-before-build. `quant_risk.rolling_volatility()` já existe; não haverá matemática nova nem tool paralela.
+
+Target eventual: `quant.risco_retorno` 1.2.0. O contrato exige janela móvel explícita no shadow e, para uso público sem janela do usuário, uma policy governada `ANALISE_PARAMS.risco_janela_movel_observacoes` sem fallback escondido. Série client-facing será compactada deterministicamente e terá gate <5 KB.
+
+Próximo passo: shadow interno não registrado + equivalência 1.1.0. PostgreSQL/cutover/promoção ficam para tranches posteriores.
+
