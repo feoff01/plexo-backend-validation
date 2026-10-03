@@ -683,3 +683,12 @@ Após baseline #145 confirmar N+1 material, foi implementado `app/market/peer_co
 Batch loader validado no run #157 `37132733373`: gate explícito 125 passed; suíte completa 886 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync verdes. Benchmark pós-otimização: 10/10/10 queries em 2/8/20 peers, contra 38/98/218 no baseline #145. Output público permaneceu ~4 KB e equivalência resolved/output contra as tools canônicas passou.
 
 Promoção candidata publicada: `quant.comparaveis_setor` 1.0.1 pública, planner com comparação descritiva e bloco compacto. Aguardar CI pós-promoção antes de considerar FQ5.6 encerrada.
+
+
+## FQ5.6 encerrada — comparáveis por setor — 2026-10-03
+
+`quant.comparaveis_setor` **1.0.1** está pública. Fonte setorial B3 e universo atual IBrA estão GREEN; coverage cruzada atual = 146/148 tickers e 142/144 company codes, com gaps RIAA3/SAUD3 explícitos.
+
+Performance final: 10 queries constantes para 2/8/20 peers; output ~4 KB. Run #170 `37133499914`: 128 gate; 889 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, prompts e tools sync verdes.
+
+Checkpoint: `.ai/checkpoints/2026-10-03_FQ5_6_PEERS_PROMOTION_GREEN.md`.
