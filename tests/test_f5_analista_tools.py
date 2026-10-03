@@ -57,7 +57,7 @@ ANALISE_PARAMS = {
 # é ela que denuncia tool vazando de outra família. `dados.expectativas_mercado` entrou na F13b.
 TOOLS_ANALISTA = {"dados.resolver_instrumento", "dados.serie_precos", "dados.serie_indice",
                   "dados.historico_comparado", "dados.expectativas_mercado",
-                  "dados.fundamentos_empresa", "dados.curva_juros",
+                  "dados.fundamentos_empresa", "dados.curva_juros", "dados.composicao_indice",
                   "quant.risco_retorno", "quant.dependencia", "quant.analise_condicional",
                   "quant.sensibilidade", "quant.regimes", "quant.event_study",
                   "quant.valor_mercado", "quant.cenario_sensibilidade",
