@@ -675,3 +675,10 @@ Documento: `.ai/FQ5_6_PEERS_PERFORMANCE_BENCHMARK.md`.
 ## 2026-10-02 — N+1 em comparáveis é material e deve ser removido antes da promoção
 
 Baseline run #145: 38/98/218 queries para 2/8/20 peers, exatamente ~18 + 10×N. Output permanece ~4 KB, portanto o problema é preparação, não payload client-facing nem cálculo. Implementar loader batch isolado que reutiliza engines canônicos; não copiar fórmulas.
+
+
+## 2026-10-03 — quant.comparaveis_setor 1.0.1 pública
+
+**Decisão:** promover `quant.comparaveis_setor` 1.0.1 como capability pública do Analista após fonte B3, universo IBrA, equivalência e performance GREEN.
+
+Contrato: comparação descritiva company-level; subsetor padrão, setor opt-in; sem ranking, recomendação, fair value ou escolha de "melhor ação". A mediana dos pares é referência descritiva, não preço-alvo.
