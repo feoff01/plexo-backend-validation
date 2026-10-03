@@ -776,3 +776,7 @@ O payload físico oficial ANBIMA foi materializado e congelado (`CurvaZero_.csv`
 
 ## FQ5.7 physical ingest shadow GREEN — run #234
 A ponte de bytes oficiais ANBIMA até `market.yield_curve` está fechada e GREEN. `ingest_anbima_yield_curve_csv()` calcula/valida SHA-256, usa o parser físico congelado e delega à ingestão semântica existente. O run #234 (`37145970504`) passou com 142 directed e 903 passed / 52 skipped / 19 warnings. `dados.curva_juros` continua 1.0.0 shadow. Próxima etapa aprovada: preparação de promoção pública restrita a leitura exata de uma curva/data.
+
+
+## FQ5.7 promotion candidate — aguardando CI
+`dados.curva_juros` foi preparada como 1.0.1 pública, com planner restritivo, bloco determinístico e readiness. Catálogo esperado: 36 tools / 33 públicas / 3 legacy ocultas. Payload da curva IPCA completa fica abaixo de 5 KB. Este estado é candidato até o CI pós-promoção ficar GREEN.
