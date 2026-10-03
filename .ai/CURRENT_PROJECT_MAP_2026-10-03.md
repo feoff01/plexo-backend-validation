@@ -214,3 +214,15 @@ Rolling volatility permanece somente no Quant Core; para expô-la será obrigat�
 - próximo gate = PostgreSQL específico do shadow + adjusted/raw + payload/provenance/readiness;
 - target 1.2.0 ainda não promovido.
 
+## Atualização — rolling volatility CI/readiness GREEN
+- commit funcional: `3794088a0cd9e6a0b0e00ae1e8cb1ca634a3f38d`;
+- run #319 / `37162064025`: GREEN;
+- 188 directed;
+- 931 passed / 52 skipped / 19 warnings / 0 failed;
+- PostgreSQL adjusted/raw end-to-end GREEN;
+- payload <5 KB e provenance/readiness GREEN;
+- golden/replay 1.1.0 congelado;
+- `quant.risco_retorno` ainda 1.1.0 pública;
+- próximo gate = policy governada + cutover 1.2.0 + planner/bloco/evals;
+- Brent/fair value continuam bloqueados pelos gates já documentados.
+
