@@ -967,3 +967,19 @@ Transversais ainda abertas:
 - [ ] full suite + prompts/tools sync;
 - [ ] checkpoint GREEN.
 
+## Rolling volatility — shadow interno GREEN
+- [x] implementar candidato rolling interno não registrado;
+- [x] preservar `quant.risco_retorno` 1.1.0 pública/catalog;
+- [x] exigir janela explícita no shadow;
+- [x] reutilizar `quant_risk.rolling_volatility()`;
+- [x] compactar mensalmente + cap 60 sem recalcular métricas na amostra;
+- [x] provar equivalência integral do payload 1.1.0;
+- [x] provar adjusted/raw nos testes puros;
+- [x] run #311 GREEN: 925 passed / 52 skipped / 19 warnings / 0 failed;
+- [ ] integração PostgreSQL específica do shadow via preparação canônica;
+- [ ] payload <5 KB + provenance/readiness;
+- [ ] congelar replay/golden 1.1.0;
+- [ ] aprovar `ANALISE_PARAMS.risco_janela_movel_observacoes`;
+- [ ] cutover único 1.2.0 + planner/bloco/evals;
+- [ ] gate final + checkpoint de promoção.
+
