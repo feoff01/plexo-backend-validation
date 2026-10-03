@@ -543,3 +543,12 @@
 - output client-facing ficou ~4 KB e não escala com a tabela de peers;
 - N+1 classificado como dívida material antes da promoção;
 - nenhuma matemática alterada nesta medição.
+
+
+## 2026-10-03 — Peer batch loader shadow candidate
+- criado `app/market/peer_company_metrics.py` para remover N+1 de preparação;
+- batch faz leitura de catálogo/classes, CNPJ fallback, fundamentos DFP PIT e preços;
+- seleção de vintages/períodos continua nos loaders canônicos existentes;
+- `quant.comparaveis_setor` passou a construir os mesmos resolved models a partir do batch;
+- teste E2E compara resolved/output batch contra preparadores canônicos;
+- nenhuma fórmula nova e nenhuma tool pública alterada nesta etapa.
