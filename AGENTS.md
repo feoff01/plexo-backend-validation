@@ -6,7 +6,8 @@ This repository uses `.ai/` as its canonical persistent project memory.
 
 For any substantial task, first read:
 1. `.ai/CODEX_START_HERE_2026-10-04.md`
-2. the task-specific documents that file points to.
+2. `.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`
+3. the task-specific documents those files point to.
 
 For integration into the existing production backend/LLM and database, also read:
 - `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`
@@ -64,9 +65,10 @@ The last fully GREEN functional baseline is:
 - tools sync --check GREEN
 - catalog: 37 registered / 34 public / 3 hidden-replay
 
-The newer documentation HEAD has a known CI failure caused by nondeterministic test fixture availability after UTC rollover:
-- run #349 / `37166181087`
+The current documentation/integration HEAD has a known CI failure caused by nondeterministic test fixture availability after UTC rollover:
+- run #367 / `37227204860`
 - 184 directed passed / 2 failed
+- same two failures first observed after the UTC rollover in earlier documentation runs
 - failing tests:
   - `tests/test_fq57_yield_curve_db.py::test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertices`
   - `tests/test_index_composition_db.py::test_index_composition_loader_reuses_official_snapshot_and_tool_is_compact`
