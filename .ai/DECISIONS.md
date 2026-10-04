@@ -817,3 +817,17 @@ Próxima seleção volta ao capability audit de Company & Market Analytics; Bren
 
 Design: `.ai/BRENT_FACTOR_FOUNDATION_DESIGN_2026-10-03.md`.
 
+## 2026-10-04 — integração no backend real exige certificação em três camadas
+
+**Decisão:** tratar este repo como implementação/contrato de referência até o Codex descobrir o backend realmente deployado. Não copiar o projeto inteiro sobre o backend atual.
+
+**Arquitetura alvo:** LLM real escolhe a tool; backend valida; loaders leem banco real com PIT/source-priority; `calcular()` determinístico produz output; provenance/execution são registrados; JSON volta à LLM; LLM apenas explica.
+
+**Certificação obrigatória:** DATA CORRECTNESS -> NUMERICAL/METHOD CORRECTNESS -> LLM/BACKEND ORCHESTRATION CORRECTNESS.
+
+**Oracle independente:** uma função financeira não pode ser considerada validada apenas por teste que reutiliza a mesma função/core. Exigir cálculo manual, implementação de referência independente, biblioteca externa adequada ou reconciliation verificável.
+
+**Rollout:** vertical slice primeiro, depois ondas; shadow antes de produção. As 18 tools não serão ativadas simultaneamente.
+
+**Roadmap futuro:** Brent/fair value só reabrem após o audit do banco e integração das capabilities atuais.
+
