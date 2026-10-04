@@ -334,3 +334,18 @@ Para cada parte da base, responder:
 > "Isso adiciona DADOS para uma capability existente, exige uma nova FUNDAÇÃO canônica, ou representa de fato uma nova INTENÇÃO ANALÍTICA que justifica uma tool?"
 
 A maior parte de uma base grande deve cair nas duas primeiras categorias.
+
+## Override 2026-10-04 — a base é parte de uma integração maior
+
+Este documento continua válido para auditoria da base, mas a missão atual é maior: integrar as tools/metodologias ao backend e LLM já existentes.
+
+Antes de qualquer adapter, ler também:
+- `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`;
+- `.ai/FINANCIAL_TOOL_CORRECTNESS_STANDARD_2026-10-04.md`;
+- `.ai/PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`;
+- `.ai/CODEX_PRODUCTION_INTEGRATION_RUNBOOK_2026-10-04.md`.
+
+A base externa/real deve ser mapeada para as tools existentes dentro do runtime/orquestrador real. Não basta demonstrar queries corretas isoladas: é obrigatório provar LLM -> tool -> DB -> método -> output -> LLM ponta a ponta.
+
+Nenhuma tabela deve ser considerada "integrada" até a capability consumidora passar pelo standard de certificação.
+
