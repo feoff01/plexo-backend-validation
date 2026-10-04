@@ -888,3 +888,28 @@ O HEAD documental `2f962de8a2800480bf2800cf41b04d01298cfb05` falhou no run #347 
 
 Para onboarding da base externa: primeira entrega obrigatória do Codex é audit read-only + matriz de mapping/reuse; nenhum adapter/tool deve ser criado antes desse audit.
 
+## 2026-10-04 — pacote Codex para integração no backend/LLM real
+
+A prioridade atual mudou de "conectar uma base" para **integrar e certificar as tools/metodologias no backend e LLM já existentes**, usando o banco real como fonte e preservando a arquitetura determinística.
+
+Foram congelados:
+- master plan de integração;
+- standard de correção/certificação financeira;
+- matriz das 18 tools;
+- parity matrix produção;
+- runbook Codex;
+- templates de backend discovery e DB audit;
+- primeira mensagem de integração;
+- novo `CODEX_START_HERE_2026-10-04.md`;
+- `AGENTS.md` atualizado.
+
+Primeira tranche obrigatória do Codex:
+1. production backend discovery;
+2. DB audit read-only;
+3. parity matrix;
+4. corrigir as 2 fixtures strict-PIT dependentes do relógio sem afrouxar PIT;
+5. propor vertical slice `resolver_instrumento -> serie_precos -> risco_retorno`;
+6. parar antes de migrar o catálogo inteiro.
+
+A referência continua com 18 tools públicas de Company & Market e baseline funcional GREEN no run #341. No backend real, cada tool começa como UNMAPPED e só chega a PROD_GREEN após data/método/PIT/provenance/LLM/E2E/shadow.
+
