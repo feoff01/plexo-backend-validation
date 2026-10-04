@@ -803,3 +803,17 @@ Design: `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`.
 
 Próxima seleção volta ao capability audit de Company & Market Analytics; Brent e fair value continuam bloqueados pelos gates de fonte/governança já documentados.
 
+## 2026-10-03 — próxima frente pós-risco 1.2: Brent spot/EIA como fundação de fator
+
+**Decisão:** selecionar Brent spot como próxima tranche de Company & Market Analytics, mas começar por source/factor foundation, não por nova tool.
+
+**Fonte candidata:** EIA `RBRTE` — Europe Brent Spot Price FOB, USD/barril. Não confundir com ICE futures/front-month/curva.
+
+**Correção do audit anterior:** o gap não é apenas fonte+loader. O schema atual de índices não representa USD/barril e `FactorKind` só aceita ativo/índice/câmbio. O gap real é fonte + schema/fundação de commodity + loader/factor contract.
+
+**Reuse-before-build:** retornos, dependência, sensibilidade, regimes e alinhamento já existem. Não criar matemática nova nem `quant.brent`/`dados.brent` por fonte.
+
+**Gate:** nenhuma implementação antes de congelar payload machine-readable oficial EIA, SHA-256 e metadata de copyright/licença específico da RBRTE. A EIA publica a série, mas materiais próprios indicam uso de dados baseados em Thomson Reuters, portanto a decisão de redistribuição deve ser explícita.
+
+Design: `.ai/BRENT_FACTOR_FOUNDATION_DESIGN_2026-10-03.md`.
+
