@@ -259,3 +259,32 @@ Próximo gate: reauditar gaps restantes de Company & Market Analytics e escolher
 - fair value/reverse DCF continua bloqueado por governança/matemática;
 - Portfolio Analytics fora do escopo.
 
+## Override 2026-10-04 — mapa da fase de integração
+
+### Referência validada
+- 37 tools registradas / 34 públicas / 3 hidden;
+- 18 tools públicas de Company & Market;
+- orquestração LLM/tool existente em `app/agents/turn.py`;
+- registry em `app/tools/registry.py`;
+- executor auditável em `app/tools/executor.py`;
+- sync/semver/fingerprint em `app/tools/sync.py`;
+- loaders em `app/market/*`;
+- matemática pura em `app/market/analytics/*`.
+
+### Alvo atual
+Backend/LLM realmente deployado + banco real/staging ainda precisam ser descobertos/mapeados pelo Codex.
+
+### Próxima ordem
+1. backend discovery;
+2. DB audit;
+3. production parity matrix;
+4. CI strict-PIT fix;
+5. vertical slice resolver/preços/risco;
+6. certification/shadow;
+7. ondas seguintes;
+8. post-integration capability audit;
+9. só então novas capabilities.
+
+### Gate de correção
+Nenhuma tool é PROD_GREEN sem data + method + PIT + provenance/replay + LLM routing/fidelity + E2E + shadow.
+
