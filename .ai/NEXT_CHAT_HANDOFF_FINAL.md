@@ -357,3 +357,23 @@ Gate exato antes de código:
 
 Fair value/reverse DCF continua bloqueado. Portfolio Analytics continua fora do escopo.
 
+## OVERRIDE — handoff para Codex / onboarding de base grande
+
+Para uma sessão Codex que receberá acesso à base externa, ler adicionalmente:
+`.ai/CODEX_DATA_ONBOARDING_HANDOFF_2026-10-03.md`.
+
+Regra de início:
+- NÃO conectar tabelas diretamente às tools;
+- começar por auditoria read-only da base;
+- produzir inventário + tabela->conceito canônico + identity/units/temporalidade/provenance/source-priority/performance;
+- classificar cada dataset em: encaixa, adapter, novo tipo canônico, governança temporal ou nova intenção analítica;
+- somente nova intenção analítica justifica nova tool.
+
+Atenção de baseline:
+- último GREEN integral: HEAD `bf16dfd561f97e136060d77d80f50092cdc4538d`, run #341;
+- run #347 do HEAD documental posterior falhou em 2 testes strict-PIT após rollover UTC;
+- causa: fixtures históricas fecham ingestion batch com `clock_timestamp()` e usam cutoff fixo 2026-10-03;
+- não alterar strict PIT; corrigir determinismo temporal do teste/fixture como primeira higiene técnica.
+
+Depois disso, usar a base grande para decidir o que alimenta tools existentes e só então selecionar uma tranche de integração.
+
