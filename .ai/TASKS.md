@@ -1083,3 +1083,11 @@ Transversais ainda abertas:
 - [ ] `POST_INTEGRATION_CAPABILITY_AUDIT_2026-10-04.md`;
 - [ ] só então reavaliar Brent/fair value e outras capabilities.
 
+## Distribuição do pacote Codex
+- [x] manifestar arquivos obrigatórios;
+- [x] README de instalação;
+- [x] atualizar estado corrente de CI para #367;
+- [ ] gerar artefato ZIP com paths preservados;
+- [ ] gerar SHA-256 do pacote;
+- [ ] entregar ZIP ao usuário.
+
