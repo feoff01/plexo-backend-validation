@@ -329,3 +329,31 @@ Próximo gate exato:
 
 Não assumir nova FQ. Brent/commodities continua dependente de source audit oficial. Fair value/reverse DCF continua dependente de premissas governadas. Portfolio Analytics continua fora do escopo.
 
+## OVERRIDE — pós-risco 1.2: Brent/EIA selecionado para source foundation
+
+Capability audit restante concluído.
+
+Documentos novos:
+- `.ai/COMPANY_MARKET_DELTA_AUDIT_POST_RISK_1_2_2026-10-03.md`;
+- `.ai/BRENT_EIA_SOURCE_AUDIT_2026-10-03.md`;
+- `.ai/BRENT_FACTOR_FOUNDATION_DESIGN_2026-10-03.md`;
+- `.ai/checkpoints/2026-10-03_POST_RISK_1_2_BRENT_DESIGN_FROZEN.md`.
+
+Decisão:
+- próxima frente = Brent spot / EIA;
+- começar por source + commodity-series foundation, sem nova tool;
+- fonte candidata = EIA `RBRTE` / Europe Brent Spot Price FOB / USD por barril;
+- não confundir com ICE futures/front-month/curva;
+- gap real inclui schema/fundação porque `FactorKind` não possui commodity e `index_definitions` não representa USD/barril;
+- Quant Core existente deve ser reutilizado.
+
+Gate exato antes de código:
+1. materializar payload machine-readable oficial EIA da RBRTE;
+2. registrar SHA-256;
+3. confirmar unit/frequency/coverage;
+4. capturar metadata específica de copyright/licença;
+5. congelar fixture/parser contract;
+6. só depois source/schema/loader shadow.
+
+Fair value/reverse DCF continua bloqueado. Portfolio Analytics continua fora do escopo.
+
