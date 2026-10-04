@@ -1,0 +1,47 @@
+{
+  "_comentario": "Golden da parte PURA. Números conferidos por cálculo independente (2026-08-23): i_rf=(1.04)^(1/12)-1; FV anuidade 120 meses. Mudou = justificar no commit.",
+  "resolvido": {
+    "valor_alvo_brl": 200000.0,
+    "prazo_meses": 120,
+    "saldo_inicial_brl": 0.0,
+    "aporte_mensal_brl": 1000.0,
+    "fonte_aporte": "parametro",
+    "capacidade_mensal_brl": 14000.0,
+    "retorno_real_rf_aa": 0.04,
+    "retorno_real_rv_aa": 0.07,
+    "premissas": {
+      "PREMISSAS_FALLBACK": {
+        "retorno_real_rf": 0.04,
+        "retorno_real_rv": 0.07,
+        "inflacao_aa": 0.04
+      }
+    }
+  },
+  "esperado": {
+    "valor_alvo_brl": 200000.0,
+    "prazo_meses": 120,
+    "aporte_considerado_brl": 1000.0,
+    "fonte_aporte": "parametro",
+    "cenarios": {
+      "renda_fixa": {
+        "retorno_real_aa": 0.04,
+        "valor_projetado_brl": 146695.92,
+        "atingivel": false,
+        "aporte_necessario_brl": 1363.36
+      },
+      "renda_variavel": {
+        "retorno_real_aa": 0.07,
+        "valor_projetado_brl": 171051.73,
+        "atingivel": false,
+        "aporte_necessario_brl": 1169.24
+      }
+    },
+    "capacidade_mensal_brl": 14000.0,
+    "avisos": [],
+    "premissas_usadas": {
+      "retorno_real_rf_aa": 0.04,
+      "retorno_real_rv_aa": 0.07
+    },
+    "nota_metodo": "Dois cenários fixos, um de renda fixa e outro de renda variável, com retornos reais definidos em premissa aprovada. Não há distribuição de probabilidade aqui: a chance de atingir o objetivo vem da simulação de mercado."
+  }
+}

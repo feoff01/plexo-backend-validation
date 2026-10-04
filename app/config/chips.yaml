@@ -1,0 +1,44 @@
+# Chips de sugestão do Copiloto (padrão C6: atalhos que roteiam SEM chamada de LLM).
+# CONFIG, não código. Em F7 os chips ficam dinâmicos (v_open_questions, findings).
+chips:
+  - id: reserva
+    rotulo: "Minha reserva de emergência"
+    agente: assessor
+    texto: "Como está a minha reserva de emergência?"
+  - id: capacidade
+    rotulo: "Quanto posso aportar por mês?"
+    agente: assessor
+    texto: "Quanto eu consigo aportar por mês sem depender de mês bom?"
+  - id: custo_produto
+    rotulo: "Avaliar um produto indicado"
+    agente: assessor
+    texto: "Me indicaram um produto. Quero uma segunda opinião sobre o custo."
+  - id: conceito
+    rotulo: "Entender um conceito"
+    agente: educador
+    texto: "Me explica o que é come-cotas?"
+  - id: juros_compostos
+    rotulo: "Simular juros compostos"
+    agente: educador
+    texto: "Como funcionam os juros compostos? Simula um aporte mensal para mim."
+  - id: imposto_fundos
+    rotulo: "Imposto em fundos e renda fixa"
+    agente: educador
+    texto: "Como funciona o imposto de renda em fundos e na renda fixa?"
+  - id: retorno_ativo
+    rotulo: "Retorno e volatilidade de um ativo"
+    agente: analista
+    texto: "Como foi o retorno e a volatilidade da PETR4 nos últimos 12 meses?"
+  - id: correlacao_ativos
+    rotulo: "Dois ativos andam juntos?"
+    agente: analista
+    texto: "PETR4 e VALE3 andam juntas? E a PETR4 em relação ao CDI?"
+  - id: reacao_evento
+    rotulo: "Reação a um evento"
+    agente: analista
+    texto: "Como a PETR4 reagiu à última decisão de juros do Copom?"
+  - id: analise_aprofundada
+    rotulo: "Análise aprofundada de um ativo"
+    agente: analista
+    modo: research
+    texto: "Quero uma análise aprofundada da PETR4 em 2026: retorno e volatilidade, correlação com o CDI e reação ao Copom de 18/06/2026."

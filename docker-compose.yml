@@ -1,0 +1,67 @@
+# Plexo backend em produção (EC2 pequena): API + worker Arq + Redis + Caddy (80 em HTTP, 443 em HTTPS).
+# O banco é o Aiven (DATABASE_URL no .env). O frontend fica na Vercel e chega aqui por rewrite server-side (/api).
+# Subir: `docker compose up -d --build` (ou `bash deploy/deploy.sh` do Windows). Limites de memória para 2 GB.
+name: plexo
+
+services:
+  api:
+    build: .
+    image: plexo-backend:latest
+    env_file: .env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 512m
+    expose: ["8000"]
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+  worker:
+    image: plexo-backend:latest
+    command: ["python", "-m", "app.cli", "worker"]
+    env_file: .env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      api:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 384m
+    healthcheck:
+      disable: true
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "48mb", "--maxmemory-policy", "allkeys-lru"]
+    restart: unless-stopped
+    mem_limit: 64m
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    logging: { driver: json-file, options: { max-size: "5m", max-file: "2" } }
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    mem_limit: 96m
+    # A 443 é publicada no host mesmo antes de o Security Group liberá-la de fora: o Caddy já
+    # emite o certificado pelo desafio HTTP-01 na 80, e no dia em que a 443 abrir não é preciso
+    # mexer aqui. A 81 saiu — era HTTPS que ninguém alcançava.
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [api]
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+volumes:
+  caddy_data:
+  caddy_config:

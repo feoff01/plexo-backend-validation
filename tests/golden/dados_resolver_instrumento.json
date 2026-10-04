@@ -1,0 +1,59 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular) sobre série sintética. Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "termo": "PETR4",
+    "cutoff_date": "2024-01-06",
+    "candidatos": [
+      {
+        "instrument_id": "i-petr4",
+        "ticker": "PETR4",
+        "name": "Petrobras PN",
+        "kind": "acao",
+        "is_in_universe": true,
+        "prioridade": 0,
+        "ultimo_preco_em": "2024-01-05"
+      },
+      {
+        "instrument_id": "i-petr3",
+        "ticker": "PETR3",
+        "name": "Petrobras ON",
+        "kind": "acao",
+        "is_in_universe": true,
+        "prioridade": 2,
+        "ultimo_preco_em": "2024-01-05"
+      }
+    ]
+  },
+  "esperado": {
+    "encontrado": true,
+    "termo": "PETR4",
+    "instrument_id": "i-petr4",
+    "ticker": "PETR4",
+    "name": "Petrobras PN",
+    "kind": "acao",
+    "is_in_universe": true,
+    "ultimo_preco_em": "2024-01-05",
+    "ambiguos": [],
+    "nota": "Instrumento identificado; use o ticker nas demais ferramentas.",
+    "evidencia": {
+      "fonte": "b3",
+      "instrument_ids": [
+        "i-petr4"
+      ],
+      "tickers": [
+        "PETR4"
+      ],
+      "index_codes": [],
+      "cutoff_date": "2024-01-06",
+      "as_of": "2024-01-05",
+      "n_observacoes": 2,
+      "lacunas": [],
+      "metodo": "resolucao_de_entidade",
+      "nota_metodo": "Casamento exato por ticker/alias; senão único por nome. Sem inferência.",
+      "suficiente": true,
+      "avisos": [],
+      "metricas": {},
+      "ingestion_batch_ids": []
+    }
+  }
+}

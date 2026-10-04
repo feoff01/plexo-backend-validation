@@ -1,0 +1,93 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular) sobre série sintética. Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "indice": "cdi",
+    "unidade": "taxa_aa",
+    "de": "2024-01-01",
+    "ate": "2024-01-06",
+    "dias_uteis_ano": 252,
+    "max_pontos": 260,
+    "serie": {
+      "codigo": "cdi",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 10.65
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 10.65
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 10.65
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 10.65
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 10.65
+        }
+      ]
+    },
+    "cutoff_date": "2024-01-06",
+    "min_observacoes": 3,
+    "max_dias_defasagem": 5,
+    "fonte": "bacen_sgs",
+    "ingestion_batch_ids": [
+      "lote-1"
+    ]
+  },
+  "esperado": {
+    "indice": "cdi",
+    "unidade": "taxa_aa",
+    "pontos": [
+      {
+        "data": "2024-01-02",
+        "valor": 10.65
+      },
+      {
+        "data": "2024-01-03",
+        "valor": 10.65
+      },
+      {
+        "data": "2024-01-04",
+        "valor": 10.65
+      },
+      {
+        "data": "2024-01-05",
+        "valor": 10.65
+      },
+      {
+        "data": "2024-01-06",
+        "valor": 10.65
+      }
+    ],
+    "acumulado_periodo_pct": 0.20099911490751854,
+    "amostrado": false,
+    "evidencia": {
+      "fonte": "bacen_sgs",
+      "instrument_ids": [],
+      "tickers": [],
+      "index_codes": [
+        "cdi"
+      ],
+      "cutoff_date": "2024-01-06",
+      "as_of": "2024-01-06",
+      "n_observacoes": 5,
+      "lacunas": [],
+      "metodo": "composicao_taxa_aa_base_252",
+      "nota_metodo": "Acumulado por composição dos valores oficiais do período. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "avisos": [],
+      "metricas": {
+        "acumulado_periodo_pct": 0.20099911490751854
+      },
+      "ingestion_batch_ids": [
+        "lote-1"
+      ]
+    }
+  }
+}

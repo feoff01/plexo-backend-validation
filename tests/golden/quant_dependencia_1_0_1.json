@@ -1,0 +1,179 @@
+{
+  "esperado": {
+    "coeficiente": 1.0,
+    "defasagem_observacoes": -1,
+    "evidencia": {
+      "as_of": "2024-01-08",
+      "avisos": [
+        "adjusted_close_retrospective"
+      ],
+      "cutoff_date": "2024-01-08",
+      "fonte": "b3",
+      "index_codes": [],
+      "ingestion_batch_ids": [
+        "batch-aaa3",
+        "batch-bbb3"
+      ],
+      "instrument_ids": [
+        "iid-a",
+        "iid-b"
+      ],
+      "lacunas": [],
+      "metodo": "spearman_retornos_log_lag_-1",
+      "metricas": {
+        "coeficiente": 1.0,
+        "n_pares": 3.0
+      },
+      "n_observacoes": 3,
+      "nota_metodo": "Ativos usam preços ajustados retrospectivamente com corporate actions conhecidas hoje; não é vintage histórico. Spearman mede associação monotônica pelos ranks sobre retornos log alinhados pela interseção de datas; lag assinado de -1 observações (positivo=A antecede B; negativo=B antecede A). Dependência não implica causalidade. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "tickers": [
+        "AAA3",
+        "BBB3"
+      ]
+    },
+    "metodo": "spearman",
+    "n_pares": 3,
+    "par": "AAA3 × BBB3",
+    "price_basis_ativos": "adjusted_close",
+    "temporal_semantics_ativos": "retrospective_as_known_now",
+    "tipo_b": "ativo"
+  },
+  "resolvido": {
+    "a_in_universe": true,
+    "b_found": true,
+    "b_in_universe": true,
+    "codigo_b": "BBB3",
+    "cutoff_date": "2024-01-08",
+    "defasagem_observacoes": -1,
+    "dias_uteis_ano": 252,
+    "index_code_b": null,
+    "instrument_a_id": "iid-a",
+    "instrument_b_id": "iid-b",
+    "max_dias_defasagem": 5,
+    "metodo": "spearman",
+    "metodo_retorno": "log",
+    "min_observacoes": 2,
+    "price_basis": "adjusted_close",
+    "serie_a": {
+      "code": "AAA3",
+      "currency": "BRL",
+      "index_code": null,
+      "instrument_id": "iid-a",
+      "points": [
+        {
+          "data": "2024-01-02",
+          "valor": 100.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 103.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 101.0
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 106.0
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 104.0
+        }
+      ],
+      "provenance": {
+        "calendar_ingestion_batch_ids": [
+          "cal"
+        ],
+        "cutoff_date": "2024-01-08",
+        "dataset": "market.v_precos_ajustados",
+        "ingestion_batch_ids": [
+          "batch-aaa3"
+        ],
+        "price_basis": "adjusted_close",
+        "source_codes": [
+          "b3"
+        ],
+        "temporal_semantics": "retrospective_as_known_now",
+        "warnings": [
+          "adjusted_close_retrospective"
+        ]
+      },
+      "quality": {
+        "calendar_fallback_used": false,
+        "calendar_source": "market.trading_calendar",
+        "coverage_ratio": 1.0,
+        "first_date": "2024-01-02",
+        "last_date": "2024-01-08",
+        "missing_dates": [],
+        "observations": 5,
+        "stale_days": 0,
+        "unexpected_dates": []
+      },
+      "unit": null
+    },
+    "serie_b": {
+      "code": "BBB3",
+      "currency": "BRL",
+      "index_code": null,
+      "instrument_id": "iid-b",
+      "points": [
+        {
+          "data": "2024-01-02",
+          "valor": 200.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 198.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 205.0
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 203.0
+        },
+        {
+          "data": "2024-01-08",
+          "valor": 210.0
+        }
+      ],
+      "provenance": {
+        "calendar_ingestion_batch_ids": [
+          "cal"
+        ],
+        "cutoff_date": "2024-01-08",
+        "dataset": "market.v_precos_ajustados",
+        "ingestion_batch_ids": [
+          "batch-bbb3"
+        ],
+        "price_basis": "adjusted_close",
+        "source_codes": [
+          "b3"
+        ],
+        "temporal_semantics": "retrospective_as_known_now",
+        "warnings": [
+          "adjusted_close_retrospective"
+        ]
+      },
+      "quality": {
+        "calendar_fallback_used": false,
+        "calendar_source": "market.trading_calendar",
+        "coverage_ratio": 1.0,
+        "first_date": "2024-01-02",
+        "last_date": "2024-01-08",
+        "missing_dates": [],
+        "observations": 5,
+        "stale_days": 0,
+        "unexpected_dates": []
+      },
+      "unit": null
+    },
+    "temporal_semantics": "retrospective_as_known_now",
+    "ticker_a": "AAA3",
+    "tipo_b": "ativo",
+    "unidade_b": "pontos"
+  }
+}

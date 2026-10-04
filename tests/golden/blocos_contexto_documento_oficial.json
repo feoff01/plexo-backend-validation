@@ -1,0 +1,30 @@
+[
+  {
+    "tipo": "citacao",
+    "id": "GOLDEN:1",
+    "titulo": "O que o emissor publicou",
+    "subtitulo": "Selic",
+    "dados": {
+      "itens": [
+        {
+          "titulo": "280ª reunião - Copom reduz a taxa Selic para 14,00% a.a.",
+          "publisher": "Banco Central do Brasil",
+          "publicado_em": "2026-08-05",
+          "url": "https://www.bcb.gov.br/publicacoes/comunicados/280",
+          "trecho": "…O Copom decidiu reduzir a taxa Selic para 14,00% a.a., em linha com o cenário de convergência da inflação…"
+        }
+      ]
+    },
+    "proveniencia": {
+      "fonte": "bacen_copom",
+      "as_of": "2026-08-05",
+      "cutoff_date": null,
+      "n": 1,
+      "metodo": "trecho literal de documento aprovado, recortado em torno do termo procurado",
+      "premissas": {},
+      "avisos": [],
+      "lacunas": 0
+    },
+    "nota": "Trecho literal do documento oficial citado, na data indicada. É o que o emissor publicou — não é análise da Plexo nem indicação de investimento."
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output educacao_exemplo_taxa_administracao.json pela tool educacao.exemplo_didatico. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "tabela",
+      "id": "exec-1:1",
+      "titulo": "Taxa de administração",
+      "subtitulo": null,
+      "dados": {
+        "colunas": [
+          {
+            "chave": "rotulo",
+            "rotulo": "Item"
+          },
+          {
+            "chave": "valor_brl",
+            "rotulo": "Valor",
+            "formato": "brl"
+          },
+          {
+            "chave": "detalhe",
+            "rotulo": "Premissa"
+          }
+        ],
+        "linhas": [
+          {
+            "rotulo": "valor aplicado",
+            "valor_brl": 10000.0,
+            "detalhe": ""
+          },
+          {
+            "rotulo": "montante em 10 anos sem taxa",
+            "valor_brl": 25937.42,
+            "detalhe": "10% a.a. (didático)"
+          },
+          {
+            "rotulo": "montante em 10 anos com taxa de 2.0% a.a.",
+            "valor_brl": 21589.25,
+            "detalhe": "rendimento líquido = bruto − taxa"
+          },
+          {
+            "rotulo": "diferença atribuível à taxa",
+            "valor_brl": 4348.17,
+            "detalhe": ""
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "verbete aprovado · taxa-de-administracao",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "",
+        "premissas": {
+          "EDUCACAO_EXEMPLOS": {
+            "taxa_administracao": {
+              "taxa_aa_pct": 2.0,
+              "rendimento_bruto_aa_pct": 10,
+              "anos": 10
+            },
+            "fonte_valor": "policy"
+          }
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Exemplo DIDÁTICO com a taxa informada; não é projeção de rentabilidade de nenhum produto real."
+    }
+  ]
+}

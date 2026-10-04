@@ -1,0 +1,49 @@
+[
+  {
+    "tipo": "barras",
+    "id": "GOLDEN:1",
+    "titulo": "O que o mercado projeta · Selic",
+    "subtitulo": "coleta de 2026-08-21 · janela: últimos 30 dias",
+    "dados": {
+      "itens": [
+        {
+          "rotulo": "2026",
+          "valor": 13.75,
+          "detalhe": "145 respondentes"
+        },
+        {
+          "rotulo": "2027",
+          "valor": 12.0,
+          "detalhe": "142 respondentes"
+        },
+        {
+          "rotulo": "2028",
+          "valor": 10.5,
+          "detalhe": "116 respondentes"
+        },
+        {
+          "rotulo": "2029",
+          "valor": 10.0,
+          "detalhe": "110 respondentes"
+        },
+        {
+          "rotulo": "2030",
+          "valor": 10.0,
+          "detalhe": "108 respondentes"
+        }
+      ],
+      "formato": "pct"
+    },
+    "proveniencia": {
+      "fonte": "bacen_focus",
+      "as_of": "2026-08-21",
+      "cutoff_date": "2026-08-27",
+      "n": 5,
+      "metodo": "mediana das projeções informadas ao Banco Central na coleta mais recente",
+      "premissas": {},
+      "avisos": [],
+      "lacunas": 0
+    },
+    "nota": "Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+  }
+]

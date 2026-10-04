@@ -1,0 +1,109 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular) sobre série sintética. Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "ticker": "PETR4",
+    "instrument_id": "i-petr4",
+    "de": "2024-01-01",
+    "ate": "2024-01-06",
+    "serie": {
+      "codigo": "PETR4",
+      "pontos": [
+        {
+          "data": "2024-01-02",
+          "valor": 100.0
+        },
+        {
+          "data": "2024-01-03",
+          "valor": 102.0
+        },
+        {
+          "data": "2024-01-04",
+          "valor": 101.0
+        },
+        {
+          "data": "2024-01-05",
+          "valor": 104.0
+        },
+        {
+          "data": "2024-01-06",
+          "valor": 103.0
+        }
+      ]
+    },
+    "calendario": [
+      "2024-01-02",
+      "2024-01-03",
+      "2024-01-04",
+      "2024-01-05",
+      "2024-01-06",
+      "2024-01-07"
+    ],
+    "max_pontos": 260,
+    "cutoff_date": "2024-01-06",
+    "min_observacoes": 3,
+    "max_dias_defasagem": 5,
+    "fonte": "b3",
+    "ingestion_batch_ids": [
+      "lote-1"
+    ]
+  },
+  "esperado": {
+    "ticker": "PETR4",
+    "pontos": [
+      {
+        "data": "2024-01-02",
+        "valor": 100.0
+      },
+      {
+        "data": "2024-01-03",
+        "valor": 102.0
+      },
+      {
+        "data": "2024-01-04",
+        "valor": 101.0
+      },
+      {
+        "data": "2024-01-05",
+        "valor": 104.0
+      },
+      {
+        "data": "2024-01-06",
+        "valor": 103.0
+      }
+    ],
+    "primeiro": {
+      "data": "2024-01-02",
+      "valor": 100.0
+    },
+    "ultimo": {
+      "data": "2024-01-06",
+      "valor": 103.0
+    },
+    "amostrado": false,
+    "evidencia": {
+      "fonte": "b3",
+      "instrument_ids": [
+        "i-petr4"
+      ],
+      "tickers": [
+        "PETR4"
+      ],
+      "index_codes": [],
+      "cutoff_date": "2024-01-06",
+      "as_of": "2024-01-06",
+      "n_observacoes": 5,
+      "lacunas": [],
+      "metodo": "fechamento_oficial_d1",
+      "nota_metodo": "Preço de fechamento do pregão (lote padrão), D-1. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "avisos": [],
+      "metricas": {
+        "primeiro_fechamento": 100.0,
+        "ultimo_fechamento": 103.0
+      },
+      "ingestion_batch_ids": [
+        "lote-1"
+      ]
+    }
+  }
+}

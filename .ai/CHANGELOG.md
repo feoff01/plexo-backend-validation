@@ -1,0 +1,803 @@
+# Plexo — Changelog de continuidade
+
+## 2026-09-19 — FQ0 do Analista de Mercado
+
+- Criada a memória persistente `.ai/` conforme protocolo de continuidade do projeto.
+- Consolidado o escopo exclusivo de mercado para esta frente.
+- Reconciliado o plano do Analista com o backend real no commit `51d87b4`.
+- Confirmado que tools Quant atuais ainda usam fechamento bruto.
+- Confirmado que F22 já possui views de ajuste e estruturas de acervo, porém a carga histórica ampla está bloqueada por infraestrutura.
+- Identificado risco de auditoria/cache: hash de versão de tool não cobre helpers/engines importados.
+- Definida como primeira alteração técnica a correção desse fingerprint antes da extração dos Quant Engines.
+
+## 2026-09-19 — FQ0.5: fingerprint composto e exposição de tools
+
+- `ToolSpec` passou a distinguir tool executável de tool exposta ao LLM por `exposed_to_llm`.
+- turno e Research planner deixam de oferecer tools ocultas; compiler recusa tool oculta em planos novos.
+- runtime/registry continuam capazes de resolver a tool, permitindo janela de migração legacy.
+- `source_sha256` ganhou suporte a fingerprint composto por arquivos de implementação declarados (`source_dependencies`).
+- o módulo de `preparar` entra automaticamente no fingerprint quando estiver em arquivo diferente do `calcular`.
+- uma tool de arquivo único preserva exatamente o SHA legado; compatibilidade CRLF permanece somente para esse caso.
+- foram adicionados testes para fingerprint composto, exposição no catálogo e rejeição pelo compiler.
+- validação disponível neste ambiente: `py_compile`, `git diff --check`, smokes puros e 8 testes pytest sem banco verdes. A suíte de integração com PostgreSQL permanece pendente por falta da configuração de banco deste ambiente; nenhum `.env` do ZIP foi lido.
+
+## 2026-09-19 — FQ1: Quant Data Foundation
+
+- criado `app/market/series.py` como camada canônica de séries;
+- introduzidos `SeriesReader`, `PostgresSeriesReader` e `MarketSeriesLoader`;
+- preços e índices/taxas passam a compartilhar cutoff, quality e provenance;
+- `raw_close` e `adjusted_close` ficaram separados da semântica temporal;
+- adjusted close estritamente point-in-time é recusado enquanto corporate actions não possuírem data de disponibilidade;
+- calendário B3 oficial só é aceito com cobertura diária completa da janela; caso contrário o fallback derivado de preços é marcado explicitamente;
+- adapters legacy de `_comum.py` foram movidos para o novo loader sem alterar os outputs das tools atuais;
+- seis tools de mercado tiveram patch bump e fingerprint composto incluindo `_comum.py` + `app/market/series.py`;
+- adicionada suíte FQ1 com cutoff, calendário, provenance, adjusted retrospective, fail-closed PIT, duplicatas, preço inválido, índices negativos legítimos e alinhamento;
+- validação local disponível: 42 testes sem banco verdes + `py_compile`/`git diff --check`; integração PostgreSQL está escrita e pendente de execução no ambiente oficial.
+
+## 2026-09-21 — FQ1: bateria ampliada e correção da semântica temporal
+
+- executada a suíte local inteira que não depende do fixture PostgreSQL: 243 testes passaram, sem falhas;
+- executados 41 testes críticos FQ1/F22/F5 sem banco;
+- adicionada bateria de property/fuzz com dezenas de milhares de combinações para cutoff, alinhamento, quality e valores inválidos;
+- validado grafo de 61 migrations Alembic e contratos estáticos da migration 61;
+- validado registry de 24 tools e fingerprint composto;
+- identificado que `strict_point_in_time` superestimava a garantia disponível: preços/índices têm data de observação, mas não vintage/availability auditável;
+- semântica renomeada para `observation_date_cutoff`; adjusted close continua somente retrospectivo até o schema de corporate actions suportar availability;
+- integração PostgreSQL continua como gate obrigatório antes de merge/deploy.
+
+## 2026-09-21 — Gate PostgreSQL isolado para FQ1
+
+- criado `.github/workflows/verify.yml` para PR/manual, sem deploy e sem segredos de produção;
+- workflow usa PostgreSQL 18 local, migrations do zero, `preparar_ambiente`, validador, invariantes SQL nos dois papéis, gate FQ1/F5/F22, suíte pytest completa e drift local de prompts/tools;
+- adicionado `tests/test_fq1_ci_verify.py` para proteger a configuração do workflow;
+- após a mudança, suíte local sem banco: 245 passed, 16 skipped, 355 deselected, nenhuma falha;
+- integração PostgreSQL real permanece o único gate obrigatório não executado neste runtime.
+
+
+## 2026-09-21 — FQ2.1: Quant Core de retornos e estatística
+
+- criado `app/market/analytics/` como camada matemática independente de I/O e LLM;
+- adicionados modelos imutáveis `ReturnMethod`, `IndexUnit`, `ReturnObservation` e `DistributionSummary`;
+- implementados retornos simples/log, acumulado, anualização geométrica, composição e conversão de índices/taxas;
+- implementados validação de amostra finita, desvio-padrão amostral e resumo descritivo;
+- definidos edge cases fail-closed para preços/taxas/datas inválidos e `None` para estatística sem amostra suficiente;
+- `quant.retorno_volatilidade` passou a consumir o novo core para retorno e volatilidade, com semver `1.0.2`;
+- o fingerprint da tool inclui os arquivos do Quant Core que alteram o resultado;
+- golden legacy de retorno/volatilidade permaneceu idêntico;
+- adicionados 18 testes FQ2.1, incluindo 500 caminhos sintéticos/property checks;
+- suíte local sem PostgreSQL após a mudança: 263 passed, 16 skipped, 355 DB-deselected, 0 failed.
+
+## 2026-09-21 — FQ2.2: Risk Engine
+
+- criado `app/market/analytics/risk.py` como camada matemática pura;
+- adicionados modelos imutáveis para rolling metric, drawdown e episódio de drawdown;
+- implementados volatilidade anualizada, rolling volatility, downside deviation, série/max drawdown, duração e recovery;
+- duração de drawdown foi definida em intervalos observados, sem inventar calendário no core;
+- `quant.retorno_volatilidade` passou a usar Risk Engine para volatilidade e maximum drawdown, com semver `1.0.3`;
+- fingerprint da tool passou a incluir `risk.py`;
+- golden legacy permaneceu idêntico;
+- 17 testes diretos de risco passaram, incluindo 500 caminhos de invariantes, 750 comparações de drawdown legacy e 750 comparações de volatilidade legacy;
+- bateria local ampla sem PostgreSQL: 280 passed, 16 skipped, 355 DB-deselected, 0 failed.
+
+
+## 2026-09-21 — FQ2.3: Dependence Engine
+
+- criado `app/market/analytics/dependence.py` como camada matemática pura;
+- adicionados modelos imutáveis para pares de retorno, estimativa de dependência, rolling e condicionais;
+- implementados Pearson, Spearman com ranks médios, alinhamento por interseção, lag assinado, rolling dependence e up/down-market;
+- lag preserva `x_date`, `y_date` e `as_of_date`, evitando esconder a temporalidade do pareamento;
+- `quant.correlacao` passou a usar Returns + Dependence Core, com semver `1.0.2` e fingerprint incluindo os engines relevantes;
+- schema/output/golden legacy de `quant.correlacao` permaneceram idênticos;
+- 14 testes diretos passaram, além de 750 comparações com Pearson+lag legacy e 250 checks de simetria de lag;
+- bateria local ampla sem PostgreSQL: 294 passed, 16 skipped, 355 DB-deselected, 0 failed;
+- FQ2 base foi encerrado com returns/statistics/risk/dependence; event study permanece na FQ4.
+
+## 2026-09-21 — FQ3.1 `quant.risco_retorno` shadow
+
+- corrigida a descrição/schema de `dados.serie_precos`: cutoff é pela data da observação e não
+  promessa de vintage point-in-time; semver `1.0.1 -> 1.0.2`;
+- criada `quant.risco_retorno` `1.0.0` em shadow mode (`exposed_to_llm=False`);
+- default da tool canônica é `adjusted_close -> retrospective_as_known_now`; `raw_close` deriva
+  `observation_date_cutoff`;
+- output compacto inclui retorno acumulado/anualizado, volatilidade, maximum drawdown e episódio de
+  drawdown, sem série ponto a ponto;
+- provenance/warnings de adjusted retrospectivo e fallback de calendário são preservados;
+- blocos agora conhecem frases para `adjusted_close_retrospective` e
+  `calendar_fallback_from_prices` em preparação para o cutover;
+- 12 testes FQ3.1 verdes; bateria local sem PostgreSQL: 306 passed, 16 skipped, 355 deselected.
+
+
+## 2026-09-21 — FQ3.2 `quant.dependencia` + FQ3.3 cutover canônico
+
+- criada `quant.dependencia` sobre MarketSeriesLoader + Returns/Dependence Core;
+- contrato suporta ativo×ativo ou ativo×índice, Pearson/Spearman e lag assinado em observações comuns;
+- output permanece compacto e não envia séries/pares para a LLM;
+- adicionado `indice_desconhecido` e loader resolvido de índice em `_comum.py`;
+- regra de `price_basis -> temporal_semantics` centralizada em `app/market/series.py`;
+- canônicas expostas: `quant.risco_retorno` `1.0.1` e `quant.dependencia` `1.0.1`;
+- legacy ocultadas: `quant.retorno_volatilidade` `1.0.4` e `quant.correlacao` `1.0.3`;
+- planner, evals, Research e blocos migrados para códigos canônicos em novas execuções; replay legacy preservado;
+- adicionados testes de cutover atômico, registry/semver, planner sem legacy e blocos canônicos/legacy;
+- regressão local sem PostgreSQL: 324 passed, 16 skipped, 355 DB-deselected, zero falhas;
+- ativação em produção permanece pendente de PostgreSQL CI + tool sync + sync/aprovação do planner.
+
+## 2026-09-21 — FQ4.1 `quant.analise_condicional` shadow
+
+- criado `app/market/analytics/conditional.py`;
+- adicionados modelos internos de mudança condicionante, pares de intervalos, resumo de retorno e análise condicional;
+- condicionantes de ativo/índice em pontos usam retorno simples; taxas/percentuais usam mudança do nível;
+- retorno do ativo é medido no mesmo intervalo da condicionante com as-of backward nos endpoints, sem look-ahead;
+- baseline contém todos os intervalos válidos; amostra condicional seleciona alta/queda e mantém neutros separados;
+- criada `quant.analise_condicional` 1.0.0 em shadow mode;
+- output compacto inclui resumos, diferença de médias, magnitude da condição e Evidencia, sem séries/pares;
+- amostra curta mantém métricas com warning; ausência de eventos ganhou `sem_eventos_condicao`;
+- adicionado mapeador de bloco específico e frase cliente para o novo warning;
+- 19 testes FQ4.1 verdes, incluindo 400 cenários property e edge cases de as-of; regressão ampla sem DB: 343 passed, 16 skipped, 355 deselected, 0 failed;
+- registry após a etapa: 27 tools registradas; catálogo Analista continua com 8 visíveis porque a nova tool está shadow.
+
+
+## 2026-09-21 — FQ4.2 foundation: structured statistical estimates
+
+- criado `app/market/analytics/estimates.py` com `ConfidenceInterval` e `MetricEstimate`;
+- criado `app/tools/analista/evidencia_estatistica.py` sem alterar `Evidencia` base;
+- pipeline de `analysis.evidence_findings` passou a transportar `estimativas` somente quando presentes;
+- removida linguagem interna obsoleta de "point-in-time" em comentários/docstrings tocados de `analysis.py`, substituída por as-of/cutoff de observação;
+- modelos novos foram isolados de arquivos já fingerprintados para evitar bumps falsos de semver/source hash;
+- comparação FQ4.1 vs FQ4.2: 27 tool specs idênticas em semver/exposição/source SHA;
+- 13 testes específicos do novo contrato passaram; FQ4.1 + foundation = 32 testes;
+- regressão ampla sem DB: 356 passed, 16 skipped, 355 DB-deselected, 0 failed;
+- nenhuma regressão estatística ou nova tool foi criada nesta etapa.
+
+
+## 2026-09-21 — FQ4.2: Regression/Sensitivity Engine + `quant.sensibilidade` shadow
+
+- criado `analytics/regression.py` com OLS univariada + HAC/Newey-West Bartlett/HC1 correction;
+- criado `analytics/sensitivity.py` para unidades, escala e diagnóstico de frequência;
+- implementada regra automática de lags e CI 95% sem nova dependência numérica;
+- corrigida estabilidade numérica via resíduos/funções de influência centrados após teste com offset `1e12`;
+- criada `quant.sensibilidade` 1.0.0 em shadow mode, usando `EvidenciaEstatistica`;
+- taxa/percentual usa mudança de nível; ativo/índice em pontos usa retorno; resposta usa retorno no mesmo intervalo;
+- output não inclui pares, preços ou resíduos; bloco determinístico mostra beta, CI, R², n e lags HAC;
+- sem imputação, winsorização ou trimming; linguagem explicitamente associacional/não causal;
+- novos warnings client-facing para driver constante, falta de graus de liberdade e amostra insuficiente de regressão;
+- 27 testes novos específicos; regressão ampla sem PostgreSQL: 383 passed, 16 skipped, 355 deselected, 0 failed;
+- registry cresceu de 27 para 28 tools; nenhuma das 27 anteriores mudou semver/exposição/source SHA.
+
+
+## 2026-09-21 — FQ4.3: Regimes Engine + `quant.regimes` shadow
+
+- criado `app/market/analytics/regimes.py`;
+- regimes v1 são regras auditáveis de `level`/`direction`, sem clustering/HMM/threshold otimizado;
+- `level` usa nível do driver no início do intervalo; default = mediana retrospectiva da amostra válida;
+- `direction` usa retorno para ativos/índices em pontos e mudança de nível para taxa/percentual;
+- alinhamento da resposta usa as-of backward + freshness gate, sem look-ahead;
+- nenhuma métrica de drawdown é calculada em amostras de regime descontínuas;
+- criada `quant.regimes` 1.0.0 shadow, com output compacto e bloco determinístico;
+- adicionados warnings `regime_sem_duas_amostras` e `regime_amostra_insuficiente`;
+- 21 testes específicos/property passaram, cobrindo 1.100 cenários sintéticos;
+- regressão ampla sem DB: 404 passed, 16 skipped, 355 deselected, 0 failed;
+- registry cresceu 28 -> 29; 28 tools anteriores preservaram semver/exposição/source SHA.
+
+## 2026-09-25 — FQ4.4: Event Study v2 shadow + replay 1.0.1
+
+- criado `app/market/analytics/event_study.py`;
+- criado `quant.event_study_v2` 1.0.0 shadow sobre MarketSeriesLoader/Returns/Regression/Estimates;
+- adicionado alinhamento seguro `synchronized_returns_from_prices`: níveis são intersectados antes dos retornos para garantir endpoints idênticos;
+- market model usa OLS point estimate do Regression Core; market adjusted mantém alpha=0/beta=1;
+- inferência opcional `classic_iid_normal` produz CI do CAR sem p-value/significance;
+- criado replay autocontido `event_study_legacy_1_0_1.py` e validado contra golden histórico;
+- `quant.event_study` visível recebeu somente correção textual de semântica temporal e bump 1.0.1 -> 1.0.2, sem mudança numérica;
+- novo mapper de blocos v2 e warnings client-facing;
+- 22 testes específicos verdes, incluindo 500 cenários sintéticos/property;
+- regressão ampla sem PostgreSQL: 426 passed, 16 skipped, 355 DB-deselected, 0 failed;
+- registry audit: 29 -> 30 tools; única tool anterior alterada = `quant.event_study`; única nova = `quant.event_study_v2`.
+
+## 2026-09-25 — Gate de integração/promoção FQ4
+
+- criado `tests/test_fq4_integration_db.py` com E2E das quatro shadows pelo executor real;
+- teste cobre sync, policies, COTAHIST, MarketSeriesLoader/views, `tool_executions` e cache;
+- `.github/workflows/verify.yml` passou a executar o gate FQ4 junto de FQ1/F5/F22 em PostgreSQL 18;
+- `tests/test_fq1_ci_verify.py` protege a presença do novo gate;
+- planner preparado condicionalmente para `analise_condicional`, `sensibilidade` e `regimes`;
+- criado `tests/test_fq4_promotion_readiness.py`, garantindo que preparação do planner não expõe shadows;
+- regressão local sem DB: 429 passed, 16 skipped, 357 DB-deselected, 0 failed;
+- registry: 30/30 códigos únicos, quatro FQ4 shadows ainda ocultas;
+- gate PostgreSQL continua pendente porque este runtime não possui servidor/container e não tem DNS externo.
+
+
+## 2026-09-30 — FQ4 real PostgreSQL integration gate
+
+- executado CI isolado contra PostgreSQL 18 real;
+- gate FQ1/F5/F22/FQ4 E2E verde;
+- suíte completa verde: 806 passed, 52 skipped, 19 warnings;
+- `prompts check` verde;
+- `tools sync --check` verde;
+- corrigidas fixtures FQ4 para API async real e asserts para os schemas públicos reais de condicional/sensibilidade/regimes;
+- testes F5/F6 atualizados para exigir propagação auditável de warnings metodológicos;
+- nenhuma tool FQ4 foi promovida nesta etapa.
+
+## 2026-09-30 — Promoção controlada do FQ4
+
+- após gate PostgreSQL 18 verde, promovidas `quant.analise_condicional` 1.0.1, `quant.sensibilidade` 1.0.1 e `quant.regimes` 1.0.1;
+- `quant.event_study` passou para a implementação Quant Core/MarketSeriesLoader em 2.0.0;
+- `quant.event_study_v2` deixou de ser um código registrado;
+- legacy event study continua disponível apenas para golden/replay;
+- testes de catálogo, blocos e E2E PostgreSQL foram atualizados para o estado promovido;
+- promoção aplicada somente em `feoff01/plexo-backend-validation`, branch `bootstrap/plexo-project`;
+- CI pós-promoção é gate obrigatório antes de considerar o cutover encerrado.
+
+## 2026-09-30 — Fechamento do FQ4 pós-promoção
+
+- CI detectou e corrigiu contratos F5 ainda presos ao catálogo/shape legacy;
+- golden de blocos de `quant.event_study` foi atualizado explicitamente para a representação canônica v2;
+- números históricos do golden foram preservados;
+- run #39 (`36760273363`) ficou totalmente verde;
+- suíte: **806 passed, 52 skipped, 19 warnings**;
+- FQ1/F5/F22/FQ4 E2E, prompts check e tools sync --check verdes;
+- documentação de fechamento atualizada;
+- run #40 (`36760679156`) também verde no HEAD `c11cb160743c00d18a06b2fa5689fdb56cd64dff`;
+- FQ4 encerrado no repositório dedicado de validação.
+
+
+## 2026-09-30 — FQ5.1–FQ5.4 promovido e encerrado
+- migration 0062 para unidade/currency e fundamentals multi-classe;
+- novas foundations: fundamentals PIT, raw price snapshots, FX factors;
+- publicadas `dados.fundamentos_empresa`, `quant.valor_mercado`, `quant.cenario_sensibilidade`, `quant.dependencia_macro` 1.0.0;
+- market cap exige cobertura completa de classes; múltiplos falham fechado com inputs inadequados;
+- cenário usa somente `slope × choque`, sem intercepto, previsão ou fair value;
+- planner decompõe empresa/juros/câmbio e não inventa choque;
+- blocos determinísticos compactos adicionados;
+- shadow run #47 verde: 74 E2E / 810 passed full suite;
+- run #48 bloqueou corretamente catálogo F5 desatualizado após promoção;
+- run #49 pós-correção totalmente verde: **74 E2E / 816 passed / 52 skipped / 19 warnings / prompts/tools sync verdes**;
+- FQ4 permaneceu intacto; nenhuma migration histórica foi editada.
+
+
+## 2026-09-30 — Auditoria arquitetural / capability inventory pós-FQ5
+
+### Documentação
+- novo `.ai/ANALISTA_CAPABILITY_AUDIT_2026-09-30.md` com inventário de tools, Quant Core, loaders, schema e gaps reais;
+- novo checkpoint `.ai/checkpoints/2026-09-30_ARCHITECTURE_CAPABILITY_AUDIT.md`;
+- regra `reuse-before-build` formalizada em `DECISIONS.md` e `TASKS.md`.
+
+### Achados
+- `quant.dependencia_macro` classificada como sobreposição real de interface/orquestração com `quant.dependencia`; adapter FX é a adição de dados legítima;
+- legacy de correlação/risco/Event Study permanece intencional para replay;
+- `quant.cenario_sensibilidade` permanece composição legítima por reutilizar a sensibilidade existente e evitar cálculo numérico pelo LLM;
+- capacidades Quant latentes e schemas existentes sem consumer foram catalogados para evitar reinvenção.
+
+### Código
+- nenhuma alteração de código, migration, semver, exposição ou source fingerprint nesta rodada.
+
+
+## 2026-09-30 — Protocolo de memória persistente
+
+- adicionado `.ai/WORKING_PROTOCOL.md` como protocolo canônico de continuidade;
+- formalizado que decisões, estado, tarefas, changelog e checkpoints devem ser persistidos em `.ai/` e não depender de memória de chat;
+- registrada sequência recomendada pós-auditoria como proposta: consolidação de fatores/dependência -> cutover versionado -> retomada de Fundamentals + Valuation;
+- nenhuma alteração de código, migration, tool, semver, exposição ou fingerprint.
+
+
+## 2026-09-30 — Design de consolidação de fatores/dependência
+
+- criado `.ai/FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`;
+- criado checkpoint `.ai/checkpoints/2026-09-30_FACTOR_DEPENDENCY_CONSOLIDATION_DESIGN.md`;
+- proposta `FactorRef`/`ResolvedFactor` para resolver ativo/índice/FX sem tool por fonte;
+- recomendado cutover `quant.dependencia` 2.0.0 e macro como compatibilidade oculta;
+- definido plano de semver/fingerprint/replay, equivalência numérica e gates;
+- nenhuma alteração de código, SQL, migration, prompt, tool ou matemática nesta etapa.
+
+
+## 2026-09-30 — Cutover de dependência / factor resolver — GREEN
+
+- criado `factor_resolution.py` com `FactorRef`/`ResolvedFactor` para ativo, índice/taxa e FX;
+- `quant.dependencia` promovida de 1.0.1 para **2.0.0** com `serie_b={tipo,codigo}`;
+- `quant.dependencia_macro` promovida de 1.0.0 para **1.0.1** e ocultada do LLM;
+- versões históricas congeladas em módulos legacy + goldens;
+- planner passa a usar dependência canônica para ativos, índices/taxas e USD/BRL;
+- nenhum engine Quant Core FQ3/FQ4, migration ou schema foi alterado;
+- registry permaneceu 33 -> 33; apenas as duas interfaces previstas mudaram;
+- commit `60bad205666e5cc5c5d0e2b2b8e643f41e2ac322`;
+- run #54 `36793672760`: 87 E2E; 831 passed, 52 skipped, 19 warnings, 0 failed; PostgreSQL 18, invariantes, validador 0/0, prompts e tools sync verdes.
+
+## 2026-09-30 — Design FQ5.5 tendências fundamentais PIT
+
+- criado `.ai/FQ5_5_FUNDAMENTAL_TRENDS_DESIGN.md`;
+- reuse-before-build confirmou que `market.fundamentals` e o reader atual já fornecem a base necessária;
+- detectado e evitado drift de fingerprint: histórico será módulo novo em vez de alteração de `app/market/fundamentals.py`;
+- v1 limitada a DFP anual; ITR/trimestre explicitamente fora para evitar interpretação errada de fluxos acumulados;
+- nenhuma alteração de código/schema/tool nesta etapa de design.
+
+## 2026-09-30 — FQ5.5 shadow ready
+
+- criado `app/market/fundamental_history.py` sem tocar no foundation fingerprintado;
+- criado `app/market/analytics/fundamental_trends.py`;
+- criada `quant.tendencias_fundamentais` 1.0.0 shadow;
+- adicionados testes de vintage/restatement, YoY, margens, base não positiva, unidade incompatível e E2E PostgreSQL;
+- workflow CI atualizado para incluir FQ5.5 shadow no gate explícito;
+- registry audit: 33 -> 34, somente nova tool adicionada; 33 fingerprints anteriores intactos;
+- 29 testes puros relevantes passaram localmente;
+- promoção ainda não realizada.
+
+## 2026-09-30 — FQ5.5 shadow GREEN e promoção preparada
+
+- shadow run #56 `36795497161` success: 93 gate / 837 passed / 52 skipped / 19 warnings / 0 failed;
+- `quant.tendencias_fundamentais` preparada para promoção 1.0.1 pública;
+- planner passa a diferenciar fundamentos atuais (`dados.fundamentos_empresa`) de evolução anual (`quant.tendencias_fundamentais`);
+- mapper de blocos adiciona resumo de métricas e série de margens sem criar números novos;
+- warnings de histórico curto, base não positiva, receita não positiva e métrica por classe ganharam tradução client-facing;
+- catálogo F5/promotion readiness atualizados;
+- nenhuma das 33 tools anteriores alterou source fingerprint.
+
+
+## 2026-09-30 — FQ5.5 tendências fundamentais PIT — GREEN
+
+- `quant.tendencias_fundamentais` promovida para **1.0.1 pública**;
+- planner diferencia snapshot atual de fundamentos versus evolução histórica;
+- blocos compactos adicionados sem recalcular métricas no LLM;
+- DFP anual PIT preserva vintages/restatements por cutoff;
+- ITR, CAGR, forecast e fair value permanecem explicitamente fora da v1;
+- as 33 tools existentes antes da tranche mantiveram semver/exposição/source fingerprint;
+- commit de promoção `a8eb2bfeee7c77361fbefffe4d689b4328c70122`;
+- run #57 `36796184892`: 93 gate; **838 passed, 52 skipped, 19 warnings, 0 failed**; PostgreSQL 18, invariantes, validador, prompts e tools sync verdes;
+- criado checkpoint `.ai/checkpoints/2026-09-30_FQ5_5_PROMOTION_GREEN.md`.
+
+
+## 2026-09-30 — FQ5.6 peers/setor — design e data readiness audit
+
+- auditado `market.sector_classification`: schema existe, mas não há coletor/projetor que o preencha no repo;
+- criada `.ai/FQ5_6_PEERS_SECTOR_DESIGN.md` e checkpoint correspondente;
+- FQ5.6 dividido em Sector Data Foundation (A) e Peer Comparison (B);
+- definida B3 como única fonte da v1;
+- definido matching CNPJ -> issuer e projeção para classes de ação, sem heurística por prefixo de ticker;
+- definido strict PIT de novos snapshots via `ingestion_batches.finished_at`, sem migration redundante;
+- comparação futura deve reutilizar valuation/FQ5.5/statistics existentes;
+- nenhuma alteração de código, migration, tool, semver ou fingerprint nesta etapa.
+
+
+## 2026-09-30 — FQ5.6A1 fonte B3 + loader setorial shadow
+
+- criada `.ai/FQ5_6A1_B3_SOURCE_AUDIT.md`;
+- UP2DATA Empresas Listadas / SummaryData definido como fonte estruturada oficial preferida;
+- endpoint interno `listedCompaniesProxy` não aceito como contrato estável de produção;
+- criado `app/market/sectors.py` somente leitura com strict PIT por `ingestion_batches.finished_at`;
+- dedupe por issuer, conflito multi-classe fail-closed e peer universe sem auto-widen;
+- target do universo de peers deve ser ação `is_in_universe`;
+- adicionados testes puros e PostgreSQL shadow e o E2E entrou no gate explícito;
+- registry local: 34 -> 34, zero drift;
+- commit shadow de código: `08bda53fa47eeef576a5fa525260f69d7818d906`;
+- nenhuma tool, migration, semver, exposição, Quant Core ou cálculo alterado.
+
+
+## 2026-09-30 — FQ5.6A2a loader setorial shadow — GREEN
+
+- HEAD `e039d771c1b086e0f425d73d6c73822e688d3faa` validado no run #61 / `36799893075`;
+- gate explícito com `test_fq56_sectors_db.py`: **98 passed**;
+- suíte completa: **849 passed, 52 skipped, 19 warnings, 0 failed**;
+- migrations PostgreSQL 18, validador e invariantes admin/`plexo_service`: verdes;
+- `prompts check` e `tools sync --check`: verdes;
+- nenhuma tool existente mudou; loader setorial permanece infraestrutura shadow;
+- parser/ingestão B3 continua bloqueado até fixture oficial/UP2DATA autorizado.
+
+
+## 2026-09-30 — FQ5.6A2 ingestão setorial semântica shadow
+
+- localizada a amostra oficial B3 `Listed_Companies.zip`, sem conseguir materializar os bytes neste runtime;
+- parser físico mantido bloqueado, sem inferir formato;
+- adicionado `app/market/sector_ingest.py` com contrato semântico, idempotência, CNPJ->issuer, expansão multi-classe, append-only e conflitos fail-closed;
+- adicionado coverage PIT por nível explícito, sem threshold automático;
+- adicionados testes puros e PostgreSQL da ingestão;
+- workflow explícito passa a incluir `tests/test_fq56_sector_ingest_db.py`;
+- nenhuma migration, tool, semver, exposição, Quant Core ou schema alterado.
+
+
+## 2026-09-30 — FQ5.6A2 shadow GREEN
+
+- commit shadow `36ffa05f9cbacd51c04b7887f74be7036c972489`;
+- run #63 `36801883060` success;
+- gate explícito com ingestão setorial: **103 passed**;
+- suíte completa: **861 passed, 52 skipped, 19 warnings, 0 failed**;
+- migrations PostgreSQL 18, validador e invariantes admin/service verdes;
+- `prompts check` e `tools sync --check` verdes;
+- nenhuma tool adicionada/alterada; catálogo permaneceu inalterado;
+- parser físico e coverage real permanecem bloqueados até bytes oficiais reais.
+
+
+## 2026-10-01 — Auditoria de dados Economatica fornecidos pelo usuário
+
+- auditados exports 2009–2025 de fundamentos/cadastro e preços;
+- setor/subsetor mostrou forte cobertura nas ações B3 ativas do export 2025;
+- identificado look-ahead potencial: metadata moderna aparece em workbook 2009;
+- Economatica classificada como fonte auxiliar de validação, não como B3/CVM;
+- raw files permanecem fora do repositório;
+- nenhuma alteração de código, migration, tool, semver ou fingerprint.
+
+
+## 2026-10-01 — Design da integração auxiliar Economatica
+- definido source próprio, sem masquerade como B3;
+- limitada a classificação corrente por ticker exato;
+- proibida retrodatação pelos anos dos workbooks;
+- preços/fundamentos vendor-derived permanecem fora;
+- ainda sem código nesta etapa documental.
+
+
+## 2026-10-01 — FQ5.6 Economatica auxiliar shadow
+- migration 0063 registra somente provenance da fonte Economatica;
+- parser XLSX stdlib para setor/subsetor de ações B3 ativas;
+- ingestão por ticker exato com expansão company-level e idempotência;
+- sem preços/fundamentos Economatica, sem retrodatação e sem tool pública;
+- raw vendor files não entram no repo.
+
+
+## 2026-10-01 — FQ5.6 Economatica auxiliar shadow GREEN
+- source `economatica` registrado via migration 0063;
+- parser XLSX stdlib validado no export real do usuário;
+- 478 ações B3 ativas extraídas no snapshot 2025;
+- ingestão por ticker exato expandindo company-level;
+- run #71 verde: 108 gate; 866 passed, 52 skipped, 19 warnings;
+- 34 tools inalteradas;
+- sem tool pública e sem ingestão de preços/fundamentos vendor-derived.
+
+## 2026-10-01 — Design coverage dry-run Economatica
+- definido dry-run somente leitura contra instruments/issuers;
+- cobertura de decisão será company-level;
+- formalizada separação entre prova de CI/dev e coverage real;
+- nenhuma alteração de código nesta etapa documental.
+
+## 2026-10-01 — Coverage dry-run Economatica shadow
+- novo app/market/economatica_coverage.py, somente SELECT;
+- novo tools/economatica_sector_coverage.py com transação read-only;
+- relatório ticker-level + issuer-level;
+- novo E2E DB no gate;
+- nenhuma tool pública, migration ou ingestão nova nesta tranche.
+
+## 2026-10-01 — Coverage dry-run Economatica GREEN
+- corrigido typo de teste revelado pelo primeiro CI; nenhuma lógica de domínio mudou;
+- run #75 verde: 110 gate; 868 passed, 52 skipped, 19 warnings;
+- dry-run read-only pronto para catálogo real;
+- 34 tools permanecem inalteradas;
+- coverage de produção continua explicitamente pendente; seed CI não é proxy de produção.
+
+## 2026-10-01 — FQ5.6A fonte oficial B3 GREEN
+- parser do XLSX oficial B3 adicionado;
+- adapter estrito de company code para issuer/CNPJ adicionado;
+- persistência continua em `ingest_sector_records`;
+- arquivo real validado em 373 registros;
+- run #81 verde: 116 gate; 874 passed, 52 skipped, 19 warnings;
+- 34 tools inalteradas;
+- FQ5.6B liberada apenas para shadow subsetor/setor.
+
+
+## 2026-10-01 — FQ5.6B peers shadow GREEN
+
+- adicionada quant.comparaveis_setor 1.0.0 com exposed_to_llm=false;
+- subsetor default; setor explícito; segmento fora;
+- métricas vêm de quant.valor_mercado e quant.tendencias_fundamentais; estatística usa statistics.describe;
+- distribuição usa todos os peers válidos; exemplos são compactos/alfabéticos;
+- run #92 detectou somente hash inválido em fixture;
+- run #93 GREEN: 118 gate; 876 passed, 52 skipped, 19 warnings, 0 failed;
+- registry 34 -> 35 apenas pela nova tool shadow.
+
+
+## 2026-10-02 — Design ponte de identidade issuer B3
+- identificado gap entre catálogo de instrumentos e identidade company-level;
+- decidido não criar CNPJ artificial nem catálogo paralelo;
+- projetor será estendido para issuer por raiz B3 e ingestão setorial compartilhará core por issuer_id;
+- nenhuma alteração de código nesta etapa documental.
+
+
+## 2026-10-02 — Issuer identity bridge GREEN + universo desenhado
+- projetor COTAHIST passa a criar/reutilizar issuer company-level para ações correntes e preencher `issuer_id` sem sintetizar CNPJ;
+- seleção de raízes restringida ao ano mais recente observado para evitar ligação automática de tickers históricos/delistados;
+- persistência setorial refatorada para core por issuer_id, preservando a rota CNPJ;
+- download B3 oficial agora pode persistir setor/subsetor mesmo com issuer sem CNPJ;
+- gates intermediários capturaram erros de publicação/helper ausente e foram corrigidos sem mudança de domínio;
+- run #113 GREEN: 120 gate; 878 passed, 52 skipped, 19 warnings, 0 failed; 35 tools inalteradas;
+- criada `.ai/FQ5_6_UNIVERSE_POLICY_DESIGN.md`; nenhum `is_in_universe` foi marcado artificialmente.
+
+
+## 2026-10-02 — Auditoria dos arquivos B3 de índices
+- auditados 3 arquivos oficiais fornecidos pelo usuário;
+- IBrA diário 02/10/2026: 148 componentes, peso total 100%;
+- `AcoesIndices` e XLSX multiíndice confirmam os mesmos 148 membros;
+- cross-check setorial oficial: 146/148 tickers, gaps RIAA3/SAUD3;
+- arquivos tratados como snapshots atuais, sem inferência histórica;
+- código ainda não alterado nesta etapa documental.
+
+
+## 2026-10-02 — IBrA universe shadow candidate
+- adicionada migration 0064 com `Índice Brasil Amplo B3`;
+- adicionado parser determinístico do CSV diário oficial B3;
+- adicionada ingestão append-only em `market.index_weights`;
+- fail-closed se qualquer ticker do snapshot não resolver no catálogo;
+- adicionada projeção auditável do universo operacional atual apenas para ações;
+- histórico de membership continua em `index_weights`; nenhuma tool pública mudou.
+
+
+## 2026-10-02 — IBrA universe GREEN
+- run #130 detectou somente incompatibilidade de tipo no audit.object_id (texto vs UUID);
+- corrigido audit trail sem mudança da regra de domínio;
+- run #131 GREEN: 124 gate; 882 passed, 52 skipped, 19 warnings;
+- migration 0064, index_weights e projeção IBrA validados em PostgreSQL 18;
+- 35 tools inalteradas;
+- coverage setorial externa do IBrA: 146/148 tickers.
+
+
+## 2026-10-02 — Design do benchmark de comparáveis
+- definido benchmark 2/8/20 peers;
+- query count, latência, resolved bytes e output bytes serão medidos;
+- proibida otimização prematura ou cópia de matemática;
+- nenhuma alteração de código nesta etapa documental.
+
+
+## 2026-10-02 — Instrumentação do benchmark de peers
+- adicionado `tests/test_fq56_peer_performance_db.py`;
+- benchmark dedicado no CI para 2/8/20 peers;
+- nenhuma lógica de `quant.comparaveis_setor` foi alterada ainda;
+- medição precede qualquer otimização.
+
+
+## 2026-10-02 — Baseline de performance de comparáveis
+- run #145 mediu 2/8/20 peers;
+- query count = 38/98/218 (~18 + 10×N);
+- output client-facing ficou ~4 KB e não escala com a tabela de peers;
+- N+1 classificado como dívida material antes da promoção;
+- nenhuma matemática alterada nesta medição.
+
+
+## 2026-10-03 — Peer batch loader shadow candidate
+- criado `app/market/peer_company_metrics.py` para remover N+1 de preparação;
+- batch faz leitura de catálogo/classes, CNPJ fallback, fundamentos DFP PIT e preços;
+- seleção de vintages/períodos continua nos loaders canônicos existentes;
+- `quant.comparaveis_setor` passou a construir os mesmos resolved models a partir do batch;
+- teste E2E compara resolved/output batch contra preparadores canônicos;
+- nenhuma fórmula nova e nenhuma tool pública alterada nesta etapa.
+
+
+## 2026-10-03 — Batch de peers GREEN e promoção candidata FQ5.6
+- run #157: 125 gate; 886 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark caiu de 38/98/218 queries para 10/10/10 em 2/8/20 peers;
+- output client-facing permaneceu ~4 KB;
+- equivalência batch vs preparadores canônicos passou;
+- benchmark virou regression gate (<=12 queries; output <5 KB);
+- `quant.comparaveis_setor` promovida como candidata 1.0.1 pública;
+- planner limita uso a comparação descritiva; sem ranking, recomendação ou fair value;
+- bloco compacto alvo vs mediana dos pares adicionado;
+- aguardando CI pós-promoção.
+
+
+## 2026-10-03 — FQ5.6 comparáveis promovida e encerrada
+- `quant.comparaveis_setor` 1.0.1 pública;
+- planner roteia comparação descritiva com pares;
+- bloco compacto alvo vs mediana dos pares;
+- regression gate de performance consolidado;
+- run #170 GREEN: 128 gate; 889 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark final 10/10/10 queries para 2/8/20 peers;
+- prompts/tools sync verdes;
+- sem ranking, recomendação ou fair value.
+
+
+## 2026-10-03 — Design FQ5.7 curva de juros
+- auditado schema existente `market.yield_curve`;
+- auditada fonte oficial ANBIMA Developers para curvas de juros;
+- definido mapeamento canônico `ettj_pre`, `ettj_ipca`, `inflacao_implicita`;
+- strict PIT usará lote/finished_at;
+- nenhuma alteração de código nesta etapa documental.
+
+
+## 2026-10-03 — FQ5.7 curva de juros foundation shadow candidate
+- adicionada ingestão semântica append-only ANBIMA ETTJ sobre `market.yield_curve` existente;
+- adicionadas curvas canônicas `ettj_pre`, `ettj_ipca`, `inflacao_implicita` sem schema novo;
+- adicionada normalização de taxa para 6 casas conforme coluna `rate_pct`;
+- adicionado loader PIT sem interpolação/extrapolação;
+- adicionados testes de idempotência, conflito, latest/reference_date e look-ahead por `finished_at`;
+- nenhuma tool pública/semver/planner/prompt alterado.
+
+
+## 2026-10-03 — FQ5.7 curva de juros foundation GREEN
+- run #191 revelou um erro de expectativa do teste strict PIT: snapshot ingerido em 03/10 não pode aparecer num cutoff 02/10;
+- teste corrigido sem afrouxar a regra de domínio;
+- run #192 GREEN: 135 gate; 896 passed, 52 skipped, 19 warnings, 0 failed;
+- benchmark FQ5.6 permaneceu 10/10/10 queries;
+- prompts/tools sync verdes; 35 tools inalteradas;
+- fundação pronta para payload físico ANBIMA autorizado; nenhuma tool pública criada.
+
+
+## 2026-10-03 — Auditoria pública ANBIMA após FQ5.7 GREEN
+- página oficial de fechamento confirmou snapshot 02/10/2026;
+- cobertura observada: 65 vértices IPCA e 19 PRE/inflação implícita;
+- UI pública declara últimos cinco dias úteis e downloads XLS/CSV/TXT/XML;
+- nenhum payload ANBIMA foi encontrado nos anexos da conversa;
+- adapter físico permanece bloqueado sem bytes oficiais; scraper HTML foi explicitamente rejeitado.
+
+
+## 2026-10-03 — Consolidação final de handoff pós-FQ5.7 foundation
+
+- criado `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`;
+- reescrito `.ai/NEXT_CHAT_HANDOFF_FINAL.md` como snapshot atual;
+- atualizado `NEXT_CHAT_START_HERE.md`;
+- adicionada fila canônica atual em PROJECT_STATE/TASKS;
+- estado funcional validado permanece `c3d7cc95f6ef896a5463397b6a323a0325f3c9f0` / run #202 `37135725129`;
+- run #202: 135 gate; 896 passed, 52 skipped, 19 warnings, 0 failed; peers 10/10/10; prompts/tools sync verdes;
+- FQ5.6 pública/encerrada; FQ5.7 foundation GREEN sem tool pública;
+- source gate ANBIMA físico é a pendência funcional imediata;
+- nenhuma alteração de código, migration, tool, semver, planner ou matemática nesta consolidação.
+
+
+## 2026-10-03 — Consolidação mestre para novo chat
+- criado `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md` com visão completa do projeto, arquitetura, decisões, fontes, FQ0.5–FQ5.7, erros a evitar e roadmap;
+- criado `.ai/NEW_CHAT_PROMPT_2026-10-03.md` como prompt pronto para continuação;
+- `PROJECT_STATE.md` e `TASKS.md` agora deixam explícito que blocos antigos são históricos e que o estado canônico está nos documentos atuais;
+- `NEXT_CHAT_HANDOFF.md` virou ponteiro de compatibilidade para o handoff final;
+- `NEXT_CHAT_START_HERE.md`, `WORKING_PROTOCOL.md`, mapa e handoff final atualizados para a nova ordem de leitura;
+- referência documental validada antes desta consolidação: HEAD `60b234b4614b3bbbc6890597a9e4a2fb5503f58f`, run #215 `37137581471` success;
+- nenhuma alteração de código, migration, semver, exposição, planner, engine ou tool.
+
+
+## 2026-10-03 — Revalidação final e preparação de snapshot para novo chat
+- revalidado estado consolidado no run #216 / `37139839922`;
+- gate dirigido: 135 passed;
+- benchmark peers: 10/10/10 queries para 2/8/20;
+- suíte completa: 896 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts e tools sync verdes;
+- alinhados handoff, mapa, master context, prompt e START HERE;
+- adicionada seção explícita dos arquivos B3/Economatica já recebidos e sua semântica temporal;
+- FQ5.6 permanece encerrada; FQ5.7 source gate ANBIMA permanece próxima tarefa;
+- nenhuma matemática, migration, tool, semver ou engine alterada nesta consolidação documental.
+
+
+## 2026-10-03 — FQ5.7 source gate GREEN + primeira capability shadow
+- materializado CSV físico oficial ANBIMA ETTJ (`CurvaZero_.csv`), 2.899 bytes, SHA-256 `a254ebf789b41cb83838d9b0df29c4d094f1a4c37ddf0f1400d94637267af1f7`;
+- congelados fixture e parser fail-closed;
+- coverage observada: 65 IPCA / 19 PRE / 19 inflação implícita em 02/10/2026;
+- criada `dados.curva_juros` 1.0.0 em shadow, sem interpolação/extrapolação/forecast;
+- promoção pública permanece condicionada aos gates PostgreSQL/suíte/sync.
+
+
+## 2026-10-03 — FQ5.7 physical ingest shadow GREEN
+- adicionada ponte `yield_curve_ingest_anbima_csv.py`, sem HTTP e sem duplicar persistência;
+- fixture oficial ingere 103 linhas canônicas (65 IPCA + 19 PRE + 19 implícita);
+- gate dirigido ampliado para parser/bridge/tool shadow;
+- run #234 GREEN: 142 directed; full 903/52/19/0; prompts/tools sync GREEN.
+
+
+## 2026-10-03 — FQ5.7 promotion candidate
+- `dados.curva_juros` candidata 1.0.1 pública;
+- adicionado mapper client-facing determinístico;
+- planner distingue ETTJ ANBIMA de série Selic/IPCA e veta matemática não suportada;
+- catálogo do Analista/readiness/payload gate atualizados;
+- promoção ainda não considerada encerrada antes do CI.
+
+
+## 2026-10-03 — FQ5.7 dados.curva_juros 1.0.1 pública/GREEN
+- promoção pública concluída;
+- planner/bloco/readiness/payload gate GREEN;
+- run #249: 145 directed; 906 passed, 52 skipped, 19 warnings, 0 failed;
+- prompts/tools sync GREEN;
+- catálogo passa a 36 tools, 33 públicas e 3 ocultas/replay;
+- FQ5.7 encerrada para leitura exata de ETTJ oficial.
+
+## 2026-10-03 — FQ5.7 cobertura histórica física + cleanup
+- reproduzido o POST first-party oficial de download ANBIMA ETTJ;
+- seis datas dentro do limite público observado (25/09–02/10/2026) retornaram CSVs distintos e válidos;
+- parser aceitou 65 IPCA / 19 PRE / 19 inflação implícita em todas as seis datas;
+- retenção observada em 24/09 não foi promovida a contrato suportado;
+- removidos todos os workflows temporários usados na auditoria;
+- nenhum código de produto mudou após o head validado do run #249.
+
+## 2026-10-03 — composição de índice shadow candidate
+- reauditoria pós-FQ5.7 escolheu membership/peso de índice como próxima lacuna real;
+- criado loader PIT read-only sobre `market.index_weights`;
+- criada `dados.composicao_indice` 1.0.0 shadow, sem exposição ao LLM;
+- nenhum schema, migration, matemática, planner ou bloco público alterado;
+- gate PostgreSQL 18 pendente.
+
+## 2026-10-03 — dados.composicao_indice 1.0.1 pública/GREEN
+- promovida `dados.composicao_indice` 1.0.1 para o catálogo LLM;
+- loader PIT read-only reutiliza `market.index_weights`;
+- planner diferencia composição/peso de performance de índice;
+- bloco determinístico apresenta tabela factual, sem recomendação;
+- ausência de snapshot não gera inferência/nearest;
+- run #283 / `37153499452` GREEN: 153 directed; 914 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6/migrations/invariantes, prompts e tools sync verdes;
+- peers 10/10/10 preservados;
+- catálogo: 37 tools, 34 públicas, 3 ocultas/replay.
+
+## 2026-10-03 — quant.risco_retorno 1.1.0 candidate
+- reuse-before-build confirmou gap de contrato/apresentação;
+- downside deviation já existia no Risk Core;
+- duração/recovery já existiam no `DrawdownDetail`;
+- candidata 1.1.0 adiciona downside deviation anualizada contra target periódico zero explícito;
+- bloco passa a mostrar duração/recovery em intervalos observados;
+- planner usa a mesma `quant.risco_retorno`;
+- rolling vol/Sharpe/Sortino/Calmar/VaR/ES permanecem fora;
+- aguardando CI PostgreSQL antes de GREEN.
+
+### Correção de compatibilidade no gate #295
+- run #295 detectou 1 falha em golden de replay legacy por mudança de título no mapper compartilhado;
+- restaurado título histórico do bloco;
+- downside deviation e duração/recovery permanecem aditivos somente quando presentes no payload;
+- nenhuma matemática mudou;
+- novo CI obrigatório antes de GREEN.
+
+## 2026-10-03 — quant.risco_retorno 1.1.0 GREEN
+- adicionada downside deviation anualizada contra target periódico zero explícito;
+- duração/recovery já existentes no drawdown passaram a aparecer no bloco em intervalos observados;
+- planner ampliado sem nova tool;
+- run #295 encontrou e o código corrigiu uma regressão cosmética de replay legacy;
+- run #296 / `37154531785` GREEN: 175 directed; 918 passed, 52 skipped, 19 warnings, 0 failed;
+- PostgreSQL 18.6, prompts/tools sync e benchmark peers verdes;
+- catálogo permanece 37 total / 34 expostas / 3 ocultas.
+
+## 2026-10-03 — audit/design pós-risco 1.1
+- reauditoria pós-`quant.risco_retorno` 1.1.0 concluída;
+- rolling volatility selecionada como próxima lacuna executável por reuse-before-build;
+- criado `.ai/COMPANY_MARKET_DELTA_AUDIT_POST_RISK_2026-10-03.md`;
+- criado `.ai/RISK_ROLLING_VOLATILITY_DESIGN_2026-10-03.md`;
+- criado checkpoint `.ai/checkpoints/2026-10-03_POST_RISK_ROLLING_DESIGN_FROZEN.md`;
+- target eventual definido como `quant.risco_retorno` 1.2.0, sem tool paralela;
+- nenhuma alteração de código, migration, schema, policy, planner, bloco, semver público ou catálogo nesta tranche.
+
+## 2026-10-03 — rolling volatility shadow interno GREEN
+- criado `app/tools/analista/_risco_retorno_rolling_shadow.py`, sem registro público;
+- cálculo-base 1.1.0 permanece delegado à tool canônica;
+- rolling reutiliza `quant_risk.rolling_volatility()`;
+- janela obrigatoriamente explícita no shadow; nenhuma policy/default escondido;
+- compactação: último ponto mensal + cap estrutural de 60;
+- adicionados 7 testes de equivalência/semântica/compactação/registry;
+- commit funcional `bef38e7d2bc44e69bfc931f4d12ee9d7df3a00bd`;
+- run #311 / `37161330785` GREEN: 175 directed; 925 passed, 52 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
+- `quant.risco_retorno` continua 1.1.0 pública; nenhum planner/bloco/policy/semver público alterado.
+
+## 2026-10-03 — rolling volatility CI/readiness GREEN
+- adicionado golden/replay `tests/golden/quant_risco_retorno_1_1_0.json`;
+- adicionada readiness `tests/test_risk_rolling_readiness.py`;
+- adicionada integração PostgreSQL `tests/test_risk_rolling_shadow_db.py`;
+- workflow dirigido passou a executar os gates rolling explicitamente;
+- adjusted/raw semantics, provenance e payload <5 KB validados;
+- run #319 / `37162064025` GREEN: 188 directed; 931 passed, 52 skipped, 19 warnings, 0 failed;
+- `quant.risco_retorno` permanece 1.1.0 pública; nenhuma policy/planner/bloco/semver público foi alterado.
+
+## 2026-10-03 — quant.risco_retorno 1.2.0 pública/GREEN
+- adicionado default governado `ANALISE_PARAMS.risco_janela_movel_observacoes=21`;
+- `quant.risco_retorno` bump 1.1.0 -> 1.2.0;
+- novos params públicos opcionais `incluir_evolucao_volatilidade` e `janela_volatilidade_observacoes`;
+- novo output opcional `evolucao_volatilidade`;
+- rolling reutiliza Quant Core; nenhuma matemática/fonte/schema/migration nova;
+- replay 1.1.0 congelado em `risco_retorno_legacy_1_1_0.py` + golden;
+- planner, bloco e eval temporal atualizados;
+- shadow interno removido após promoção;
+- workflow dirigido passou a testar o cutover público;
+- run #334 / `37162747600` GREEN: 186 directed; 929 passed, 53 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
+- catálogo permanece 37 total / 34 públicas / 3 ocultas-replay.
+
+## 2026-10-03 — audit/design pós-risco 1.2
+- reaberto capability audit de Company & Market Analytics após `quant.risco_retorno` 1.2.0;
+- Brent/commodities selecionado como próxima frente por reuse-before-build;
+- EIA `RBRTE` identificada como fonte candidata de Brent spot Europe FOB em USD/barril;
+- gap corrigido de fonte+loader para fonte + schema/fundação + loader/factor contract;
+- criado `.ai/COMPANY_MARKET_DELTA_AUDIT_POST_RISK_1_2_2026-10-03.md`;
+- criado `.ai/BRENT_EIA_SOURCE_AUDIT_2026-10-03.md`;
+- criado `.ai/BRENT_FACTOR_FOUNDATION_DESIGN_2026-10-03.md`;
+- criado checkpoint `.ai/checkpoints/2026-10-03_POST_RISK_1_2_BRENT_DESIGN_FROZEN.md`;
+- nenhuma tool, migration, schema, loader, semver, planner ou cálculo alterado nesta tranche.
+
+## 2026-10-04 — pacote de integração backend/LLM real
+- criado `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`;
+- criado `.ai/FINANCIAL_TOOL_CORRECTNESS_STANDARD_2026-10-04.md`;
+- criado `.ai/TOOL_INTEGRATION_CERTIFICATION_MATRIX_2026-10-04.md`;
+- criado `.ai/PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`;
+- criado `.ai/CODEX_PRODUCTION_INTEGRATION_RUNBOOK_2026-10-04.md`;
+- criado `.ai/CODEX_PRODUCTION_INTEGRATION_FIRST_MESSAGE_2026-10-04.md`;
+- criados templates de production backend discovery e external DB audit;
+- criado `.ai/CODEX_START_HERE_2026-10-04.md`;
+- atualizado `AGENTS.md`;
+- criado checkpoint `.ai/checkpoints/2026-10-04_CODEX_PRODUCTION_INTEGRATION_PACKAGE_READY.md`;
+- nenhuma alteração funcional em tool/cálculo/schema nesta tranche.
+
+## 2026-10-04 — consolidação do pacote final Codex
+- criado `.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`;
+- criado `CODEX_PACKAGE_README.md`;
+- `AGENTS.md` e `CODEX_START_HERE_2026-10-04.md` atualizados para run #367;
+- onboarding atualizado para usar #367 como estado corrente, mantendo #347 como histórico;
+- pacote passa a ter uma lista única e explícita de arquivos obrigatórios.NaN

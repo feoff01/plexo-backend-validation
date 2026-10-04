@@ -1,0 +1,240 @@
+{
+  "carteira": {
+    "posicoes": [
+      {
+        "instrument_id": "p-cdb",
+        "nome": "CDB Itaú 108% do CDI",
+        "kind": "cdb",
+        "classe": "selic",
+        "grupo": "renda_fixa",
+        "emissor_id": "i-itau",
+        "emissor_nome": "Itaú Unibanco",
+        "emissor_fgc": true,
+        "valor_brl": 180000.0,
+        "liquidez_dias": 0,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-itub4",
+        "nome": "Itaú Unibanco PN",
+        "kind": "acao",
+        "classe": "acoes_br",
+        "grupo": "renda_variavel",
+        "emissor_id": "i-itau",
+        "emissor_nome": "Itaú Unibanco",
+        "emissor_fgc": true,
+        "valor_brl": 93840.0,
+        "liquidez_dias": 2,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-tesipca",
+        "nome": "Tesouro IPCA+ 2035",
+        "kind": "tesouro",
+        "classe": "ipca",
+        "grupo": "renda_fixa",
+        "emissor_id": "i-tn",
+        "emissor_nome": "Tesouro Nacional",
+        "emissor_fgc": false,
+        "valor_brl": 90000.0,
+        "liquidez_dias": 1,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-lci",
+        "nome": "LCI Itaú Financeira 95% do CDI",
+        "kind": "lci_lca",
+        "classe": "selic",
+        "grupo": "renda_fixa",
+        "emissor_id": "i-itau",
+        "emissor_nome": "Itaú Unibanco",
+        "emissor_fgc": true,
+        "valor_brl": 90000.0,
+        "liquidez_dias": 90,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-petr4",
+        "nome": "Petrobras PN",
+        "kind": "acao",
+        "classe": "acoes_br",
+        "grupo": "renda_variavel",
+        "emissor_id": "i-petro",
+        "emissor_nome": "Petróleo Brasileiro S.A.",
+        "emissor_fgc": false,
+        "valor_brl": 72590.0,
+        "liquidez_dias": 2,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-bova11",
+        "nome": "iShares Ibovespa (ETF)",
+        "kind": "etf",
+        "classe": "acoes_br",
+        "grupo": "renda_variavel",
+        "emissor_id": "i-gidx",
+        "emissor_nome": "Gestora de índices",
+        "emissor_fgc": false,
+        "valor_brl": 62064.0,
+        "liquidez_dias": 2,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-vale3",
+        "nome": "Vale ON",
+        "kind": "acao",
+        "classe": "acoes_br",
+        "grupo": "renda_variavel",
+        "emissor_id": "i-vale",
+        "emissor_nome": "Vale S.A.",
+        "emissor_fgc": false,
+        "valor_brl": 55377.0,
+        "liquidez_dias": 2,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-hglg11",
+        "nome": "FII de logística",
+        "kind": "fii",
+        "classe": "fii",
+        "grupo": "renda_variavel",
+        "emissor_id": "i-gfii",
+        "emissor_nome": "Gestora imobiliária",
+        "emissor_fgc": false,
+        "valor_brl": 48000.0,
+        "liquidez_dias": 2,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-wege3",
+        "nome": "WEG ON",
+        "kind": "acao",
+        "classe": "acoes_br",
+        "grupo": "renda_variavel",
+        "emissor_id": "i-weg",
+        "emissor_nome": "WEG S.A.",
+        "emissor_fgc": false,
+        "valor_brl": 35175.0,
+        "liquidez_dias": 2,
+        "taxa_adm_aa": null
+      },
+      {
+        "instrument_id": "p-fundo",
+        "nome": "Fundo multimercado macro",
+        "kind": "fundo",
+        "classe": "multimercado",
+        "grupo": "alternativos",
+        "emissor_id": "i-gmacro",
+        "emissor_nome": "Gestora macro",
+        "emissor_fgc": false,
+        "valor_brl": 30000.0,
+        "liquidez_dias": 30,
+        "taxa_adm_aa": 0.028
+      },
+      {
+        "instrument_id": "p-caixa",
+        "nome": "Saldo em conta na corretora",
+        "kind": "conta",
+        "classe": "caixa",
+        "grupo": "caixa",
+        "emissor_id": null,
+        "emissor_nome": null,
+        "emissor_fgc": false,
+        "valor_brl": 18000.0,
+        "liquidez_dias": 0,
+        "taxa_adm_aa": null
+      }
+    ],
+    "total_brl": 775046.0,
+    "reserva_saldo_brl": 95000.0,
+    "reserva_requerida_brl": 69000.0
+  },
+  "limiares": {
+    "concentracao_emissor_max": 0.2,
+    "concentracao_classe_max": 0.5,
+    "teto_fgc_brl": 250000,
+    "caixa_ocioso_multiplo_da_reserva": 1.0,
+    "iliquido_dias_min": 30,
+    "iliquido_share_max": 0.1,
+    "taxa_fundo_folga_sobre_referencia": 0.005,
+    "impacto_padrao_confianca": 0.8
+  },
+  "referencias": {
+    "multimercado": 0.02,
+    "acoes": 0.015,
+    "renda_fixa": 0.005
+  },
+  "esperado": [
+    {
+      "tipo": "risco.concentracao_emissor",
+      "chave": "risco.concentracao_emissor:issuer:i-itau",
+      "severidade": "critica",
+      "impacto_brl_ano": null,
+      "quantificacao": {
+        "emissor": "Itaú Unibanco",
+        "exposicao_brl": 363840.0,
+        "share_pct": 46.94,
+        "limiar_pct": 20.0,
+        "excedente_brl": 208830.8
+      }
+    },
+    {
+      "tipo": "risco.exposicao_acima_do_fgc",
+      "chave": "risco.exposicao_acima_do_fgc:issuer:i-itau",
+      "severidade": "alta",
+      "impacto_brl_ano": 20000.0,
+      "quantificacao": {
+        "emissor": "Itaú Unibanco",
+        "coberto_brl": 270000.0,
+        "teto_brl": 250000.0,
+        "excedente_brl": 20000.0
+      }
+    },
+    {
+      "tipo": "alocacao.caixa_parado_excessivo",
+      "chave": "alocacao.caixa_parado_excessivo:scope:caixa",
+      "severidade": "alta",
+      "impacto_brl_ano": 44000.0,
+      "quantificacao": {
+        "caixa_total_brl": 113000.0,
+        "caixa_na_carteira_brl": 18000.0,
+        "reserva_saldo_brl": 95000.0,
+        "reserva_requerida_brl": 69000.0,
+        "excedente_brl": 44000.0
+      }
+    },
+    {
+      "tipo": "liquidez.resgate_longo_excessivo",
+      "chave": "liquidez.resgate_longo_excessivo:scope:d30",
+      "severidade": "media",
+      "impacto_brl_ano": null,
+      "quantificacao": {
+        "valor_brl": 120000.0,
+        "share_pct": 15.48,
+        "limiar_pct": 10.0,
+        "a_partir_de_dias": 30
+      }
+    },
+    {
+      "tipo": "custo.taxa_fundo_alta",
+      "chave": "custo.taxa_fundo_alta:instrument:p-fundo",
+      "severidade": "alta",
+      "impacto_brl_ano": 240.0,
+      "quantificacao": {
+        "produto": "Fundo multimercado macro",
+        "taxa_aa": 0.028,
+        "referencia_aa": 0.02,
+        "excesso_aa": 0.008,
+        "valor_aplicado_brl": 30000.0,
+        "custo_ano_brl": 240.0
+      }
+    },
+    {
+      "tipo": "alocacao.sem_exposicao_internacional",
+      "chave": "alocacao.sem_exposicao_internacional:scope:acoes_int",
+      "severidade": "baixa",
+      "impacto_brl_ano": null,
+      "quantificacao": {}
+    }
+  ]
+}

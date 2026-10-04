@@ -1,0 +1,105 @@
+{
+  "blocos": [
+    {
+      "tipo": "barras",
+      "id": "exec-1:1",
+      "titulo": "Onde a carteira está hoje",
+      "subtitulo": "5 classes em 2 conta(s)",
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Ações Brasil",
+            "valor": 142000.0,
+            "detalhe": "29.22% da carteira"
+          },
+          {
+            "rotulo": "Inflação (IPCA+)",
+            "valor": 140000.0,
+            "detalhe": "28.81% da carteira"
+          },
+          {
+            "rotulo": "Caixa e liquidez",
+            "valor": 95000.0,
+            "detalhe": "19.55% da carteira"
+          },
+          {
+            "rotulo": "Fundos imobiliários",
+            "valor": 71000.0,
+            "detalhe": "14.61% da carteira"
+          },
+          {
+            "rotulo": "Multimercado",
+            "valor": 38000.0,
+            "detalhe": "7.82% da carteira"
+          }
+        ],
+        "formato": "brl",
+        "referencia": {
+          "rotulo": "total investido",
+          "valor": 486000.0
+        }
+      },
+      "proveniencia": {
+        "fonte": "wealth.holdings_snapshots",
+        "as_of": "2026-08-26",
+        "cutoff_date": null,
+        "n": 5,
+        "metodo": "soma das posições registradas, por classe de ativo",
+        "premissas": {},
+        "avisos": [
+          "O consolidado inclui dívidas."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Composição declarada pelo cliente e registrada no escopo, na data de referência; é descrição do que está registrado, não avaliação de adequação nem indicação de investimento."
+    },
+    {
+      "tipo": "indicadores",
+      "id": "exec-1:2",
+      "titulo": "Patrimônio consolidado",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Investido",
+            "valor": 486000.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Imóveis",
+            "valor": 1270000.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Demais bens",
+            "valor": 95000.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Passivo",
+            "valor": 329500.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Patrimônio líquido",
+            "valor": 1521500.0,
+            "formato": "brl"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "wealth.holdings_snapshots",
+        "as_of": "2026-08-26",
+        "cutoff_date": null,
+        "n": 5,
+        "metodo": "soma das posições registradas, por classe de ativo",
+        "premissas": {},
+        "avisos": [
+          "O consolidado inclui dívidas."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Composição declarada pelo cliente e registrada no escopo, na data de referência; é descrição do que está registrado, não avaliação de adequação nem indicação de investimento."
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "resolvido": {
+    "indicador": "Selic",
+    "data_coleta": "2026-08-21",
+    "base_calculo": 0,
+    "janela_dias": "últimos 30 dias",
+    "horizontes": [
+      {
+        "referencia": "2026",
+        "mediana": 13.75,
+        "media": 13.6871,
+        "desvio_padrao": 0.2651,
+        "minimo": 12.75,
+        "maximo": 14.25,
+        "respondentes": 145
+      },
+      {
+        "referencia": "2027",
+        "mediana": 12.0,
+        "media": 12.0845,
+        "desvio_padrao": 0.7725,
+        "minimo": 9.75,
+        "maximo": 14.0,
+        "respondentes": 142
+      },
+      {
+        "referencia": "2028",
+        "mediana": 10.5,
+        "media": 10.6078,
+        "desvio_padrao": 0.9936,
+        "minimo": 8.0,
+        "maximo": 14.0,
+        "respondentes": 116
+      },
+      {
+        "referencia": "2029",
+        "mediana": 10.0,
+        "media": 10.2455,
+        "desvio_padrao": 1.0514,
+        "minimo": 8.0,
+        "maximo": 14.0,
+        "respondentes": 110
+      },
+      {
+        "referencia": "2030",
+        "mediana": 10.0,
+        "media": 10.0972,
+        "desvio_padrao": 1.144,
+        "minimo": 7.0,
+        "maximo": 14.0,
+        "respondentes": 108
+      }
+    ],
+    "cutoff_date": "2026-08-27",
+    "lotes": [
+      "01a04375-0ccf-7d74-8872-848d3d71de4d"
+    ]
+  },
+  "esperado": {
+    "indicador": "Selic",
+    "data_coleta": "2026-08-21",
+    "janela": "últimos 30 dias",
+    "horizontes": [
+      {
+        "referencia": "2026",
+        "mediana": 13.75,
+        "media": 13.6871,
+        "desvio_padrao": 0.2651,
+        "minimo": 12.75,
+        "maximo": 14.25,
+        "respondentes": 145
+      },
+      {
+        "referencia": "2027",
+        "mediana": 12.0,
+        "media": 12.0845,
+        "desvio_padrao": 0.7725,
+        "minimo": 9.75,
+        "maximo": 14.0,
+        "respondentes": 142
+      },
+      {
+        "referencia": "2028",
+        "mediana": 10.5,
+        "media": 10.6078,
+        "desvio_padrao": 0.9936,
+        "minimo": 8.0,
+        "maximo": 14.0,
+        "respondentes": 116
+      },
+      {
+        "referencia": "2029",
+        "mediana": 10.0,
+        "media": 10.2455,
+        "desvio_padrao": 1.0514,
+        "minimo": 8.0,
+        "maximo": 14.0,
+        "respondentes": 110
+      },
+      {
+        "referencia": "2030",
+        "mediana": 10.0,
+        "media": 10.0972,
+        "desvio_padrao": 1.144,
+        "minimo": 7.0,
+        "maximo": 14.0,
+        "respondentes": 108
+      }
+    ],
+    "evidencia": {
+      "fonte": "bacen_focus",
+      "instrument_ids": [],
+      "tickers": [],
+      "index_codes": [],
+      "cutoff_date": "2026-08-27",
+      "as_of": "2026-08-21",
+      "n_observacoes": 5,
+      "lacunas": [],
+      "metodo": "mediana das projeções informadas ao Banco Central na coleta mais recente",
+      "nota_metodo": "Estatística descritiva das projeções de terceiros publicada pelo Banco Central. Não é projeção da Plexo e não indica resultado futuro.",
+      "suficiente": true,
+      "avisos": [],
+      "metricas": {
+        "mediana_2026": 13.75,
+        "mediana_2027": 12.0,
+        "mediana_2028": 10.5,
+        "mediana_2029": 10.0,
+        "mediana_2030": 10.0
+      },
+      "ingestion_batch_ids": [
+        "01a04375-0ccf-7d74-8872-848d3d71de4d"
+      ]
+    },
+    "nota": "Estatística descritiva das projeções de terceiros publicada pelo Banco Central. Não é projeção da Plexo e não indica resultado futuro."
+  }
+}

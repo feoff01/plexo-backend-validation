@@ -1,0 +1,67 @@
+{
+  "caso": "aposentado · alvo inalcançável com o aporte atual",
+  "esperado": {
+    "projecoes": [
+      {
+        "objetivo": "Objetivo principal",
+        "prazo_meses": 24,
+        "valor_alvo": 200000.0,
+        "aporte_mensal": 800.0,
+        "total_a_depositar": 19200.0,
+        "carteira": "conservadora",
+        "cenario_ruim_p5": 19521.5,
+        "p25": 19796.61,
+        "mediana_p50": 19990.57,
+        "p75": 20181.5,
+        "cenario_bom_p95": 20460.4,
+        "chance_de_atingir": 0.0,
+        "chance_de_ficar_abaixo_do_depositado": 0.0027,
+        "aporte_para_90_por_cento": 8155.7,
+        "veredito_de_risco": "Nesta simulação, nenhuma das carteiras alcança o alvo desta meta com o aporte atual — a diferença entre elas não muda esse resultado. Para chegar lá em 9 de cada 10 cenários, o aporte precisaria ser de R$ 8.156 por mês. O que move este plano é o aporte ou o prazo, não o risco.",
+        "carteiras_comparadas": [
+          {
+            "carteira": "conservadora",
+            "cenario_ruim_p5": 19521.5,
+            "mediana_p50": 19990.57,
+            "chance_de_atingir": 0.0,
+            "chance_de_ficar_abaixo_do_depositado": 0.0027
+          },
+          {
+            "carteira": "balanceada",
+            "cenario_ruim_p5": 18920.57,
+            "mediana_p50": 20106.84,
+            "chance_de_atingir": 0.0,
+            "chance_de_ficar_abaixo_do_depositado": 0.1096
+          },
+          {
+            "carteira": "arrojada",
+            "cenario_ruim_p5": 17823.09,
+            "mediana_p50": 20155.74,
+            "chance_de_atingir": 0.0,
+            "chance_de_ficar_abaixo_do_depositado": 0.2606
+          }
+        ],
+        "avisos": [
+          "objetivo_dificil_com_aporte_atual"
+        ]
+      }
+    ],
+    "premissas_de_mercado": {
+      "conjunto": "PLEXO_BASE",
+      "versao": 1,
+      "metodologia": "Retornos REAIS de longo prazo (acima do IPCA), em fração ao ano. Renda fixa a partir da mediana do Focus para Selic e IPCA de 12 meses combinada com a estrutura a termo das NTN-B; renda variável a partir de série histórica de 20 anos do Ibovespa e do MSCI World em BRL, deflacionada pelo IPCA. Volatilidades e correlações da mesma janela de 20 anos, dados mensais. LIMITAÇÃO DECLARADA: a simulação assume log-retornos normais, o que SUBESTIMA a cauda — crise real é pior que o p5 aqui. Premissa explícita e revisável vale mais que precisão silenciosa; recalibrar a cada 12 meses ou quando a Selic longa se mover mais de 200 bps.",
+      "status": "draft",
+      "horizonte_anos": 30
+    },
+    "avisos": [
+      "premissas_em_revisao"
+    ],
+    "metodo": "leitura da projeção gravada por run determinístico (engine.runs kind=projection): Monte Carlo com log-retornos normais, aporte no fim do mês e volatilidade da carteira derivada da matriz de covariância das premissas de mercado vigentes",
+    "nota": "Simulação ilustrativa a partir de premissas de mercado versionadas, não previsão. Os valores mudam se as premissas, o aporte ou o prazo mudarem.",
+    "limitacao": "A simulação assume oscilações com distribuição normal, o que SUBESTIMA a cauda: uma crise real tende a ser pior que o cenário ruim mostrado aqui.",
+    "orientacao_ao_modelo": [
+      "'Objetivo principal': a chance está abaixo de 50%. O número acionável é o aporte para 90% de confiança, não o alvo — traga-o na resposta.",
+      "As premissas de mercado estão em revisão interna: apresente os números como ordem de grandeza."
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "_comentario": "Golden/replay explícito da quant.risco_retorno 1.1.0 antes do cutover rolling. Mudança em qualquer campo exige decisão de semver/replay.",
+  "tool": {
+    "code": "quant.risco_retorno",
+    "semver": "1.1.0"
+  },
+  "resolvido": {
+    "ticker": "PETR4",
+    "instrument_id": "i-petr4",
+    "in_universe": true,
+    "cutoff_date": "2024-01-06",
+    "price_basis": "adjusted_close",
+    "temporal_semantics": "retrospective_as_known_now",
+    "serie": {
+      "code": "PETR4",
+      "instrument_id": "i-petr4",
+      "index_code": null,
+      "unit": null,
+      "currency": "BRL",
+      "points": [
+        {"data": "2024-01-02", "valor": 100.0},
+        {"data": "2024-01-03", "valor": 102.0},
+        {"data": "2024-01-04", "valor": 101.0},
+        {"data": "2024-01-05", "valor": 104.0},
+        {"data": "2024-01-06", "valor": 103.0}
+      ],
+      "quality": {
+        "observations": 5,
+        "first_date": "2024-01-02",
+        "last_date": "2024-01-06",
+        "stale_days": 0,
+        "missing_dates": [],
+        "unexpected_dates": [],
+        "coverage_ratio": 1.0,
+        "calendar_source": "market.trading_calendar",
+        "calendar_fallback_used": false
+      },
+      "provenance": {
+        "dataset": "market.v_precos_ajustados",
+        "source_codes": ["b3"],
+        "ingestion_batch_ids": ["batch-risk-1"],
+        "calendar_ingestion_batch_ids": ["cal-risk-1"],
+        "price_basis": "adjusted_close",
+        "temporal_semantics": "retrospective_as_known_now",
+        "cutoff_date": "2024-01-06",
+        "warnings": ["adjusted_close_retrospective"]
+      }
+    },
+    "metodo_retorno": "log",
+    "dias_uteis_ano": 252,
+    "min_observacoes": 3,
+    "max_dias_defasagem": 5
+  },
+  "esperado": {
+    "ticker": "PETR4",
+    "periodo": {
+      "de": "2024-01-02",
+      "ate": "2024-01-06",
+      "n": 5
+    },
+    "price_basis": "adjusted_close",
+    "temporal_semantics": "retrospective_as_known_now",
+    "retorno_acumulado_pct": 3.0000000000000027,
+    "retorno_anualizado_pct": 543.7913785074596,
+    "vol_anualizada_pct": 32.02415766767408,
+    "downside_deviation_anualizada_pct": 10.95284294740004,
+    "downside_target_periodic_pct": 0.0,
+    "max_drawdown_pct": -0.9803921568627416,
+    "drawdown": {
+      "peak_date": "2024-01-03",
+      "trough_date": "2024-01-04",
+      "recovery_date": "2024-01-05",
+      "depth_pct": -0.9803921568627416,
+      "time_to_trough_intervals": 1,
+      "recovery_intervals": 1,
+      "duration_intervals": 2,
+      "recovered": true
+    },
+    "evidencia": {
+      "fonte": "b3",
+      "instrument_ids": ["i-petr4"],
+      "tickers": ["PETR4"],
+      "index_codes": [],
+      "cutoff_date": "2024-01-06",
+      "as_of": "2024-01-06",
+      "n_observacoes": 5,
+      "lacunas": [],
+      "metodo": "risco_retorno:adjusted_close:retrospective_as_known_now:log:base_252",
+      "nota_metodo": "Preços ajustados retrospectivamente com corporate actions disponíveis hoje; essa série não representa um vintage histórico reproduzível no cutoff. Retorno log entre observações consecutivas; anualização geométrica; volatilidade = desvio-padrão amostral × raiz(252); downside deviation anualizada usa target periódico 0% e raiz(252); drawdown é medido contra o pico corrente, com duração/recuperação em intervalos observados. Métrica descritiva sobre preços oficiais passados; retorno passado não indica retorno futuro. Não é tese, previsão nem indicação de compra ou venda.",
+      "suficiente": true,
+      "avisos": ["adjusted_close_retrospective"],
+      "metricas": {
+        "retorno_acumulado_pct": 3.0000000000000027,
+        "retorno_anualizado_pct": 543.7913785074596,
+        "vol_anualizada_pct": 32.02415766767408,
+        "downside_deviation_anualizada_pct": 10.95284294740004,
+        "max_drawdown_pct": -0.9803921568627416
+      },
+      "ingestion_batch_ids": ["batch-risk-1"]
+    }
+  }
+}

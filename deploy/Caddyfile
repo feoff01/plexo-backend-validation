@@ -1,0 +1,74 @@
+# A API atende em HTTP na 80 e em HTTPS na 443. As duas ao mesmo tempo, DE PROPÓSITO — ver abaixo.
+#
+# O QUE ESTAVA ERRADO
+#   A configuração anterior punha o HTTPS na porta 81 "para quando o Security Group a liberar", e
+#   comentava que "o navegador nunca fala HTTP". A segunda parte é verdade e não é o ponto: o
+#   `next.config.ts` da Vercel reescreve `/api/*` para `http://<ip-da-ec2>`, então a perna
+#   navegador→Vercel é TLS e a perna **Vercel→EC2 atravessa a internet pública em claro**,
+#   carregando o corpo de `POST /auth/login` com a senha, o `Cookie: plx_sessao` de toda chamada
+#   seguinte, e as respostas de `/carteira` e `/perfil` com posições, renda, dívidas e objetivos.
+#   `COOKIE_SECURE=true` não ajuda: a exposição é servidor-a-servidor.
+#
+# POR QUE O HTTP CONTINUA AQUI, E POR QUANTO TEMPO
+#   Porque é por ele que a Vercel fala HOJE. Trocar para redirecionar 80→443 antes de a 443 estar
+#   aberta no Security Group derrubaria a API — a Vercel receberia um 308 para uma porta que não
+#   responde. Este arquivo é ADITIVO: nada que funciona hoje para de funcionar. A troca é feita em
+#   passos, e o último remove o HTTP daqui (ver `deploy/README-tls.md`).
+#
+# COMO O CERTIFICADO SAI ANTES DE A 443 ABRIR
+#   `disable_tlsalpn_challenge` força o desafio HTTP-01, que roda na porta 80 — já aberta. O
+#   certificado é emitido no primeiro `docker compose up` com este arquivo, mesmo com a 443 ainda
+#   fechada de fora. `sslip.io` está na Public Suffix List, então a Let's Encrypt emite para
+#   `3-236-177-183.sslip.io` normalmente.
+{
+	http_port 80
+	# `https_port` volta ao padrão (443). A 81 não existia para ninguém de fora e mantê-la só
+	# dava a impressão de que havia HTTPS.
+}
+
+(api) {
+	encode zstd gzip
+
+	# SSE do turno: sem buffer e sem timeout curto
+	reverse_proxy api:8000 {
+		flush_interval -1
+		transport http {
+			read_timeout 10m
+			write_timeout 10m
+		}
+
+		# SUBSTITUI o X-Forwarded-For em vez de anexar a ele. Sem isto o cabeçalho fica
+		# `<o que o cliente mandou>, <peer real>`, e qualquer coisa a jusante que leia a ponta
+		# esquerda lê o valor do atacante. O uvicorn com `--forwarded-allow-ips` restrito já
+		# percorre a lista em ordem reversa e acerta (ver Dockerfile), mas o cabeçalho também
+		# vai para log e para o `ip_address` gravado no audit: dado forjado não deve nem entrar.
+		header_up X-Forwarded-For {remote_host}
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}
+
+# --- HTTP (a porta que a Vercel usa hoje) -------------------------------------------------
+# Sai daqui no passo 4 do README-tls, depois que a Vercel estiver apontando para HTTPS.
+http://3.236.177.183:80, http://3-236-177-183.sslip.io:80 {
+	import api
+}
+
+# --- HTTPS (o destino) --------------------------------------------------------------------
+# Só pelo nome: certificado não se emite para endereço IP.
+https://3-236-177-183.sslip.io {
+	import api
+
+	tls {
+		issuer acme {
+			disable_tlsalpn_challenge
+		}
+	}
+
+	# HSTS só neste bloco. Se estivesse no (api) compartilhado, o cabeçalho sairia também nas
+	# respostas HTTP, onde ele não tem efeito e confunde quem audita.
+	header Strict-Transport-Security "max-age=31536000"
+}

@@ -1,0 +1,53 @@
+{
+  "resolvido": {
+    "termo": "Selic",
+    "fonte": "bacen_copom",
+    "encontrados": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "fonte": "bacen_copom",
+        "publisher": "Banco Central do Brasil",
+        "titulo": "280ª reunião - Copom reduz a taxa Selic para 14,00% a.a.",
+        "publicado_em": "2026-08-05",
+        "url": "https://www.bcb.gov.br/publicacoes/comunicados/280",
+        "trecho": "…O Copom decidiu reduzir a taxa Selic para 14,00% a.a., em linha com o cenário de convergência da inflação…"
+      }
+    ],
+    "trecho_chars": 700,
+    "max_documentos": 3
+  },
+  "esperado": {
+    "termo": "Selic",
+    "documentos": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "fonte": "bacen_copom",
+        "publisher": "Banco Central do Brasil",
+        "titulo": "280ª reunião - Copom reduz a taxa Selic para 14,00% a.a.",
+        "publicado_em": "2026-08-05",
+        "url": "https://www.bcb.gov.br/publicacoes/comunicados/280",
+        "trecho": "…O Copom decidiu reduzir a taxa Selic para 14,00% a.a., em linha com o cenário de convergência da inflação…"
+      }
+    ],
+    "evidencia_documental": {
+      "fonte": "bacen_copom",
+      "documentos": [
+        {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "fonte": "bacen_copom",
+          "publisher": "Banco Central do Brasil",
+          "titulo": "280ª reunião - Copom reduz a taxa Selic para 14,00% a.a.",
+          "publicado_em": "2026-08-05",
+          "url": "https://www.bcb.gov.br/publicacoes/comunicados/280"
+        }
+      ],
+      "as_of": "2026-08-05",
+      "n_documentos": 1,
+      "metodo": "trecho literal de documento aprovado, recortado em torno do termo procurado",
+      "nota": "Trecho literal do documento oficial citado, na data indicada. É o que o emissor publicou — não é análise da Plexo nem indicação de investimento.",
+      "suficiente": true,
+      "avisos": []
+    },
+    "nota": "Trecho literal do documento oficial citado, na data indicada. É o que o emissor publicou — não é análise da Plexo nem indicação de investimento."
+  }
+}

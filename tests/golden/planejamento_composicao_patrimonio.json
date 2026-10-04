@@ -1,0 +1,123 @@
+{
+  "resolvido": {
+    "as_of_date": "2026-08-26",
+    "posicoes": [
+      {
+        "classe": "acoes_br",
+        "rotulo": "Ações Brasil",
+        "grupo": "renda_variavel",
+        "valor_brl": 142000.0
+      },
+      {
+        "classe": "ipca",
+        "rotulo": "Inflação (IPCA+)",
+        "grupo": "renda_fixa",
+        "valor_brl": 140000.0
+      },
+      {
+        "classe": "caixa",
+        "rotulo": "Caixa e liquidez",
+        "grupo": "caixa",
+        "valor_brl": 95000.0
+      },
+      {
+        "classe": "fii",
+        "rotulo": "Fundos imobiliários",
+        "grupo": "renda_variavel",
+        "valor_brl": 71000.0
+      },
+      {
+        "classe": "multimercado",
+        "rotulo": "Multimercado",
+        "grupo": "alternativos",
+        "valor_brl": 38000.0
+      }
+    ],
+    "total_investido_brl": 486000.0,
+    "contas": 2,
+    "incluir_nao_financeiro": true,
+    "nao_financeiro_brl": 1365000.0,
+    "imoveis_brl": 1270000.0,
+    "iliquido_brl": 0.0,
+    "passivo_brl": 329500.0,
+    "patrimonio_liquido_brl": 1521500.0
+  },
+  "esperado": {
+    "as_of": "2026-08-26",
+    "total_investido_brl": 486000.0,
+    "composicao": [
+      {
+        "classe": "acoes_br",
+        "rotulo": "Ações Brasil",
+        "grupo": "renda_variavel",
+        "valor_brl": 142000.0,
+        "share_pct": 29.22
+      },
+      {
+        "classe": "ipca",
+        "rotulo": "Inflação (IPCA+)",
+        "grupo": "renda_fixa",
+        "valor_brl": 140000.0,
+        "share_pct": 28.81
+      },
+      {
+        "classe": "caixa",
+        "rotulo": "Caixa e liquidez",
+        "grupo": "caixa",
+        "valor_brl": 95000.0,
+        "share_pct": 19.55
+      },
+      {
+        "classe": "fii",
+        "rotulo": "Fundos imobiliários",
+        "grupo": "renda_variavel",
+        "valor_brl": 71000.0,
+        "share_pct": 14.61
+      },
+      {
+        "classe": "multimercado",
+        "rotulo": "Multimercado",
+        "grupo": "alternativos",
+        "valor_brl": 38000.0,
+        "share_pct": 7.82
+      }
+    ],
+    "por_grupo": [
+      {
+        "grupo": "renda_variavel",
+        "valor_brl": 213000.0,
+        "share_pct": 43.83
+      },
+      {
+        "grupo": "renda_fixa",
+        "valor_brl": 140000.0,
+        "share_pct": 28.81
+      },
+      {
+        "grupo": "caixa",
+        "valor_brl": 95000.0,
+        "share_pct": 19.55
+      },
+      {
+        "grupo": "alternativos",
+        "valor_brl": 38000.0,
+        "share_pct": 7.82
+      }
+    ],
+    "classes": 5,
+    "contas": 2,
+    "maior_classe": "acoes_br",
+    "maior_classe_share_pct": 29.22,
+    "nao_financeiro_brl": 1365000.0,
+    "imoveis_brl": 1270000.0,
+    "outros_bens_brl": 95000.0,
+    "iliquido_brl": 0.0,
+    "passivo_brl": 329500.0,
+    "patrimonio_liquido_brl": 1521500.0,
+    "fonte": "wealth.holdings_snapshots",
+    "avisos": [
+      "ha_passivo_no_consolidado"
+    ],
+    "nota": "Composição declarada pelo cliente e registrada no escopo, na data de referência indicada. É descrição do que está registrado, não avaliação de adequação nem indicação de investimento."
+  }
+}
