@@ -1022,3 +1022,30 @@ Transversais ainda abertas:
 - [x] checkpoint final `.ai/checkpoints/2026-10-03_RISK_ROLLING_1_2_GREEN.md`;
 - [ ] reabrir capability audit restante; não assumir nova FQ automaticamente.
 
+## Pós-risco 1.2 — Brent spot / EIA
+
+### Audit/design
+- [x] descontar `quant.risco_retorno` 1.2.0 das lacunas;
+- [x] reauditar Brent vs fair value;
+- [x] identificar EIA `RBRTE` como fonte candidata de Brent spot;
+- [x] corrigir classificação para fonte + schema/fundação + loader/factor contract;
+- [x] congelar source audit;
+- [x] congelar design da fundação Brent;
+- [x] manter fair value/reverse DCF bloqueado por matemática/premissas governadas.
+
+### Próximo gate — source physical/legal
+- [ ] materializar payload machine-readable oficial EIA da RBRTE;
+- [ ] registrar SHA-256;
+- [ ] confirmar series id, daily frequency, USD/barril, first/latest observation;
+- [ ] capturar campo específico de copyright/licença;
+- [ ] congelar fixture real e parser contract;
+- [ ] encerrar gate antes de schema/loader.
+
+### Depois do source gate
+- [ ] source `eia` + migration nova;
+- [ ] commodity definitions/values append-only por ingestion batch;
+- [ ] ingestão idempotente/fail-closed;
+- [ ] loader strict PIT por finished_at;
+- [ ] PostgreSQL 18 + provenance/quality;
+- [ ] somente depois reauditar cutover público de `FactorRef(tipo="commodity")`.
+
