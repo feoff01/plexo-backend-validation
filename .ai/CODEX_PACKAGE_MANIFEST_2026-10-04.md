@@ -7,6 +7,11 @@ Instalar preservando caminhos relativos na raiz do backend/repositório alvo.
 ## 1. Arquivos obrigatórios — núcleo
 
 ### Raiz
+- `CODEX_BOOTSTRAP.md`
+  - entrypoint manual de uma única linha;
+  - evita colar prompts longos no Codex;
+  - encaminha para todo o contexto canônico.
+
 - `AGENTS.md`
   - instruções automáticas do Codex;
   - arquitetura;
