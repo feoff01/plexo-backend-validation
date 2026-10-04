@@ -913,3 +913,19 @@ Primeira tranche obrigatória do Codex:
 
 A referência continua com 18 tools públicas de Company & Market e baseline funcional GREEN no run #341. No backend real, cada tool começa como UNMAPPED e só chega a PROD_GREEN após data/método/PIT/provenance/LLM/E2E/shadow.
 
+## 2026-10-04 — pacote final Codex consolidado
+
+Criados:
+- `.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`;
+- `CODEX_PACKAGE_README.md`.
+
+Estado de CI mais recente observado:
+- run #367 / `37227204860`;
+- 184 directed passed / 2 failed;
+- exatamente as mesmas duas falhas strict-PIT de yield curve/index composition após rollover UTC;
+- nenhuma nova regressão funcional identificada.
+
+Último baseline funcional integralmente GREEN continua sendo `bf16dfd561f97e136060d77d80f50092cdc4538d`, run #341.
+
+Para o Codex, a entrada atual é `.ai/CODEX_START_HERE_2026-10-04.md` + `.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`.
+
