@@ -771,3 +771,14 @@
 - run #334 / `37162747600` GREEN: 186 directed; 929 passed, 53 skipped, 19 warnings, 0 failed; prompts/tools sync GREEN;
 - catálogo permanece 37 total / 34 públicas / 3 ocultas-replay.
 
+## 2026-10-03 — audit/design pós-risco 1.2
+- reaberto capability audit de Company & Market Analytics após `quant.risco_retorno` 1.2.0;
+- Brent/commodities selecionado como próxima frente por reuse-before-build;
+- EIA `RBRTE` identificada como fonte candidata de Brent spot Europe FOB em USD/barril;
+- gap corrigido de fonte+loader para fonte + schema/fundação + loader/factor contract;
+- criado `.ai/COMPANY_MARKET_DELTA_AUDIT_POST_RISK_1_2_2026-10-03.md`;
+- criado `.ai/BRENT_EIA_SOURCE_AUDIT_2026-10-03.md`;
+- criado `.ai/BRENT_FACTOR_FOUNDATION_DESIGN_2026-10-03.md`;
+- criado checkpoint `.ai/checkpoints/2026-10-03_POST_RISK_1_2_BRENT_DESIGN_FROZEN.md`;
+- nenhuma tool, migration, schema, loader, semver, planner ou cálculo alterado nesta tranche.
+
