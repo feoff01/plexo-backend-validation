@@ -878,3 +878,13 @@ O repo não possui hoje unidade USD/barril em `market.index_definitions` nem `Fa
 
 Fair value/reverse DCF continua bloqueado por matemática contratual e premissas governadas. Portfolio Analytics permanece fora do escopo.
 
+## 2026-10-03 — Codex onboarding handoff criado / CI temporal pendente
+
+Criado `.ai/CODEX_DATA_ONBOARDING_HANDOFF_2026-10-03.md` para transferir ao Codex o contexto completo de arquitetura, tools, gates, estado de Brent/fair value e protocolo de auditoria read-only da base grande do usuário.
+
+Baseline funcional confiável permanece HEAD `bf16dfd561f97e136060d77d80f50092cdc4538d`, run #341 GREEN: 186 directed; 929 passed, 53 skipped, 19 warnings, 0 failed; catálogo 37/34/3.
+
+O HEAD documental `2f962de8a2800480bf2800cf41b04d01298cfb05` falhou no run #347 depois da virada UTC para 2026-10-04: 184 directed passed / 2 failed. As falhas são fixtures strict-PIT de yield curve e index composition que ingerem snapshot histórico com `finished_at=clock_timestamp()` e consultam cutoff fixo 2026-10-03. Com o runner em 2026-10-04, o loader corretamente esconde o lote. Não enfraquecer strict PIT; tornar disponibilidade temporal dos testes explícita/determinística antes de adotar novo baseline GREEN.
+
+Para onboarding da base externa: primeira entrega obrigatória do Codex é audit read-only + matriz de mapping/reuse; nenhum adapter/tool deve ser criado antes desse audit.
+
