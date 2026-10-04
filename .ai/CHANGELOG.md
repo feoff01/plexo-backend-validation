@@ -782,3 +782,16 @@
 - criado checkpoint `.ai/checkpoints/2026-10-03_POST_RISK_1_2_BRENT_DESIGN_FROZEN.md`;
 - nenhuma tool, migration, schema, loader, semver, planner ou cálculo alterado nesta tranche.
 
+## 2026-10-04 — pacote de integração backend/LLM real
+- criado `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`;
+- criado `.ai/FINANCIAL_TOOL_CORRECTNESS_STANDARD_2026-10-04.md`;
+- criado `.ai/TOOL_INTEGRATION_CERTIFICATION_MATRIX_2026-10-04.md`;
+- criado `.ai/PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`;
+- criado `.ai/CODEX_PRODUCTION_INTEGRATION_RUNBOOK_2026-10-04.md`;
+- criado `.ai/CODEX_PRODUCTION_INTEGRATION_FIRST_MESSAGE_2026-10-04.md`;
+- criados templates de production backend discovery e external DB audit;
+- criado `.ai/CODEX_START_HERE_2026-10-04.md`;
+- atualizado `AGENTS.md`;
+- criado checkpoint `.ai/checkpoints/2026-10-04_CODEX_PRODUCTION_INTEGRATION_PACKAGE_READY.md`;
+- nenhuma alteração funcional em tool/cálculo/schema nesta tranche.
+
