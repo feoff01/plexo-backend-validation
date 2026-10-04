@@ -558,3 +558,21 @@ Antes de código é obrigatório congelar um payload machine-readable oficial EI
 
 Fair value/reverse DCF continua posterior porque exige matemática contratual e premissas governadas.
 
+## Override 2026-10-04 — integração produção
+
+A fase atual é integrar/certificar o pacote de Company & Market no backend/LLM real, não continuar construindo capabilities em isolamento.
+
+Novos documentos canônicos:
+- `.ai/CODEX_START_HERE_2026-10-04.md`;
+- `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`;
+- `.ai/FINANCIAL_TOOL_CORRECTNESS_STANDARD_2026-10-04.md`;
+- `.ai/TOOL_INTEGRATION_CERTIFICATION_MATRIX_2026-10-04.md`;
+- `.ai/PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`;
+- `.ai/CODEX_PRODUCTION_INTEGRATION_RUNBOOK_2026-10-04.md`.
+
+O Codex deve primeiro descobrir o backend deployado e o banco real, produzir mapping e provar vertical slice LLM->tool->DB->cálculo->output->LLM. Não assumir que este repo de validação é estruturalmente idêntico ao backend final.
+
+Validação agora exige três camadas independentes: dado correto, método correto e orquestração LLM correta. Tool que apenas retorna número não é produção-ready.
+
+Novas capabilities, inclusive Brent e fair value, ficam depois do `POST_INTEGRATION_CAPABILITY_AUDIT`.
+
