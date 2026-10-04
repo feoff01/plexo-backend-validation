@@ -75,15 +75,22 @@ Não reinventar essa separação.
 
 ## 5. CI atual conhecido
 
-Commits documentais posteriores apresentam 2 falhas strict-PIT dependentes do relógio:
-- yield curve DB fixture;
-- index composition DB fixture.
+HEAD documental/integration package anterior a esta atualização:
+`93e2de958b918ea1689e6844971e23dd347c5a72`
+
+Run #367 / `37227204860`:
+- **184 passed / 2 failed** no directed gate;
+- falhas:
+  - `tests/test_fq57_yield_curve_db.py::test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertices`;
+  - `tests/test_index_composition_db.py::test_index_composition_loader_reuses_official_snapshot_and_tool_is_compact`.
+
+São as mesmas duas falhas temporais observadas desde o rollover UTC.
 
 Causa:
-batch fechado hoje por `clock_timestamp()` + cutoff histórico fixo.
+batch de fixture fechado por `clock_timestamp()` + cutoff histórico fixo `2026-10-03`.
 
 Não enfraquecer strict PIT.
-Corrigir disponibilidade temporal da fixture.
+Corrigir disponibilidade temporal da fixture/batch.
 
 Esse é o primeiro gate técnico antes de declarar novo baseline GREEN.
 
