@@ -1,0 +1,77 @@
+{
+  "blocos": [
+    {
+      "tipo": "atencao",
+      "id": "exec-1:1",
+      "titulo": "Pontos de atenção",
+      "subtitulo": "sobre a carteira registrada de R$ 775.046,00",
+      "dados": {
+        "itens": [
+          {
+            "titulo": "Concentração em um único emissor",
+            "gravidade": "crítico",
+            "familia": "risco",
+            "leitura": "46,9% da carteira está em Itaú Unibanco, somando ações, títulos e fundos do mesmo grupo — R$ 363.840,00. A referência de diversificação usada aqui é 20,0% por emissor.",
+            "impacto": null,
+            "unidade_do_impacto": null
+          },
+          {
+            "titulo": "Caixa parado além da reserva",
+            "gravidade": "alto",
+            "familia": "alocacao",
+            "leitura": "R$ 113.000,00 em caixa, contra R$ 69.000,00 de reserva de emergência calculada para o seu custo de vida — R$ 44.000,00 além dela.",
+            "impacto": 44000.0,
+            "unidade_do_impacto": "valor_parado_brl"
+          },
+          {
+            "titulo": "Exposição acima do limite do FGC",
+            "gravidade": "alto",
+            "familia": "risco",
+            "leitura": "R$ 270.000,00 em produtos cobertos pelo FGC no Itaú Unibanco, contra um teto de R$ 250.000,00 por instituição. R$ 20.000,00 ficam fora dessa cobertura.",
+            "impacto": 20000.0,
+            "unidade_do_impacto": "valor_exposto_brl"
+          },
+          {
+            "titulo": "Fundo com taxa acima do equivalente",
+            "gravidade": "alto",
+            "familia": "custo",
+            "leitura": "Fundo multimercado macro cobra 2,8% ao ano de administração, contra 2,0% de referência para a classe — R$ 240,00 por ano sobre R$ 30.000,00 aplicados.",
+            "impacto": 240.0,
+            "unidade_do_impacto": "custo_ano_brl"
+          },
+          {
+            "titulo": "Parcela excessiva em D+30 ou mais",
+            "gravidade": "médio",
+            "familia": "liquidez",
+            "leitura": "15,5% da carteira (R$ 120.000,00) só pode ser resgatada em D+30 ou mais. A referência usada é 10,0%.",
+            "impacto": null,
+            "unidade_do_impacto": null
+          }
+        ],
+        "ocultos": 1,
+        "ocultos_familias": [
+          "alocacao"
+        ],
+        "plano": "advanced",
+        "cobertura_pct": 100.0,
+        "nao_diagnosticado": {
+          "sem_emissor_para_concentracao": 18000.0
+        }
+      },
+      "proveniencia": {
+        "fonte": "diagnostics.findings",
+        "as_of": "2026-08-30",
+        "cutoff_date": null,
+        "n": 5,
+        "metodo": "posições registradas medidas contra as referências versionadas da plataforma",
+        "premissas": {},
+        "avisos": [
+          "Há pontos de atenção que o seu plano atual não abre.",
+          "Parte da carteira não pôde ser diagnosticada por falta de cadastro."
+        ],
+        "lacunas": 1
+      },
+      "nota": "Diagnóstico sobre as posições registradas no escopo, medido contra as referências versionadas da plataforma na data indicada. Aponta o que foi medido, não o que fazer com o dinheiro."
+    }
+  ]
+}

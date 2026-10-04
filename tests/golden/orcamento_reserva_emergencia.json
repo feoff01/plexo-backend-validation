@@ -1,0 +1,33 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "custo_mensal_brl": 8000.0,
+    "fonte_custo": "media_monthly_summaries",
+    "meses_media_custo": 6,
+    "meses_alvo": 6.0,
+    "fonte_meses_alvo": "reserve_settings",
+    "meses_minimos": 3.0,
+    "saldo_reserva_brl": 46000.0,
+    "fonte_saldo": "parametro",
+    "aporte_mensal_brl": 2000.0,
+    "variable_share": 0.4,
+    "premissas": {"FOUNDATION_THRESHOLDS": {"reserva_meses_min": 3, "reserva_meses_alvo": 6, "divida_cara_spread_sobre_cdi": 0.06}}
+  },
+  "esperado": {
+    "custo_mensal_brl": 8000.0,
+    "meses_cobertos": 5.75,
+    "alvo_meses": 6.0,
+    "alvo_brl": 48000.0,
+    "minimo_meses": 3.0,
+    "minimo_brl": 24000.0,
+    "gap_para_alvo_brl": 2000.0,
+    "gap_para_minimo_brl": 0.0,
+    "meses_para_fechar_alvo": 1,
+    "acima_do_minimo": true,
+    "no_alvo": false,
+    "variable_share": 0.4,
+    "avisos": [],
+    "premissas_usadas": {"reserva_meses_min": 3.0, "reserva_meses_alvo": 6.0},
+    "fontes": {"custo": "media_monthly_summaries", "meses_alvo": "reserve_settings", "saldo": "parametro"}
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "conceito": "ir_regressivo",
+    "slug": "ir-regressivo-renda-fixa",
+    "titulo_conteudo": "Tabela regressiva do IR",
+    "valor_brl": 10000.0,
+    "fonte_valor": "policy",
+    "prazo_meses": 24,
+    "parametros": {
+      "rendimento_aa_pct": 10,
+      "dias_por_mes": 30,
+      "meses_por_ano": 12,
+      "prazo_meses_padrao": 24,
+      "faixas": [
+        {
+          "ate_dias": 180,
+          "aliquota_pct": 22.5
+        },
+        {
+          "ate_dias": 360,
+          "aliquota_pct": 20
+        },
+        {
+          "ate_dias": 720,
+          "aliquota_pct": 17.5
+        },
+        {
+          "ate_dias": null,
+          "aliquota_pct": 15
+        }
+      ]
+    }
+  },
+  "esperado": {
+    "conceito": "ir_regressivo",
+    "slug": "ir-regressivo-renda-fixa",
+    "titulo_conteudo": "Tabela regressiva do IR",
+    "valor_base_brl": 10000.0,
+    "linhas": [
+      {
+        "rotulo": "valor aplicado",
+        "valor_brl": 10000.0,
+        "detalhe": ""
+      },
+      {
+        "rotulo": "rendimento em 24 meses",
+        "valor_brl": 2000.0,
+        "detalhe": "10% a.a. simples (didático)"
+      },
+      {
+        "rotulo": "imposto se resgatado até 180 dias",
+        "valor_brl": 450.0,
+        "detalhe": "22.5%"
+      },
+      {
+        "rotulo": "imposto se resgatado até 360 dias",
+        "valor_brl": 400.0,
+        "detalhe": "20.0%"
+      },
+      {
+        "rotulo": "imposto se resgatado até 720 dias",
+        "valor_brl": 350.0,
+        "detalhe": "17.5%"
+      },
+      {
+        "rotulo": "imposto se resgatado acima do último limite",
+        "valor_brl": 300.0,
+        "detalhe": "15.0%"
+      },
+      {
+        "rotulo": "imposto neste prazo (720 dias)",
+        "valor_brl": 350.0,
+        "detalhe": "17.5%"
+      }
+    ],
+    "leitura": "Quanto mais tempo a aplicação fica, menor a alíquota sobre o rendimento — é a tabela regressiva.",
+    "premissas_usadas": {
+      "EDUCACAO_EXEMPLOS": {
+        "ir_regressivo": {
+          "rendimento_aa_pct": 10,
+          "dias_por_mes": 30,
+          "meses_por_ano": 12,
+          "prazo_meses_padrao": 24,
+          "faixas": [
+            {
+              "ate_dias": 180,
+              "aliquota_pct": 22.5
+            },
+            {
+              "ate_dias": 360,
+              "aliquota_pct": 20
+            },
+            {
+              "ate_dias": 720,
+              "aliquota_pct": 17.5
+            },
+            {
+              "ate_dias": null,
+              "aliquota_pct": 15
+            }
+          ]
+        },
+        "fonte_valor": "policy"
+      }
+    }
+  }
+}

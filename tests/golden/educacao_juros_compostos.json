@@ -1,0 +1,46 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "valor_inicial_brl": 1000.0,
+    "aporte_mensal_brl": 100.0,
+    "taxa_anual_pct": 12.0,
+    "prazo_anos": 2,
+    "premissas": {
+      "EDUCACAO_PARAMS": {
+        "prazo_max_anos": 50,
+        "taxa_max_aa_pct": 100
+      }
+    }
+  },
+  "esperado": {
+    "valor_inicial_brl": 1000.0,
+    "aporte_mensal_brl": 100.0,
+    "taxa_anual_pct": 12.0,
+    "taxa_mensal_equivalente_pct": 0.95,
+    "prazo_anos": 2,
+    "total_aportado_brl": 3400.0,
+    "montante_final_brl": 3935.46,
+    "juros_totais_brl": 535.46,
+    "serie_anual": [
+      {
+        "ano": 1,
+        "aportado_acumulado_brl": 2200.0,
+        "montante_brl": 2384.65,
+        "juros_acumulados_brl": 184.65
+      },
+      {
+        "ano": 2,
+        "aportado_acumulado_brl": 3400.0,
+        "montante_brl": 3935.46,
+        "juros_acumulados_brl": 535.46
+      }
+    ],
+    "metodo": "capitalizacao_mensal_aporte_fim_do_mes",
+    "premissas_usadas": {
+      "EDUCACAO_PARAMS": {
+        "prazo_max_anos": 50,
+        "taxa_max_aa_pct": 100
+      }
+    }
+  }
+}

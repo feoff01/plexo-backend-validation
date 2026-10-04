@@ -1,0 +1,100 @@
+{
+  "blocos": [
+    {
+      "tipo": "barras",
+      "id": "exec-1:1",
+      "titulo": "De onde vem a capacidade de aporte",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Renda fixa",
+            "valor": 12000.0
+          },
+          {
+            "rotulo": "Piso da variável (p10)",
+            "valor": 2000.0
+          },
+          {
+            "rotulo": "Média da variável",
+            "valor": 8000.0,
+            "destaque": "referencia",
+            "detalhe": "só referência: a capacidade usa o piso"
+          }
+        ],
+        "formato": "brl",
+        "referencia": {
+          "rotulo": "capacidade mensal",
+          "valor": 6000.0
+        }
+      },
+      "proveniencia": {
+        "fonte": "renda do escopo (income_summaries)",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "sobra_sobre_o_piso_da_renda",
+        "premissas": {
+          "meses_minimos_para_p10": 6
+        },
+        "avisos": [
+          "Existe dívida cara ativa, e ela vem antes de aportar."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Simulação ILUSTRATIVA sob as premissas indicadas; não é projeção de rentabilidade nem indicação de investimento."
+    },
+    {
+      "tipo": "tabela",
+      "id": "exec-1:2",
+      "titulo": "Dívidas caras ativas",
+      "subtitulo": null,
+      "dados": {
+        "colunas": [
+          {
+            "chave": "descricao",
+            "rotulo": "Dívida"
+          },
+          {
+            "chave": "outstanding_brl",
+            "rotulo": "Saldo",
+            "formato": "brl"
+          },
+          {
+            "chave": "annual_rate",
+            "rotulo": "Juros a.a.",
+            "formato": "pct_fracao"
+          },
+          {
+            "chave": "custo_anual_estimado_brl",
+            "rotulo": "Custo anual estimado",
+            "formato": "brl"
+          }
+        ],
+        "linhas": [
+          {
+            "descricao": "cartão",
+            "outstanding_brl": 15000.0,
+            "annual_rate": 0.9,
+            "custo_anual_estimado_brl": 13500.0
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "renda do escopo (income_summaries)",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "sobra_sobre_o_piso_da_renda",
+        "premissas": {
+          "meses_minimos_para_p10": 6
+        },
+        "avisos": [
+          "Existe dívida cara ativa, e ela vem antes de aportar."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Simulação ILUSTRATIVA sob as premissas indicadas; não é projeção de rentabilidade nem indicação de investimento."
+    }
+  ]
+}

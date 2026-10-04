@@ -1,0 +1,54 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "termo": "come-cotas",
+    "termo_normalizado": "come-cotas",
+    "nivel_usado": "basico",
+    "fonte_nivel": "policy",
+    "itens": [
+      {
+        "slug": "come-cotas",
+        "title": "Come-cotas",
+        "level": "basico",
+        "tags": [
+          "fundos",
+          "imposto"
+        ],
+        "body_md": "O come-cotas é a antecipação semestral do imposto.  Segunda frase   com espaços."
+      },
+      {
+        "slug": "ir-regressivo-renda-fixa",
+        "title": "IR regressivo",
+        "level": "intermediario",
+        "tags": [
+          "imposto"
+        ],
+        "body_md": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ],
+    "max_itens": 1,
+    "trecho_chars": 40
+  },
+  "esperado": {
+    "encontrado": true,
+    "termo": "come-cotas",
+    "nivel_usado": "basico",
+    "fonte_nivel": "policy",
+    "itens": [
+      {
+        "slug": "come-cotas",
+        "title": "Come-cotas",
+        "level": "basico",
+        "tags": [
+          "fundos",
+          "imposto"
+        ],
+        "trecho": "O come-cotas é a antecipação semestral d…"
+      }
+    ],
+    "slugs": [
+      "come-cotas"
+    ],
+    "nota": "Explique com base APENAS nos trechos acima e cite o slug de cada um."
+  }
+}

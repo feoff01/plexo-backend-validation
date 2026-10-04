@@ -1,0 +1,55 @@
+{
+  "_comentario": "Golden master da parte PURA da tool (calcular). Se um número mudar, é decisão humana: ou regressão, ou premissa nova — justificar no commit.",
+  "resolvido": {
+    "conceito": "taxa_administracao",
+    "slug": "taxa-de-administracao",
+    "titulo_conteudo": "Taxa de administração",
+    "valor_brl": 10000.0,
+    "fonte_valor": "policy",
+    "prazo_meses": null,
+    "parametros": {
+      "taxa_aa_pct": 2.0,
+      "rendimento_bruto_aa_pct": 10,
+      "anos": 10
+    }
+  },
+  "esperado": {
+    "conceito": "taxa_administracao",
+    "slug": "taxa-de-administracao",
+    "titulo_conteudo": "Taxa de administração",
+    "valor_base_brl": 10000.0,
+    "linhas": [
+      {
+        "rotulo": "valor aplicado",
+        "valor_brl": 10000.0,
+        "detalhe": ""
+      },
+      {
+        "rotulo": "montante em 10 anos sem taxa",
+        "valor_brl": 25937.42,
+        "detalhe": "10% a.a. (didático)"
+      },
+      {
+        "rotulo": "montante em 10 anos com taxa de 2.0% a.a.",
+        "valor_brl": 21589.25,
+        "detalhe": "rendimento líquido = bruto − taxa"
+      },
+      {
+        "rotulo": "diferença atribuível à taxa",
+        "valor_brl": 4348.17,
+        "detalhe": ""
+      }
+    ],
+    "leitura": "A taxa de administração é cobrada todo ano sobre o patrimônio, esteja o fundo subindo ou não; ao longo do tempo a diferença cresce por juros compostos.",
+    "premissas_usadas": {
+      "EDUCACAO_EXEMPLOS": {
+        "taxa_administracao": {
+          "taxa_aa_pct": 2.0,
+          "rendimento_bruto_aa_pct": 10,
+          "anos": 10
+        },
+        "fonte_valor": "policy"
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output educacao_exemplo_come_cotas.json pela tool educacao.exemplo_didatico. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "tabela",
+      "id": "exec-1:1",
+      "titulo": "Come-cotas",
+      "subtitulo": null,
+      "dados": {
+        "colunas": [
+          {
+            "chave": "rotulo",
+            "rotulo": "Item"
+          },
+          {
+            "chave": "valor_brl",
+            "rotulo": "Valor",
+            "formato": "brl"
+          },
+          {
+            "chave": "detalhe",
+            "rotulo": "Premissa"
+          }
+        ],
+        "linhas": [
+          {
+            "rotulo": "valor aplicado",
+            "valor_brl": 10000.0,
+            "detalhe": ""
+          },
+          {
+            "rotulo": "rendimento no semestre",
+            "valor_brl": 500.0,
+            "detalhe": "5% (didático)"
+          },
+          {
+            "rotulo": "come-cotas em fundo de curto prazo",
+            "valor_brl": 100.0,
+            "detalhe": "20% sobre o rendimento"
+          },
+          {
+            "rotulo": "come-cotas em fundo de longo prazo",
+            "valor_brl": 75.0,
+            "detalhe": "15% sobre o rendimento"
+          },
+          {
+            "rotulo": "saldo após o come-cotas (longo prazo)",
+            "valor_brl": 10425.0,
+            "detalhe": ""
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "verbete aprovado · come-cotas",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "",
+        "premissas": {
+          "EDUCACAO_EXEMPLOS": {
+            "come_cotas": {
+              "aliquota_curto_pct": 20,
+              "aliquota_longo_pct": 15,
+              "rendimento_semestre_pct": 5
+            },
+            "fonte_valor": "policy"
+          }
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Exemplo DIDÁTICO com a taxa informada; não é projeção de rentabilidade de nenhum produto real."
+    }
+  ]
+}

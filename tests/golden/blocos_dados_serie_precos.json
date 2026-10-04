@@ -1,0 +1,88 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output dados_serie_precos.json pela tool dados.serie_precos. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "serie",
+      "id": "exec-1:1",
+      "titulo": "Fechamentos · PETR4",
+      "subtitulo": "2024-01-02 a 2024-01-06",
+      "dados": {
+        "series": [
+          {
+            "nome": "PETR4",
+            "pontos": [
+              {
+                "x": "2024-01-02",
+                "y": 100.0
+              },
+              {
+                "x": "2024-01-03",
+                "y": 102.0
+              },
+              {
+                "x": "2024-01-04",
+                "y": 101.0
+              },
+              {
+                "x": "2024-01-05",
+                "y": 104.0
+              },
+              {
+                "x": "2024-01-06",
+                "y": 103.0
+              }
+            ]
+          }
+        ],
+        "eixo_y": {
+          "formato": "brl"
+        },
+        "empilhada": false
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-06",
+        "cutoff_date": "2024-01-06",
+        "n": 5,
+        "metodo": "fechamento_oficial_d1",
+        "premissas": {},
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    },
+    {
+      "tipo": "indicadores",
+      "id": "exec-1:2",
+      "titulo": "Pontas da série",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Primeiro fechamento",
+            "valor": 100.0,
+            "formato": "brl",
+            "detalhe": "2024-01-02"
+          },
+          {
+            "rotulo": "Último fechamento",
+            "valor": 103.0,
+            "formato": "brl",
+            "detalhe": "2024-01-06"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-06",
+        "cutoff_date": "2024-01-06",
+        "n": 5,
+        "metodo": "fechamento_oficial_d1",
+        "premissas": {},
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    }
+  ]
+}

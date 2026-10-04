@@ -1,0 +1,73 @@
+{
+  "blocos": [
+    {
+      "tipo": "progresso",
+      "id": "exec-1:1",
+      "titulo": "Correlação · A × B",
+      "subtitulo": null,
+      "dados": {
+        "valor": 1.0,
+        "minimo": -1,
+        "maximo": 1,
+        "formato": "numero",
+        "marcas": [
+          {
+            "rotulo": "sem relação",
+            "valor": 0
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-09",
+        "cutoff_date": "2024-01-20",
+        "n": 6,
+        "metodo": "pearson_retornos_simples_defasagem_1",
+        "premissas": {},
+        "avisos": [
+          "O dado mais recente disponível é anterior à data pedida."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Correlação não é causalidade nem previsão. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    },
+    {
+      "tipo": "indicadores",
+      "id": "exec-1:2",
+      "titulo": "Base da correlação",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Coeficiente (Pearson)",
+            "valor": 1.0,
+            "formato": "numero"
+          },
+          {
+            "rotulo": "Pares alinhados",
+            "valor": 6,
+            "formato": "inteiro"
+          },
+          {
+            "rotulo": "Defasagem",
+            "valor": 1,
+            "formato": "dias"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "b3",
+        "as_of": "2024-01-09",
+        "cutoff_date": "2024-01-20",
+        "n": 6,
+        "metodo": "pearson_retornos_simples_defasagem_1",
+        "premissas": {},
+        "avisos": [
+          "O dado mais recente disponível é anterior à data pedida."
+        ],
+        "lacunas": 0
+      },
+      "nota": "Correlação não é causalidade nem previsão. Métrica descritiva sobre dados oficiais passados, ILUSTRATIVA; retorno passado não indica retorno futuro e isto não é indicação de compra ou venda."
+    }
+  ]
+}

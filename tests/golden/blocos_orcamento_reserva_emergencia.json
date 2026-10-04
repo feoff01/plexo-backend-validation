@@ -1,0 +1,85 @@
+{
+  "_comentario": "Golden dos BLOCOS (F11) derivados do golden de output orcamento_reserva_emergencia.json pela tool orcamento.reserva_emergencia. Representação, não número: se um bloco mudar, é decisão humana.",
+  "blocos": [
+    {
+      "tipo": "progresso",
+      "id": "exec-1:1",
+      "titulo": "Cobertura da reserva de emergência",
+      "subtitulo": "custo mensal considerado: R$ 8.000,00",
+      "dados": {
+        "valor": 5.75,
+        "maximo": 6.0,
+        "formato": "meses",
+        "marcas": [
+          {
+            "rotulo": "mínimo",
+            "valor": 3.0
+          },
+          {
+            "rotulo": "alvo",
+            "valor": 6.0
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "orçamento do escopo",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "reserva = custo mensal × meses",
+        "premissas": {
+          "reserva_meses_min": 3.0,
+          "reserva_meses_alvo": 6.0,
+          "custo": "media_monthly_summaries",
+          "meses_alvo": "reserve_settings",
+          "saldo": "parametro"
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Simulação ILUSTRATIVA sob as premissas indicadas; não é projeção de rentabilidade nem indicação de investimento."
+    },
+    {
+      "tipo": "indicadores",
+      "id": "exec-1:2",
+      "titulo": "Distância até a referência",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Falta para o alvo",
+            "valor": 2000.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Falta para o mínimo",
+            "valor": 0.0,
+            "formato": "brl"
+          },
+          {
+            "rotulo": "Meses para fechar o alvo",
+            "valor": 1,
+            "formato": "meses"
+          }
+        ]
+      },
+      "proveniencia": {
+        "fonte": "orçamento do escopo",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "reserva = custo mensal × meses",
+        "premissas": {
+          "reserva_meses_min": 3.0,
+          "reserva_meses_alvo": 6.0,
+          "custo": "media_monthly_summaries",
+          "meses_alvo": "reserve_settings",
+          "saldo": "parametro"
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Simulação ILUSTRATIVA sob as premissas indicadas; não é projeção de rentabilidade nem indicação de investimento."
+    }
+  ]
+}

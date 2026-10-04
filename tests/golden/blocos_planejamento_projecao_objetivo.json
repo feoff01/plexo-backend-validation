@@ -1,0 +1,82 @@
+{
+  "blocos": [
+    {
+      "tipo": "barras",
+      "id": "exec-1:1",
+      "titulo": "Valor projetado no prazo",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Renda fixa",
+            "valor": 146695.92,
+            "detalhe": "retorno real 4.0% a.a."
+          },
+          {
+            "rotulo": "Renda variável",
+            "valor": 171051.73,
+            "detalhe": "retorno real 7.0% a.a."
+          }
+        ],
+        "formato": "brl",
+        "referencia": {
+          "rotulo": "objetivo",
+          "valor": 200000.0
+        }
+      },
+      "proveniencia": {
+        "fonte": "premissas de política (retornos reais)",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "Dois cenários fixos, um de renda fixa e outro de renda variável, com retornos reais definidos em premissa aprovada. Não há distribuição de probabilidade aqui: a chance de atingir o objetivo vem da simulação de mercado.",
+        "premissas": {
+          "retorno_real_rf_aa": 0.04,
+          "retorno_real_rv_aa": 0.07
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Simulação ILUSTRATIVA sob as premissas indicadas; não é projeção de rentabilidade nem indicação de investimento."
+    },
+    {
+      "tipo": "barras",
+      "id": "exec-1:2",
+      "titulo": "Aporte necessário por cenário",
+      "subtitulo": null,
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "Renda fixa",
+            "valor": 1363.36,
+            "detalhe": "aporte mensal necessário"
+          },
+          {
+            "rotulo": "Renda variável",
+            "valor": 1169.24,
+            "detalhe": "aporte mensal necessário"
+          }
+        ],
+        "formato": "brl",
+        "referencia": {
+          "rotulo": "capacidade mensal",
+          "valor": 14000.0
+        }
+      },
+      "proveniencia": {
+        "fonte": "premissas de política (retornos reais)",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "Dois cenários fixos, um de renda fixa e outro de renda variável, com retornos reais definidos em premissa aprovada. Não há distribuição de probabilidade aqui: a chance de atingir o objetivo vem da simulação de mercado.",
+        "premissas": {
+          "retorno_real_rf_aa": 0.04,
+          "retorno_real_rv_aa": 0.07
+        },
+        "avisos": [],
+        "lacunas": 0
+      },
+      "nota": "Simulação ILUSTRATIVA sob as premissas indicadas; não é projeção de rentabilidade nem indicação de investimento."
+    }
+  ]
+}

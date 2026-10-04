@@ -1,0 +1,93 @@
+{
+  "blocos": [
+    {
+      "tipo": "faixa",
+      "id": "exec-1:1",
+      "titulo": "Objetivo principal · 2 anos",
+      "subtitulo": "Nesta simulação, nenhuma das carteiras alcança o alvo desta meta com o aporte atual — a diferença entre elas não muda esse resultado. Para chegar lá em 9 de cada 10 cenários, o aporte precisaria ser de R$ 8.156 por mês. O que move este plano é o aporte ou o prazo, não o risco.",
+      "dados": {
+        "probabilidade": 0.0,
+        "rotulo_probabilidade": "de chance de chegar ao alvo",
+        "p5": 19521.5,
+        "p25": 19796.61,
+        "p50": 19990.57,
+        "p75": 20181.5,
+        "p95": 20460.4,
+        "alvo": 200000.0,
+        "formato": "brl",
+        "rotulos": {
+          "baixo": "cenário ruim",
+          "meio": "valor mais provável",
+          "alto": "cenário bom",
+          "alvo": "alvo"
+        },
+        "arrependimento": 0.0027,
+        "rotulo_arrependimento": "de chance de terminar abaixo do que você depositou",
+        "acao": {
+          "rotulo": "para chegar lá em 9 de cada 10 cenários, o aporte seria de",
+          "valor": 8155.7,
+          "formato": "brl",
+          "sufixo": "por mês"
+        },
+        "aporte_atual": {
+          "rotulo": "aporte considerado",
+          "valor": 800.0,
+          "formato": "brl",
+          "sufixo": "por mês"
+        }
+      },
+      "proveniencia": {
+        "fonte": "simulação de mercado com premissas versionadas",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "leitura da projeção gravada por run determinístico (engine.runs kind=projection): Monte Carlo com log-retornos normais, aporte no fim do mês e volatilidade da carteira derivada da matriz de covariância das premissas de mercado vigentes",
+        "premissas": {},
+        "lacunas": 0,
+        "avisos": [
+          "As premissas de mercado desta simulação ainda estão em revisão interna: trate os números como ordem de grandeza.",
+          "Com o aporte atual, a simulação chega ao alvo em menos da metade dos cenários."
+        ]
+      },
+      "nota": "Simulação ilustrativa a partir de premissas de mercado versionadas, não previsão. Os valores mudam se as premissas, o aporte ou o prazo mudarem. A simulação assume oscilações com distribuição normal, o que SUBESTIMA a cauda: uma crise real tende a ser pior que o cenário ruim mostrado aqui."
+    },
+    {
+      "tipo": "barras",
+      "id": "exec-1:2",
+      "titulo": "Cenário ruim por carteira",
+      "subtitulo": "a comparação entre carteiras é feita sobre o PISO, não sobre a mediana",
+      "dados": {
+        "itens": [
+          {
+            "rotulo": "conservadora",
+            "valor": 19521.5,
+            "destaque": "referencia"
+          },
+          {
+            "rotulo": "balanceada",
+            "valor": 18920.57
+          },
+          {
+            "rotulo": "arrojada",
+            "valor": 17823.09
+          }
+        ],
+        "formato": "brl"
+      },
+      "proveniencia": {
+        "fonte": "simulação de mercado com premissas versionadas",
+        "as_of": null,
+        "cutoff_date": null,
+        "n": null,
+        "metodo": "leitura da projeção gravada por run determinístico (engine.runs kind=projection): Monte Carlo com log-retornos normais, aporte no fim do mês e volatilidade da carteira derivada da matriz de covariância das premissas de mercado vigentes",
+        "premissas": {},
+        "lacunas": 0,
+        "avisos": [
+          "As premissas de mercado desta simulação ainda estão em revisão interna: trate os números como ordem de grandeza.",
+          "Com o aporte atual, a simulação chega ao alvo em menos da metade dos cenários."
+        ]
+      },
+      "nota": "Simulação ilustrativa a partir de premissas de mercado versionadas, não previsão. Os valores mudam se as premissas, o aporte ou o prazo mudarem. A simulação assume oscilações com distribuição normal, o que SUBESTIMA a cauda: uma crise real tende a ser pior que o cenário ruim mostrado aqui."
+    }
+  ]
+}
