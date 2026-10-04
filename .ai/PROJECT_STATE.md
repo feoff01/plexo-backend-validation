@@ -929,3 +929,13 @@ Estado de CI mais recente observado:
 
 Para o Codex, a entrada atual é `.ai/CODEX_START_HERE_2026-10-04.md` + `.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`.
 
+## 2026-10-04 — pacote Codex ZIP validado
+
+O workflow `Codex Context Package` agora inclui arquivos ocultos e gera o pacote com:
+- estrutura `AGENTS.md + CODEX_PACKAGE_README.md + .ai/`;
+- `PACKAGE_HEAD.txt`;
+- `CODEX_PACKAGE_SHA256SUMS.txt`.
+
+A primeira validação completa após corrigir `include-hidden-files` confirmou 32 arquivos e todos os checksums internos GREEN.
+
+Para qualquer pacote futuro, considerar válido somente quando `PACKAGE_HEAD.txt` corresponder ao commit de origem e `sha256sum -c CODEX_PACKAGE_SHA256SUMS.txt` passar integralmente.
