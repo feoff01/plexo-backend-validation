@@ -866,3 +866,15 @@ Fechado:
 
 Próximo passo: reabrir o capability audit restante de Company & Market Analytics. Brent continua bloqueado por source audit oficial; fair value/reverse DCF por premissas governadas; Portfolio Analytics segue fora do escopo.
 
+## 2026-10-03 — capability audit pós-risco 1.2 / Brent selecionado
+
+Base funcional segue `quant.risco_retorno` 1.2.0 pública/GREEN, HEAD `bf16dfd561f97e136060d77d80f50092cdc4538d`, run #341 success.
+
+A reauditoria restante selecionou **Brent spot/EIA** como próxima frente, começando por fundação de fonte/série/fator, sem nova tool pública.
+
+Fonte candidata: EIA `RBRTE` — Europe Brent Spot Price FOB, USD/barril, série diária pública desde 1987. O source identity está identificado, mas o gate ainda exige payload machine-readable físico e metadata de copyright/licença específico antes de qualquer implementação.
+
+O repo não possui hoje unidade USD/barril em `market.index_definitions` nem `FactorKind=commodity`; portanto o gap foi reclassificado como fonte + schema/fundação + loader/factor contract. A matemática quantitativa existente será reutilizada.
+
+Fair value/reverse DCF continua bloqueado por matemática contratual e premissas governadas. Portfolio Analytics permanece fora do escopo.
+
