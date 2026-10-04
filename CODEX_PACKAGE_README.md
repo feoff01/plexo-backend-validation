@@ -36,8 +36,15 @@ A primeira atividade é discovery/parity.
 
 ## Primeira mensagem
 
-Cole no Codex o conteúdo completo de:
+Não cole o prompt longo.
 
+Envie apenas:
+
+`Leia CODEX_BOOTSTRAP.md integralmente e execute apenas a primeira tranche definida nele. Antes de começar, confirme os arquivos canônicos lidos e o baseline que você considera válido.`
+
+O arquivo `CODEX_BOOTSTRAP.md` aponta para toda a documentação canônica.
+
+O prompt longo permanece disponível, se necessário, em:
 `.ai/CODEX_PRODUCTION_INTEGRATION_FIRST_MESSAGE_2026-10-04.md`
 
 ## Arquivo principal
