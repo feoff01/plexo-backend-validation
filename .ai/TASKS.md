@@ -1049,3 +1049,37 @@ Transversais ainda abertas:
 - [ ] PostgreSQL 18 + provenance/quality;
 - [ ] somente depois reauditar cutover público de `FactorRef(tipo="commodity")`.
 
+## Integração no backend/LLM real — próxima fase
+
+### Pacote documental
+- [x] criar master plan de integração produção;
+- [x] criar standard de correção/certificação;
+- [x] criar matriz das 18 tools;
+- [x] criar production parity matrix;
+- [x] criar Codex production runbook;
+- [x] criar production backend discovery template;
+- [x] criar external DB audit template;
+- [x] criar primeira mensagem Codex;
+- [x] atualizar `AGENTS.md`;
+- [x] criar `CODEX_START_HERE_2026-10-04.md`;
+- [x] checkpoint do pacote.
+
+### Primeira tranche Codex — sem port em massa
+- [ ] identificar repo/backend realmente deployado;
+- [ ] gerar `PRODUCTION_BACKEND_DISCOVERY_2026-10-04.md`;
+- [ ] auditar banco real/staging read-only;
+- [ ] gerar `EXTERNAL_DATA_BASE_AUDIT_2026-10-04.md`;
+- [ ] preencher `PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`;
+- [ ] corrigir os 2 testes strict-PIT temporais sem mudar semântica de produção;
+- [ ] obter novo baseline integralmente GREEN;
+- [ ] desenhar vertical slice resolver -> preços -> risco;
+- [ ] parar para revisão.
+
+### Depois
+- [ ] integrar/certificar Onda 1;
+- [ ] shadow;
+- [ ] integrar/certificar ondas seguintes;
+- [ ] monitoring/rollback;
+- [ ] `POST_INTEGRATION_CAPABILITY_AUDIT_2026-10-04.md`;
+- [ ] só então reavaliar Brent/fair value e outras capabilities.
+
