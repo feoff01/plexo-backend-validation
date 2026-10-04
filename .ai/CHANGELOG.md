@@ -795,3 +795,10 @@
 - criado checkpoint `.ai/checkpoints/2026-10-04_CODEX_PRODUCTION_INTEGRATION_PACKAGE_READY.md`;
 - nenhuma alteração funcional em tool/cálculo/schema nesta tranche.
 
+## 2026-10-04 — consolidação do pacote final Codex
+- criado `.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`;
+- criado `CODEX_PACKAGE_README.md`;
+- `AGENTS.md` e `CODEX_START_HERE_2026-10-04.md` atualizados para run #367;
+- onboarding atualizado para usar #367 como estado corrente, mantendo #347 como histórico;
+- pacote passa a ter uma lista única e explícita de arquivos obrigatórios.
+
