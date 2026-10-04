@@ -6,6 +6,7 @@ on:
       - bootstrap/plexo-project
     paths:
       - AGENTS.md
+      - CODEX_BOOTSTRAP.md
       - CODEX_PACKAGE_README.md
       - .ai/**
       - .github/workflows/package_codex_context.yml
@@ -30,6 +31,7 @@ jobs:
 
           files=(
             "AGENTS.md"
+            "CODEX_BOOTSTRAP.md"
             "CODEX_PACKAGE_README.md"
             ".ai/CODEX_START_HERE_2026-10-04.md"
             ".ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md"
