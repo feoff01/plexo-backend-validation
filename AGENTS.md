@@ -5,8 +5,14 @@
 This repository uses `.ai/` as its canonical persistent project memory.
 
 For any substantial task, first read:
-1. `.ai/CODEX_START_HERE_2026-10-03.md`
+1. `.ai/CODEX_START_HERE_2026-10-04.md`
 2. the task-specific documents that file points to.
+
+For integration into the existing production backend/LLM and database, also read:
+- `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`
+- `.ai/FINANCIAL_TOOL_CORRECTNESS_STANDARD_2026-10-04.md`
+- `.ai/PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`
+- `.ai/CODEX_PRODUCTION_INTEGRATION_RUNBOOK_2026-10-04.md`
 
 For onboarding or connecting an external/large database, also read:
 - `.ai/CODEX_DATA_ONBOARDING_HANDOFF_2026-10-03.md`
@@ -43,7 +49,7 @@ Core state files:
 - `.ai/NEW_CHAT_MASTER_CONTEXT_2026-10-03.md`
 - `.ai/CURRENT_PROJECT_MAP_2026-10-03.md`
 
-Use `.ai/CODEX_START_HERE_2026-10-03.md` to determine which design/checkpoint documents are currently authoritative.
+Use `.ai/CODEX_START_HERE_2026-10-04.md` to determine which design/checkpoint documents are currently authoritative.
 
 ## Current baseline warning
 
@@ -199,3 +205,28 @@ Do not:
 - make destructive changes to a production database.
 
 When the task is complex, make a small plan, work in short tranches, and keep the canonical `.ai/` state synchronized with the actual code/test result.
+
+## Production integration is a certification task, not a copy task
+
+Treat this repository as a validated reference implementation until the deployed backend is discovered.
+
+Before porting tools:
+- discover the production backend/LLM architecture;
+- audit the real database read-only;
+- fill the production parity matrix;
+- fix the known nondeterministic strict-PIT test fixtures;
+- integrate a vertical slice before migrating the full catalog.
+
+A financial tool is not production-ready merely because it returns a number. Require:
+- data correctness;
+- unit/identity correctness;
+- point-in-time correctness;
+- independent numerical oracle;
+- provenance/replay;
+- LLM routing correctness;
+- LLM output fidelity;
+- end-to-end test;
+- shadow production validation.
+
+Never use the same production calculation function as its only numerical oracle.
+
