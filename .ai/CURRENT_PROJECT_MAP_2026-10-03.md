@@ -245,3 +245,17 @@ Rolling volatility permanece somente no Quant Core; para expô-la será obrigat�
 
 Próximo gate: reauditar gaps restantes de Company & Market Analytics e escolher uma única tranche por reuse-before-build. Brent e fair value continuam bloqueados pelos gates já documentados.
 
+## Atualização — próxima tranche pós-risco 1.2: Brent source/factor foundation
+- risco rolling encerrado em `quant.risco_retorno` 1.2.0;
+- próxima frente selecionada: Brent spot / EIA;
+- série candidata: `RBRTE` = Europe Brent Spot Price FOB, USD/barril;
+- source identity tecnicamente identificado;
+- payload machine-readable físico e metadata específica de copyright/licença ainda pendentes;
+- gap corrigido: fonte + schema/fundação + loader/factor contract;
+- `FactorKind` atual não possui commodity;
+- `market.index_definitions` não comporta USD/barril sem abuso semântico;
+- matemática de retornos/dependência/sensibilidade/regimes já existe;
+- próxima ação = materializar payload EIA + hash + copyright metadata; não implementar antes;
+- fair value/reverse DCF continua bloqueado por governança/matemática;
+- Portfolio Analytics fora do escopo.
+
