@@ -1,5 +1,7 @@
 # Plexo — Codex repository instructions
 
+For a new Codex session, the human may point you only to `CODEX_BOOTSTRAP.md`. Treat it as the session entrypoint and follow all references from there before changing code.
+
 ## Start here
 
 This repository uses `.ai/` as its canonical persistent project memory.
