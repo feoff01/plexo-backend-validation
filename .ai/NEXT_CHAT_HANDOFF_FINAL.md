@@ -377,3 +377,39 @@ Atenção de baseline:
 
 Depois disso, usar a base grande para decidir o que alimenta tools existentes e só então selecionar uma tranche de integração.
 
+## OVERRIDE 2026-10-04 — integração no backend/LLM real é a prioridade
+
+A próxima fase NÃO é criar mais tools isoladas.
+
+Objetivo:
+integrar ao backend e LLM já existentes as 18 tools públicas de Company & Market Analytics desta referência, usando o banco real/staging, e certificar cada resultado.
+
+Leia primeiro:
+- `.ai/CODEX_START_HERE_2026-10-04.md`;
+- `.ai/LLM_BACKEND_PRODUCTION_INTEGRATION_MASTER_PLAN_2026-10-04.md`;
+- `.ai/FINANCIAL_TOOL_CORRECTNESS_STANDARD_2026-10-04.md`;
+- `.ai/TOOL_INTEGRATION_CERTIFICATION_MATRIX_2026-10-04.md`;
+- `.ai/PRODUCTION_TOOL_PARITY_MATRIX_2026-10-04.md`;
+- `.ai/CODEX_PRODUCTION_INTEGRATION_RUNBOOK_2026-10-04.md`;
+- `.ai/CODEX_PRODUCTION_INTEGRATION_FIRST_MESSAGE_2026-10-04.md`.
+
+Regra:
+este repo é referência validada até o backend realmente deployado ser descoberto. Portar contratos/comportamento; não substituir a arquitetura real cegamente.
+
+Primeira tranche Codex:
+1. production backend discovery;
+2. DB audit read-only;
+3. preencher parity matrix;
+4. corrigir os 2 testes strict-PIT dependentes do relógio sem afrouxar PIT;
+5. obter novo baseline GREEN;
+6. propor vertical slice `dados.resolver_instrumento -> dados.serie_precos -> quant.risco_retorno`;
+7. parar para review antes de migrar as demais tools.
+
+Uma tool só chega a PROD_GREEN quando passa:
+data correctness + numerical oracle + PIT + provenance/replay + LLM routing/fidelity + E2E + shadow + monitoring/rollback.
+
+Último baseline funcional integralmente GREEN permanece:
+`bf16dfd561f97e136060d77d80f50092cdc4538d`, run #341, 186 directed, 929/53/19/0, catálogo 37/34/3.
+
+Brent e fair value ficam posteriores ao DB audit e integração do catálogo atual.
+
