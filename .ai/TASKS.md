@@ -1087,7 +1087,7 @@ Transversais ainda abertas:
 - [x] manifestar arquivos obrigatórios;
 - [x] README de instalação;
 - [x] atualizar estado corrente de CI para #367;
-- [ ] gerar artefato ZIP com paths preservados;
-- [ ] gerar SHA-256 do pacote;
-- [ ] entregar ZIP ao usuário.
+- [x] gerar artefato ZIP com paths preservados;
+- [x] gerar SHA-256/checksum manifest interno do pacote;
+- [x] validar integridade do ZIP (paths + checksums); entrega ao usuário no fechamento desta tranche.
 
