@@ -800,5 +800,4 @@
 - criado `CODEX_PACKAGE_README.md`;
 - `AGENTS.md` e `CODEX_START_HERE_2026-10-04.md` atualizados para run #367;
 - onboarding atualizado para usar #367 como estado corrente, mantendo #347 como histórico;
-- pacote passa a ter uma lista única e explícita de arquivos obrigatórios.
-
+- pacote passa a ter uma lista única e explícita de arquivos obrigatórios.NaN
