@@ -546,3 +546,15 @@ Gate #334: 186 directed; peers 10/10/10; 929 passed / 53 skipped / 19 warnings /
 
 Próximo passo: capability audit restante de Company & Market Analytics. Não abrir Portfolio Analytics. Brent só após source audit oficial; fair value/reverse DCF só após governança explícita de premissas.
 
+## Atualização pós-risco 1.2 — próxima frente: Brent spot/EIA
+
+Após encerrar `quant.risco_retorno` 1.2.0, o capability audit restante selecionou Brent spot como próxima frente, começando por fundação e não por nova tool.
+
+Fonte candidata: EIA `RBRTE`, Europe Brent Spot Price FOB, USD/barril, série diária pública. O repo ainda não possui representação honesta de commodity: `FactorKind` só aceita ativo/índice/câmbio e `market.index_definitions` restringe unidades a taxa/pontos/percentual. Portanto o gap é fonte + schema/fundação + loader/factor contract.
+
+Reuse-before-build: retornos, dependência, sensibilidade, regimes, alinhamento e provenance patterns já existem e não devem ser recriados.
+
+Antes de código é obrigatório congelar um payload machine-readable oficial EIA + SHA-256 + metadata de copyright/licença específica da RBRTE. Não usar scraper HTML, FRED/vendor como fonte canônica, nem substituir spot por futures.
+
+Fair value/reverse DCF continua posterior porque exige matemática contratual e premissas governadas.
+
