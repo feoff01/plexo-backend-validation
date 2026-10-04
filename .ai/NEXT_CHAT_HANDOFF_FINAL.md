@@ -413,3 +413,19 @@ data correctness + numerical oracle + PIT + provenance/replay + LLM routing/fide
 
 Brent e fair value ficam posteriores ao DB audit e integração do catálogo atual.
 
+## OVERRIDE — pacote final a entregar ao Codex
+
+Manifesto canônico:
+`.ai/CODEX_PACKAGE_MANIFEST_2026-10-04.md`.
+
+README humano:
+`CODEX_PACKAGE_README.md`.
+
+Estado CI atual:
+run #367 / `37227204860` = 184 directed passed / 2 failed, mesmas fixtures temporais strict-PIT conhecidas; nenhuma regressão funcional nova.
+
+Primeira mensagem no Codex:
+`.ai/CODEX_PRODUCTION_INTEGRATION_FIRST_MESSAGE_2026-10-04.md`.
+
+Não usar o antigo `CODEX_FIRST_MESSAGE_2026-10-03.md` como prompt principal desta fase.
+
