@@ -298,7 +298,7 @@ O documento deve conter:
 
 Somente depois do audit ser revisado:
 
-1. corrigir primeiro o CI temporal #347 sem enfraquecer strict PIT;
+1. corrigir primeiro o CI temporal atual (#367; mesma causa originalmente observada no #347) sem enfraquecer strict PIT;
 2. escolher UMA tranche de onboarding;
 3. design;
 4. adapter/schema/loader shadow;
@@ -349,3 +349,8 @@ A base externa/real deve ser mapeada para as tools existentes dentro do runtime/
 
 Nenhuma tabela deve ser considerada "integrada" até a capability consumidora passar pelo standard de certificação.
 
+## Override de CI — 2026-10-04
+
+O run mais recente do pacote documental/integration, #367 / `37227204860`, repetiu exatamente as mesmas duas falhas strict-PIT: 184 directed passed / 2 failed. Não surgiu regressão funcional nova.
+
+Use #367 como estado atual; mantenha #347 apenas como registro de quando o problema foi inicialmente observado.
