@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date
+from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
@@ -305,7 +306,7 @@ def test_tool_promovida_registry_and_fingerprint():
     spec = spec_de("quant.regimes")
     assert spec.semver == "1.0.1"
     assert spec.exposed_to_llm is True
-    names = {p.rsplit("/", 1)[-1] for p in spec.source_files}
+    names = {Path(p).name for p in spec.source_files}
     assert {"regimes.py", "conditional.py", "series.py", "statistics.py"}.issubset(names)
 
 
