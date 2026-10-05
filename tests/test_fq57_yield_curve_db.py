@@ -32,11 +32,14 @@ def _points(ref: date, *, pre_21: float = 14.0):
 
 
 @pytest.mark.asyncio
-async def test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertices(db):
+async def test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertices(db, historical_ingestion_connection):
     ref = date(2026, 10, 2)
     async with db.service_session() as conn:
+        started = datetime(2026, 10, 2, 20, 0, tzinfo=timezone.utc)
+        finished = datetime(2026, 10, 2, 21, 0, tzinfo=timezone.utc)
+        ingestion_conn = historical_ingestion_connection(conn, started_at=started, finished_at=finished)
         first = await ingest_anbima_yield_curve(
-            conn,
+            ingestion_conn,
             _points(ref),
             file_hash="7" * 64,
             dataset=DATASET_ANBIMA_ETTJ,
@@ -45,7 +48,7 @@ async def test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertice
         assert first.rows_already_equal == 0
 
         again = await ingest_anbima_yield_curve(
-            conn,
+            ingestion_conn,
             _points(ref),
             file_hash="7" * 64,
             dataset=DATASET_ANBIMA_ETTJ,
@@ -55,7 +58,7 @@ async def test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertice
         assert again.rows_already_equal == 6
 
         same_values_new_file = await ingest_anbima_yield_curve(
-            conn,
+            ingestion_conn,
             _points(ref),
             file_hash="8" * 64,
             dataset=DATASET_ANBIMA_ETTJ,
@@ -79,6 +82,12 @@ async def test_yield_curve_ingest_is_idempotent_and_loader_returns_exact_vertice
         assert all(p.calendar_days is None for p in curve.points)
         assert curve.provenance.source_codes == ["anbima"]
         assert curve.provenance.strict_pit is True
+        assert curve.provenance.availability_date == ref
+        batches = await (await conn.execute(
+            "select started_at, finished_at, status from market.ingestion_batches "
+            "where file_hash in (%s, %s)", ("7" * 64, "8" * 64),
+        )).fetchall()
+        assert batches == [(started, finished, "succeeded")] * 2
 
 
 @pytest.mark.asyncio
@@ -201,3 +210,35 @@ async def test_yield_curve_latest_respects_economic_date_and_non_pit_is_explicit
         )
         assert non_pit.reference_date == date(2026, 8, 29)
         assert "curva_juros_sem_vintage_pit" in non_pit.provenance.warnings
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("status,finished_at,visible", [
+    ("succeeded", datetime(2026, 10, 3, 23, 59, 59, tzinfo=timezone.utc), True),
+    ("succeeded", datetime(2026, 10, 4, 0, 0, tzinfo=timezone.utc), False),
+    ("running", None, False),
+])
+async def test_yield_curve_pit_availability_boundary_and_incomplete_batch(db, status, finished_at, visible):
+    """Cutoff é diário inclusivo no timezone da sessão; lote não terminal é invisível."""
+    ref = date(2026, 10, 2)
+    async with db.service_session() as conn:
+        await conn.execute("set local timezone to 'UTC'")
+        cur = await conn.execute(
+            "insert into market.ingestion_batches "
+            "(source_code,dataset,reference_date,file_hash,status,started_at,finished_at,rows_ingested) "
+            "values ('anbima',%s,%s,%s,%s,%s,%s,%s) returning id::text",
+            (DATASET_ANBIMA_ETTJ, ref, "6" * 64, status,
+             datetime(2026, 10, 2, 20, 0, tzinfo=timezone.utc), finished_at, 1 if finished_at else None),
+        )
+        batch = (await cur.fetchone())[0]
+        await conn.execute(
+            "insert into market.yield_curve "
+            "(curve_name,reference_date,business_days,calendar_days,rate_pct,day_count,source_code,ingestion_batch_id) "
+            "values ('ettj_pre',%s,63,null,13.25,'du_252','anbima',%s)", (ref, batch),
+        )
+        curve = await load_yield_curve(conn, "ettj_pre", cutoff=date(2026, 10, 3), reference_date=ref, strict_pit=True)
+        assert [(p.business_days, p.rate_pct) for p in curve.points] == ([(63, 13.25)] if visible else [])
+        if visible:
+            assert curve.provenance.availability_date == date(2026, 10, 3)
+        else:
+            assert "curva_juros_indisponivel" in curve.provenance.warnings

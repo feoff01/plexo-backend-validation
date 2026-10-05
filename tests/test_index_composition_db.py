@@ -41,7 +41,7 @@ def _record(ticker: str, weight: str, qty: str):
 
 
 @pytest.mark.asyncio
-async def test_index_composition_loader_reuses_official_snapshot_and_tool_is_compact(db):
+async def test_index_composition_loader_reuses_official_snapshot_and_tool_is_compact(db, historical_ingestion_connection):
     ref = date(2026, 10, 2)
     async with db.service_session() as conn:
         a = await _issuer(conn, "Index A", "44444444000101")
@@ -51,8 +51,11 @@ async def test_index_composition_loader_reuses_official_snapshot_and_tool_is_com
         await _action(conn, b, "IDXB3")
         await _action(conn, c, "IDXC3")
 
+        started = datetime(2026, 10, 2, 20, 0, tzinfo=timezone.utc)
+        finished = datetime(2026, 10, 2, 21, 0, tzinfo=timezone.utc)
+        ingestion_conn = historical_ingestion_connection(conn, started_at=started, finished_at=finished)
         await ingest_b3_index_portfolio(
-            conn,
+            ingestion_conn,
             [
                 _record("IDXA3", "60.000", "1000"),
                 _record("IDXB3", "30.000", "2000"),
@@ -76,6 +79,12 @@ async def test_index_composition_loader_reuses_official_snapshot_and_tool_is_com
         assert [m.ticker for m in resolved.members] == ["IDXA3", "IDXB3", "IDXC3"]
         assert resolved.provenance.source_codes == ["b3"]
         assert resolved.provenance.strict_pit is True
+        assert resolved.provenance.availability_date == ref
+        batches = await (await conn.execute(
+            "select started_at, finished_at, status from market.ingestion_batches "
+            "where file_hash = %s", ("e" * 64,),
+        )).fetchall()
+        assert batches == [(started, finished, "succeeded")]
 
         out = montar_composicao_indice(
             ComposicaoIndiceResolvida(
@@ -140,3 +149,37 @@ async def test_index_composition_strict_pit_hides_late_batch_and_explicit_date_d
         assert missing_exact.reference_date == date(2026, 9, 21)
         assert missing_exact.members == []
         assert "composicao_indice_indisponivel" in missing_exact.provenance.warnings
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("status,finished_at,visible", [
+    ("succeeded", datetime(2026, 10, 3, 23, 59, 59, tzinfo=timezone.utc), True),
+    ("succeeded", datetime(2026, 10, 4, 0, 0, tzinfo=timezone.utc), False),
+    ("running", None, False),
+])
+async def test_index_composition_pit_availability_boundary_and_incomplete_batch(db, status, finished_at, visible):
+    """Mantém o cutoff diário inclusivo e a exclusão de batches incompletos."""
+    ref = date(2026, 10, 2)
+    async with db.service_session() as conn:
+        await conn.execute("set local timezone to 'UTC'")
+        issuer = await _issuer(conn, "Boundary Index", "44444444000105")
+        iid = await _action(conn, issuer, "BOUND3")
+        cur = await conn.execute(
+            "insert into market.ingestion_batches "
+            "(source_code,dataset,reference_date,file_hash,status,started_at,finished_at,rows_ingested) "
+            "values ('b3',%s,%s,%s,%s,%s,%s,%s) returning id::text",
+            (IBRA_DATASET, ref, "6" * 64, status,
+             datetime(2026, 10, 2, 20, 0, tzinfo=timezone.utc), finished_at, 1 if finished_at else None),
+        )
+        batch = (await cur.fetchone())[0]
+        await conn.execute(
+            "insert into market.index_weights "
+            "(index_code,reference_date,instrument_id,weight_pct,theoretical_qty,ingestion_batch_id) "
+            "values ('ibra',%s,%s,100,1000,%s)", (ref, iid, batch),
+        )
+        composition = await load_index_composition(conn, "ibra", cutoff=date(2026, 10, 3), strict_pit=True)
+        assert [m.ticker for m in composition.members] == (["BOUND3"] if visible else [])
+        if visible:
+            assert composition.provenance.availability_date == date(2026, 10, 3)
+        else:
+            assert "composicao_indice_indisponivel" in composition.provenance.warnings

@@ -17,6 +17,7 @@ import os
 import sys
 import uuid
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 
 import pytest
 import pytest_asyncio
@@ -45,6 +46,56 @@ async def db(settings):
     """Banco de teste: uma conexão, transação externa, rollback no fim."""
     async with SingleConnectionDatabase.open(settings) as database:
         yield database
+
+
+class HistoricalIngestionConnection:
+    """Setup opt-in: datas explícitas na criação e única finalização real do lote.
+
+    Não congela o relógio, altera loaders, atualiza lote terminal ou substitui ingestão/audit.
+    SQL temporal diferente do contrato conhecido falha, exigindo revisão desta fixture.
+    """
+
+    _OPEN = (
+        "insert into market.ingestion_batches (source_code, dataset, reference_date, file_hash) "
+        "values (%s, %s, %s, %s) returning id::text"
+    )
+    _CLOSE = (
+        "update market.ingestion_batches set status = %s, finished_at = clock_timestamp(), rows_ingested = %s, "
+        "error_detail = %s, reference_date = coalesce(%s, reference_date) where id = %s"
+    )
+
+    def __init__(self, conn, *, started_at: datetime, finished_at: datetime):
+        for stamp in (started_at, finished_at):
+            if stamp.tzinfo is None or stamp.utcoffset() != timedelta(0):
+                raise ValueError("fixture de ingestão exige timestamps UTC explícitos")
+        if started_at > finished_at:
+            raise ValueError("fixture: started_at deve ser <= finished_at")
+        self._conn = conn
+        self.started_at = started_at
+        self.finished_at = finished_at
+
+    def __getattr__(self, name):
+        return getattr(self._conn, name)
+
+    async def execute(self, query, params=None, **kwargs):
+        if isinstance(query, str) and query.startswith("insert into market.ingestion_batches "):
+            if query != self._OPEN:
+                raise AssertionError("SQL de abertura mudou; revisar fixture temporal")
+            query = query.replace("reference_date, file_hash)", "reference_date, file_hash, started_at)")
+            query = query.replace("values (%s, %s, %s, %s)", "values (%s, %s, %s, %s, %s)")
+            params = (*params, self.started_at)
+        elif isinstance(query, str) and query.startswith("update market.ingestion_batches set status = "):
+            if query != self._CLOSE:
+                raise AssertionError("SQL de finalização mudou; revisar fixture temporal")
+            query = query.replace("finished_at = clock_timestamp()", "finished_at = %s")
+            params = (params[0], self.finished_at, *params[1:])
+        return await self._conn.execute(query, params, **kwargs)
+
+
+@pytest.fixture
+def historical_ingestion_connection():
+    """Factory restrita aos testes que declaram disponibilidade histórica; sem autouse."""
+    return HistoricalIngestionConnection
 
 
 @pytest_asyncio.fixture
